@@ -1,0 +1,324 @@
+﻿namespace AyzPaymentWizard.Forms
+{
+    partial class PacketEditForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.DGVLeftEdit = new System.Windows.Forms.DataGridView();
+            this.ColLeftSelected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.beginDTP = new System.Windows.Forms.DateTimePicker();
+            this.endDTP = new System.Windows.Forms.DateTimePicker();
+            this.txtClCodePacketEdit = new System.Windows.Forms.TextBox();
+            this.btnListelePacketEdit = new System.Windows.Forms.Button();
+            this.btnFilterPacketEdit = new System.Windows.Forms.Button();
+            this.btnFiltreRecoveryPacketEdit = new System.Windows.Forms.Button();
+            this.btnRightPacketEdit = new System.Windows.Forms.Button();
+            this.btnLeftPacketEdit = new System.Windows.Forms.Button();
+            this.DGVRightEdit = new System.Windows.Forms.DataGridView();
+            this.ColRightSelected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.btnEditPacket = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtPacketEditExp = new System.Windows.Forms.RichTextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cmbOutAccountInfoEdit = new System.Windows.Forms.ComboBox();
+            ((System.ComponentModel.ISupportInitialize)(this.DGVLeftEdit)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGVRightEdit)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // DGVLeftEdit
+            // 
+            this.DGVLeftEdit.AllowUserToAddRows = false;
+            this.DGVLeftEdit.AllowUserToDeleteRows = false;
+            this.DGVLeftEdit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.DGVLeftEdit.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGVLeftEdit.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColLeftSelected});
+            this.DGVLeftEdit.Location = new System.Drawing.Point(8, 98);
+            this.DGVLeftEdit.Name = "DGVLeftEdit";
+            this.DGVLeftEdit.Size = new System.Drawing.Size(625, 571);
+            this.DGVLeftEdit.TabIndex = 0;
+            // 
+            // ColLeftSelected
+            // 
+            this.ColLeftSelected.HeaderText = "Selected";
+            this.ColLeftSelected.Name = "ColLeftSelected";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label1.Location = new System.Drawing.Point(14, 11);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(109, 17);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Başlangıç Tarihi";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label2.Location = new System.Drawing.Point(258, 11);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(74, 17);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Bitiş Tarihi";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label3.Location = new System.Drawing.Point(14, 73);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(115, 17);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Cari Hesap Kodu";
+            // 
+            // beginDTP
+            // 
+            this.beginDTP.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.beginDTP.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.beginDTP.Location = new System.Drawing.Point(17, 33);
+            this.beginDTP.Name = "beginDTP";
+            this.beginDTP.Size = new System.Drawing.Size(200, 24);
+            this.beginDTP.TabIndex = 4;
+            // 
+            // endDTP
+            // 
+            this.endDTP.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.endDTP.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.endDTP.Location = new System.Drawing.Point(261, 33);
+            this.endDTP.Name = "endDTP";
+            this.endDTP.Size = new System.Drawing.Size(200, 24);
+            this.endDTP.TabIndex = 5;
+            // 
+            // txtClCodePacketEdit
+            // 
+            this.txtClCodePacketEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.txtClCodePacketEdit.Location = new System.Drawing.Point(141, 66);
+            this.txtClCodePacketEdit.Name = "txtClCodePacketEdit";
+            this.txtClCodePacketEdit.Size = new System.Drawing.Size(320, 26);
+            this.txtClCodePacketEdit.TabIndex = 6;
+            // 
+            // btnListelePacketEdit
+            // 
+            this.btnListelePacketEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnListelePacketEdit.Location = new System.Drawing.Point(468, 4);
+            this.btnListelePacketEdit.Name = "btnListelePacketEdit";
+            this.btnListelePacketEdit.Size = new System.Drawing.Size(165, 25);
+            this.btnListelePacketEdit.TabIndex = 7;
+            this.btnListelePacketEdit.Text = "Kalan Liste";
+            this.btnListelePacketEdit.UseVisualStyleBackColor = true;
+            this.btnListelePacketEdit.Click += new System.EventHandler(this.btnListelePacketEdit_Click);
+            // 
+            // btnFilterPacketEdit
+            // 
+            this.btnFilterPacketEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnFilterPacketEdit.Location = new System.Drawing.Point(468, 32);
+            this.btnFilterPacketEdit.Name = "btnFilterPacketEdit";
+            this.btnFilterPacketEdit.Size = new System.Drawing.Size(165, 33);
+            this.btnFilterPacketEdit.TabIndex = 8;
+            this.btnFilterPacketEdit.Text = "Filtrele ✓";
+            this.btnFilterPacketEdit.UseVisualStyleBackColor = true;
+            this.btnFilterPacketEdit.Click += new System.EventHandler(this.btnFilterPacketEdit_Click);
+            // 
+            // btnFiltreRecoveryPacketEdit
+            // 
+            this.btnFiltreRecoveryPacketEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnFiltreRecoveryPacketEdit.Location = new System.Drawing.Point(468, 67);
+            this.btnFiltreRecoveryPacketEdit.Name = "btnFiltreRecoveryPacketEdit";
+            this.btnFiltreRecoveryPacketEdit.Size = new System.Drawing.Size(165, 26);
+            this.btnFiltreRecoveryPacketEdit.TabIndex = 9;
+            this.btnFiltreRecoveryPacketEdit.Text = "Sıfırla";
+            this.btnFiltreRecoveryPacketEdit.UseVisualStyleBackColor = true;
+            this.btnFiltreRecoveryPacketEdit.Click += new System.EventHandler(this.btnFiltreRecoveryPacketEdit_Click);
+            // 
+            // btnRightPacketEdit
+            // 
+            this.btnRightPacketEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnRightPacketEdit.Location = new System.Drawing.Point(639, 273);
+            this.btnRightPacketEdit.Name = "btnRightPacketEdit";
+            this.btnRightPacketEdit.Size = new System.Drawing.Size(47, 44);
+            this.btnRightPacketEdit.TabIndex = 10;
+            this.btnRightPacketEdit.Text = ">>";
+            this.btnRightPacketEdit.UseVisualStyleBackColor = true;
+            this.btnRightPacketEdit.Click += new System.EventHandler(this.btnRightPacketEdit_Click);
+            // 
+            // btnLeftPacketEdit
+            // 
+            this.btnLeftPacketEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnLeftPacketEdit.Location = new System.Drawing.Point(639, 323);
+            this.btnLeftPacketEdit.Name = "btnLeftPacketEdit";
+            this.btnLeftPacketEdit.Size = new System.Drawing.Size(47, 44);
+            this.btnLeftPacketEdit.TabIndex = 11;
+            this.btnLeftPacketEdit.Text = "<<";
+            this.btnLeftPacketEdit.UseVisualStyleBackColor = true;
+            this.btnLeftPacketEdit.Click += new System.EventHandler(this.btnLeftPacketEdit_Click);
+            // 
+            // DGVRightEdit
+            // 
+            this.DGVRightEdit.AllowUserToAddRows = false;
+            this.DGVRightEdit.AllowUserToDeleteRows = false;
+            this.DGVRightEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DGVRightEdit.BackgroundColor = System.Drawing.Color.White;
+            this.DGVRightEdit.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGVRightEdit.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColRightSelected});
+            this.DGVRightEdit.Location = new System.Drawing.Point(693, 4);
+            this.DGVRightEdit.Name = "DGVRightEdit";
+            this.DGVRightEdit.Size = new System.Drawing.Size(625, 517);
+            this.DGVRightEdit.TabIndex = 12;
+            this.DGVRightEdit.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DGVRightEdit_CellFormatting);
+            // 
+            // ColRightSelected
+            // 
+            this.ColRightSelected.HeaderText = "Selected";
+            this.ColRightSelected.Name = "ColRightSelected";
+            // 
+            // btnEditPacket
+            // 
+            this.btnEditPacket.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditPacket.BackColor = System.Drawing.Color.ForestGreen;
+            this.btnEditPacket.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEditPacket.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnEditPacket.ForeColor = System.Drawing.Color.White;
+            this.btnEditPacket.Location = new System.Drawing.Point(692, 633);
+            this.btnEditPacket.Name = "btnEditPacket";
+            this.btnEditPacket.Size = new System.Drawing.Size(625, 36);
+            this.btnEditPacket.TabIndex = 13;
+            this.btnEditPacket.Text = "PAKETİ DÜZENLE";
+            this.btnEditPacket.UseVisualStyleBackColor = false;
+            this.btnEditPacket.Click += new System.EventHandler(this.btnEditPacket_Click);
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label4.Location = new System.Drawing.Point(688, 528);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(161, 20);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "PAKET AÇIKLAMASI";
+            // 
+            // txtPacketEditExp
+            // 
+            this.txtPacketEditExp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPacketEditExp.Location = new System.Drawing.Point(846, 528);
+            this.txtPacketEditExp.Name = "txtPacketEditExp";
+            this.txtPacketEditExp.Size = new System.Drawing.Size(471, 62);
+            this.txtPacketEditExp.TabIndex = 15;
+            this.txtPacketEditExp.Text = "";
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label5.Location = new System.Drawing.Point(688, 600);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(116, 20);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "ÇIKIŞ HESABI";
+            // 
+            // cmbOutAccountInfoEdit
+            // 
+            this.cmbOutAccountInfoEdit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbOutAccountInfoEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.cmbOutAccountInfoEdit.FormattingEnabled = true;
+            this.cmbOutAccountInfoEdit.Location = new System.Drawing.Point(846, 597);
+            this.cmbOutAccountInfoEdit.Name = "cmbOutAccountInfoEdit";
+            this.cmbOutAccountInfoEdit.Size = new System.Drawing.Size(472, 28);
+            this.cmbOutAccountInfoEdit.TabIndex = 17;
+            // 
+            // PacketEditForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1324, 681);
+            this.Controls.Add(this.cmbOutAccountInfoEdit);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.txtPacketEditExp);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.btnEditPacket);
+            this.Controls.Add(this.DGVRightEdit);
+            this.Controls.Add(this.btnLeftPacketEdit);
+            this.Controls.Add(this.btnRightPacketEdit);
+            this.Controls.Add(this.btnFiltreRecoveryPacketEdit);
+            this.Controls.Add(this.btnFilterPacketEdit);
+            this.Controls.Add(this.btnListelePacketEdit);
+            this.Controls.Add(this.txtClCodePacketEdit);
+            this.Controls.Add(this.endDTP);
+            this.Controls.Add(this.beginDTP);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.DGVLeftEdit);
+            this.Name = "PacketEditForm";
+            this.Text = "Paket Düzenleme Ekranı";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.PacketEditForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.DGVLeftEdit)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGVRightEdit)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.DateTimePicker beginDTP;
+        private System.Windows.Forms.DateTimePicker endDTP;
+        private System.Windows.Forms.TextBox txtClCodePacketEdit;
+        private System.Windows.Forms.Button btnListelePacketEdit;
+        private System.Windows.Forms.Button btnFilterPacketEdit;
+        private System.Windows.Forms.Button btnFiltreRecoveryPacketEdit;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ColLeftSelected;
+        private System.Windows.Forms.Button btnRightPacketEdit;
+        private System.Windows.Forms.Button btnLeftPacketEdit;
+        private System.Windows.Forms.Button btnEditPacket;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ColRightSelected;
+        private System.Windows.Forms.DataGridView DGVLeftEdit;
+        private System.Windows.Forms.DataGridView DGVRightEdit;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.RichTextBox txtPacketEditExp;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cmbOutAccountInfoEdit;
+    }
+}
