@@ -686,33 +686,24 @@ namespace AyzPaymentWizard
         private void btnAkibetSorgulama_Click(object sender, EventArgs e)
         {
             FileHelperEngine<PAYMENTOUTCOME> engine = new FileHelperEngine<PAYMENTOUTCOME>();
-            try
+            engine.ErrorManager.ErrorMode = ErrorMode.SaveAndContinue;
+            engine.BeforeReadRecord += (eng, i) =>
             {
-                // Switch error mode on
-                engine.ErrorManager.ErrorMode = ErrorMode.SaveAndContinue;
-
-                engine.BeforeReadRecord += (eng, i) =>
-                {
-                    if (i.RecordLine.StartsWith("! ") ||
-                        i.RecordLine.StartsWith("-"))
-                        i.SkipThisRecord = true;
-                };
-                engine.AfterReadRecord += (eng, xd) =>
-                {
-                    if (xd.Record.BANKCODE == 0)
-                        xd.SkipThisRecord = false;
-                };
-
-            }
-            catch (Exception)
+                if (i.RecordLine.StartsWith("! ") ||
+                    i.RecordLine.StartsWith("-"))
+                    i.SkipThisRecord = true;
+            };
+            engine.AfterReadRecord += (eng, xd) =>
             {
+                if (xd.Record.BANKCODE == 0)
+                    xd.SkipThisRecord = false;
+            };
 
-                throw;
-            }
-            int Downloaded_File_Id;
             List<string> fileNameList = FileNameList();
             foreach (var item in fileNameList)
             {
+                int summaryId = 0;
+                bool check = false;
                 string downloadResult = SFTP.Download("C:\\d\\", "192.168.0.6", 22, "ayztest", "ayz2021+", "/E/AYZ_FTP/Yunus/" + item + "");
                 JObject jsonDownload = JObject.Parse(downloadResult);
                 int downloadResultCode = Convert.ToInt32(jsonDownload["ResultCode"].ToString());
@@ -720,44 +711,42 @@ namespace AyzPaymentWizard
                 {
                     try
                     {
-                        using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-                        {
-                            CommandText = "INSERT INTO AYZ_PW_DOWNLOADED_FILE(FILENAME,FIRMNR,DOWNLOAD_DATE,DOWNLOAD_TIME) " +
-                                      "VALUES(" +
-                                      "\n'" + item + "'," +
-                                      "\n'" + Helper.FIRMNR + "'," +
-                                      "\nCONVERT(DATE, GETDATE(), 104)," +
-                                      "\n'" + Helper.GetTime() + "'" +
-                                      "\n);SELECT SCOPE_IDENTITY()";
-                            komut.CommandText = CommandText;
-                            komut.Connection = conn;
-                            conn.Open();
-                            Downloaded_File_Id = Convert.ToInt32(komut.ExecuteScalar());
-                        }
-                        
                         string path = @"C:\d\";
                         var result = engine.ReadFile(path + item);
                         foreach (var value in result)
                         {
-                            string day = value.TRANSACTION_DATE.ToString().Remove(2, 6); string month = value.TRANSACTION_DATE.ToString().Substring(2, 2);
-                            string year = value.TRANSACTION_DATE.ToString().Substring(4, 4); string date_ = day + "-" + month + "-" + year;
+                            string returnKey = value.COMPANYREF;
                             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                             {
-                                CommandText = "INSERT INTO AYZ_PW_PAYMENT_OUTCOME(" +
-                                "\nDOWNLOADEDFILEID,BANKCODE,BRANCHCODE,ACCOUNTNO,CURRCODE,AMOUNT,DESCRIPTION," +
-                                "\nCOMPANY_REF,IBAN,PAYMENTSTATUS,TRANSACTIONNO,TRANSACTION_DATE,EFT_QUERY_NO) " +
-                                "VALUES('" + Downloaded_File_Id + "','" + value.BANKCODE + "', '" + value.BRANCHCODE + "'," +
-                                        "\n'" + value.ACCOUNTNO + "','" + value.CURRENCYCODE + "','" + value.AMOUNT + "'," +
-                                        "\n'" + value.DESCRIPTION + "','" + value.COMPANYREF + "','" + value.IBAN + "'," +
-                                        "\n'" + value.PAYMENTSTATUS + "','" + value.TRANSACTIONNO + "',CONVERT(DATE, '" + date_ + "', 104)," +
-                                        "\n'" + value.EFTQUERYNO + "' " +
-                                        "\n)";
+                                CommandText = "SELECT * FROM AYZ_PW_SUMMARY WHERE RETURNKEY = '" + returnKey + "'";
                                 komut.CommandText = CommandText;
                                 komut.Connection = conn;
                                 conn.Open();
                                 dr = komut.ExecuteReader();
+                                if (dr.Read())
+                                {
+                                    summaryId = Convert.ToInt32(dr["ID"].ToString());
+                                }
+                                if (dr.HasRows)
+                                {
+                                    check = true;
+                                }
+                            }
+                            if (check == true)
+                            {
+                                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                                {
+                                    CommandText = "UPDATE AYZ_PW_SUMMARY SET PAYMENT_STATUS = '" + value.PAYMENTSTATUS + "' WHERE ID = '" + summaryId + "'";
+                                    komut.CommandText = CommandText;
+                                    komut.Connection = conn;
+                                    conn.Open();
+                                    komut.ExecuteNonQuery();
+                                    conn.Close();
+                                }
                             }
                         }
+                        if (check == true)
+                            saveDownloadedFiles(item);
                     }
                     catch (Exception ex)
                     {
@@ -765,6 +754,32 @@ namespace AyzPaymentWizard
                     }
                 }
             }
+        }
+
+        private void saveDownloadedFiles(string item)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "INSERT INTO AYZ_PW_DOWNLOADED_FILE(FILENAME,FIRMNR,DOWNLOAD_DATE,DOWNLOAD_TIME) " +
+                              "VALUES(" +
+                              "\n'" + item + "'," +
+                              "\n'" + Helper.FIRMNR + "'," +
+                              "\nCONVERT(DATE, GETDATE(), 104)," +
+                              "\n'" + Helper.GetTime() + "'" +
+                              "\n);";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hata: \n" + ex.Message);
+            }
+
         }
 
         private List<string> FileNameList()

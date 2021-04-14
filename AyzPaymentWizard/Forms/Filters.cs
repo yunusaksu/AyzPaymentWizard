@@ -286,7 +286,7 @@ namespace AyzPaymentWizard
 
             PacketPreparation form = new PacketPreparation();
             form.ShowDialog();
-            //this.Hide();
+            this.Hide();
         }
 
         private void FiltersForm_Load(object sender, EventArgs e)
