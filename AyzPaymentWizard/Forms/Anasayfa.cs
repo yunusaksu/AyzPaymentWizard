@@ -754,6 +754,13 @@ namespace AyzPaymentWizard
                     }
                 }
             }
+
+            // Burada seçili satırı yakalıcam
+            // AYZ_PW_SUMMARY tablosunda Null dan farklı bir değer var ise yani 0 veya 1 var ise seçili satırın statüsünü AKIBET alındı olarak güncellicem.
+            // Null var ise "Banka Henüz Akibet Dosyasını Yollamadı!" uyarı mesajını verdiricem.
+
+
+
         }
 
         private void saveDownloadedFiles(string item)
@@ -779,7 +786,6 @@ namespace AyzPaymentWizard
             {
                 MessageBox.Show("Hata: \n" + ex.Message);
             }
-
         }
 
         private List<string> FileNameList()

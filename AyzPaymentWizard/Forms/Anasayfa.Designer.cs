@@ -33,8 +33,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.btnArchive = new System.Windows.Forms.Button();
+            this.btnAkibetSorgulama = new System.Windows.Forms.Button();
             this.imageListPacketIcon = new System.Windows.Forms.ImageList(this.components);
+            this.btnArchive = new System.Windows.Forms.Button();
             this.btnSendToBank = new System.Windows.Forms.Button();
             this.btnReject = new System.Windows.Forms.Button();
             this.btnApproved = new System.Windows.Forms.Button();
@@ -53,7 +54,6 @@
             this.btnBankAndBankAccAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripAnasayfa = new System.Windows.Forms.ToolStrip();
-            this.btnAkibetSorgulama = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPacket)).BeginInit();
@@ -104,6 +104,34 @@
             this.panel3.Size = new System.Drawing.Size(1159, 85);
             this.panel3.TabIndex = 2;
             // 
+            // btnAkibetSorgulama
+            // 
+            this.btnAkibetSorgulama.BackColor = System.Drawing.Color.Transparent;
+            this.btnAkibetSorgulama.FlatAppearance.BorderSize = 0;
+            this.btnAkibetSorgulama.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAkibetSorgulama.ImageIndex = 7;
+            this.btnAkibetSorgulama.ImageList = this.imageListPacketIcon;
+            this.btnAkibetSorgulama.Location = new System.Drawing.Point(458, 4);
+            this.btnAkibetSorgulama.Name = "btnAkibetSorgulama";
+            this.btnAkibetSorgulama.Size = new System.Drawing.Size(68, 65);
+            this.btnAkibetSorgulama.TabIndex = 7;
+            this.btnAkibetSorgulama.Tag = "";
+            this.btnAkibetSorgulama.UseVisualStyleBackColor = false;
+            this.btnAkibetSorgulama.Click += new System.EventHandler(this.btnAkibetSorgulama_Click);
+            // 
+            // imageListPacketIcon
+            // 
+            this.imageListPacketIcon.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListPacketIcon.ImageStream")));
+            this.imageListPacketIcon.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListPacketIcon.Images.SetKeyName(0, "editButton.png");
+            this.imageListPacketIcon.Images.SetKeyName(1, "reviewButton.png");
+            this.imageListPacketIcon.Images.SetKeyName(2, "approveButton.png");
+            this.imageListPacketIcon.Images.SetKeyName(3, "sendToApprove.png");
+            this.imageListPacketIcon.Images.SetKeyName(4, "rejectButton.png");
+            this.imageListPacketIcon.Images.SetKeyName(5, "bank.png");
+            this.imageListPacketIcon.Images.SetKeyName(6, "archive.png");
+            this.imageListPacketIcon.Images.SetKeyName(7, "performed_process.png");
+            // 
             // btnArchive
             // 
             this.btnArchive.BackColor = System.Drawing.Color.Transparent;
@@ -118,19 +146,6 @@
             this.btnArchive.Tag = "";
             this.btnArchive.UseVisualStyleBackColor = false;
             this.btnArchive.Click += new System.EventHandler(this.btnArchive_Click);
-            // 
-            // imageListPacketIcon
-            // 
-            this.imageListPacketIcon.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListPacketIcon.ImageStream")));
-            this.imageListPacketIcon.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListPacketIcon.Images.SetKeyName(0, "editButton.png");
-            this.imageListPacketIcon.Images.SetKeyName(1, "reviewButton.png");
-            this.imageListPacketIcon.Images.SetKeyName(2, "approveButton.png");
-            this.imageListPacketIcon.Images.SetKeyName(3, "sendToApprove.png");
-            this.imageListPacketIcon.Images.SetKeyName(4, "rejectButton.png");
-            this.imageListPacketIcon.Images.SetKeyName(5, "bank.png");
-            this.imageListPacketIcon.Images.SetKeyName(6, "archive.png");
-            this.imageListPacketIcon.Images.SetKeyName(7, "performed_process.png");
             // 
             // btnSendToBank
             // 
@@ -341,21 +356,6 @@
             this.toolStripAnasayfa.Size = new System.Drawing.Size(1174, 32);
             this.toolStripAnasayfa.TabIndex = 0;
             this.toolStripAnasayfa.Text = "AnasayfaToolStrip";
-            // 
-            // btnAkibetSorgulama
-            // 
-            this.btnAkibetSorgulama.BackColor = System.Drawing.Color.Transparent;
-            this.btnAkibetSorgulama.FlatAppearance.BorderSize = 0;
-            this.btnAkibetSorgulama.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAkibetSorgulama.ImageIndex = 7;
-            this.btnAkibetSorgulama.ImageList = this.imageListPacketIcon;
-            this.btnAkibetSorgulama.Location = new System.Drawing.Point(458, 4);
-            this.btnAkibetSorgulama.Name = "btnAkibetSorgulama";
-            this.btnAkibetSorgulama.Size = new System.Drawing.Size(68, 65);
-            this.btnAkibetSorgulama.TabIndex = 7;
-            this.btnAkibetSorgulama.Tag = "";
-            this.btnAkibetSorgulama.UseVisualStyleBackColor = false;
-            this.btnAkibetSorgulama.Click += new System.EventHandler(this.btnAkibetSorgulama_Click);
             // 
             // Anasayfa
             // 
