@@ -755,12 +755,41 @@ namespace AyzPaymentWizard
                 }
             }
 
-            // Burada seçili satırı yakalıcam
-            // AYZ_PW_SUMMARY tablosunda Null dan farklı bir değer var ise yani 0 veya 1 var ise seçili satırın statüsünü AKIBET alındı olarak güncellicem.
-            // Null var ise "Banka Henüz Akibet Dosyasını Yollamadı!" uyarı mesajını verdiricem.
+            int packetId = 0;
+            for (int i = 0; i < dataGridViewPacket.SelectedRows.Count; i++)
+            {
+                packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
+            }
 
-
-
+            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                CommandText = "SELECT PAYMENT_STATUS FROM AYZ_PW_SUMMARY WHERE PAYMENT_STATUS IS NOT NULL AND PACKETID = '" + packetId + "'";
+                komut.CommandText = CommandText;
+                komut.Connection = conn;
+                conn.Open();
+                dr = komut.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    using (SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString))
+                    {
+                        // Güncellenecek Alanlar: STATUS                        
+                        CommandText = "UPDATE AYZ_PW_PACKET" +
+                                      "\nSET STATUS = " + (int)Helper.PacketStatus.AnswerReceivedBank + "" +
+                                      "\nWHERE ID = " + packetId + "";
+                        komut.CommandText = CommandText;
+                        komut.Connection = conn2;
+                        conn2.Open();
+                        komut.ExecuteNonQuery();
+                        conn2.Close();
+                    }
+                    Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
+                    form.FillPacketList();
+                }
+                else
+                {
+                    MessageBox.Show("Bu Paketin Banka Tarafından Henüz Akibet Dosyası Yollanmamıştır!");
+                }
+            }
         }
 
         private void saveDownloadedFiles(string item)
