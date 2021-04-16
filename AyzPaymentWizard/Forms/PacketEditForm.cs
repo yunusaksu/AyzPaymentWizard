@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Linq.Dynamic;
 
 namespace AyzPaymentWizard.Forms
 {
@@ -47,6 +48,156 @@ namespace AyzPaymentWizard.Forms
         List<int> internetSubCategory = new List<int>();
         DateTime payBegDate, payEndDate, invBegDate, invEndDate;
         #endregion                         
+
+        private void DGVLeftEdit_SortStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(DGVLeftEdit.SortString) == true)
+                    return;
+
+                var sortStr = DGVLeftEdit.SortString.Replace("[", "").Replace("]", "");
+
+                if (string.IsNullOrEmpty(DGVLeftEdit.FilterString) == true)
+                {
+                    // the grid is not filtered!
+                    PacketEditsLeftList = PacketEditsLeftList.OrderBy(sortStr).ToList();
+                    DGVLeftEdit.DataSource = PacketEditsLeftList;
+                }
+                else
+                {
+                    // the grid is filtered!
+                    PacketEditsLeftList = PacketEditsLeftList.OrderBy(sortStr).ToList();
+                    DGVLeftEdit.DataSource = PacketEditsLeftList;
+                }
+
+                //textBox_sort.Text = sortStr;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hata: \n" + ex.Message);
+            }
+        }
+
+        private void DGVLeftEdit_FilterStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(DGVLeftEdit.FilterString) == true)
+                {
+                    PacketEditsLeftList.Clear();
+                    var source = new BindingSource();
+                    FillLeftList();
+                    source.DataSource = PacketEditsLeftList;
+                    DGVLeftEdit.DataSource = source;
+                }
+                else
+                {
+                    var listfilter = FilterStringConverter(DGVLeftEdit.FilterString);
+
+                    PacketEditsLeftList = PacketEditsLeftList.Where(listfilter).ToList();
+
+                    DGVLeftEdit.DataSource = PacketEditsLeftList;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hata: \n" + ex.Message);
+            }
+        }
+
+        private string FilterStringConverter(string filter)
+        {
+            string newColFilter = "";
+
+            filter = filter.Replace("(", "").Replace(")", "");
+
+            var colFilterList = filter.Split(new string[] { "AND" }, StringSplitOptions.None);
+
+            string andOperator = "";
+
+            foreach (var colFilter in colFilterList)
+            {
+                newColFilter += andOperator;
+
+                var colName = "";
+
+                // Step 1: BOOLEAN Check 
+                if (colFilter.Contains(" IN ") == false && colFilter.Split('=').Length == 2)
+                {
+                    // if the filter string is in the form "ColumnName=value". example = "(InAlarm != null && (InAlarm == true))";
+                    colName = colFilter.Split('=')[0];
+                    var booleanVal = colFilter.Split('=')[1];
+
+                    newColFilter += $"({colName} != null && ({colName} == {booleanVal}))";
+
+                    continue;
+                }
+
+                // Step 2: NUMBER (int/decimal/double/etc) and STRING Check
+                if (colFilter.Contains(" IN ") == true)
+                {
+                    var temp1 = colFilter.Trim().Split(new string[] { "IN" }, StringSplitOptions.None);
+
+                    colName = GetStringBetweenChars(temp1[0], '[', ']');
+
+                    var filterValsList = temp1[1].Split(',');
+
+                    newColFilter += string.Format("({0} != null && (", colName);
+
+                    string orOperator = "";
+
+                    foreach (var filterVal in filterValsList)
+                    {
+                        double tempNum = 0;
+                        if (Double.TryParse(filterVal, out tempNum))
+                            newColFilter += string.Format("{0} {1} = {2}", orOperator, colName, filterVal.Trim());
+                        else
+                            newColFilter += string.Format("{0} {1}.Contains({2})", orOperator, colName, filterVal.Trim());
+
+                        orOperator = " OR ";
+                    }
+
+                    newColFilter += "))";
+                }
+
+                // Step 3: DATETIME Check
+                if (colFilter.Contains(" LIKE ") == true && colFilter.Contains("Convert[") == true)
+                {
+                    // first of all remove the cast
+                    var colFilterNoCast = colFilter.Replace("Convert", "").Replace(", 'System.String'", "");
+
+                    var filterValsList = colFilterNoCast.Trim().Split(new string[] { "OR" }, StringSplitOptions.None);
+
+                    colName = GetStringBetweenChars(filterValsList[0], '[', ']');
+
+                    newColFilter += string.Format("({0} != null && (", colName);
+
+                    string orOperator = "";
+
+                    foreach (var filterVal in filterValsList)
+                    {
+                        var v = GetStringBetweenChars(filterVal, '%', '%');
+
+                        newColFilter += string.Format("{0} {1}.Date = DateTime.Parse('{2}')", orOperator, colName, v.Trim());
+
+                        orOperator = " OR ";
+                    }
+
+                    newColFilter += "))";
+                }
+
+                andOperator = " AND ";
+            }
+
+            return newColFilter.Replace("'", "\"");
+        }
+
+        private string GetStringBetweenChars(string input, char startChar, char endChar)
+        {
+            string output = input.Split(startChar, endChar)[1];
+            return output;
+        }
 
         private void PacketEditForm_Load(object sender, EventArgs e)
         {
@@ -136,7 +287,6 @@ namespace AyzPaymentWizard.Forms
             DGVLeftEdit.Columns["FicheNo"].HeaderText = "Fiş Numarası";
             DGVLeftEdit.Columns["Total"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVLeftEdit.Columns["ClCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            DGVLeftEdit.Columns["ColLeftSelected"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVLeftEdit.Columns["ClDef"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVLeftEdit.Columns["IBAN"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVLeftEdit.Columns["CurCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -194,7 +344,6 @@ namespace AyzPaymentWizard.Forms
 
             DGVRightEdit.Columns["Total"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVRightEdit.Columns["ClCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            DGVRightEdit.Columns["ColRightSelected"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVRightEdit.Columns["ClDef"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVRightEdit.Columns["IBAN"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVRightEdit.Columns["CurCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -682,9 +831,9 @@ namespace AyzPaymentWizard.Forms
         {
             for (int i = DGVLeftEdit.Rows.Count - 1; i >= 0; i--)
             {
-                DataGridViewRow drv = DGVLeftEdit.Rows[i];
-                bool chkboxselect = Convert.ToBoolean(drv.Cells["ColLeftSelected"].Value);
-                if (chkboxselect)
+                DataGridViewRow drv = DGVLeftEdit.Rows[i];                
+                bool selectedRow = Convert.ToBoolean(drv.Selected);
+                if (selectedRow)
                 {
                     Debit debit = new Debit();
                     #region şimdilik isimsiz region                    
@@ -756,8 +905,8 @@ namespace AyzPaymentWizard.Forms
             for (int i = DGVRightEdit.Rows.Count - 1; i >= 0; i--)
             {
                 DataGridViewRow drv = DGVRightEdit.Rows[i];
-                bool chkboxselect = Convert.ToBoolean(drv.Cells["ColRightSelected"].Value);
-                if (chkboxselect)
+                bool selectedRow = Convert.ToBoolean(drv.Selected);
+                if (selectedRow)
                 {
                     Debit debit = new Debit();
                     debit.PayRef = Convert.ToInt32(drv.Cells["PayRef"].Value);
@@ -818,39 +967,7 @@ namespace AyzPaymentWizard.Forms
             var source2 = new BindingSource();
             source2.DataSource = PacketEditsLeftList;
             DGVLeftEdit.DataSource = source2;
-        }
-
-        private void btnListelePacketEdit_Click(object sender, EventArgs e)
-        {
-            PacketEditsLeftList.Clear();                // Left listeyi clear edip 
-            FillLeftList();                             // Sonra tekrar doldurup
-
-            foreach (var item in PacketEditsRightList)
-            {
-                var a = PacketEditsLeftList.Where(x => x.PayRef == item.PayRef).ToList(); // sağ listede olan elemanları sol listeden çıkartırız.
-                if (a.Count > 0)
-                    PacketEditsLeftList.Remove(a[0]);
-            }
-
-            var source = new BindingSource();
-            source.DataSource = PacketEditsLeftList;
-            DGVLeftEdit.DataSource = source;
-        }
-
-        private void btnFilterPacketEdit_Click(object sender, EventArgs e)
-        {
-            var begDate = beginDTP.Value;
-            var endDate = endDTP.Value;
-            string clientCode = txtClCodePacketEdit.Text;
-
-            FilteredList = PacketEditsLeftList.Where(x => x.ClCode.ToUpper() == clientCode.ToUpper() || x.ClCode.ToUpper().Contains(clientCode.ToUpper())).Where(x => x.DueDate >= begDate && x.DueDate <= endDate).ToList();
-
-            var source = new BindingSource();
-            source.DataSource = FilteredList;
-            DGVLeftEdit.DataSource = source;
-
-            PacketEditsLeftList = FilteredList;
-        }
+        }                
 
         private void btnFiltreRecoveryPacketEdit_Click(object sender, EventArgs e)
         {
@@ -864,8 +981,6 @@ namespace AyzPaymentWizard.Forms
             var source = new BindingSource();
             source.DataSource = PacketEditsLeftList;
             DGVLeftEdit.DataSource = source;
-
-            txtClCodePacketEdit.Text = "";
 
             // Filtreyi sıfırla yaptığımız zaman sağ dataGridView'daki satırların silinmesi gerekir.
             PacketEditsRightList.RemoveRange(0, PacketEditsRightList.Count);

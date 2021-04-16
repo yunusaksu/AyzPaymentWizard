@@ -21,3 +21,5 @@ C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\bin\Debug\Newtonso
 C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.Forms.BankAccounts.resources
 C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.Forms.BanksForm.resources
 C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.Forms.sftpForm.resources
+C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\Interop.UnityObjects.dll
+C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csproj.ResolveComReference.cache

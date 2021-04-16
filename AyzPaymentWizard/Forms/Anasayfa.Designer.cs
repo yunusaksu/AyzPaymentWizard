@@ -54,6 +54,7 @@
             this.btnBankAndBankAccAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripAnasayfa = new System.Windows.Forms.ToolStrip();
+            this.btnHavalaFisi = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPacket)).BeginInit();
@@ -91,6 +92,7 @@
             this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel3.Controls.Add(this.btnHavalaFisi);
             this.panel3.Controls.Add(this.btnAkibetSorgulama);
             this.panel3.Controls.Add(this.btnArchive);
             this.panel3.Controls.Add(this.btnSendToBank);
@@ -357,6 +359,21 @@
             this.toolStripAnasayfa.TabIndex = 0;
             this.toolStripAnasayfa.Text = "AnasayfaToolStrip";
             // 
+            // btnHavalaFisi
+            // 
+            this.btnHavalaFisi.BackColor = System.Drawing.Color.Transparent;
+            this.btnHavalaFisi.FlatAppearance.BorderSize = 0;
+            this.btnHavalaFisi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHavalaFisi.ImageIndex = 7;
+            this.btnHavalaFisi.ImageList = this.imageListPacketIcon;
+            this.btnHavalaFisi.Location = new System.Drawing.Point(709, 13);
+            this.btnHavalaFisi.Name = "btnHavalaFisi";
+            this.btnHavalaFisi.Size = new System.Drawing.Size(68, 65);
+            this.btnHavalaFisi.TabIndex = 8;
+            this.btnHavalaFisi.Tag = "";
+            this.btnHavalaFisi.UseVisualStyleBackColor = false;
+            this.btnHavalaFisi.Click += new System.EventHandler(this.btnHavalaFisi_Click);
+            // 
             // Anasayfa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -407,5 +424,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStrip toolStripAnasayfa;
         private System.Windows.Forms.Button btnAkibetSorgulama;
+        private System.Windows.Forms.Button btnHavalaFisi;
     }
 }
