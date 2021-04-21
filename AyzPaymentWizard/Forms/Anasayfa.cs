@@ -325,8 +325,9 @@ namespace AyzPaymentWizard
                     //dataGridViewPacket.DataSource = source;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                MessageBox.Show("Hata: \n" + ex.Message);
             }
         }
 
@@ -370,8 +371,9 @@ namespace AyzPaymentWizard
 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                MessageBox.Show("Hata: \n" + ex.Message);
             }
         }
 
@@ -884,7 +886,7 @@ namespace AyzPaymentWizard
         private void btnHavalaFisi_Click(object sender, EventArgs e)
         {
             UnityObjects.UnityApplication UnityApp = new UnityObjects.UnityApplication();
-            if(UnityApp.Login("Logo","logo",1))
+            if (UnityApp.Login("Logo", "logo", 1))
             {
                 UnityObjects.Data bankvo = UnityApp.NewDataObject(UnityObjects.DataObjectType.doBankVoucher);
                 bankvo.New();

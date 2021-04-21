@@ -54,9 +54,7 @@ namespace AyzPaymentWizard
                 else
                 {
                     var listfilter = FilterStringConverter(dataGridViewLeft.FilterString);
-
                     LeftList = LeftList.Where(listfilter).ToList();
-
                     dataGridViewLeft.DataSource = LeftList;
                 }
             }
@@ -157,25 +155,34 @@ namespace AyzPaymentWizard
         {
             try
             {
-                if (string.IsNullOrEmpty(dataGridViewLeft.SortString) == true)
-                    return;
-
-                var sortStr = dataGridViewLeft.SortString.Replace("[", "").Replace("]", "");
-
                 if (string.IsNullOrEmpty(dataGridViewLeft.FilterString) == true)
                 {
-                    // the grid is not filtered!
-                    LeftList = LeftList.OrderBy(sortStr).ToList();
-                    dataGridViewLeft.DataSource = LeftList;
-                }
+                    LeftList.Clear();
+                    var source = new BindingSource();
+                    FillLeftList();
+                    source.DataSource = LeftList;
+                    dataGridViewLeft.DataSource = source;
+                }                
                 else
                 {
-                    // the grid is filtered!
-                    LeftList = LeftList.OrderBy(sortStr).ToList();
-                    dataGridViewLeft.DataSource = LeftList;
+                    var sortStr = dataGridViewLeft.SortString.Replace("[", "").Replace("]", "");
+
+                    if (string.IsNullOrEmpty(dataGridViewLeft.FilterString) == true)
+                    {
+                        // the grid is not filtered!
+                        LeftList = LeftList.OrderBy(sortStr).ToList();
+                        dataGridViewLeft.DataSource = LeftList;
+                    }
+                    else
+                    {
+                        // the grid is filtered!
+                        LeftList = LeftList.OrderBy(sortStr).ToList();
+                        dataGridViewLeft.DataSource = LeftList;
+                    }
+
+                    //textBox_sort.Text = sortStr;
                 }
 
-                //textBox_sort.Text = sortStr;
             }
             catch (Exception ex)
             {
