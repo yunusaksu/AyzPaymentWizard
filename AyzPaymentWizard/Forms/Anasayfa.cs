@@ -747,7 +747,7 @@ namespace AyzPaymentWizard
                 {
                     int summaryId = 0;
                     bool check = false;
-
+                    PAYMENTOUTCOME[] result;
                     string downloadResult = SFTP.Download(filePath, hostName, port, sftpUserName, password, folderPath + item);
                     JObject jsonDownload = JObject.Parse(downloadResult);
                     int downloadResultCode = Convert.ToInt32(jsonDownload["ResultCode"].ToString());
@@ -755,7 +755,9 @@ namespace AyzPaymentWizard
                     {
                         try
                         {
-                            var result = engine.ReadFile(filePath + item);
+                            //var result = engine.ReadFile(filePath + item);
+                            result = engine.ReadFile(filePath + item);
+
                             foreach (var value in result)
                             {
                                 string returnKey = value.COMPANYREF;
@@ -789,7 +791,7 @@ namespace AyzPaymentWizard
                                 }
                             }
                             if (check == true)
-                                saveDownloadedFiles(item);
+                                saveDownloadedFiles(item, result);
                         }
                         catch (Exception ex)
                         {
@@ -830,8 +832,9 @@ namespace AyzPaymentWizard
             }
         }
 
-        private void saveDownloadedFiles(string item)
+        private void saveDownloadedFiles(string item, PAYMENTOUTCOME[] result)
         {
+            int DownloadedFileID;
             try
             {
                 using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
@@ -842,11 +845,39 @@ namespace AyzPaymentWizard
                               "\n'" + Helper.FIRMNR + "'," +
                               "\nCONVERT(DATE, GETDATE(), 104)," +
                               "\n'" + Helper.GetTime() + "'" +
-                              "\n);";
+                              "\n);SELECT SCOPE_IDENTITY()";
                     komut.CommandText = CommandText;
                     komut.Connection = conn;
                     conn.Open();
-                    dr = komut.ExecuteReader();
+                    DownloadedFileID = Convert.ToInt32(komut.ExecuteScalar());
+                    for (int i = 0; i < result.Length; i++)
+                    {
+                        string day = result[i].TRANSACTION_DATE.ToString().Substring(0, 2);
+                        string month = result[i].TRANSACTION_DATE.ToString().Substring(2,2);
+                        string year = result[i].TRANSACTION_DATE.ToString().Substring(4,4);
+                        string date = day + "." + month + "." + year;
+                        komut.CommandText = "INSERT INTO [AYZ_PW_DOWNLOADED_FILE_DETAIL]        (PARENTREF,FIRMNR,RECORD_TYPE,TARGET_BANK,TARGET_BRANCH,TARGET_ACCNO,CURRCODE,AMOUNT,EXPLAIN,COMPANY_REF," +
+                                  "PAYMENT_STATUS,TRANSACTIONNO,TRANSACTION_DATE,EFTQUERY_NO,IBAN) " +
+                                  "VALUES(" +
+                                          "\n'" + DownloadedFileID + "', " +
+                                          "\n'" + Helper.FIRMNR + "'," +
+                                          "\n'" + result[i].TYPE + "', " +
+                                          "\n'" + result[i].BANKCODE + "', " +
+                                          "\n'" + result[i].BRANCHCODE + "', " +
+                                          "\n'" + result[i].ACCOUNTNO + "', " +
+                                          "\n'" + result[i].CURRENCYCODE + "', " +
+                                          "\n'" + result[i].AMOUNT + "', " +
+                                          "\n'" + result[i].DESCRIPTION + "', " +
+                                          "\n'" + result[i].COMPANYREF + "', " +
+                                          "\n'" + result[i].PAYMENTSTATUS + "', " +
+                                          "\n'" + result[i].TRANSACTIONNO + "', " +
+                                          "\n CONVERT(DATE,'" + date + "', 104), " +
+                                          "\n'" + result[i].EFTQUERYNO + "', " +
+                                          "\n'" + result[i].IBAN + "' " +
+                                          ")";
+                        komut.ExecuteNonQuery();
+                    }
+                    conn.Close();
                 }
             }
             catch (Exception ex)
