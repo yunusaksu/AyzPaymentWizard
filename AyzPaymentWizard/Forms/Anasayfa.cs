@@ -697,19 +697,38 @@ namespace AyzPaymentWizard
             }
             else
             {
-                FileHelperEngine<PAYMENTOUTCOME> engine = new FileHelperEngine<PAYMENTOUTCOME>();
-                engine.ErrorManager.ErrorMode = ErrorMode.SaveAndContinue;
-                engine.BeforeReadRecord += (eng, i) =>
+                #region engine 1
+                FileHelperEngine<PAYMENTOUTCOME> engineDetail = new FileHelperEngine<PAYMENTOUTCOME>(); // Detail için
+                engineDetail.ErrorManager.ErrorMode = ErrorMode.SaveAndContinue;
+                engineDetail.BeforeReadRecord += (eng, i) =>
                 {
                     if (i.RecordLine.StartsWith("!") ||
                         i.RecordLine.StartsWith("-"))
                         i.SkipThisRecord = true;
                 };
-                engine.AfterReadRecord += (eng, xd) =>
+                engineDetail.AfterReadRecord += (eng, xd) =>
                 {
                     if (xd.Record.BANKCODE == 0)
                         xd.SkipThisRecord = false;
                 };
+                #endregion
+
+                #region engine 2
+                FileHelperEngine<FOOTER> engineFooter = new FileHelperEngine<FOOTER>();
+                engineFooter.ErrorManager.ErrorMode = ErrorMode.SaveAndContinue;
+                engineFooter.BeforeReadRecord += (eng, f) =>
+                {
+                    if (f.RecordLine.StartsWith("H") ||
+                        f.RecordLine.StartsWith("D"))
+                        f.SkipThisRecord = true;
+                };
+                engineFooter.AfterReadRecord += (eng, f) =>
+                {
+                    if (f.RecordLine.StartsWith(" "))
+                        f.SkipThisRecord = true;
+                };
+                #endregion
+
 
                 #region SFTP Bilgilerini AYZ_PW_SFTP_SETTING tablosundan alma
                 string hostName = "", sftpUserName = "", password = "", folderPath = "", filePath = "";
@@ -747,7 +766,8 @@ namespace AyzPaymentWizard
                 {
                     int summaryId = 0;
                     bool check = false;
-                    PAYMENTOUTCOME[] result;
+                    PAYMENTOUTCOME[] DetailResult;
+                    FOOTER[] FooterResult;
                     string downloadResult = SFTP.Download(filePath, hostName, port, sftpUserName, password, folderPath + item);
                     JObject jsonDownload = JObject.Parse(downloadResult);
                     int downloadResultCode = Convert.ToInt32(jsonDownload["ResultCode"].ToString());
@@ -755,10 +775,9 @@ namespace AyzPaymentWizard
                     {
                         try
                         {
-                            //var result = engine.ReadFile(filePath + item);
-                            result = engine.ReadFile(filePath + item);
-
-                            foreach (var value in result)
+                            DetailResult = engineDetail.ReadFile(filePath + item);
+                            FooterResult = engineFooter.ReadFile(filePath + item);
+                            foreach (var value in DetailResult)
                             {
                                 string returnKey = value.COMPANYREF;
                                 using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
@@ -791,7 +810,12 @@ namespace AyzPaymentWizard
                                 }
                             }
                             if (check == true)
-                                saveDownloadedFiles(item, result);
+                            {
+                                saveDownloadedFiles(item, DetailResult, FooterResult);
+                                DebitClosingForm form = new DebitClosingForm(packetId);
+                                form.ShowDialog();
+                            }
+
                         }
                         catch (Exception ex)
                         {
@@ -832,19 +856,23 @@ namespace AyzPaymentWizard
             }
         }
 
-        private void saveDownloadedFiles(string item, PAYMENTOUTCOME[] result)
+        private void saveDownloadedFiles(string item, PAYMENTOUTCOME[] result, FOOTER[] footerResult)
         {
+            decimal SumOfLines = Convert.ToDecimal(footerResult[0].PAYMENT_TOTAL);
+            int CountOfLines = Convert.ToInt32(footerResult[0].PAYMENT_COUNT);
             int DownloadedFileID;
             try
             {
                 using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
-                    CommandText = "INSERT INTO AYZ_PW_DOWNLOADED_FILE(FILENAME,FIRMNR,DOWNLOAD_DATE,DOWNLOAD_TIME) " +
+                    CommandText = "INSERT INTO AYZ_PW_DOWNLOADED_FILE(FILENAME,FIRMNR,DOWNLOAD_DATE,DOWNLOAD_TIME,COUNT_LINE,SUM_LINE) " +
                               "VALUES(" +
                               "\n'" + item + "'," +
                               "\n'" + Helper.FIRMNR + "'," +
                               "\nCONVERT(DATE, GETDATE(), 104)," +
-                              "\n'" + Helper.GetTime() + "'" +
+                              "\n'" + Helper.GetTime() + "'," +
+                              "\n'" + CountOfLines + "'," +
+                              "\n'" + SumOfLines + "'" +
                               "\n);SELECT SCOPE_IDENTITY()";
                     komut.CommandText = CommandText;
                     komut.Connection = conn;
@@ -853,8 +881,8 @@ namespace AyzPaymentWizard
                     for (int i = 0; i < result.Length; i++)
                     {
                         string day = result[i].TRANSACTION_DATE.ToString().Substring(0, 2);
-                        string month = result[i].TRANSACTION_DATE.ToString().Substring(2,2);
-                        string year = result[i].TRANSACTION_DATE.ToString().Substring(4,4);
+                        string month = result[i].TRANSACTION_DATE.ToString().Substring(2, 2);
+                        string year = result[i].TRANSACTION_DATE.ToString().Substring(4, 4);
                         string date = day + "." + month + "." + year;
                         komut.CommandText = "INSERT INTO [AYZ_PW_DOWNLOADED_FILE_DETAIL]        (PARENTREF,FIRMNR,RECORD_TYPE,TARGET_BANK,TARGET_BRANCH,TARGET_ACCNO,CURRCODE,AMOUNT,EXPLAIN,COMPANY_REF," +
                                   "PAYMENT_STATUS,TRANSACTIONNO,TRANSACTION_DATE,EFTQUERY_NO,IBAN) " +
@@ -889,7 +917,7 @@ namespace AyzPaymentWizard
         private List<string> FileNameList(string folderPath, string hostName, int port, string userName, string password)
         {
             List<string> oldDownloadedList = new List<string>();
-            #region Daha Önce İndirilen Akibet Dosyalarının ismini oldDownloadedList adlı Listeye Kaydetme
+            #region Daha Önce İndirilen Akibet Dosyalarının ismini oldDownloadedList adlı Listeye alma
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
                 string name = "";
