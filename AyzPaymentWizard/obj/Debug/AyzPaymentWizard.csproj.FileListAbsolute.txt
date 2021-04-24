@@ -14,9 +14,6 @@ C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPayme
 C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.pdb
 C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.PacketPreparation.resources
 C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.Forms.PacketEditForm.resources
-C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\bin\Debug\Renci.SshNet.dll
-C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\bin\Debug\Renci.SshNet.xml
-C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csprojAssemblyReference.cache
 C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\bin\Debug\Newtonsoft.Json.dll
 C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.Forms.BankAccounts.resources
 C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.Forms.BanksForm.resources
@@ -24,3 +21,4 @@ C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPayme
 C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\Interop.UnityObjects.dll
 C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csproj.ResolveComReference.cache
 C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.Forms.DebitClosingForm.resources
+C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csprojAssemblyReference.cache
