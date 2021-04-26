@@ -87,7 +87,7 @@ namespace AyzPaymentWizard
             dataGridViewPacket.Columns["TigerBankAccountCode"].Visible = false;
             dataGridViewPacket.Columns["TigerAccountCode"].Visible = false;
             dataGridViewPacket.Columns["Status"].Visible = false;
-            dataGridViewPacket.Columns["Archived"].Visible = false;            
+            dataGridViewPacket.Columns["Archived"].Visible = false;
             dataGridViewPacket.Columns["Id"].HeaderText = "ID";
             dataGridViewPacket.Columns["CreatedBy"].HeaderText = "Oluşturan";
             dataGridViewPacket.Columns["CreatedDate"].HeaderText = "Oluşturma Tarihi";
@@ -767,7 +767,7 @@ namespace AyzPaymentWizard
                                 string returnKey = value.COMPANYREF;
                                 using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                                 {
-                                    CommandText = "SELECT * FROM AYZ_PW_SUMMARY WHERE RETURNKEY = '" + returnKey + "'";
+                                    CommandText = "SELECT * FROM AYZ_PW_SUMMARY WHERE RETURNKEY = '" + returnKey + "' AND PACKETID = '" + packetId + "'";
                                     komut.CommandText = CommandText;
                                     komut.Connection = conn;
                                     conn.Open();
@@ -835,7 +835,7 @@ namespace AyzPaymentWizard
                     }
                     else
                     {
-                        MessageBox.Show("Bu Paketin Banka Tarafından Henüz Akibet Dosyası Yollanmamıştır!");
+                        MessageBox.Show("Bu Paketin Banka Tarafından Henüz Akibet Dosyası Yollanmamıştır!","BANKADAN GELEN CEVAP");
                     }
                 }
             }

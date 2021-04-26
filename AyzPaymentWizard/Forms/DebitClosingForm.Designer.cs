@@ -29,12 +29,13 @@
         private void InitializeComponent()
         {
             this.btnDebitClosing = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.DGVDebitClosing = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.DGVDebitClosing)).BeginInit();
             this.SuspendLayout();
             // 
             // btnDebitClosing
             // 
+            this.btnDebitClosing.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDebitClosing.BackColor = System.Drawing.Color.ForestGreen;
             this.btnDebitClosing.FlatAppearance.BorderSize = 0;
             this.btnDebitClosing.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -46,29 +47,34 @@
             this.btnDebitClosing.TabIndex = 0;
             this.btnDebitClosing.Text = "Borç Kapatmayı Başlat";
             this.btnDebitClosing.UseVisualStyleBackColor = false;
+            this.btnDebitClosing.Click += new System.EventHandler(this.btnDebitClosing_Click);
             // 
-            // dataGridView1
+            // DGVDebitClosing
             // 
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.GridColor = System.Drawing.Color.DarkGray;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 12);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1170, 449);
-            this.dataGridView1.TabIndex = 1;
+            this.DGVDebitClosing.AllowUserToAddRows = false;
+            this.DGVDebitClosing.AllowUserToDeleteRows = false;
+            this.DGVDebitClosing.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DGVDebitClosing.BackgroundColor = System.Drawing.Color.White;
+            this.DGVDebitClosing.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGVDebitClosing.Location = new System.Drawing.Point(12, 12);
+            this.DGVDebitClosing.Name = "DGVDebitClosing";
+            this.DGVDebitClosing.Size = new System.Drawing.Size(1170, 449);
+            this.DGVDebitClosing.TabIndex = 1;
             // 
             // DebitClosingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1194, 518);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.DGVDebitClosing);
             this.Controls.Add(this.btnDebitClosing);
             this.Name = "DebitClosingForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Borç Kapatma Ekranı";
             this.Load += new System.EventHandler(this.DebitClosingForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGVDebitClosing)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -76,6 +82,6 @@
         #endregion
 
         private System.Windows.Forms.Button btnDebitClosing;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView DGVDebitClosing;
     }
 }

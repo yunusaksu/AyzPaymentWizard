@@ -130,6 +130,26 @@ namespace AyzPaymentWizard.Model
         public string IBAN;
     }
 
+    public class SUB_PAYMENTOUTCOME
+    {
+        public int ID { get; set; }
+        public int PARANTREF { get; set; }
+        public string CLCODE { get; set; }
+        public string TYPE { get; set; }
+        public int BANKCODE { get; set; }
+        public int BRANCHCODE { get; set; }
+        public string ACCOUNTNO { get; set; }
+        public string CURRENCYCODE { get; set; }
+        public string AMOUNT { get; set; }
+        public string DESCRIPTION { get; set; }
+        public string COMPANYREF { get; set; }
+        public int PAYMENTSTATUS { get; set; }
+        public int TRANSACTIONNO { get; set; }
+        public int TRANSACTION_DATE { get; set; }
+        public int EFTQUERYNO { get; set; }
+        public string IBAN { get; set; }
+    }
+
     [FixedLengthRecord(FixedMode.ExactLength)]
     public class FOOTER
     {
