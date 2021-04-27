@@ -100,45 +100,71 @@ namespace AyzPaymentWizard.Forms
                 {
                     UnityObjects.Data bankvo = UnityApp.NewDataObject(UnityObjects.DataObjectType.doBankVoucher);
                     bankvo.New();
-                    bankvo.DataFields.FieldByName("DATE").Value = "01.07.2020";
+                    bankvo.DataFields.FieldByName("INTERNAL_REFERENCE").Value = "~";
+                    bankvo.DataFields.FieldByName("DATE").Value = "27.07.2020";
                     bankvo.DataFields.FieldByName("NUMBER").Value = "~";
                     bankvo.DataFields.FieldByName("DIVISION").Value = 0;
                     bankvo.DataFields.FieldByName("DEPARMENT").Value = 0;
                     bankvo.DataFields.FieldByName("TYPE").Value = 4;
-                    bankvo.DataFields.FieldByName("GL_POSTED").Value = 1;
                     bankvo.DataFields.FieldByName("SIGN").Value = 1;
-                    bankvo.DataFields.FieldByName("NOTES1").Value = "TEB GÖNDERİLEN HAVALELER";
-                    bankvo.DataFields.FieldByName("ACCFICHEREF").Value = 14459;
+                    //bankvo.DataFields.FieldByName("TOTAL_CREDIT").Value = 128.84;
+                    bankvo.DataFields.FieldByName("CREATED_BY").Value = 1;
+                    bankvo.DataFields.FieldByName("DATE_CREATED").Value = "27.04.2021";
+                    bankvo.DataFields.FieldByName("HOUR_CREATED").Value = 14;
+                    bankvo.DataFields.FieldByName("MIN_CREATED").Value = 30;
+                    bankvo.DataFields.FieldByName("SEC_CREATED").Value = 49;
                     bankvo.DataFields.FieldByName("CURRSEL_TOTALS").Value = 1;
+                    bankvo.DataFields.FieldByName("DATA_REFERENCE").Value = "~";
+                    //bankvo.DataFields.FieldByName("RC_TOTAL_CREDIT").Value = 16.11;
 
                     UnityObjects.Lines transactions_lines = bankvo.DataFields.FieldByName("TRANSACTIONS").Lines;
                     transactions_lines.AppendLine();
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("INTERNAL_REFERENCE").Value = 5077;
+                    transactions_lines[transactions_lines.Count - 1].FieldByName("INTERNAL_REFERENCE").Value = "~";
                     transactions_lines[transactions_lines.Count - 1].FieldByName("TYPE").Value = 1;
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("TRANNO").Value = 2020070100002;
+                    transactions_lines[transactions_lines.Count - 1].FieldByName("TRANNO").Value = 2020072700002;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("BANKACC_CODE").Value = "" + TigerBankAccNo + "";
                     transactions_lines[transactions_lines.Count - 1].FieldByName("ARP_CODE").Value = "" + item.CLCODE + "";
-                    //transactions_lines[transactions_lines.Count - 1].FieldByName("GL_CODE1").Value = "320.001.001.0250";
-                    //transactions_lines[transactions_lines.Count - 1].FieldByName("GL_CODE2").Value = "102.001.001.0004";
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("SOURCEFREF").Value = 1217;
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("DATE").Value = "01.07.2020";
+                    //transactions_lines[transactions_lines.Count - 1].FieldByName("GL_CODE1").Value = "120.001.001.0026";
+                    //transactions_lines[transactions_lines.Count - 1].FieldByName("GL_CODE2").Value = "102.001.001.0003";
+                    transactions_lines[transactions_lines.Count - 1].FieldByName("SOURCEFREF").Value = "~";
+                    transactions_lines[transactions_lines.Count - 1].FieldByName("DATE").Value = "27.07.2020";
                     transactions_lines[transactions_lines.Count - 1].FieldByName("SIGN").Value = 1;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("TRCODE").Value = 4;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("MODULENR").Value = 7;
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("DESCRIPTION").Value = "" + item.DESCRIPTION + "";
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("CREDIT").Value = Convert.ToDecimal(item.AMOUNT);
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("AMOUNT").Value = Convert.ToDecimal(item.AMOUNT);
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("TC_AMOUNT").Value = Convert.ToDecimal(item.AMOUNT);
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("RC_XRATE").Value = 6.8432;
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("RC_AMOUNT").Value = 1724.34;
+                    transactions_lines[transactions_lines.Count - 1].FieldByName("CREDIT").Value = 128.84;
+                    transactions_lines[transactions_lines.Count - 1].FieldByName("AMOUNT").Value = 128.84;
+                    transactions_lines[transactions_lines.Count - 1].FieldByName("TC_AMOUNT").Value = 128.84;
+                    transactions_lines[transactions_lines.Count - 1].FieldByName("RC_XRATE").Value = 8;
+                    transactions_lines[transactions_lines.Count - 1].FieldByName("RC_AMOUNT").Value = 16.11;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("BANK_PROC_TYPE").Value = 2;
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("DUE_DATE").Value = "01.07.2020";
+                    transactions_lines[transactions_lines.Count - 1].FieldByName("DUE_DATE").Value = "27.07.2020";
+                    transactions_lines[transactions_lines.Count - 1].FieldByName("DATA_REFERENCE").Value = 5579;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("AFFECT_RISK").Value = 0;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("IBAN").Value = "" + item.IBAN + "";
+
+                    UnityObjects.Lines payment_list0 = transactions_lines[transactions_lines.Count - 1].FieldByName("PAYMENT_LIST").Lines;
+                    payment_list0.AppendLine();
+                    payment_list0[payment_list0.Count - 1].FieldByName("INTERNAL_REFERENCE").Value = "~";
+                    payment_list0[payment_list0.Count - 1].FieldByName("DATE").Value = "27.07.2020";
+                    payment_list0[payment_list0.Count - 1].FieldByName("MODULENR").Value = 7;
+                    payment_list0[payment_list0.Count - 1].FieldByName("TRCODE").Value = 4;
+                    payment_list0[payment_list0.Count - 1].FieldByName("TOTAL").Value = 128.84;
+                    payment_list0[payment_list0.Count - 1].FieldByName("PROCDATE").Value = "27.07.2020";
+                    payment_list0[payment_list0.Count - 1].FieldByName("REPORTRATE").Value = 8;
+                    payment_list0[payment_list0.Count - 1].FieldByName("DATA_REFERENCE").Value = 0;
+                    payment_list0[payment_list0.Count - 1].FieldByName("DISCOUNT_DUEDATE").Value = "27.07.2020";
+                    payment_list0[payment_list0.Count - 1].FieldByName("DISCTRDELLIST").Value = 0;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("BN_CRDTYPE").Value = 1;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("DIVISION").Value = 0;
+                    //transactions_lines[transactions_lines.Count - 1].FieldByName("GUID").Value = "A45BA7A1 - 38C3 - 4912 - 8BBF - BF28C7AF99BD";
                     bankvo.DataFields.FieldByName("EBOOK_DOCTYPE").Value = 99;
+                    //bankvo.DataFields.FieldByName("GUID").Value = "5A4379A5 - C5AF - 4116 - B9D0 - 0D85492C2374";
                     bankvo.FillAccCodes();
+                    // Muhasebe Kodlarının otomatik gelmesi için Tigerda Genel Muhasebe > Ana Kayıtlar > Muhasebe Bağlantı Kodları > Cari Hesap Bağlantı Kodları 
+                    // içerisine girerek ilgili cari hesaba gerekli muhasebe kodu tanımlanmalıdır. Sonrasında tekrar Muhasebe bağlantı Kodları'na girerek
+                    // Bu sefer Banka Kodları > Banka Cari Hesap Kodları kısmını açarak orada da ilgili banka hesabını gerekli muhasebe koduyla ilişkilendirilmesi
+                    // gerekmektedir.
+
                     if (bankvo.Post() == true)
                     {
                         MessageBox.Show("POST OK !");
