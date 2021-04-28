@@ -77,11 +77,16 @@ namespace AyzPaymentWizard.Forms
 
         private void btnDebitClosing_Click(object sender, EventArgs e)
         {
+
             string TigerBankAccNo = "";
+            string BankName = "";
             #region Paket Id'den paranın çıkacağı hesap bulunur. (AYZ_PW_BANKACCOUNT tablosundan)
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
-                CommandText = "SELECT B.* FROM AYZ_PW_PACKET AS P LEFT JOIN AYZ_PW_BANKACCOUNT AS B ON P.ACCOUNTOUTID = B.ID WHERE P.ID = '" + PacketID + "'";
+                CommandText = "SELECT B.*,BN.DEFINITION_ FROM AYZ_PW_PACKET AS P " +
+                              "\nLEFT JOIN AYZ_PW_BANKACCOUNT AS B ON P.ACCOUNTOUTID = B.ID " +
+                              "\nLEFT JOIN LG_" + Helper.FIRMANO + "_BNCARD AS BN ON BN.LOGICALREF = B.BANKREF " +
+                              "\nWHERE P.ID = '" + PacketID + "'";
                 komut.CommandText = CommandText;
                 komut.Connection = conn;
                 conn.Open();
@@ -89,6 +94,7 @@ namespace AyzPaymentWizard.Forms
                 while (dr.Read())
                 {
                     TigerBankAccNo = dr["TIGERBANKACCOUNTNO"].ToString();
+                    BankName = dr["DEFINITION_"].ToString();
                 }
             }
             #endregion
@@ -101,7 +107,7 @@ namespace AyzPaymentWizard.Forms
                     UnityObjects.Data bankvo = UnityApp.NewDataObject(UnityObjects.DataObjectType.doBankVoucher);
                     bankvo.New();
                     bankvo.DataFields.FieldByName("INTERNAL_REFERENCE").Value = "~";
-                    bankvo.DataFields.FieldByName("DATE").Value = "27.07.2020";
+                    bankvo.DataFields.FieldByName("DATE").Value = "" + DateTime.Now.Day + "." + DateTime.Now.Month + "." + DateTime.Now.Year + "";
                     bankvo.DataFields.FieldByName("NUMBER").Value = "~";
                     bankvo.DataFields.FieldByName("DIVISION").Value = 0;
                     bankvo.DataFields.FieldByName("DEPARMENT").Value = 0;
@@ -109,50 +115,51 @@ namespace AyzPaymentWizard.Forms
                     bankvo.DataFields.FieldByName("SIGN").Value = 1;
                     //bankvo.DataFields.FieldByName("TOTAL_CREDIT").Value = 128.84;
                     bankvo.DataFields.FieldByName("CREATED_BY").Value = 1;
-                    bankvo.DataFields.FieldByName("DATE_CREATED").Value = "27.04.2021";
-                    bankvo.DataFields.FieldByName("HOUR_CREATED").Value = 14;
-                    bankvo.DataFields.FieldByName("MIN_CREATED").Value = 30;
-                    bankvo.DataFields.FieldByName("SEC_CREATED").Value = 49;
+                    //bankvo.DataFields.FieldByName("DATE_CREATED").Value = "27.04.2021";
+                    //bankvo.DataFields.FieldByName("HOUR_CREATED").Value = DateTime.Now.Hour;
+                    //bankvo.DataFields.FieldByName("MIN_CREATED").Value = DateTime.Now.Minute;
+                    //bankvo.DataFields.FieldByName("SEC_CREATED").Value = DateTime.Now.Second;
                     bankvo.DataFields.FieldByName("CURRSEL_TOTALS").Value = 1;
                     bankvo.DataFields.FieldByName("DATA_REFERENCE").Value = "~";
                     //bankvo.DataFields.FieldByName("RC_TOTAL_CREDIT").Value = 16.11;
+                    bankvo.DataFields.FieldByName("NOTES1").Value = "" + BankName + " GÖNDERİLEN HAVALELER";
 
                     UnityObjects.Lines transactions_lines = bankvo.DataFields.FieldByName("TRANSACTIONS").Lines;
                     transactions_lines.AppendLine();
                     transactions_lines[transactions_lines.Count - 1].FieldByName("INTERNAL_REFERENCE").Value = "~";
                     transactions_lines[transactions_lines.Count - 1].FieldByName("TYPE").Value = 1;
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("TRANNO").Value = 2020072700002;
+                    //transactions_lines[transactions_lines.Count - 1].FieldByName("TRANNO").Value = 2020072700002;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("BANKACC_CODE").Value = "" + TigerBankAccNo + "";
                     transactions_lines[transactions_lines.Count - 1].FieldByName("ARP_CODE").Value = "" + item.CLCODE + "";
-                    //transactions_lines[transactions_lines.Count - 1].FieldByName("GL_CODE1").Value = "120.001.001.0026";
+                    transactions_lines[transactions_lines.Count - 1].FieldByName("GL_CODE1").Value = "" + GetClCardEmuhaccCode(item.CLCODE) + "";
                     //transactions_lines[transactions_lines.Count - 1].FieldByName("GL_CODE2").Value = "102.001.001.0003";
                     transactions_lines[transactions_lines.Count - 1].FieldByName("SOURCEFREF").Value = "~";
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("DATE").Value = "27.07.2020";
+                    //transactions_lines[transactions_lines.Count - 1].FieldByName("DATE").Value = "27.07.2020";
                     transactions_lines[transactions_lines.Count - 1].FieldByName("SIGN").Value = 1;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("TRCODE").Value = 4;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("MODULENR").Value = 7;
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("CREDIT").Value = 128.84;
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("AMOUNT").Value = 128.84;
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("TC_AMOUNT").Value = 128.84;
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("RC_XRATE").Value = 8;
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("RC_AMOUNT").Value = 16.11;
+                    //transactions_lines[transactions_lines.Count - 1].FieldByName("CREDIT").Value = 128.84;
+                    //transactions_lines[transactions_lines.Count - 1].FieldByName("AMOUNT").Value = item.AMOUNT;
+                    transactions_lines[transactions_lines.Count - 1].FieldByName("TC_AMOUNT").Value = item.AMOUNT.Replace(",",".");  // Transaction Currency Amount
+                    transactions_lines[transactions_lines.Count - 1].FieldByName("RC_XRATE").Value = 8;    // Report Curreny Rate
+                    transactions_lines[transactions_lines.Count - 1].FieldByName("RC_AMOUNT").Value = 16.11;  // Report Currency Amount
                     transactions_lines[transactions_lines.Count - 1].FieldByName("BANK_PROC_TYPE").Value = 2;
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("DUE_DATE").Value = "27.07.2020";
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("DATA_REFERENCE").Value = 5579;
+                    //transactions_lines[transactions_lines.Count - 1].FieldByName("DUE_DATE").Value = "27.07.2020";
+                    transactions_lines[transactions_lines.Count - 1].FieldByName("DATA_REFERENCE").Value = "~";
                     transactions_lines[transactions_lines.Count - 1].FieldByName("AFFECT_RISK").Value = 0;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("IBAN").Value = "" + item.IBAN + "";
 
                     UnityObjects.Lines payment_list0 = transactions_lines[transactions_lines.Count - 1].FieldByName("PAYMENT_LIST").Lines;
                     payment_list0.AppendLine();
                     payment_list0[payment_list0.Count - 1].FieldByName("INTERNAL_REFERENCE").Value = "~";
-                    payment_list0[payment_list0.Count - 1].FieldByName("DATE").Value = "27.07.2020";
+                    //payment_list0[payment_list0.Count - 1].FieldByName("DATE").Value = "27.07.2020";
                     payment_list0[payment_list0.Count - 1].FieldByName("MODULENR").Value = 7;
                     payment_list0[payment_list0.Count - 1].FieldByName("TRCODE").Value = 4;
-                    payment_list0[payment_list0.Count - 1].FieldByName("TOTAL").Value = 128.84;
-                    payment_list0[payment_list0.Count - 1].FieldByName("PROCDATE").Value = "27.07.2020";
+                    //payment_list0[payment_list0.Count - 1].FieldByName("TOTAL").Value = 128.84;
+                    //payment_list0[payment_list0.Count - 1].FieldByName("PROCDATE").Value = "27.07.2020";
                     payment_list0[payment_list0.Count - 1].FieldByName("REPORTRATE").Value = 8;
                     payment_list0[payment_list0.Count - 1].FieldByName("DATA_REFERENCE").Value = 0;
-                    payment_list0[payment_list0.Count - 1].FieldByName("DISCOUNT_DUEDATE").Value = "27.07.2020";
+                    //payment_list0[payment_list0.Count - 1].FieldByName("DISCOUNT_DUEDATE").Value = "27.07.2020";
                     payment_list0[payment_list0.Count - 1].FieldByName("DISCTRDELLIST").Value = 0;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("BN_CRDTYPE").Value = 1;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("DIVISION").Value = 0;
@@ -192,6 +199,35 @@ namespace AyzPaymentWizard.Forms
                 }
             }
 
+        }
+
+        private string GetClCardEmuhaccCode(string clCode)
+        {
+            string accoutingCode = "";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT MUHAC.CODE FROM LG_" + Helper.FIRMANO + "_CLCARD AS CLIENT " +
+                                  "\nLEFT JOIN LG_" + Helper.FIRMANO + "_CRDACREF AS CRDACREF ON CLIENT.LOGICALREF = CRDACREF.CARDREF " +
+                                  "\nLEFT JOIN LG_" + Helper.FIRMANO + "_EMUHACC AS MUHAC ON MUHAC.LOGICALREF = CRDACREF.ACCOUNTREF " +
+                                  "\nWHERE CLIENT.CODE = '" + clCode + "' AND TYP = 1 AND TRCODE = 5";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        accoutingCode = dr["CODE"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hata: \n" + ex.Message);
+            }
+
+            return accoutingCode;
         }
     }
 }
