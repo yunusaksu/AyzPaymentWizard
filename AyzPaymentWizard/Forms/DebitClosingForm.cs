@@ -101,6 +101,10 @@ namespace AyzPaymentWizard.Forms
 
             foreach (var item in liste)
             {
+                int CurType = GetCurType(item.CURRENCYCODE);
+                decimal CurRate = GetCurRate(item.CURRENCYCODE);
+                decimal ReportCurRate = GetReportCurRate();
+
                 UnityObjects.UnityApplication UnityApp = new UnityObjects.UnityApplication();
                 if (UnityApp.Login("Logo", "logo", 1))
                 {
@@ -113,36 +117,30 @@ namespace AyzPaymentWizard.Forms
                     bankvo.DataFields.FieldByName("DEPARMENT").Value = 0;
                     bankvo.DataFields.FieldByName("TYPE").Value = 4;
                     bankvo.DataFields.FieldByName("SIGN").Value = 1;
-                    //bankvo.DataFields.FieldByName("TOTAL_CREDIT").Value = 128.84;
                     bankvo.DataFields.FieldByName("CREATED_BY").Value = 1;
-                    //bankvo.DataFields.FieldByName("DATE_CREATED").Value = "27.04.2021";
-                    //bankvo.DataFields.FieldByName("HOUR_CREATED").Value = DateTime.Now.Hour;
-                    //bankvo.DataFields.FieldByName("MIN_CREATED").Value = DateTime.Now.Minute;
-                    //bankvo.DataFields.FieldByName("SEC_CREATED").Value = DateTime.Now.Second;
                     bankvo.DataFields.FieldByName("CURRSEL_TOTALS").Value = 1;
                     bankvo.DataFields.FieldByName("DATA_REFERENCE").Value = "~";
-                    //bankvo.DataFields.FieldByName("RC_TOTAL_CREDIT").Value = 16.11;
                     bankvo.DataFields.FieldByName("NOTES1").Value = "" + BankName + " GÖNDERİLEN HAVALELER";
 
                     UnityObjects.Lines transactions_lines = bankvo.DataFields.FieldByName("TRANSACTIONS").Lines;
                     transactions_lines.AppendLine();
                     transactions_lines[transactions_lines.Count - 1].FieldByName("INTERNAL_REFERENCE").Value = "~";
                     transactions_lines[transactions_lines.Count - 1].FieldByName("TYPE").Value = 1;
-                    //transactions_lines[transactions_lines.Count - 1].FieldByName("TRANNO").Value = 2020072700002;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("BANKACC_CODE").Value = "" + TigerBankAccNo + "";
                     transactions_lines[transactions_lines.Count - 1].FieldByName("ARP_CODE").Value = "" + item.CLCODE + "";
                     transactions_lines[transactions_lines.Count - 1].FieldByName("GL_CODE1").Value = "" + GetClCardEmuhaccCode(item.CLCODE) + "";
                     //transactions_lines[transactions_lines.Count - 1].FieldByName("GL_CODE2").Value = "102.001.001.0003";
                     transactions_lines[transactions_lines.Count - 1].FieldByName("SOURCEFREF").Value = "~";
-                    //transactions_lines[transactions_lines.Count - 1].FieldByName("DATE").Value = "27.07.2020";
                     transactions_lines[transactions_lines.Count - 1].FieldByName("SIGN").Value = 1;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("TRCODE").Value = 4;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("MODULENR").Value = 7;
+                    transactions_lines[transactions_lines.Count - 1].FieldByName("CURR_TRANS").Value = "" + CurType + ""; // dolar için 1 Euro için 20 ...
                     //transactions_lines[transactions_lines.Count - 1].FieldByName("CREDIT").Value = 128.84;
                     //transactions_lines[transactions_lines.Count - 1].FieldByName("AMOUNT").Value = item.AMOUNT;
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("TC_AMOUNT").Value = item.AMOUNT.Replace(",",".");  // Transaction Currency Amount
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("RC_XRATE").Value = 8;    // Report Curreny Rate
-                    transactions_lines[transactions_lines.Count - 1].FieldByName("RC_AMOUNT").Value = 16.11;  // Report Currency Amount
+                    transactions_lines[transactions_lines.Count - 1].FieldByName("TC_AMOUNT").Value = item.AMOUNT.Replace(",", ".");  // Transaction Currency Amount
+                    transactions_lines[transactions_lines.Count - 1].FieldByName("TC_XRATE").Value = "" + CurRate + ""; // işlem döviz kurunun değeri örn: 8 buçuk lira
+                    transactions_lines[transactions_lines.Count - 1].FieldByName("RC_XRATE").Value = "" + ReportCurRate + "";    // Report Curreny Rate
+                    //transactions_lines[transactions_lines.Count - 1].FieldByName("RC_AMOUNT").Value = 16.11;  // Report Currency Amount
                     transactions_lines[transactions_lines.Count - 1].FieldByName("BANK_PROC_TYPE").Value = 2;
                     //transactions_lines[transactions_lines.Count - 1].FieldByName("DUE_DATE").Value = "27.07.2020";
                     transactions_lines[transactions_lines.Count - 1].FieldByName("DATA_REFERENCE").Value = "~";
@@ -152,20 +150,16 @@ namespace AyzPaymentWizard.Forms
                     UnityObjects.Lines payment_list0 = transactions_lines[transactions_lines.Count - 1].FieldByName("PAYMENT_LIST").Lines;
                     payment_list0.AppendLine();
                     payment_list0[payment_list0.Count - 1].FieldByName("INTERNAL_REFERENCE").Value = "~";
-                    //payment_list0[payment_list0.Count - 1].FieldByName("DATE").Value = "27.07.2020";
                     payment_list0[payment_list0.Count - 1].FieldByName("MODULENR").Value = 7;
                     payment_list0[payment_list0.Count - 1].FieldByName("TRCODE").Value = 4;
                     //payment_list0[payment_list0.Count - 1].FieldByName("TOTAL").Value = 128.84;
                     //payment_list0[payment_list0.Count - 1].FieldByName("PROCDATE").Value = "27.07.2020";
-                    payment_list0[payment_list0.Count - 1].FieldByName("REPORTRATE").Value = 8;
+                    //payment_list0[payment_list0.Count - 1].FieldByName("REPORTRATE").Value = 8;
                     payment_list0[payment_list0.Count - 1].FieldByName("DATA_REFERENCE").Value = 0;
-                    //payment_list0[payment_list0.Count - 1].FieldByName("DISCOUNT_DUEDATE").Value = "27.07.2020";
                     payment_list0[payment_list0.Count - 1].FieldByName("DISCTRDELLIST").Value = 0;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("BN_CRDTYPE").Value = 1;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("DIVISION").Value = 0;
-                    //transactions_lines[transactions_lines.Count - 1].FieldByName("GUID").Value = "A45BA7A1 - 38C3 - 4912 - 8BBF - BF28C7AF99BD";
                     bankvo.DataFields.FieldByName("EBOOK_DOCTYPE").Value = 99;
-                    //bankvo.DataFields.FieldByName("GUID").Value = "5A4379A5 - C5AF - 4116 - B9D0 - 0D85492C2374";
                     bankvo.FillAccCodes();
                     // Muhasebe Kodlarının otomatik gelmesi için Tigerda Genel Muhasebe > Ana Kayıtlar > Muhasebe Bağlantı Kodları > Cari Hesap Bağlantı Kodları 
                     // içerisine girerek ilgili cari hesaba gerekli muhasebe kodu tanımlanmalıdır. Sonrasında tekrar Muhasebe bağlantı Kodları'na girerek
@@ -228,6 +222,85 @@ namespace AyzPaymentWizard.Forms
             }
 
             return accoutingCode;
+        }
+
+        private decimal GetCurRate(string curCode)
+        {
+            int val = GetCurType(curCode);
+
+            decimal result = 0;
+            if (curCode != "TRY")
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT * FROM L_DAILYEXCHANGES WHERE EDATE = '" + DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "' AND CRTYPE = " + val + "";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        result = Convert.ToDecimal(dr["RATES1"].ToString());
+                    }
+                }
+            }
+            else
+            {
+                result = 1;
+                return result;
+            }
+
+            return result;
+        }
+
+        private int GetCurType(string curCode)
+        {
+            int result = 0;
+            if (curCode != "TRY")
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT * FROM L_CURRENCYLIST WHERE CURCODE = '" + curCode + "' AND FIRMNR = '" + Helper.FIRMNR + "'";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        result = Convert.ToInt32(dr["CURTYPE"].ToString());
+                    }
+                }
+            }
+            else
+            {
+                result = 160;
+                return result;
+            }
+
+            return result;
+        }
+
+        private decimal GetReportCurRate()
+        {
+            int ReportCurType = 0;
+            decimal ReportCurRate = 0;
+            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                CommandText = "SELECT REPORTCUR.PERREPCURR,DAILY.EDATE,DAILY.RATES1 FROM L_CAPIPERIOD AS REPORTCUR " +
+                              "\nLEFT JOIN L_DAILYEXCHANGES AS DAILY ON DAILY.CRTYPE = REPORTCUR.PERREPCURR " +
+                              "\nWHERE ACTIVE = 1 AND FIRMNR = '" + Helper.FIRMNR + "' AND " +
+                              "\nEDATE = '" + DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "'";
+                komut.CommandText = CommandText;
+                komut.Connection = conn;
+                conn.Open();
+                dr = komut.ExecuteReader();
+                while (dr.Read())
+                {
+                    ReportCurRate = Convert.ToDecimal(dr["RATES1"].ToString());
+                    ReportCurType = Convert.ToInt32(dr["PERREPCURR"].ToString());
+                }
+            }
+            return ReportCurRate;
         }
     }
 }
