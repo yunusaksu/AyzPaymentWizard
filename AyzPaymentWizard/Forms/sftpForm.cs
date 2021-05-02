@@ -94,7 +94,7 @@ namespace AyzPaymentWizard.Forms
             list.Clear();
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
-                CommandText = "SELECT * FROM AYZ_PW_SFTP_SETTING WHERE FIRMNR = " + Helper.FIRMNR + " ";
+                CommandText = "SELECT * FROM AYZ_PW_SFTP_SETTING --WHERE FIRMNR = " + Helper.FIRMNR + " ";
                 komut.CommandText = CommandText;
                 komut.Connection = conn;
                 conn.Open();

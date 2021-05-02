@@ -551,7 +551,7 @@ namespace AyzPaymentWizard
                         string OdemeninHesaptanCikisTarihi = DateTime.Now.Year + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd");
                         int kurusHesabi = 00012345;
                         string fileHeader = "H6" + DateTime.Now.Year + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + BankaKodu.ToString().PadLeft(4, '0') + SubeKodu.ToString().PadLeft(5, '0') + MusteriNo.ToString().PadLeft(8, '0') + HesapNo.ToString().PadLeft(8, '0') + OdemeninHesaptanCikisTarihi + DateTime.Now.Hour.ToString().PadLeft(2, '0') + DateTime.Now.Minute.ToString().PadLeft(2, '0') + kurusHesabi.ToString().PadLeft(8, '0');
-                        Engine.HeaderText = fileHeader;//Dosyanın Header
+                        Engine.HeaderText = fileHeader;                 //Dosyanın Headerı
 
                         //DECİMAL  Format
                         CultureInfo myCI = new CultureInfo("tr-TR", false);
@@ -570,7 +570,6 @@ namespace AyzPaymentWizard
 
                         //Dosyayı Yaz
                         Engine.WriteFile("" + filePath + "" + fileName + ".txt", Records);
-
 
                         string sendToBankFileName = filePath + fileName + ".txt";
 
@@ -725,7 +724,7 @@ namespace AyzPaymentWizard
                                   "\nLEFT JOIN AYZ_PW_BANKACCOUNT AS BA ON P.ACCOUNTOUTID = BA.ID " +
                                   "\nLEFT JOIN AYZ_PW_BANK AS BANK ON BANK.ID = BA.BANKID " +
                                   "\nLEFT JOIN AYZ_PW_SFTP_SETTING AS SETTING ON SETTING.BANKCODE = BANK.BANKNR " +
-                                  "\nWHERE P.ID = '" + packetId + "' AND P.FIRMNR = '" + Helper.FIRMNR + "'";
+                                  "\nWHERE P.ID = '" + packetId + "' AND SETTING.FIRMNR = '" + Helper.FIRMNR + "'";
                     komut.CommandText = CommandText;
                     komut.Connection = conn;
                     conn.Open();

@@ -49,8 +49,7 @@ namespace AyzPaymentWizard
 
         public enum PacketStatus
         {
-            NewPacket = 0,
-            EditPacket = 1,
+            NewPacket = 0,            
             Approved = 2,
             Rejected = 3,
             SentToBank = 4,

@@ -203,6 +203,22 @@ namespace AyzPaymentWizard.Forms
         {
             FillLeftList();
 
+            // Ödeme çıkış hesap bilgilerini AYZ_PW_BANKACCOUNT tablosundan combobox'a getiren kod.
+            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                DataTable tbl = new DataTable();
+                CommandText = "SELECT * FROM AYZ_PW_BANKACCOUNT WHERE CURRENCY = " + currencyValue + " AND FIRMNR = " + Helper.FIRMNR + "";
+                komut.CommandText = CommandText;
+                komut.Connection = conn;
+                conn.Open();
+                dr = komut.ExecuteReader();
+                tbl.Load(dr);
+
+                cmbOutAccountInfoEdit.DataSource = tbl;
+                cmbOutAccountInfoEdit.DisplayMember = "TITLE";
+                cmbOutAccountInfoEdit.ValueMember = "ID";
+            }
+
             if (Review == true)
             {
                 btnRightPacketEdit.Enabled = false;
@@ -1031,8 +1047,7 @@ namespace AyzPaymentWizard.Forms
                               "\nTOTAL_REQUIRED = " + sumRequire.ToString().Replace(',', '.') + ", " +
                               "\nTOTAL_PAID = " + sumPaid.ToString().Replace(',', '.') + ", " +
                               "\nNOTE = '" + txtPacketEditExp.Text + "', " +
-                              "\nACCOUNTOUTID = '" + cmbOutAccountInfoEdit.SelectedValue + "', " +
-                              "\nSTATUS = " + (int)Helper.PacketStatus.EditPacket + "" +
+                              "\nACCOUNTOUTID = '" + cmbOutAccountInfoEdit.SelectedValue + "' " +
                               "\nWHERE ID = " + PacketId + " ";
                     komut.CommandText = CommandText;
                     komut.Connection = conn;
