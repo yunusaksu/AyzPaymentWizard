@@ -403,7 +403,6 @@ namespace AyzPaymentWizard
             dataGridViewLeft.Columns["Paid"].Visible = false;
             dataGridViewLeft.Columns["GenExp1"].Visible = false;
             dataGridViewLeft.Columns["EmailAdres"].Visible = false;
-            dataGridViewLeft.Columns["DoCode"].Visible = false;
             dataGridViewLeft.Columns["TrCode"].Visible = false;
             dataGridViewLeft.Columns["TrCurr"].Visible = false;
             dataGridViewLeft.Columns["TaxNr"].Visible = false;
@@ -424,11 +423,13 @@ namespace AyzPaymentWizard
             dataGridViewLeft.Columns["ClDef"].HeaderText = "Cari Hesap Tanımı";
             dataGridViewLeft.Columns["FicheDate"].HeaderText = "Fiş Tarihi";
             dataGridViewLeft.Columns["FicheNo"].HeaderText = "Fiş Numarası";
+            dataGridViewLeft.Columns["DoCode"].HeaderText = "Belge Numarası";
             dataGridViewLeft.Columns["NotInPayTransFrame"].HeaderText = "Active";
             dataGridViewLeft.Columns["Total"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dataGridViewLeft.Columns["ClCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dataGridViewLeft.Columns["ClDef"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dataGridViewLeft.Columns["IBAN"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dataGridViewLeft.Columns["DoCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dataGridViewLeft.Columns["CurCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dataGridViewLeft.Columns["FicheDate"].Width = 75;
             dataGridViewLeft.Columns["FicheNo"].Width = 90;
@@ -452,7 +453,6 @@ namespace AyzPaymentWizard
             dataGridViewRight.Columns["TrCode"].Visible = false;
             dataGridViewRight.Columns["GenExp1"].Visible = false;
             dataGridViewRight.Columns["TrType"].Visible = false;
-            dataGridViewRight.Columns["DoCode"].Visible = false;
             dataGridViewRight.Columns["EmailAdres"].Visible = false;
             dataGridViewRight.Columns["IsPerson"].Visible = false;
             dataGridViewRight.Columns["CurCode"].HeaderText = "Döviz";
@@ -477,6 +477,7 @@ namespace AyzPaymentWizard
             dataGridViewRight.Columns["ClCode"].HeaderText = "Cari Kod";
             dataGridViewRight.Columns["FicheDate"].HeaderText = "Fiş Tarihi";
             dataGridViewRight.Columns["FicheNo"].HeaderText = "Fiş Numarası";
+            dataGridViewRight.Columns["DoCode"].HeaderText = "Belge Numarası";
             dataGridViewRight.Columns["MecraType"].HeaderText = "Mecra Türü";
             dataGridViewRight.Columns["MarketingCompany"].HeaderText = "Pazarlama Şirketi";
             dataGridViewRight.Columns["Customer"].HeaderText = "Müşteri";
@@ -487,6 +488,7 @@ namespace AyzPaymentWizard
             dataGridViewRight.Columns["ClCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dataGridViewRight.Columns["ClDef"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dataGridViewRight.Columns["IBAN"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            dataGridViewRight.Columns["DoCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dataGridViewRight.Columns["CurCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dataGridViewRight.Columns["MecraType"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dataGridViewRight.Columns["Mecra"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -837,7 +839,7 @@ namespace AyzPaymentWizard
 
             var source2 = new BindingSource();
             source2.DataSource = LeftList;
-            dataGridViewLeft.DataSource = source2;            
+            dataGridViewLeft.DataSource = source2;
         }
 
         private void btnLeft_Click(object sender, EventArgs e)
@@ -914,7 +916,7 @@ namespace AyzPaymentWizard
             dataGridViewLeft.DataSource = source;
 
             LeftList = FilteredList;
-        }               
+        }
 
         private void btnCreatePackage_Click(object sender, EventArgs e)
         {
@@ -951,6 +953,7 @@ namespace AyzPaymentWizard
                                     "\nTIGER_BNKACCODE," +
                                     "\nTIGER_ACCOUNT_CODE," +
                                     "\nACCOUNTOUTID," +
+                                    "\nCURRENCY," +
                                     "\nCREATED_NAME" +
                                     "\n) " +
                                     "\nVALUES" +
@@ -970,6 +973,7 @@ namespace AyzPaymentWizard
                                     "\n '" + bankCode + "', " +
                                     "\n '" + tigerBankAccountCode + "', " +
                                     "\n '" + bankOutAccID + "', " +
+                                    "\n '" + getCurrency(currencyValue) + "', " +
                                     "\n '" + Helper.USERNAME + "' " +
                                     "\n);" +
                                     "\nSELECT SCOPE_IDENTITY()";
@@ -1059,7 +1063,7 @@ namespace AyzPaymentWizard
                         }
                         MessageBox.Show("Paket başarılı bir şekilde kaydedildi!", "Paket Oluşturma Ekranı");
                         SavePacketFilters(PacketId);
-                        this.Hide();                        
+                        this.Hide();
                         Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
                         form.FillPacketList();
                     }
@@ -1072,6 +1076,31 @@ namespace AyzPaymentWizard
                 {
                     MessageBox.Show("Hata: " + ex.Message.ToString());
                 }
+            }
+        }
+
+        private string getCurrency(int currencyValue)
+        {
+            string CurCode = "";
+            if(currencyValue !=0)
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT CURCODE FROM L_CURRENCYLIST WHERE CURTYPE = '" + currencyValue + "' AND FIRMNR = '" + Helper.FIRMNR + "'";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        CurCode = dr["CURCODE"].ToString();
+                    }
+                }
+                return CurCode;
+            }
+            else
+            {
+                return "TL";
             }
         }
 

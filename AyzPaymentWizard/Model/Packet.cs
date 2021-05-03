@@ -20,7 +20,8 @@ namespace AyzPaymentWizard.Model
         public DateTime ModifiedDate { get; set; }          // Paketin Güncellenme Tarihi
         public int ModifiedTime { get; set; }               // Paketin Güncellenme Zamanı
         public decimal TotalRequired { get; set; }          // Toplam Ödenmesi Gereken Tutar
-        public decimal TotalPaid { get; set; }              // Toplan Ödenecek Tutar        
+        public decimal TotalPaid { get; set; }              // Toplan Ödenecek Tutar    
+        public string Currency { get; set; }                // Para Birimi
         public string ApprovalNote { get; set; }            // Onay Notu
         public int FirmNr { get; set; }                     // Paketin ait olduğu Logo Firma Numarası
         public int Status { get; set; }                     // Paketin Durumu

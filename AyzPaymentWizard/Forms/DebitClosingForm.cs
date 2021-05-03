@@ -19,9 +19,17 @@ namespace AyzPaymentWizard.Forms
         SqlDataReader dr;
         string CommandText = "";
         int PacketID;
+        bool Review = false;
 
         public DebitClosingForm()
         {
+            InitializeComponent();
+        }
+
+        public DebitClosingForm(int packetId, bool review)
+        {
+            PacketID = packetId;
+            Review = review;
             InitializeComponent();
         }
 
@@ -34,17 +42,18 @@ namespace AyzPaymentWizard.Forms
         private void DebitClosingForm_Load(object sender, EventArgs e)
         {
             fillDGVDebitClosing();
+            if (Review)
+                btnDebitClosing.Enabled = false;
         }
 
         private void fillDGVDebitClosing()
         {
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
-                CommandText = "SELECT DISTINCT DETAIL.*,CL_CODE FROM AYZ_PW_PACKET_DETAIL AS P " +
-                              "\nLEFT JOIN AYZ_PW_SUMMARY AS SUMMARY ON P.PACKETID = SUMMARY.PACKETID " +
-                              "\nLEFT JOIN AYZ_PW_DOWNLOADED_FILE_DETAIL AS DETAIL ON DETAIL.COMPANY_REF = SUMMARY.RETURNKEY " +
-                              "\nLEFT JOIN AYZ_PW_DOWNLOADED_FILE AS DOWNLOADED ON DOWNLOADED.ID = DETAIL.PARENTREF " +
-                              "\nWHERE P.PACKETID = '" + PacketID + "' AND DETAIL.ID IS NOT NULL";
+                CommandText = "\nSELECT D.*,CLIENT.CODE FROM AYZ_PW_SUMMARY AS S " +
+                              "\nLEFT JOIN AYZ_PW_DOWNLOADED_FILE_DETAIL D ON S.RETURNKEY = D.COMPANY_REF " +
+                              "\nLEFT JOIN LG_001_CLCARD AS CLIENT ON CLIENT.LOGICALREF = S.CLIENTREF " +
+                              "\nWHERE PACKETID = '" + PacketID + "' AND D.ID IS NOT NULL";
                 komut.CommandText = CommandText;
                 komut.Connection = conn;
                 conn.Open();
@@ -66,7 +75,7 @@ namespace AyzPaymentWizard.Forms
                     payment.EFTQUERYNO = Convert.ToInt32(dr["EFTQUERY_NO"].ToString());
                     payment.IBAN = dr["IBAN"].ToString();
                     payment.TYPE = dr["RECORD_TYPE"].ToString();
-                    payment.CLCODE = dr["CL_CODE"].ToString();
+                    payment.CLCODE = dr["CODE"].ToString();
                     liste.Add(payment);
                 }
             }
@@ -77,7 +86,6 @@ namespace AyzPaymentWizard.Forms
 
         private void btnDebitClosing_Click(object sender, EventArgs e)
         {
-
             string TigerBankAccNo = "";
             string BankName = "";
             #region Paket Id'den paranın çıkacağı hesap bulunur. (AYZ_PW_BANKACCOUNT tablosundan)

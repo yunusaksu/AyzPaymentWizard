@@ -33,8 +33,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.btnAkibetSorgulama = new System.Windows.Forms.Button();
+            this.btnHavalaFisi = new System.Windows.Forms.Button();
             this.imageListPacketIcon = new System.Windows.Forms.ImageList(this.components);
+            this.btnAkibetSorgulama = new System.Windows.Forms.Button();
             this.btnArchive = new System.Windows.Forms.Button();
             this.btnSendToBank = new System.Windows.Forms.Button();
             this.btnReject = new System.Windows.Forms.Button();
@@ -54,11 +55,13 @@
             this.btnBankAndBankAccAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripAnasayfa = new System.Windows.Forms.ToolStrip();
-            this.btnHavalaFisi = new System.Windows.Forms.Button();
+            this.contextMenuStripAnasayfa = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.akibetiİnceleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPacket)).BeginInit();
             this.toolStripAnasayfa.SuspendLayout();
+            this.contextMenuStripAnasayfa.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -106,6 +109,34 @@
             this.panel3.Size = new System.Drawing.Size(1159, 85);
             this.panel3.TabIndex = 2;
             // 
+            // btnHavalaFisi
+            // 
+            this.btnHavalaFisi.BackColor = System.Drawing.Color.Transparent;
+            this.btnHavalaFisi.FlatAppearance.BorderSize = 0;
+            this.btnHavalaFisi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHavalaFisi.ImageIndex = 7;
+            this.btnHavalaFisi.ImageList = this.imageListPacketIcon;
+            this.btnHavalaFisi.Location = new System.Drawing.Point(709, 13);
+            this.btnHavalaFisi.Name = "btnHavalaFisi";
+            this.btnHavalaFisi.Size = new System.Drawing.Size(68, 65);
+            this.btnHavalaFisi.TabIndex = 8;
+            this.btnHavalaFisi.Tag = "";
+            this.btnHavalaFisi.UseVisualStyleBackColor = false;
+            this.btnHavalaFisi.Click += new System.EventHandler(this.btnHavalaFisi_Click);
+            // 
+            // imageListPacketIcon
+            // 
+            this.imageListPacketIcon.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListPacketIcon.ImageStream")));
+            this.imageListPacketIcon.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListPacketIcon.Images.SetKeyName(0, "editButton.png");
+            this.imageListPacketIcon.Images.SetKeyName(1, "reviewButton.png");
+            this.imageListPacketIcon.Images.SetKeyName(2, "approveButton.png");
+            this.imageListPacketIcon.Images.SetKeyName(3, "sendToApprove.png");
+            this.imageListPacketIcon.Images.SetKeyName(4, "rejectButton.png");
+            this.imageListPacketIcon.Images.SetKeyName(5, "bank.png");
+            this.imageListPacketIcon.Images.SetKeyName(6, "archive.png");
+            this.imageListPacketIcon.Images.SetKeyName(7, "performed_process.png");
+            // 
             // btnAkibetSorgulama
             // 
             this.btnAkibetSorgulama.BackColor = System.Drawing.Color.Transparent;
@@ -120,19 +151,6 @@
             this.btnAkibetSorgulama.Tag = "";
             this.btnAkibetSorgulama.UseVisualStyleBackColor = false;
             this.btnAkibetSorgulama.Click += new System.EventHandler(this.btnAkibetSorgulama_Click);
-            // 
-            // imageListPacketIcon
-            // 
-            this.imageListPacketIcon.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListPacketIcon.ImageStream")));
-            this.imageListPacketIcon.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListPacketIcon.Images.SetKeyName(0, "editButton.png");
-            this.imageListPacketIcon.Images.SetKeyName(1, "reviewButton.png");
-            this.imageListPacketIcon.Images.SetKeyName(2, "approveButton.png");
-            this.imageListPacketIcon.Images.SetKeyName(3, "sendToApprove.png");
-            this.imageListPacketIcon.Images.SetKeyName(4, "rejectButton.png");
-            this.imageListPacketIcon.Images.SetKeyName(5, "bank.png");
-            this.imageListPacketIcon.Images.SetKeyName(6, "archive.png");
-            this.imageListPacketIcon.Images.SetKeyName(7, "performed_process.png");
             // 
             // btnArchive
             // 
@@ -249,12 +267,14 @@
             this.dataGridViewPacket.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridViewPacket.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedHorizontal;
             this.dataGridViewPacket.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewPacket.ContextMenuStrip = this.contextMenuStripAnasayfa;
             this.dataGridViewPacket.Location = new System.Drawing.Point(3, 42);
             this.dataGridViewPacket.Name = "dataGridViewPacket";
             this.dataGridViewPacket.ReadOnly = true;
             this.dataGridViewPacket.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewPacket.Size = new System.Drawing.Size(1159, 469);
             this.dataGridViewPacket.TabIndex = 1;
+            this.dataGridViewPacket.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewPacket_CellMouseDown);
             // 
             // toolStripSeparator1
             // 
@@ -359,20 +379,19 @@
             this.toolStripAnasayfa.TabIndex = 0;
             this.toolStripAnasayfa.Text = "AnasayfaToolStrip";
             // 
-            // btnHavalaFisi
+            // contextMenuStripAnasayfa
             // 
-            this.btnHavalaFisi.BackColor = System.Drawing.Color.Transparent;
-            this.btnHavalaFisi.FlatAppearance.BorderSize = 0;
-            this.btnHavalaFisi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHavalaFisi.ImageIndex = 7;
-            this.btnHavalaFisi.ImageList = this.imageListPacketIcon;
-            this.btnHavalaFisi.Location = new System.Drawing.Point(709, 13);
-            this.btnHavalaFisi.Name = "btnHavalaFisi";
-            this.btnHavalaFisi.Size = new System.Drawing.Size(68, 65);
-            this.btnHavalaFisi.TabIndex = 8;
-            this.btnHavalaFisi.Tag = "";
-            this.btnHavalaFisi.UseVisualStyleBackColor = false;
-            this.btnHavalaFisi.Click += new System.EventHandler(this.btnHavalaFisi_Click);
+            this.contextMenuStripAnasayfa.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.akibetiİnceleToolStripMenuItem});
+            this.contextMenuStripAnasayfa.Name = "contextMenuStripAnasayfa";
+            this.contextMenuStripAnasayfa.Size = new System.Drawing.Size(181, 48);
+            // 
+            // akibetiİnceleToolStripMenuItem
+            // 
+            this.akibetiİnceleToolStripMenuItem.Name = "akibetiİnceleToolStripMenuItem";
+            this.akibetiİnceleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.akibetiİnceleToolStripMenuItem.Text = "Akibeti İncele";
+            this.akibetiİnceleToolStripMenuItem.Click += new System.EventHandler(this.akibetiİnceleToolStripMenuItem_Click);
             // 
             // Anasayfa
             // 
@@ -394,6 +413,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPacket)).EndInit();
             this.toolStripAnasayfa.ResumeLayout(false);
             this.toolStripAnasayfa.PerformLayout();
+            this.contextMenuStripAnasayfa.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -425,5 +445,7 @@
         private System.Windows.Forms.ToolStrip toolStripAnasayfa;
         private System.Windows.Forms.Button btnAkibetSorgulama;
         private System.Windows.Forms.Button btnHavalaFisi;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripAnasayfa;
+        private System.Windows.Forms.ToolStripMenuItem akibetiİnceleToolStripMenuItem;
     }
 }

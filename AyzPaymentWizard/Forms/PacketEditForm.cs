@@ -280,7 +280,6 @@ namespace AyzPaymentWizard.Forms
             DGVLeftEdit.Columns["Paid"].Visible = false;
             DGVLeftEdit.Columns["GenExp1"].Visible = false;
             DGVLeftEdit.Columns["EmailAdres"].Visible = false;
-            DGVLeftEdit.Columns["DoCode"].Visible = false;
             DGVLeftEdit.Columns["TrCode"].Visible = false;
             DGVLeftEdit.Columns["TrCurr"].Visible = false;
             DGVLeftEdit.Columns["TaxNr"].Visible = false;
@@ -301,10 +300,12 @@ namespace AyzPaymentWizard.Forms
             DGVLeftEdit.Columns["ClDef"].HeaderText = "Cari Hesap Tanımı";
             DGVLeftEdit.Columns["FicheDate"].HeaderText = "Fiş Tarihi";
             DGVLeftEdit.Columns["FicheNo"].HeaderText = "Fiş Numarası";
+            DGVLeftEdit.Columns["DoCode"].HeaderText = "Belge Numarası";
             DGVLeftEdit.Columns["Total"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVLeftEdit.Columns["ClCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVLeftEdit.Columns["ClDef"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVLeftEdit.Columns["IBAN"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            DGVLeftEdit.Columns["DoCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVLeftEdit.Columns["CurCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVLeftEdit.Columns["FicheDate"].Width = 75;
             DGVLeftEdit.Columns["FicheNo"].Width = 90;
@@ -325,8 +326,7 @@ namespace AyzPaymentWizard.Forms
             DGVRightEdit.Columns["ModuleNr"].Visible = false;
             DGVRightEdit.Columns["TrCode"].Visible = false;
             DGVRightEdit.Columns["GenExp1"].Visible = false;
-            DGVRightEdit.Columns["TrType"].Visible = false;
-            DGVRightEdit.Columns["DoCode"].Visible = false;
+            DGVRightEdit.Columns["TrType"].Visible = false;            
             DGVRightEdit.Columns["EmailAdres"].Visible = false;
             DGVRightEdit.Columns["IsPerson"].Visible = false;
             DGVRightEdit.Columns["CurCode"].HeaderText = "Döviz";
@@ -350,6 +350,7 @@ namespace AyzPaymentWizard.Forms
             DGVRightEdit.Columns["ClCode"].HeaderText = "Cari Kod";
             DGVRightEdit.Columns["FicheDate"].HeaderText = "Fiş Tarihi";
             DGVRightEdit.Columns["FicheNo"].HeaderText = "Fiş Numarası";
+            DGVRightEdit.Columns["DoCode"].HeaderText = "Belge Numarası";
             DGVRightEdit.Columns["MecraType"].HeaderText = "Mecra Türü";
             DGVRightEdit.Columns["MarketingCompany"].HeaderText = "Pazarlama Şirketi";
             DGVRightEdit.Columns["Customer"].HeaderText = "Müşteri";
@@ -362,6 +363,7 @@ namespace AyzPaymentWizard.Forms
             DGVRightEdit.Columns["ClCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVRightEdit.Columns["ClDef"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVRightEdit.Columns["IBAN"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            DGVRightEdit.Columns["DoCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVRightEdit.Columns["CurCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVRightEdit.Columns["MecraType"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVRightEdit.Columns["Mecra"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;

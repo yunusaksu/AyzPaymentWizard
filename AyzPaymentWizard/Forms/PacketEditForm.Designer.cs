@@ -33,10 +33,10 @@
             this.DGVRightEdit = new System.Windows.Forms.DataGridView();
             this.btnEditPacket = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtPacketEditExp = new System.Windows.Forms.RichTextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.cmbOutAccountInfoEdit = new System.Windows.Forms.ComboBox();
             this.DGVLeftEdit = new Zuby.ADGV.AdvancedDataGridView();
+            this.txtPacketEditExp = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DGVRightEdit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGVLeftEdit)).BeginInit();
             this.SuspendLayout();
@@ -75,7 +75,7 @@
             this.DGVRightEdit.Location = new System.Drawing.Point(693, 4);
             this.DGVRightEdit.Name = "DGVRightEdit";
             this.DGVRightEdit.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGVRightEdit.Size = new System.Drawing.Size(625, 517);
+            this.DGVRightEdit.Size = new System.Drawing.Size(625, 552);
             this.DGVRightEdit.TabIndex = 12;
             this.DGVRightEdit.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DGVRightEdit_CellFormatting);
             // 
@@ -101,21 +101,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label4.Location = new System.Drawing.Point(688, 528);
+            this.label4.Location = new System.Drawing.Point(689, 568);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(161, 20);
+            this.label4.Size = new System.Drawing.Size(90, 20);
             this.label4.TabIndex = 14;
-            this.label4.Text = "PAKET AÇIKLAMASI";
-            // 
-            // txtPacketEditExp
-            // 
-            this.txtPacketEditExp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPacketEditExp.Location = new System.Drawing.Point(846, 528);
-            this.txtPacketEditExp.Name = "txtPacketEditExp";
-            this.txtPacketEditExp.Size = new System.Drawing.Size(471, 62);
-            this.txtPacketEditExp.TabIndex = 15;
-            this.txtPacketEditExp.Text = "";
+            this.label4.Text = "AÇIKLAMA";
             // 
             // label5
             // 
@@ -157,15 +147,25 @@
             this.DGVLeftEdit.SortStringChanged += new System.EventHandler<Zuby.ADGV.AdvancedDataGridView.SortEventArgs>(this.DGVLeftEdit_SortStringChanged);
             this.DGVLeftEdit.FilterStringChanged += new System.EventHandler<Zuby.ADGV.AdvancedDataGridView.FilterEventArgs>(this.DGVLeftEdit_FilterStringChanged);
             // 
+            // txtPacketEditExp
+            // 
+            this.txtPacketEditExp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPacketEditExp.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.txtPacketEditExp.Location = new System.Drawing.Point(846, 562);
+            this.txtPacketEditExp.Name = "txtPacketEditExp";
+            this.txtPacketEditExp.Size = new System.Drawing.Size(472, 26);
+            this.txtPacketEditExp.TabIndex = 19;
+            // 
             // PacketEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1324, 681);
+            this.Controls.Add(this.txtPacketEditExp);
             this.Controls.Add(this.DGVLeftEdit);
             this.Controls.Add(this.cmbOutAccountInfoEdit);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.txtPacketEditExp);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnEditPacket);
             this.Controls.Add(this.DGVRightEdit);
@@ -188,9 +188,9 @@
         private System.Windows.Forms.Button btnEditPacket;
         private System.Windows.Forms.DataGridView DGVRightEdit;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.RichTextBox txtPacketEditExp;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cmbOutAccountInfoEdit;
         private Zuby.ADGV.AdvancedDataGridView DGVLeftEdit;
+        private System.Windows.Forms.TextBox txtPacketEditExp;
     }
 }

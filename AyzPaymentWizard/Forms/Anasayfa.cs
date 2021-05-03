@@ -97,6 +97,7 @@ namespace AyzPaymentWizard
             dataGridViewPacket.Columns["TotalPaid"].HeaderText = "Ödenecek";
             dataGridViewPacket.Columns["Note"].HeaderText = "Not";
             dataGridViewPacket.Columns["ApprovalNote"].HeaderText = "Onay Notu";
+            dataGridViewPacket.Columns["Currency"].HeaderText = "";
             dataGridViewPacket.Columns["FirmNr"].HeaderText = "Firma No";
             dataGridViewPacket.Columns["StatusMask"].HeaderText = "Paket Durumu";
             dataGridViewPacket.Columns["ApprovedBy"].HeaderText = "Onaylayan";
@@ -140,6 +141,7 @@ namespace AyzPaymentWizard
                     packet.ModifiedTime = dr["MODIFIED_TIME"].ToString() == "" ? 0 : Convert.ToInt32(dr["MODIFIED_TIME"]);
                     packet.TotalRequired = Convert.ToDecimal(dr["TOTAL_REQUIRED"].ToString());
                     packet.TotalPaid = Convert.ToDecimal(dr["TOTAL_PAID"].ToString());
+                    packet.Currency = dr["CURRENCY"].ToString();
                     packet.Note = dr["NOTE"].ToString();
                     packet.ApprovalNote = dr["APPROVALNOTE"].ToString();
                     packet.FirmNr = Convert.ToInt32(dr["FIRMNR"].ToString());
@@ -175,6 +177,8 @@ namespace AyzPaymentWizard
             var source = new BindingSource();
             source.DataSource = packets;
             dataGridViewPacket.DataSource = source;
+
+            dataGridViewPacket.Columns["Currency"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -834,7 +838,7 @@ namespace AyzPaymentWizard
                     }
                     else
                     {
-                        MessageBox.Show("Bu Paketin Banka Tarafından Henüz Akibet Dosyası Yollanmamıştır!","BANKADAN GELEN CEVAP");
+                        MessageBox.Show("Bu Paketin Banka Tarafından Henüz Akibet Dosyası Yollanmamıştır!", "BANKADAN GELEN CEVAP");
                     }
                 }
             }
@@ -1020,6 +1024,28 @@ namespace AyzPaymentWizard
             else
             {
                 MessageBox.Show("Hatalı");
+            }
+        }
+
+        private void dataGridViewPacket_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && e.Button == MouseButtons.Right)
+            {
+                dataGridViewPacket.Rows[e.RowIndex].Selected = true;
+                Rectangle r = dataGridViewPacket.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, true);
+                contextMenuStripAnasayfa.Show((Control)sender, r.Left + e.X, r.Top + e.Y);
+            }
+        }
+
+        private void akibetiİnceleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int packetId = (int)dataGridViewPacket.SelectedRows[0].Cells["ID"].Value;
+            int packetStatus = (int)dataGridViewPacket.SelectedRows[0].Cells["STATUS"].Value;
+            if (packetStatus == (int)Helper.PacketStatus.AnswerReceivedBank)
+            {
+                bool review = true;
+                DebitClosingForm form = new DebitClosingForm(packetId, review);
+                form.Show();
             }
         }
     }

@@ -32,11 +32,11 @@
             this.btnRight = new System.Windows.Forms.Button();
             this.btnLeft = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtPacketExp = new System.Windows.Forms.RichTextBox();
             this.cmbOutAccountInfo = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.dataGridViewLeft = new Zuby.ADGV.AdvancedDataGridView();
             this.dataGridViewRight = new System.Windows.Forms.DataGridView();
+            this.txtPacketExp = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRight)).BeginInit();
             this.SuspendLayout();
@@ -86,22 +86,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label4.Location = new System.Drawing.Point(688, 541);
+            this.label4.Location = new System.Drawing.Point(688, 567);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(106, 40);
+            this.label4.Size = new System.Drawing.Size(90, 20);
             this.label4.TabIndex = 14;
-            this.label4.Text = "PAKET\r\nAÇIKLAMASI";
-            // 
-            // txtPacketExp
-            // 
-            this.txtPacketExp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPacketExp.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtPacketExp.Location = new System.Drawing.Point(847, 531);
-            this.txtPacketExp.Name = "txtPacketExp";
-            this.txtPacketExp.Size = new System.Drawing.Size(470, 59);
-            this.txtPacketExp.TabIndex = 15;
-            this.txtPacketExp.Text = "";
+            this.label4.Text = "AÇIKLAMA";
             // 
             // cmbOutAccountInfo
             // 
@@ -155,19 +144,29 @@
             this.dataGridViewRight.Location = new System.Drawing.Point(692, 5);
             this.dataGridViewRight.Name = "dataGridViewRight";
             this.dataGridViewRight.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewRight.Size = new System.Drawing.Size(625, 520);
+            this.dataGridViewRight.Size = new System.Drawing.Size(625, 550);
             this.dataGridViewRight.TabIndex = 20;
+            // 
+            // txtPacketExp
+            // 
+            this.txtPacketExp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPacketExp.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.txtPacketExp.Location = new System.Drawing.Point(847, 561);
+            this.txtPacketExp.Name = "txtPacketExp";
+            this.txtPacketExp.Size = new System.Drawing.Size(470, 26);
+            this.txtPacketExp.TabIndex = 21;
             // 
             // PacketPreparation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1324, 681);
+            this.Controls.Add(this.txtPacketExp);
             this.Controls.Add(this.dataGridViewRight);
             this.Controls.Add(this.dataGridViewLeft);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cmbOutAccountInfo);
-            this.Controls.Add(this.txtPacketExp);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnLeft);
             this.Controls.Add(this.btnRight);
@@ -189,10 +188,10 @@
         private System.Windows.Forms.Button btnRight;
         private System.Windows.Forms.Button btnLeft;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.RichTextBox txtPacketExp;
         private System.Windows.Forms.ComboBox cmbOutAccountInfo;
         private System.Windows.Forms.Label label5;
         private Zuby.ADGV.AdvancedDataGridView dataGridViewLeft;
         private System.Windows.Forms.DataGridView dataGridViewRight;
+        private System.Windows.Forms.TextBox txtPacketExp;
     }
 }
