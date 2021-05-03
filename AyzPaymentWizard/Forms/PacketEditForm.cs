@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Linq.Dynamic;
+using System.Reflection;
+using System.Runtime.Serialization;
 
 namespace AyzPaymentWizard.Forms
 {
@@ -83,7 +85,7 @@ namespace AyzPaymentWizard.Forms
         {
             try
             {
-                if (string.IsNullOrEmpty(DGVLeftEdit.FilterString) == true)
+                if (string.IsNullOrEmpty(DGVLeftEdit.FilterString))
                 {
                     PacketEditsLeftList.Clear();
                     var source = new BindingSource();
@@ -93,111 +95,201 @@ namespace AyzPaymentWizard.Forms
                 }
                 else
                 {
-                    var listfilter = FilterStringConverter(DGVLeftEdit.FilterString);
-
-                    PacketEditsLeftList = PacketEditsLeftList.Where(listfilter).ToList();
-
-                    DGVLeftEdit.DataSource = PacketEditsLeftList;
+                    IEnumerable<Debit> enumerable = PacketEditsLeftList.AsEnumerable();
+                    PacketEditsLeftList = FilterAndSortDataStr(enumerable, DGVLeftEdit.FilterString, DGVLeftEdit.SortString);
                 }
+                DGVLeftEdit.DataSource = PacketEditsLeftList;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Hata: \n" + ex.Message);
             }
+            //try
+            //{
+            //    if (string.IsNullOrEmpty(DGVLeftEdit.FilterString) == true)
+            //    {
+            //        PacketEditsLeftList.Clear();
+            //        var source = new BindingSource();
+            //        FillLeftList();
+            //        source.DataSource = PacketEditsLeftList;
+            //        DGVLeftEdit.DataSource = source;
+            //    }
+            //    else
+            //    {
+            //        var listfilter = FilterStringConverter(DGVLeftEdit.FilterString);
+
+            //        PacketEditsLeftList = PacketEditsLeftList.Where(listfilter).ToList();
+
+            //        DGVLeftEdit.DataSource = PacketEditsLeftList;
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Hata: \n" + ex.Message);
+            //}
         }
 
-        private string FilterStringConverter(string filter)
+        //Filtereleme Metodu 
+        private List<Debit> FilterAndSortDataStr(IEnumerable<Debit> collection, string filter, string sort)
         {
-            string newColFilter = "";
-
-            filter = filter.Replace("(", "").Replace(")", "");
-
-            var colFilterList = filter.Split(new string[] { "AND" }, StringSplitOptions.None);
-
-            string andOperator = "";
-
-            foreach (var colFilter in colFilterList)
+            if (collection == null)
             {
-                newColFilter += andOperator;
-
-                var colName = "";
-
-                // Step 1: BOOLEAN Check 
-                if (colFilter.Contains(" IN ") == false && colFilter.Split('=').Length == 2)
-                {
-                    // if the filter string is in the form "ColumnName=value". example = "(InAlarm != null && (InAlarm == true))";
-                    colName = colFilter.Split('=')[0];
-                    var booleanVal = colFilter.Split('=')[1];
-
-                    newColFilter += $"({colName} != null && ({colName} == {booleanVal}))";
-
-                    continue;
-                }
-
-                // Step 2: NUMBER (int/decimal/double/etc) and STRING Check
-                if (colFilter.Contains(" IN ") == true)
-                {
-                    var temp1 = colFilter.Trim().Split(new string[] { "IN" }, StringSplitOptions.None);
-
-                    colName = GetStringBetweenChars(temp1[0], '[', ']');
-
-                    var filterValsList = temp1[1].Split(',');
-
-                    newColFilter += string.Format("({0} != null && (", colName);
-
-                    string orOperator = "";
-
-                    foreach (var filterVal in filterValsList)
-                    {
-                        double tempNum = 0;
-                        if (Double.TryParse(filterVal, out tempNum))
-                            newColFilter += string.Format("{0} {1} = {2}", orOperator, colName, filterVal.Trim());
-                        else
-                            newColFilter += string.Format("{0} {1}.Contains({2})", orOperator, colName, filterVal.Trim());
-
-                        orOperator = " OR ";
-                    }
-
-                    newColFilter += "))";
-                }
-
-                // Step 3: DATETIME Check
-                if (colFilter.Contains(" LIKE ") == true && colFilter.Contains("Convert[") == true)
-                {
-                    // first of all remove the cast
-                    var colFilterNoCast = colFilter.Replace("Convert", "").Replace(", 'System.String'", "");
-
-                    var filterValsList = colFilterNoCast.Trim().Split(new string[] { "OR" }, StringSplitOptions.None);
-
-                    colName = GetStringBetweenChars(filterValsList[0], '[', ']');
-
-                    newColFilter += string.Format("({0} != null && (", colName);
-
-                    string orOperator = "";
-
-                    foreach (var filterVal in filterValsList)
-                    {
-                        var v = GetStringBetweenChars(filterVal, '%', '%');
-
-                        newColFilter += string.Format("{0} {1}.Date = DateTime.Parse('{2}')", orOperator, colName, v.Trim());
-
-                        orOperator = " OR ";
-                    }
-
-                    newColFilter += "))";
-                }
-
-                andOperator = " AND ";
+                return new List<Debit>();
+            }
+            if (string.IsNullOrWhiteSpace(filter) && string.IsNullOrWhiteSpace(sort))
+            {
+                return collection.ToList();
             }
 
-            return newColFilter.Replace("'", "\"");
+            var table = new DataTable
+            {
+                CaseSensitive = false
+            };
+
+            var props = typeof(Debit).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(prop => !Attribute.IsDefined(prop, typeof(IgnoreDataMemberAttribute)))
+                .ToList();
+
+            table.Columns.AddRange(props.Select(p => new DataColumn(p.Name, p.PropertyType)).ToArray());
+
+            table.Columns.Add(new DataColumn { DataType = typeof(int) });
+
+            var itemList = collection.ToArray();
+            var count = itemList.Length;
+            for (var i = 0; i < count; i++)
+            {
+                var data = new object[props.Count + 1];
+                var dataItems = props.Select(p => p.GetValue(itemList[i], null)).ToArray();
+
+                for (var z = 0; z < props.Count; z++)
+                {
+                    data[z] = dataItems[z];
+                }
+
+                data[props.Count] = i;
+                table.Rows.Add(data);
+            }
+
+            DataRow[] rows = null;
+
+            try
+            {
+                var dv = table.DefaultView;
+                dv.RowFilter = filter ?? string.Empty;
+                dv.Sort = sort ?? string.Empty;
+                rows = dv.ToTable().Rows.Cast<DataRow>().ToArray();
+            }
+            catch (EvaluateException) { }
+
+            var result = new List<Debit>();
+            if (rows != null)
+            {
+                var indexes = rows.Select(r => (int)r[table.Columns.Count - 1]).ToArray();
+
+                for (var i = 0; i < count; i++)
+                {
+                    if (indexes.Contains(i))
+                    {
+                        result.Add(itemList[i]);
+                    }
+                }
+            }
+
+            return result;
         }
 
-        private string GetStringBetweenChars(string input, char startChar, char endChar)
-        {
-            string output = input.Split(startChar, endChar)[1];
-            return output;
-        }
+        //private string FilterStringConverter(string filter)
+        //{
+        //    string newColFilter = "";
+
+        //    filter = filter.Replace("(", "").Replace(")", "");
+
+        //    var colFilterList = filter.Split(new string[] { "AND" }, StringSplitOptions.None);
+
+        //    string andOperator = "";
+
+        //    foreach (var colFilter in colFilterList)
+        //    {
+        //        newColFilter += andOperator;
+
+        //        var colName = "";
+
+        //        // Step 1: BOOLEAN Check 
+        //        if (colFilter.Contains(" IN ") == false && colFilter.Split('=').Length == 2)
+        //        {
+        //            // if the filter string is in the form "ColumnName=value". example = "(InAlarm != null && (InAlarm == true))";
+        //            colName = colFilter.Split('=')[0];
+        //            var booleanVal = colFilter.Split('=')[1];
+
+        //            newColFilter += $"({colName} != null && ({colName} == {booleanVal}))";
+
+        //            continue;
+        //        }
+
+        //        // Step 2: NUMBER (int/decimal/double/etc) and STRING Check
+        //        if (colFilter.Contains(" IN ") == true)
+        //        {
+        //            var temp1 = colFilter.Trim().Split(new string[] { "IN" }, StringSplitOptions.None);
+
+        //            colName = GetStringBetweenChars(temp1[0], '[', ']');
+
+        //            var filterValsList = temp1[1].Split(',');
+
+        //            newColFilter += string.Format("({0} != null && (", colName);
+
+        //            string orOperator = "";
+
+        //            foreach (var filterVal in filterValsList)
+        //            {
+        //                double tempNum = 0;
+        //                if (Double.TryParse(filterVal, out tempNum))
+        //                    newColFilter += string.Format("{0} {1} = {2}", orOperator, colName, filterVal.Trim());
+        //                else
+        //                    newColFilter += string.Format("{0} {1}.Contains({2})", orOperator, colName, filterVal.Trim());
+
+        //                orOperator = " OR ";
+        //            }
+
+        //            newColFilter += "))";
+        //        }
+
+        //        // Step 3: DATETIME Check
+        //        if (colFilter.Contains(" LIKE ") == true && colFilter.Contains("Convert[") == true)
+        //        {
+        //            // first of all remove the cast
+        //            var colFilterNoCast = colFilter.Replace("Convert", "").Replace(", 'System.String'", "");
+
+        //            var filterValsList = colFilterNoCast.Trim().Split(new string[] { "OR" }, StringSplitOptions.None);
+
+        //            colName = GetStringBetweenChars(filterValsList[0], '[', ']');
+
+        //            newColFilter += string.Format("({0} != null && (", colName);
+
+        //            string orOperator = "";
+
+        //            foreach (var filterVal in filterValsList)
+        //            {
+        //                var v = GetStringBetweenChars(filterVal, '%', '%');
+
+        //                newColFilter += string.Format("{0} {1}.Date = DateTime.Parse('{2}')", orOperator, colName, v.Trim());
+
+        //                orOperator = " OR ";
+        //            }
+
+        //            newColFilter += "))";
+        //        }
+
+        //        andOperator = " AND ";
+        //    }
+
+        //    return newColFilter.Replace("'", "\"");
+        //}
+
+        //private string GetStringBetweenChars(string input, char startChar, char endChar)
+        //{
+        //    string output = input.Split(startChar, endChar)[1];
+        //    return output;
+        //}
 
         private void PacketEditForm_Load(object sender, EventArgs e)
         {
