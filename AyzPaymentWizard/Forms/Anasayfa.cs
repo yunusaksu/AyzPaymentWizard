@@ -799,11 +799,9 @@ namespace AyzPaymentWizard
                             }
                             if (check == true)
                             {
-                                saveDownloadedFiles(item, DetailResult, FooterResult);
-                                DebitClosingForm form = new DebitClosingForm(packetId);
+                                DebitClosingForm form = new DebitClosingForm(packetId, item, DetailResult, FooterResult);
                                 form.ShowDialog();
                             }
-
                         }
                         catch (Exception ex)
                         {
@@ -812,93 +810,35 @@ namespace AyzPaymentWizard
                     }
                 }
 
-                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-                {
-                    CommandText = "SELECT PAYMENT_STATUS FROM AYZ_PW_SUMMARY WHERE PAYMENT_STATUS IS NOT NULL AND PACKETID = '" + packetId + "'";
-                    komut.CommandText = CommandText;
-                    komut.Connection = conn;
-                    conn.Open();
-                    dr = komut.ExecuteReader();
-                    if (dr.HasRows)
-                    {
-                        using (SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString))
-                        {
-                            // Güncellenecek Alanlar: STATUS                        
-                            CommandText = "UPDATE AYZ_PW_PACKET" +
-                                          "\nSET STATUS = " + (int)Helper.PacketStatus.AnswerReceivedBank + "" +
-                                          "\nWHERE ID = " + packetId + "";
-                            komut.CommandText = CommandText;
-                            komut.Connection = conn2;
-                            conn2.Open();
-                            komut.ExecuteNonQuery();
-                            conn2.Close();
-                        }
-                        Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
-                        form.FillPacketList();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Bu Paketin Banka Tarafından Henüz Akibet Dosyası Yollanmamıştır!", "BANKADAN GELEN CEVAP");
-                    }
-                }
-            }
-        }
-
-        private void saveDownloadedFiles(string item, PAYMENTOUTCOME[] result, FOOTER[] footerResult)
-        {
-            decimal SumOfLines = Convert.ToDecimal(footerResult[0].PAYMENT_TOTAL);
-            int CountOfLines = Convert.ToInt32(footerResult[0].PAYMENT_COUNT);
-            int DownloadedFileID;
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-                {
-                    CommandText = "INSERT INTO AYZ_PW_DOWNLOADED_FILE(FILENAME,FIRMNR,DOWNLOAD_DATE,DOWNLOAD_TIME,COUNT_LINE,SUM_LINE) " +
-                              "VALUES(" +
-                              "\n'" + item + "'," +
-                              "\n'" + Helper.FIRMNR + "'," +
-                              "\nCONVERT(DATE, GETDATE(), 104)," +
-                              "\n'" + Helper.GetTime() + "'," +
-                              "\n'" + CountOfLines + "'," +
-                              "\n'" + SumOfLines + "'" +
-                              "\n);SELECT SCOPE_IDENTITY()";
-                    komut.CommandText = CommandText;
-                    komut.Connection = conn;
-                    conn.Open();
-                    DownloadedFileID = Convert.ToInt32(komut.ExecuteScalar());
-                    for (int i = 0; i < result.Length; i++)
-                    {
-                        string day = result[i].TRANSACTION_DATE.ToString().Substring(0, 2);
-                        string month = result[i].TRANSACTION_DATE.ToString().Substring(2, 2);
-                        string year = result[i].TRANSACTION_DATE.ToString().Substring(4, 4);
-                        string date = day + "." + month + "." + year;
-                        komut.CommandText = "INSERT INTO [AYZ_PW_DOWNLOADED_FILE_DETAIL]        (PARENTREF,FIRMNR,RECORD_TYPE,TARGET_BANK,TARGET_BRANCH,TARGET_ACCNO,CURRCODE,AMOUNT,EXPLAIN,COMPANY_REF," +
-                                  "PAYMENT_STATUS,TRANSACTIONNO,TRANSACTION_DATE,EFTQUERY_NO,IBAN) " +
-                                  "VALUES(" +
-                                          "\n'" + DownloadedFileID + "', " +
-                                          "\n'" + Helper.FIRMNR + "'," +
-                                          "\n'" + result[i].TYPE + "', " +
-                                          "\n'" + result[i].BANKCODE + "', " +
-                                          "\n'" + result[i].BRANCHCODE + "', " +
-                                          "\n'" + result[i].ACCOUNTNO + "', " +
-                                          "\n'" + result[i].CURRENCYCODE + "', " +
-                                          "\n'" + result[i].AMOUNT + "', " +
-                                          "\n'" + result[i].DESCRIPTION + "', " +
-                                          "\n'" + result[i].COMPANYREF + "', " +
-                                          "\n'" + result[i].PAYMENTSTATUS + "', " +
-                                          "\n'" + result[i].TRANSACTIONNO + "', " +
-                                          "\n CONVERT(DATE,'" + date + "', 104), " +
-                                          "\n'" + result[i].EFTQUERYNO + "', " +
-                                          "\n'" + result[i].IBAN + "' " +
-                                          ")";
-                        komut.ExecuteNonQuery();
-                    }
-                    conn.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Hata: \n" + ex.Message);
+                //using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                //{
+                //    CommandText = "SELECT PAYMENT_STATUS FROM AYZ_PW_SUMMARY WHERE PAYMENT_STATUS IS NOT NULL AND PACKETID = '" + packetId + "'";
+                //    komut.CommandText = CommandText;
+                //    komut.Connection = conn;
+                //    conn.Open();
+                //    dr = komut.ExecuteReader();
+                //    if (dr.HasRows)
+                //    {
+                //        using (SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString))
+                //        {
+                //            // Güncellenecek Alanlar: STATUS                        
+                //            CommandText = "UPDATE AYZ_PW_PACKET" +
+                //                          "\nSET STATUS = " + (int)Helper.PacketStatus.AnswerReceivedBank + "" +
+                //                          "\nWHERE ID = " + packetId + "";
+                //            komut.CommandText = CommandText;
+                //            komut.Connection = conn2;
+                //            conn2.Open();
+                //            komut.ExecuteNonQuery();
+                //            conn2.Close();
+                //        }
+                //        Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
+                //        form.FillPacketList();
+                //    }
+                //    else
+                //    {
+                //        MessageBox.Show("Bu Paketin Banka Tarafından Henüz Akibet Dosyası Yollanmamıştır!", "BANKADAN GELEN CEVAP");
+                //    }
+                //}
             }
         }
 

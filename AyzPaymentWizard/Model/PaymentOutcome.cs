@@ -132,8 +132,6 @@ namespace AyzPaymentWizard.Model
 
     public class SUB_PAYMENTOUTCOME
     {
-        public int ID { get; set; }
-        public int PARANTREF { get; set; }
         public string CLCODE { get; set; }
         public string TYPE { get; set; }
         public int BANKCODE { get; set; }

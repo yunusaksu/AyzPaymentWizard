@@ -20,7 +20,9 @@ namespace AyzPaymentWizard.Forms
         string CommandText = "";
         int PacketID;
         bool Review = false;
-
+        string Item = "";
+        PAYMENTOUTCOME[] DetailResult;
+        FOOTER[] FooterResult;
         public DebitClosingForm()
         {
             InitializeComponent();
@@ -33,10 +35,14 @@ namespace AyzPaymentWizard.Forms
             InitializeComponent();
         }
 
-        public DebitClosingForm(int packetId)
+
+        public DebitClosingForm(int packetId, string item, PAYMENTOUTCOME[] detailResult, FOOTER[] footerResult)
         {
             InitializeComponent();
             PacketID = packetId;
+            Item = item;
+            DetailResult = detailResult;
+            FooterResult = footerResult;
         }
 
         private void DebitClosingForm_Load(object sender, EventArgs e)
@@ -48,37 +54,38 @@ namespace AyzPaymentWizard.Forms
 
         private void fillDGVDebitClosing()
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            for (int i = 0; i < DetailResult.Length; i++)
             {
-                CommandText = "\nSELECT D.*,CLIENT.CODE FROM AYZ_PW_SUMMARY AS S " +
-                              "\nLEFT JOIN AYZ_PW_DOWNLOADED_FILE_DETAIL D ON S.RETURNKEY = D.COMPANY_REF " +
-                              "\nLEFT JOIN LG_001_CLCARD AS CLIENT ON CLIENT.LOGICALREF = S.CLIENTREF " +
-                              "\nWHERE PACKETID = '" + PacketID + "' AND D.ID IS NOT NULL";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                while (dr.Read())
+                SUB_PAYMENTOUTCOME payment = new SUB_PAYMENTOUTCOME();
+                payment.ACCOUNTNO = DetailResult[i].ACCOUNTNO;
+                payment.BRANCHCODE = DetailResult[i].BRANCHCODE;
+                payment.BANKCODE = DetailResult[i].BANKCODE;
+                payment.PAYMENTSTATUS = DetailResult[i].PAYMENTSTATUS;
+                payment.CURRENCYCODE = DetailResult[i].CURRENCYCODE;
+                payment.AMOUNT = DetailResult[i].AMOUNT;
+                payment.DESCRIPTION = DetailResult[i].DESCRIPTION;
+                payment.COMPANYREF = DetailResult[i].COMPANYREF;
+                payment.TRANSACTIONNO = DetailResult[i].TRANSACTIONNO;
+                payment.EFTQUERYNO = DetailResult[i].EFTQUERYNO;
+                payment.IBAN = DetailResult[i].IBAN;
+                payment.TYPE = DetailResult[i].TYPE;                
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
-                    SUB_PAYMENTOUTCOME payment = new SUB_PAYMENTOUTCOME();
-                    payment.ID = Convert.ToInt32(dr["ID"].ToString());
-                    payment.PARANTREF = Convert.ToInt32(dr["PARENTREF"].ToString());
-                    payment.ACCOUNTNO = dr["TARGET_ACCNO"].ToString();
-                    payment.BRANCHCODE = Convert.ToInt32(dr["TARGET_BRANCH"].ToString());
-                    payment.BANKCODE = Convert.ToInt32(dr["TARGET_BANK"].ToString());
-                    payment.PAYMENTSTATUS = Convert.ToInt32(dr["PAYMENT_STATUS"].ToString());
-                    payment.CURRENCYCODE = dr["CURRCODE"].ToString();
-                    payment.AMOUNT = dr["AMOUNT"].ToString();
-                    payment.DESCRIPTION = dr["EXPLAIN"].ToString();
-                    payment.COMPANYREF = dr["COMPANY_REF"].ToString();
-                    payment.TRANSACTIONNO = Convert.ToInt32(dr["TRANSACTIONNO"].ToString());
-                    payment.EFTQUERYNO = Convert.ToInt32(dr["EFTQUERY_NO"].ToString());
-                    payment.IBAN = dr["IBAN"].ToString();
-                    payment.TYPE = dr["RECORD_TYPE"].ToString();
-                    payment.CLCODE = dr["CODE"].ToString();
-                    liste.Add(payment);
+                    CommandText = "SELECT C.CODE FROM AYZ_PW_SUMMARY AS S " +
+                                  "\nLEFT JOIN LG_" + Helper.FIRMANO + "_CLCARD AS C ON C.LOGICALREF = S.CLIENTREF " +
+                                  "\nWHERE S.RETURNKEY = '" + payment.COMPANYREF + "'";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        payment.CLCODE = dr["CODE"].ToString();
+                    }
                 }
-            }
+                liste.Add(payment);
+            }            
+
             var source = new BindingSource();
             source.DataSource = liste;
             DGVDebitClosing.DataSource = source;
@@ -201,6 +208,36 @@ namespace AyzPaymentWizard.Forms
                 }
             }
 
+            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                CommandText = "SELECT PAYMENT_STATUS FROM AYZ_PW_SUMMARY WHERE PAYMENT_STATUS IS NOT NULL AND PACKETID = '" + PacketID + "'";
+                komut.CommandText = CommandText;
+                komut.Connection = conn;
+                conn.Open();
+                dr = komut.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    using (SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString))
+                    {
+                        // Güncellenecek Alanlar: STATUS                        
+                        CommandText = "UPDATE AYZ_PW_PACKET" +
+                                      "\nSET STATUS = " + (int)Helper.PacketStatus.AnswerReceivedBank + "" +
+                                      "\nWHERE ID = " + PacketID + "";
+                        komut.CommandText = CommandText;
+                        komut.Connection = conn2;
+                        conn2.Open();
+                        komut.ExecuteNonQuery();
+                        conn2.Close();
+                    }
+                    saveDownloadedFiles(Item, DetailResult, FooterResult);
+                    Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
+                    form.FillPacketList();
+                }
+                else
+                {
+                    MessageBox.Show("Bu Paketin Banka Tarafından Henüz Akibet Dosyası Yollanmamıştır!", "BANKADAN GELEN CEVAP");
+                }
+            }
         }
 
         private string GetClCardEmuhaccCode(string clCode)
@@ -309,6 +346,64 @@ namespace AyzPaymentWizard.Forms
                 }
             }
             return ReportCurRate;
+        }
+
+        private void saveDownloadedFiles(string item, PAYMENTOUTCOME[] result, FOOTER[] footerResult)
+        {
+            decimal SumOfLines = Convert.ToDecimal(footerResult[0].PAYMENT_TOTAL);
+            int CountOfLines = Convert.ToInt32(footerResult[0].PAYMENT_COUNT);
+            int DownloadedFileID;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "INSERT INTO AYZ_PW_DOWNLOADED_FILE(FILENAME,FIRMNR,DOWNLOAD_DATE,DOWNLOAD_TIME,COUNT_LINE,SUM_LINE) " +
+                              "VALUES(" +
+                              "\n'" + item + "'," +
+                              "\n'" + Helper.FIRMNR + "'," +
+                              "\nCONVERT(DATE, GETDATE(), 104)," +
+                              "\n'" + Helper.GetTime() + "'," +
+                              "\n'" + CountOfLines + "'," +
+                              "\n'" + SumOfLines + "'" +
+                              "\n);SELECT SCOPE_IDENTITY()";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    DownloadedFileID = Convert.ToInt32(komut.ExecuteScalar());
+                    for (int i = 0; i < result.Length; i++)
+                    {
+                        string day = result[i].TRANSACTION_DATE.ToString().Substring(0, 2);
+                        string month = result[i].TRANSACTION_DATE.ToString().Substring(2, 2);
+                        string year = result[i].TRANSACTION_DATE.ToString().Substring(4, 4);
+                        string date = day + "." + month + "." + year;
+                        komut.CommandText = "INSERT INTO [AYZ_PW_DOWNLOADED_FILE_DETAIL]        (PARENTREF,FIRMNR,RECORD_TYPE,TARGET_BANK,TARGET_BRANCH,TARGET_ACCNO,CURRCODE,AMOUNT,EXPLAIN,COMPANY_REF," +
+                                  "PAYMENT_STATUS,TRANSACTIONNO,TRANSACTION_DATE,EFTQUERY_NO,IBAN) " +
+                                  "VALUES(" +
+                                          "\n'" + DownloadedFileID + "', " +
+                                          "\n'" + Helper.FIRMNR + "'," +
+                                          "\n'" + result[i].TYPE + "', " +
+                                          "\n'" + result[i].BANKCODE + "', " +
+                                          "\n'" + result[i].BRANCHCODE + "', " +
+                                          "\n'" + result[i].ACCOUNTNO + "', " +
+                                          "\n'" + result[i].CURRENCYCODE + "', " +
+                                          "\n'" + result[i].AMOUNT + "', " +
+                                          "\n'" + result[i].DESCRIPTION + "', " +
+                                          "\n'" + result[i].COMPANYREF + "', " +
+                                          "\n'" + result[i].PAYMENTSTATUS + "', " +
+                                          "\n'" + result[i].TRANSACTIONNO + "', " +
+                                          "\n CONVERT(DATE,'" + date + "', 104), " +
+                                          "\n'" + result[i].EFTQUERYNO + "', " +
+                                          "\n'" + result[i].IBAN + "' " +
+                                          ")";
+                        komut.ExecuteNonQuery();
+                    }
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hata: \n" + ex.Message);
+            }
         }
     }
 }
