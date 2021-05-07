@@ -628,6 +628,7 @@ namespace AyzPaymentWizard
                     invEndDate = invoiceDateList[1];
                 }
                 #endregion
+
             }
 
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))

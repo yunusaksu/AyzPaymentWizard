@@ -545,6 +545,19 @@ namespace AyzPaymentWizard.Forms
             DGVLeftEdit.Columns["CurCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVLeftEdit.Columns["FicheDate"].Width = 75;
             DGVLeftEdit.Columns["FicheNo"].Width = 90;
+
+            //Middle Center Alignment of DGVLEFTEDIT
+            Dictionary<string, DataGridView> LGCenteredEd = new Dictionary<string, DataGridView>();
+            DataGridView dgl = DGVLeftEdit;
+            string[] strLeft = { "CurCode", "Total" };
+            foreach (var str in strLeft)
+            {
+                LGCenteredEd.Add(str, dgl);
+                foreach (var LC in LGCenteredEd)
+                {
+                    LC.Value.Columns[LC.Key].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                }
+            }
             //form.DGVLeftEdit.Columns["CurCode"].DisplayIndex = 1; HANGİ COLUMNDA Göstermek istersek bu şekilde yapabiliriz.
             #endregion
 
@@ -608,6 +621,20 @@ namespace AyzPaymentWizard.Forms
             DGVRightEdit.Columns["PlanCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVRightEdit.Columns["InternetMainCategory"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             DGVRightEdit.Columns["InternetSubCategory"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+
+            // Center Align of Columns of RGCenteredEd
+            Dictionary<string, DataGridView> RGCenteredEd = new Dictionary<string, DataGridView>();
+            DataGridView dgr = DGVRightEdit;
+            string[] strRight = { "CUrCode", "Paid" };
+            foreach (var str in strRight)
+            {
+                RGCenteredEd.Add(str, dgr);
+                foreach (var LC in RGCenteredEd)
+                {
+                    LC.Value.Columns[LC.Key].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                }
+            }
+
             if (detailSendingValue == 2) // Ödeme Satırları Üzerinden
             {
                 DGVRightEdit.Columns["MecraType"].Visible = false;
