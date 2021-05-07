@@ -37,6 +37,8 @@
             this.cmbOutAccountInfoEdit = new System.Windows.Forms.ComboBox();
             this.DGVLeftEdit = new Zuby.ADGV.AdvancedDataGridView();
             this.txtPacketEditExp = new System.Windows.Forms.TextBox();
+            this.btnPLeft = new System.Windows.Forms.Button();
+            this.btnPRight = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DGVRightEdit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGVLeftEdit)).BeginInit();
             this.SuspendLayout();
@@ -44,7 +46,7 @@
             // btnRightPacketEdit
             // 
             this.btnRightPacketEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnRightPacketEdit.Location = new System.Drawing.Point(639, 273);
+            this.btnRightPacketEdit.Location = new System.Drawing.Point(639, 257);
             this.btnRightPacketEdit.Name = "btnRightPacketEdit";
             this.btnRightPacketEdit.Size = new System.Drawing.Size(47, 44);
             this.btnRightPacketEdit.TabIndex = 10;
@@ -55,7 +57,7 @@
             // btnLeftPacketEdit
             // 
             this.btnLeftPacketEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnLeftPacketEdit.Location = new System.Drawing.Point(639, 323);
+            this.btnLeftPacketEdit.Location = new System.Drawing.Point(639, 307);
             this.btnLeftPacketEdit.Name = "btnLeftPacketEdit";
             this.btnLeftPacketEdit.Size = new System.Drawing.Size(47, 44);
             this.btnLeftPacketEdit.TabIndex = 11;
@@ -157,11 +159,35 @@
             this.txtPacketEditExp.Size = new System.Drawing.Size(472, 26);
             this.txtPacketEditExp.TabIndex = 19;
             // 
+            // btnPLeft
+            // 
+            this.btnPLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnPLeft.Location = new System.Drawing.Point(639, 157);
+            this.btnPLeft.Name = "btnPLeft";
+            this.btnPLeft.Size = new System.Drawing.Size(47, 44);
+            this.btnPLeft.TabIndex = 20;
+            this.btnPLeft.Text = ">";
+            this.btnPLeft.UseVisualStyleBackColor = true;
+            this.btnPLeft.Click += new System.EventHandler(this.btnPLeft_Click);
+            // 
+            // btnPRight
+            // 
+            this.btnPRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnPRight.Location = new System.Drawing.Point(639, 207);
+            this.btnPRight.Name = "btnPRight";
+            this.btnPRight.Size = new System.Drawing.Size(47, 44);
+            this.btnPRight.TabIndex = 21;
+            this.btnPRight.Text = "<";
+            this.btnPRight.UseVisualStyleBackColor = true;
+            this.btnPRight.Click += new System.EventHandler(this.btnPRight_Click);
+            // 
             // PacketEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1324, 681);
+            this.Controls.Add(this.btnPRight);
+            this.Controls.Add(this.btnPLeft);
             this.Controls.Add(this.txtPacketEditExp);
             this.Controls.Add(this.DGVLeftEdit);
             this.Controls.Add(this.cmbOutAccountInfoEdit);
@@ -192,5 +218,7 @@
         private System.Windows.Forms.ComboBox cmbOutAccountInfoEdit;
         private Zuby.ADGV.AdvancedDataGridView DGVLeftEdit;
         private System.Windows.Forms.TextBox txtPacketEditExp;
+        private System.Windows.Forms.Button btnPLeft;
+        private System.Windows.Forms.Button btnPRight;
     }
 }

@@ -93,7 +93,7 @@ namespace AyzPaymentWizard
         private string UserRead()
         {
             StringBuilder sb = new StringBuilder(5000);
-            GetPrivateProfileString("KullaniciBaslik", "KullaniciAdi", "", sb, sb.Capacity, "C:\\Users\\yunus\\Desktop\\System.ini");
+            GetPrivateProfileString("KullaniciBaslik", "KullaniciAdi", "", sb, sb.Capacity, @"C:\WorkPrograms\AyzPaymentWizard\System.ini");
             string user = sb.ToString();
             return user;
         }
@@ -101,7 +101,7 @@ namespace AyzPaymentWizard
         private string PasswordRead()
         {
             StringBuilder sb2 = new StringBuilder(5000);
-            GetPrivateProfileString("PasswordBaslik", "Password", "", sb2, sb2.Capacity, "C:\\Users\\yunus\\Desktop\\System.ini");
+            GetPrivateProfileString("PasswordBaslik", "Password", "", sb2, sb2.Capacity, @"C:\WorkPrograms\AyzPaymentWizard\System.ini");
             string password = sb2.ToString();
             return password;
         }             

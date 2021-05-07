@@ -51,6 +51,150 @@ namespace AyzPaymentWizard.Forms
         DateTime payBegDate, payEndDate, invBegDate, invEndDate;
         #endregion                         
 
+        private void btnPLeft_Click(object sender, EventArgs e)
+        {
+            for (int i = DGVLeftEdit.Rows.Count - 1; i >= 0; i--)
+            {
+                
+                DataGridViewRow drv = DGVLeftEdit.Rows[i];
+                bool selectedRow = Convert.ToBoolean(drv.Selected);
+                if (selectedRow)
+                {
+                    Debit debit = new Debit();
+                    #region şimdilik isimsiz region                    
+                    debit.PayRef = Convert.ToInt32(drv.Cells["PayRef"].Value);
+                    debit.ClCardRef = Convert.ToInt32(drv.Cells["ClCardRef"].Value);
+                    debit.FicheRef = Convert.ToInt32(drv.Cells["FicheRef"].Value);
+                    debit.ModuleNr = Convert.ToInt32(drv.Cells["ModuleNr"].Value);
+                    debit.DueDate = Convert.ToDateTime(drv.Cells["DueDate"].Value);
+                    debit.TrCode = Convert.ToInt32(drv.Cells["TrCode"].Value);
+                    debit.Total = Convert.ToDecimal(drv.Cells["Total"].Value);
+                    debit.CurCode = drv.Cells["CurCode"].Value.ToString();
+                    debit.TrCurr = Convert.ToInt32(drv.Cells["TrCurr"].Value);
+                    debit.ClCode = drv.Cells["ClCode"].Value.ToString();
+                    debit.ClDef = drv.Cells["ClDef"].Value.ToString();
+                    debit.IsPerson = Convert.ToInt32(drv.Cells["IsPerson"].Value);
+                    debit.TaxNr = drv.Cells["TaxNr"].Value.ToString();
+                    debit.TaxOffice = drv.Cells["TaxOffice"].Value.ToString();
+                    debit.IBAN = drv.Cells["IBAN"].Value.ToString();
+                    debit.EmailAdres = drv.Cells["EmailAdres"].Value.ToString();
+                    debit.FicheDate = Convert.ToDateTime(drv.Cells["FicheDate"].Value);
+                    debit.FicheNo = drv.Cells["FicheNo"].Value.ToString();
+                    debit.DoCode = drv.Cells["DoCode"].Value.ToString();
+                    debit.TrType = drv.Cells["TrType"].Value.ToString();
+                    debit.GenExp1 = drv.Cells["GenExp1"].Value.ToString();
+                    debit.Branch = Convert.ToInt32(drv.Cells["Branch"].Value);
+                    debit.Paid = Convert.ToDecimal(drv.Cells["Total"].Value);
+                    debit.NotInPayTrans = Helper.NotInPayTrans(debit.PayRef);
+                    if (debit.NotInPayTrans == false)
+                        debit.NotInPayTransFrame = "DELETED";
+                    else if (debit.NotInPayTrans)
+                        debit.NotInPayTransFrame = "MEVCUT";
+                    #endregion
+                    if (detailSendingValue == 3)     // Boyutlu Ödeme Satırları Üzerinden
+                    {
+                        debit.MecraType = drv.Cells["MecraType"].Value.ToString();
+                        debit.Mecra = drv.Cells["Mecra"].Value.ToString();
+                        debit.MarketingCompany = drv.Cells["MarketingCompany"].Value.ToString();
+                        debit.Customer = drv.Cells["Customer"].Value.ToString();
+                        debit.PlanCode = drv.Cells["PlanCode"].Value.ToString();
+                        debit.InternetMainCategory = drv.Cells["InternetMainCategory"].Value.ToString();
+                        debit.InternetSubCategory = drv.Cells["InternetSubCategory"].Value.ToString();
+                        debit.DD1REF = Convert.ToInt32(drv.Cells["DD1REF"].Value);
+                        debit.DD2REF = Convert.ToInt32(drv.Cells["DD2REF"].Value);
+                        debit.DD3REF = Convert.ToInt32(drv.Cells["DD3REF"].Value);
+                        debit.DD4REF = Convert.ToInt32(drv.Cells["DD4REF"].Value);
+                        debit.DD5REF = Convert.ToInt32(drv.Cells["DD5REF"].Value);
+                        debit.DD6REF = Convert.ToInt32(drv.Cells["DD6REF"].Value);
+                        debit.DD7REF = Convert.ToInt32(drv.Cells["DD7REF"].Value);
+
+                    }
+                    PacketEditsRightList.Add(debit);
+                    var select = PacketEditsLeftList.Where(x => x.PayRef == debit.PayRef).ToList();
+                    PacketEditsLeftList.Remove(select[0]);
+                }
+            }
+
+            var source = new BindingSource();
+            source.DataSource = PacketEditsRightList;
+            DGVRightEdit.DataSource = source;
+
+
+            var source2 = new BindingSource();
+            source2.DataSource = PacketEditsLeftList;
+            DGVLeftEdit.DataSource = source2;
+        }
+
+        private void btnPRight_Click(object sender, EventArgs e)
+        {
+            for (int i = DGVRightEdit.Rows.Count - 1; i >= 0; i--)
+            {
+                
+                DataGridViewRow drv = DGVRightEdit.Rows[i];
+                bool selectedRow = Convert.ToBoolean(drv.Selected);
+                if (selectedRow)
+                {
+                    Debit debit = new Debit();
+                    debit.PayRef = Convert.ToInt32(drv.Cells["PayRef"].Value);
+                    debit.ClCardRef = Convert.ToInt32(drv.Cells["ClCardRef"].Value);
+                    debit.FicheRef = Convert.ToInt32(drv.Cells["FicheRef"].Value);
+                    debit.ModuleNr = Convert.ToInt32(drv.Cells["ModuleNr"].Value);
+                    debit.DueDate = Convert.ToDateTime(drv.Cells["DueDate"].Value);
+                    debit.TrCode = Convert.ToInt32(drv.Cells["TrCode"].Value);
+                    debit.Total = Convert.ToDecimal(drv.Cells["Total"].Value);
+                    debit.CurCode = drv.Cells["CurCode"].Value.ToString();
+                    debit.TrCurr = Convert.ToInt32(drv.Cells["TrCurr"].Value);
+                    debit.ClCode = drv.Cells["ClCode"].Value.ToString();
+                    debit.ClDef = drv.Cells["ClDef"].Value.ToString();
+                    debit.IsPerson = Convert.ToInt32(drv.Cells["IsPerson"].Value);
+                    debit.TaxNr = drv.Cells["TaxNr"].Value.ToString();
+                    debit.TaxOffice = drv.Cells["TaxOffice"].Value.ToString();
+                    debit.IBAN = drv.Cells["IBAN"].Value.ToString();
+                    debit.EmailAdres = drv.Cells["EmailAdres"].Value.ToString();
+                    debit.FicheDate = Convert.ToDateTime(drv.Cells["FicheDate"].Value);
+                    debit.FicheNo = drv.Cells["FicheNo"].Value.ToString();
+                    debit.DoCode = drv.Cells["DoCode"].Value.ToString();
+                    debit.TrType = drv.Cells["TrType"].Value.ToString();
+                    debit.GenExp1 = drv.Cells["GenExp1"].Value.ToString();
+                    debit.Branch = Convert.ToInt32(drv.Cells["Branch"].Value);
+                    debit.NotInPayTrans = Helper.NotInPayTrans(debit.PayRef);
+                    if (debit.NotInPayTrans == false)
+                        debit.NotInPayTransFrame = "DELETED";
+                    else if (debit.NotInPayTrans)
+                        debit.NotInPayTransFrame = "MEVCUT";
+                    if (detailSendingValue == 3)
+                    {
+                        debit.MecraType = drv.Cells["MecraType"].Value.ToString();
+                        debit.Mecra = drv.Cells["Mecra"].Value.ToString();
+                        debit.MarketingCompany = drv.Cells["MarketingCompany"].Value.ToString();
+                        debit.Customer = drv.Cells["Customer"].Value.ToString();
+                        debit.PlanCode = drv.Cells["PlanCode"].Value.ToString();
+                        debit.InternetMainCategory = drv.Cells["InternetMainCategory"].Value.ToString();
+                        debit.InternetSubCategory = drv.Cells["InternetSubCategory"].Value.ToString();
+                        debit.DD1REF = Convert.ToInt32(drv.Cells["DD1REF"].Value);
+                        debit.DD2REF = Convert.ToInt32(drv.Cells["DD2REF"].Value);
+                        debit.DD3REF = Convert.ToInt32(drv.Cells["DD3REF"].Value);
+                        debit.DD4REF = Convert.ToInt32(drv.Cells["DD4REF"].Value);
+                        debit.DD5REF = Convert.ToInt32(drv.Cells["DD5REF"].Value);
+                        debit.DD6REF = Convert.ToInt32(drv.Cells["DD6REF"].Value);
+                        debit.DD7REF = Convert.ToInt32(drv.Cells["DD7REF"].Value);
+                    }
+                    PacketEditsLeftList.Add(debit);
+                    var select = PacketEditsRightList.Where(x => x.PayRef == debit.PayRef).ToList();
+                    PacketEditsRightList.Remove(select[0]);
+
+                }
+            }
+
+            var source = new BindingSource();
+            source.DataSource = PacketEditsRightList;
+            DGVRightEdit.DataSource = source;
+
+            var source2 = new BindingSource();
+            source2.DataSource = PacketEditsLeftList;
+            DGVLeftEdit.DataSource = source2;
+        }
+
         private void DGVLeftEdit_SortStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
         {
             try
@@ -941,6 +1085,7 @@ namespace AyzPaymentWizard.Forms
         {
             for (int i = DGVLeftEdit.Rows.Count - 1; i >= 0; i--)
             {
+                DGVLeftEdit.SelectAll();
                 DataGridViewRow drv = DGVLeftEdit.Rows[i];                
                 bool selectedRow = Convert.ToBoolean(drv.Selected);
                 if (selectedRow)
@@ -1014,6 +1159,7 @@ namespace AyzPaymentWizard.Forms
         {
             for (int i = DGVRightEdit.Rows.Count - 1; i >= 0; i--)
             {
+                DGVRightEdit.SelectAll();
                 DataGridViewRow drv = DGVRightEdit.Rows[i];
                 bool selectedRow = Convert.ToBoolean(drv.Selected);
                 if (selectedRow)
