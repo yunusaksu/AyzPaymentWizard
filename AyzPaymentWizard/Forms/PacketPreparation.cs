@@ -64,27 +64,7 @@ namespace AyzPaymentWizard
             {
                 MessageBox.Show("Hata: \n" + ex.Message);
             }
-            //try
-            //{
-            //    if (string.IsNullOrEmpty(dataGridViewLeft.FilterString) == true)
-            //    {
-            //        LeftList.Clear();
-            //        var source = new BindingSource();
-            //        FillLeftList();
-            //        source.DataSource = LeftList;
-            //        dataGridViewLeft.DataSource = source;
-            //    }
-            //    else
-            //    {
-            //        var listfilter = FilterStringConverter(dataGridViewLeft.FilterString);
-            //        LeftList = LeftList.Where(listfilter).ToList();
-            //        dataGridViewLeft.DataSource = LeftList;
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("Hata: \n" + ex.Message);
-            //}
+          
         }
 
         //Filtereleme Metodu 
@@ -156,92 +136,142 @@ namespace AyzPaymentWizard
             return result;
         }
 
-        //private string FilterStringConverter(string filter)
-        //{
-        //    string newColFilter = "";
+        private void btnRightsel_Click(object sender, EventArgs e)
+        {
+            for (int i = dataGridViewLeft.Rows.Count - 1; i >= 0; i--)
+            {
+                DataGridViewRow drv = dataGridViewLeft.Rows[i];
+                bool selectedRow = Convert.ToBoolean(drv.Selected);
+                if (selectedRow)
+                {
+                    Debit debit = new Debit();
+                    #region şimdilik isimsiz region                    
+                    debit.PayRef = Convert.ToInt32(drv.Cells["PayRef"].Value);
+                    debit.ClCardRef = Convert.ToInt32(drv.Cells["ClCardRef"].Value);
+                    debit.FicheRef = Convert.ToInt32(drv.Cells["FicheRef"].Value);
+                    debit.ModuleNr = Convert.ToInt32(drv.Cells["ModuleNr"].Value);
+                    debit.DueDate = Convert.ToDateTime(drv.Cells["DueDate"].Value);
+                    debit.TrCode = Convert.ToInt32(drv.Cells["TrCode"].Value);
+                    debit.Total = Convert.ToDecimal(drv.Cells["Total"].Value);
+                    debit.CurCode = drv.Cells["CurCode"].Value.ToString();
+                    debit.TrCurr = Convert.ToInt32(drv.Cells["TrCurr"].Value);
+                    debit.ClCode = drv.Cells["ClCode"].Value.ToString();
+                    debit.ClDef = drv.Cells["ClDef"].Value.ToString();
+                    debit.IsPerson = Convert.ToInt32(drv.Cells["IsPerson"].Value);
+                    debit.TaxNr = drv.Cells["TaxNr"].Value.ToString();
+                    debit.TaxOffice = drv.Cells["TaxOffice"].Value.ToString();
+                    debit.IBAN = drv.Cells["IBAN"].Value.ToString();
+                    debit.EmailAdres = drv.Cells["EmailAdres"].Value.ToString();
+                    debit.FicheDate = Convert.ToDateTime(drv.Cells["FicheDate"].Value);
+                    debit.FicheNo = drv.Cells["FicheNo"].Value.ToString();
+                    debit.DoCode = drv.Cells["DoCode"].Value.ToString();
+                    debit.TrType = drv.Cells["TrType"].Value.ToString();
+                    debit.GenExp1 = drv.Cells["GenExp1"].Value.ToString();
+                    debit.Branch = Convert.ToInt32(drv.Cells["Branch"].Value);
+                    debit.Paid = Convert.ToDecimal(drv.Cells["Total"].Value);
+                    #endregion
+                    if (detailSendingValue == 3)     // Boyutlu Ödeme Satırları Üzerinden
+                    {
+                        debit.MecraType = drv.Cells["MecraType"].Value.ToString();
+                        debit.Mecra = drv.Cells["Mecra"].Value.ToString();
+                        debit.MarketingCompany = drv.Cells["MarketingCompany"].Value.ToString();
+                        debit.Customer = drv.Cells["Customer"].Value.ToString();
+                        debit.PlanCode = drv.Cells["PlanCode"].Value.ToString();
+                        debit.InternetMainCategory = drv.Cells["InternetMainCategory"].Value.ToString();
+                        debit.InternetSubCategory = drv.Cells["InternetSubCategory"].Value.ToString();
+                        debit.DD1REF = Convert.ToInt32(drv.Cells["DD1REF"].Value);
+                        debit.DD2REF = Convert.ToInt32(drv.Cells["DD2REF"].Value);
+                        debit.DD3REF = Convert.ToInt32(drv.Cells["DD3REF"].Value);
+                        debit.DD4REF = Convert.ToInt32(drv.Cells["DD4REF"].Value);
+                        debit.DD5REF = Convert.ToInt32(drv.Cells["DD5REF"].Value);
+                        debit.DD6REF = Convert.ToInt32(drv.Cells["DD6REF"].Value);
+                        debit.DD7REF = Convert.ToInt32(drv.Cells["DD7REF"].Value);
 
-        //    filter = filter.Replace("(", "").Replace(")", "");
+                    }
+                    RightList.Add(debit);
+                    var select = LeftList.Where(x => x.PayRef == debit.PayRef).ToList();
+                    //LeftList.RemoveAt(drv.Cells[1].RowIndex);                    
+                    LeftList.Remove(select[0]);
+                }
+            }
 
-        //    var colFilterList = filter.Split(new string[] { "AND" }, StringSplitOptions.None);
+            var source = new BindingSource();
+            source.DataSource = RightList;
+            dataGridViewRight.DataSource = source;
 
-        //    string andOperator = "";
+            var source2 = new BindingSource();
+            source2.DataSource = LeftList;
+            dataGridViewLeft.DataSource = source2;
+        }
 
-        //    foreach (var colFilter in colFilterList)
-        //    {
-        //        newColFilter += andOperator;
+        private void btnLeftsel_Click(object sender, EventArgs e)
+        {
+            for (int i = dataGridViewRight.Rows.Count - 1; i >= 0; i--)
+            {
+                DataGridViewRow drv = dataGridViewRight.Rows[i];
+                //bool chkboxselect = Convert.ToBoolean(drv.Cells["ColRightSelected"].Value);
+                bool selectedRow = Convert.ToBoolean(drv.Selected);
+                if (selectedRow)
+                {
+                    Debit debit = new Debit();
+                    debit.PayRef = Convert.ToInt32(drv.Cells["PayRef"].Value);
+                    debit.ClCardRef = Convert.ToInt32(drv.Cells["ClCardRef"].Value);
+                    debit.FicheRef = Convert.ToInt32(drv.Cells["FicheRef"].Value);
+                    debit.ModuleNr = Convert.ToInt32(drv.Cells["ModuleNr"].Value);
+                    debit.DueDate = Convert.ToDateTime(drv.Cells["DueDate"].Value);
+                    debit.TrCode = Convert.ToInt32(drv.Cells["TrCode"].Value);
+                    debit.Total = Convert.ToDecimal(drv.Cells["Total"].Value);
+                    debit.CurCode = drv.Cells["CurCode"].Value.ToString();
+                    debit.TrCurr = Convert.ToInt32(drv.Cells["TrCurr"].Value);
+                    debit.ClCode = drv.Cells["ClCode"].Value.ToString();
+                    debit.ClDef = drv.Cells["ClDef"].Value.ToString();
+                    debit.IsPerson = Convert.ToInt32(drv.Cells["IsPerson"].Value);
+                    debit.TaxNr = drv.Cells["TaxNr"].Value.ToString();
+                    debit.TaxOffice = drv.Cells["TaxOffice"].Value.ToString();
+                    debit.IBAN = drv.Cells["IBAN"].Value.ToString();
+                    debit.EmailAdres = drv.Cells["EmailAdres"].Value.ToString();
+                    debit.FicheDate = Convert.ToDateTime(drv.Cells["FicheDate"].Value);
+                    debit.FicheNo = drv.Cells["FicheNo"].Value.ToString();
+                    debit.DoCode = drv.Cells["DoCode"].Value.ToString();
+                    debit.TrType = drv.Cells["TrType"].Value.ToString();
+                    debit.GenExp1 = drv.Cells["GenExp1"].Value.ToString();
+                    debit.Branch = Convert.ToInt32(drv.Cells["Branch"].Value);
 
-        //        var colName = "";
+                    if (detailSendingValue == 3)
+                    {
+                        debit.MecraType = drv.Cells["MecraType"].Value.ToString();
+                        debit.Mecra = drv.Cells["Mecra"].Value.ToString();
+                        debit.MarketingCompany = drv.Cells["MarketingCompany"].Value.ToString();
+                        debit.Customer = drv.Cells["Customer"].Value.ToString();
+                        debit.PlanCode = drv.Cells["PlanCode"].Value.ToString();
+                        debit.InternetMainCategory = drv.Cells["InternetMainCategory"].Value.ToString();
+                        debit.InternetSubCategory = drv.Cells["InternetSubCategory"].Value.ToString();
+                        debit.DD1REF = Convert.ToInt32(drv.Cells["DD1REF"].Value);
+                        debit.DD2REF = Convert.ToInt32(drv.Cells["DD2REF"].Value);
+                        debit.DD3REF = Convert.ToInt32(drv.Cells["DD3REF"].Value);
+                        debit.DD4REF = Convert.ToInt32(drv.Cells["DD4REF"].Value);
+                        debit.DD5REF = Convert.ToInt32(drv.Cells["DD5REF"].Value);
+                        debit.DD6REF = Convert.ToInt32(drv.Cells["DD6REF"].Value);
+                        debit.DD7REF = Convert.ToInt32(drv.Cells["DD7REF"].Value);
+                    }
+                    LeftList.Add(debit);
+                    var select = RightList.Where(x => x.PayRef == debit.PayRef).ToList();
+                    //RightList.RemoveAt(drv.Cells[1].RowIndex);
+                    RightList.Remove(select[0]);
 
-        //        // Step 1: BOOLEAN Check 
-        //        if (colFilter.Contains(" IN ") == false && colFilter.Split('=').Length == 2)
-        //        {
-        //            // if the filter string is in the form "ColumnName=value". example = "(InAlarm != null && (InAlarm == true))";
-        //            colName = colFilter.Split('=')[0];
-        //            var booleanVal = colFilter.Split('=')[1];
+                }
+            }
 
-        //            newColFilter += $"({colName} != null && ({colName} == {booleanVal}))";
+            var source = new BindingSource();
+            source.DataSource = RightList;
+            dataGridViewRight.DataSource = source;
 
-        //            continue;
-        //        }
+            var source2 = new BindingSource();
+            source2.DataSource = LeftList;
+            dataGridViewLeft.DataSource = source2;
+        }
 
-        //        // Step 2: NUMBER (int/decimal/double/etc) and STRING Check
-        //        if (colFilter.Contains(" IN ") == true)
-        //        {
-        //            var temp1 = colFilter.Trim().Split(new string[] { "IN" }, StringSplitOptions.None);
-
-        //            colName = GetStringBetweenChars(temp1[0], '[', ']');
-
-        //            var filterValsList = temp1[1].Split(',');
-
-        //            newColFilter += string.Format("({0} != null && (", colName);
-
-        //            string orOperator = "";
-
-        //            foreach (var filterVal in filterValsList)
-        //            {
-        //                double tempNum = 0;
-        //                if (Double.TryParse(filterVal, out tempNum))
-        //                    newColFilter += string.Format("{0} {1} = {2}", orOperator, colName, filterVal.Trim());
-        //                else
-        //                    newColFilter += string.Format("{0} {1}.Contains({2})", orOperator, colName, filterVal.Trim());
-
-        //                orOperator = " OR ";
-        //            }
-
-        //            newColFilter += "))";
-        //        }
-
-        //        // Step 3: DATETIME Check
-        //        if (colFilter.Contains(" LIKE ") == true && colFilter.Contains("Convert[") == true)
-        //        {
-        //            // first of all remove the cast
-        //            var colFilterNoCast = colFilter.Replace("Convert", "").Replace(", 'System.String'", "");
-
-        //            var filterValsList = colFilterNoCast.Trim().Split(new string[] { "OR" }, StringSplitOptions.None);
-
-        //            colName = GetStringBetweenChars(filterValsList[0], '[', ']');
-
-        //            newColFilter += string.Format("({0} != null && (", colName);
-
-        //            string orOperator = "";
-
-        //            foreach (var filterVal in filterValsList)
-        //            {
-        //                var v = GetStringBetweenChars(filterVal, '%', '%');
-
-        //                newColFilter += string.Format("{0} {1}.Date = DateTime.Parse('{2}')", orOperator, colName, v.Trim());
-
-        //                orOperator = " OR ";
-        //            }
-
-        //            newColFilter += "))";
-        //        }
-
-        //        andOperator = " AND ";
-        //    }
-
-        //    return newColFilter.Replace("'", "\"");
-        //}
+      
 
         private void dataGridViewLeft_SortStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
         {
@@ -279,48 +309,10 @@ namespace AyzPaymentWizard
             {
                 MessageBox.Show("Hata: \n" + ex.Message);
             }
-            //try
-            //{
-            //    if (string.IsNullOrEmpty(dataGridViewLeft.FilterString) == true)
-            //    {
-            //        LeftList.Clear();
-            //        var source = new BindingSource();
-            //        FillLeftList();
-            //        source.DataSource = LeftList;
-            //        dataGridViewLeft.DataSource = source;
-            //    }                
-            //    else
-            //    {
-            //        var sortStr = dataGridViewLeft.SortString.Replace("[", "").Replace("]", "");
-
-            //        if (string.IsNullOrEmpty(dataGridViewLeft.FilterString) == true)
-            //        {
-            //            // the grid is not filtered!
-            //            LeftList = LeftList.OrderBy(sortStr).ToList();
-            //            dataGridViewLeft.DataSource = LeftList;
-            //        }
-            //        else
-            //        {
-            //            // the grid is filtered!
-            //            LeftList = LeftList.OrderBy(sortStr).ToList();
-            //            dataGridViewLeft.DataSource = LeftList;
-            //        }
-
-            //        //textBox_sort.Text = sortStr;
-            //    }
-
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("Hata: \n" + ex.Message);
-            //}
+            
         }
 
-        //private string GetStringBetweenChars(string input, char startChar, char endChar)
-        //{
-        //    string output = input.Split(startChar, endChar)[1];
-        //    return output;
-        //}
+       
 
         private void button_unloadfilters_Click(object sender, EventArgs e)
         {
@@ -433,6 +425,21 @@ namespace AyzPaymentWizard
             dataGridViewLeft.Columns["CurCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dataGridViewLeft.Columns["FicheDate"].Width = 75;
             dataGridViewLeft.Columns["FicheNo"].Width = 90;
+
+            
+            //LEft Grid Middle Centered Aligned
+            Dictionary<string, DataGridView> LGCentered = new Dictionary<string, DataGridView>();
+            DataGridView dgl = dataGridViewLeft;
+            string[] strLeft = { "CurCode", "Total" };
+            foreach (var str in strLeft)
+            {
+                LGCentered.Add(str, dgl);
+                foreach (var LC in LGCentered)
+                {
+                    LC.Value.Columns[LC.Key].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                }
+            }
+
             //dataGridViewLeft.Columns["CurCode"].DisplayIndex = 1; HANGİ COLUMNDA Göstermek istersek bu şekilde yapabiliriz.
             #endregion
 
@@ -498,6 +505,21 @@ namespace AyzPaymentWizard
             dataGridViewRight.Columns["InternetMainCategory"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dataGridViewRight.Columns["InternetSubCategory"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
 
+            //MiddleCenter Align  alligned for Right Grid
+            Dictionary<string,DataGridView > RGCentered = new Dictionary<string,DataGridView >();
+            DataGridView dgr = dataGridViewRight;
+            string[] strRight = { "Paid", "CurCode" };
+            foreach(var str in strRight)
+            {
+                RGCentered.Add(str, dgr);
+                foreach (var ab in RGCentered)
+                {
+                    ab.Value.Columns[ab.Key].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                }
+            }
+            
+           
+            
             if (detailSendingValue == 2) // Ödeme Satırları Üzerinden
             {
                 dataGridViewRight.Columns["MecraType"].Visible = false;
@@ -606,6 +628,7 @@ namespace AyzPaymentWizard
                     invEndDate = invoiceDateList[1];
                 }
                 #endregion
+
             }
 
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
@@ -615,6 +638,7 @@ namespace AyzPaymentWizard
                     using (SqlCommand cmd = new SqlCommand("AYZ_SP_PW_PAYTRANS", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandTimeout = 240;
                         #region StoredProcedure Paremetreleri
                         cmd.Parameters.Add("@FIRMNR", SqlDbType.Int).Value = Helper.FIRMNR;
                         cmd.Parameters.Add("@PERNR", SqlDbType.Int).Value = 1;
@@ -778,6 +802,7 @@ namespace AyzPaymentWizard
         {
             for (int i = dataGridViewLeft.Rows.Count - 1; i >= 0; i--)
             {
+                dataGridViewLeft.SelectAll();
                 DataGridViewRow drv = dataGridViewLeft.Rows[i];
                 bool selectedRow = Convert.ToBoolean(drv.Selected);
                 if (selectedRow)
@@ -846,6 +871,7 @@ namespace AyzPaymentWizard
         {
             for (int i = dataGridViewRight.Rows.Count - 1; i >= 0; i--)
             {
+                dataGridViewRight.SelectAll();
                 DataGridViewRow drv = dataGridViewRight.Rows[i];
                 //bool chkboxselect = Convert.ToBoolean(drv.Cells["ColRightSelected"].Value);
                 bool selectedRow = Convert.ToBoolean(drv.Selected);
