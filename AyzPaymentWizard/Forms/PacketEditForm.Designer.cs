@@ -37,6 +37,7 @@
             this.txtPacketEditExp = new System.Windows.Forms.TextBox();
             this.btnPLeft = new System.Windows.Forms.Button();
             this.btnPRight = new System.Windows.Forms.Button();
+<<<<<<< HEAD
             this.panelLEd = new System.Windows.Forms.Panel();
             this.labelCurLEd = new System.Windows.Forms.Label();
             this.labelsumLEd = new System.Windows.Forms.Label();
@@ -56,6 +57,9 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.panelLEd.SuspendLayout();
             this.panel2.SuspendLayout();
+=======
+            ((System.ComponentModel.ISupportInitialize)(this.DGVRightEdit)).BeginInit();
+>>>>>>> 7bce5ec17c3c2fe154cdfd6f77eb3070bdaa4e79
             ((System.ComponentModel.ISupportInitialize)(this.DGVLeftEdit)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVRightEdit)).BeginInit();
@@ -334,11 +338,34 @@
             this.panel3.Size = new System.Drawing.Size(629, 112);
             this.panel3.TabIndex = 14;
             // 
+            // btnPLeft
+            // 
+            this.btnPLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnPLeft.Location = new System.Drawing.Point(639, 157);
+            this.btnPLeft.Name = "btnPLeft";
+            this.btnPLeft.Size = new System.Drawing.Size(47, 44);
+            this.btnPLeft.TabIndex = 20;
+            this.btnPLeft.Text = ">";
+            this.btnPLeft.UseVisualStyleBackColor = true;
+            this.btnPLeft.Click += new System.EventHandler(this.btnPLeft_Click);
+            // 
+            // btnPRight
+            // 
+            this.btnPRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnPRight.Location = new System.Drawing.Point(639, 207);
+            this.btnPRight.Name = "btnPRight";
+            this.btnPRight.Size = new System.Drawing.Size(47, 44);
+            this.btnPRight.TabIndex = 21;
+            this.btnPRight.Text = "<";
+            this.btnPRight.UseVisualStyleBackColor = true;
+            this.btnPRight.Click += new System.EventHandler(this.btnPRight_Click);
+            // 
             // PacketEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1324, 681);
+<<<<<<< HEAD
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel1);
@@ -346,6 +373,17 @@
             this.Controls.Add(this.panelLEd);
             this.Controls.Add(this.btnPRight);
             this.Controls.Add(this.btnPLeft);
+=======
+            this.Controls.Add(this.btnPRight);
+            this.Controls.Add(this.btnPLeft);
+            this.Controls.Add(this.txtPacketEditExp);
+            this.Controls.Add(this.DGVLeftEdit);
+            this.Controls.Add(this.cmbOutAccountInfoEdit);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.btnEditPacket);
+            this.Controls.Add(this.DGVRightEdit);
+>>>>>>> 7bce5ec17c3c2fe154cdfd6f77eb3070bdaa4e79
             this.Controls.Add(this.btnLeftPacketEdit);
             this.Controls.Add(this.btnRightPacketEdit);
             this.Name = "PacketEditForm";
@@ -376,6 +414,7 @@
         private System.Windows.Forms.TextBox txtPacketEditExp;
         private System.Windows.Forms.Button btnPLeft;
         private System.Windows.Forms.Button btnPRight;
+<<<<<<< HEAD
         private System.Windows.Forms.Panel panelLEd;
         private System.Windows.Forms.Label labelCurLEd;
         private System.Windows.Forms.Label labelsumLEd;
@@ -393,5 +432,7 @@
         private System.Windows.Forms.TextBox textBoxsumREd;
         private System.Windows.Forms.Label labelsumREd;
         private System.Windows.Forms.Panel panel3;
+=======
+>>>>>>> 7bce5ec17c3c2fe154cdfd6f77eb3070bdaa4e79
     }
 }
