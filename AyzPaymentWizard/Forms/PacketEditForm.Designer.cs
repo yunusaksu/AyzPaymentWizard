@@ -37,7 +37,6 @@
             this.txtPacketEditExp = new System.Windows.Forms.TextBox();
             this.btnPLeft = new System.Windows.Forms.Button();
             this.btnPRight = new System.Windows.Forms.Button();
-<<<<<<< HEAD
             this.panelLEd = new System.Windows.Forms.Panel();
             this.labelCurLEd = new System.Windows.Forms.Label();
             this.labelsumLEd = new System.Windows.Forms.Label();
@@ -49,6 +48,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.DGVRightEdit = new System.Windows.Forms.DataGridView();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.labelodenecek = new System.Windows.Forms.Label();
+            this.textBoxodenecek = new System.Windows.Forms.TextBox();
             this.labelCurREd = new System.Windows.Forms.Label();
             this.labelSumEd = new System.Windows.Forms.Label();
             this.textBox_totalREd = new System.Windows.Forms.TextBox();
@@ -57,9 +59,6 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.panelLEd.SuspendLayout();
             this.panel2.SuspendLayout();
-=======
-            ((System.ComponentModel.ISupportInitialize)(this.DGVRightEdit)).BeginInit();
->>>>>>> 7bce5ec17c3c2fe154cdfd6f77eb3070bdaa4e79
             ((System.ComponentModel.ISupportInitialize)(this.DGVLeftEdit)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVRightEdit)).BeginInit();
@@ -248,6 +247,8 @@
             this.DGVLeftEdit.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGVLeftEdit.Size = new System.Drawing.Size(625, 640);
             this.DGVLeftEdit.TabIndex = 27;
+            this.DGVLeftEdit.SortStringChanged += new System.EventHandler<Zuby.ADGV.AdvancedDataGridView.SortEventArgs>(this.DGVLeftEdit_SortStringChanged_1);
+            this.DGVLeftEdit.FilterStringChanged += new System.EventHandler<Zuby.ADGV.AdvancedDataGridView.FilterEventArgs>(this.DGVLeftEdit_FilterStringChanged_1);
             // 
             // panel1
             // 
@@ -271,9 +272,13 @@
             this.DGVRightEdit.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGVRightEdit.Size = new System.Drawing.Size(625, 513);
             this.DGVRightEdit.TabIndex = 13;
+            this.DGVRightEdit.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGVRightEdit_CellValueChanged);
             // 
             // panel5
             // 
+            this.panel5.Controls.Add(this.label1);
+            this.panel5.Controls.Add(this.labelodenecek);
+            this.panel5.Controls.Add(this.textBoxodenecek);
             this.panel5.Controls.Add(this.labelCurREd);
             this.panel5.Controls.Add(this.labelSumEd);
             this.panel5.Controls.Add(this.textBox_totalREd);
@@ -283,6 +288,32 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(629, 39);
             this.panel5.TabIndex = 28;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(178, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(58, 13);
+            this.label1.TabIndex = 25;
+            this.label1.Text = "odenecek:";
+            // 
+            // labelodenecek
+            // 
+            this.labelodenecek.AutoSize = true;
+            this.labelodenecek.Location = new System.Drawing.Point(178, 11);
+            this.labelodenecek.Name = "labelodenecek";
+            this.labelodenecek.Size = new System.Drawing.Size(58, 13);
+            this.labelodenecek.TabIndex = 25;
+            this.labelodenecek.Text = "odenecek:";
+            // 
+            // textBoxodenecek
+            // 
+            this.textBoxodenecek.Location = new System.Drawing.Point(242, 11);
+            this.textBoxodenecek.Name = "textBoxodenecek";
+            this.textBoxodenecek.ReadOnly = true;
+            this.textBoxodenecek.Size = new System.Drawing.Size(139, 20);
+            this.textBoxodenecek.TabIndex = 24;
             // 
             // labelCurREd
             // 
@@ -338,34 +369,11 @@
             this.panel3.Size = new System.Drawing.Size(629, 112);
             this.panel3.TabIndex = 14;
             // 
-            // btnPLeft
-            // 
-            this.btnPLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnPLeft.Location = new System.Drawing.Point(639, 157);
-            this.btnPLeft.Name = "btnPLeft";
-            this.btnPLeft.Size = new System.Drawing.Size(47, 44);
-            this.btnPLeft.TabIndex = 20;
-            this.btnPLeft.Text = ">";
-            this.btnPLeft.UseVisualStyleBackColor = true;
-            this.btnPLeft.Click += new System.EventHandler(this.btnPLeft_Click);
-            // 
-            // btnPRight
-            // 
-            this.btnPRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnPRight.Location = new System.Drawing.Point(639, 207);
-            this.btnPRight.Name = "btnPRight";
-            this.btnPRight.Size = new System.Drawing.Size(47, 44);
-            this.btnPRight.TabIndex = 21;
-            this.btnPRight.Text = "<";
-            this.btnPRight.UseVisualStyleBackColor = true;
-            this.btnPRight.Click += new System.EventHandler(this.btnPRight_Click);
-            // 
             // PacketEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1324, 681);
-<<<<<<< HEAD
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel1);
@@ -373,17 +381,6 @@
             this.Controls.Add(this.panelLEd);
             this.Controls.Add(this.btnPRight);
             this.Controls.Add(this.btnPLeft);
-=======
-            this.Controls.Add(this.btnPRight);
-            this.Controls.Add(this.btnPLeft);
-            this.Controls.Add(this.txtPacketEditExp);
-            this.Controls.Add(this.DGVLeftEdit);
-            this.Controls.Add(this.cmbOutAccountInfoEdit);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.btnEditPacket);
-            this.Controls.Add(this.DGVRightEdit);
->>>>>>> 7bce5ec17c3c2fe154cdfd6f77eb3070bdaa4e79
             this.Controls.Add(this.btnLeftPacketEdit);
             this.Controls.Add(this.btnRightPacketEdit);
             this.Name = "PacketEditForm";
@@ -414,7 +411,6 @@
         private System.Windows.Forms.TextBox txtPacketEditExp;
         private System.Windows.Forms.Button btnPLeft;
         private System.Windows.Forms.Button btnPRight;
-<<<<<<< HEAD
         private System.Windows.Forms.Panel panelLEd;
         private System.Windows.Forms.Label labelCurLEd;
         private System.Windows.Forms.Label labelsumLEd;
@@ -432,7 +428,8 @@
         private System.Windows.Forms.TextBox textBoxsumREd;
         private System.Windows.Forms.Label labelsumREd;
         private System.Windows.Forms.Panel panel3;
-=======
->>>>>>> 7bce5ec17c3c2fe154cdfd6f77eb3070bdaa4e79
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelodenecek;
+        private System.Windows.Forms.TextBox textBoxodenecek;
     }
 }

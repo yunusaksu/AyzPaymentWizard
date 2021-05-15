@@ -1,2 +1,2 @@
-*.vs
-
+.gitignore
+.vs/AyzPaymentWizard/v16/.suo

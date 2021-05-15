@@ -112,7 +112,6 @@ namespace AyzPaymentWizard.Forms
                     PacketEditsRightList.Add(debit);
                     var select = PacketEditsLeftList.Where(x => x.PayRef == debit.PayRef).ToList();
                     PacketEditsLeftList.Remove(select[0]);
-<<<<<<< HEAD
                     //Adding Selected Left Total to Right and Removing from Left
                     foreach (var sel in select)
                     {
@@ -120,14 +119,15 @@ namespace AyzPaymentWizard.Forms
                         textBoxsumREd.Text = (Convert.ToDecimal(textBoxsumREd.Text) + sel.Total).ToString();
                         //Getting the Currency Code
                         labelCurREd.Text = debit.CurCode.ToString();
+
+                        //Updated odenecek
+                        textBoxodenecek.Text = (Convert.ToDecimal(textBoxodenecek.Text) + Convert.ToDecimal(sel.Total)).ToString();
                     }
 
                     //Updating the number of Rows
                     
                     textBox_totalLEd.Text = (Convert.ToInt32(textBox_totalLEd.Text) - select.Count).ToString();
                     textBox_totalREd.Text = (Convert.ToInt32(textBox_totalREd.Text) + select.Count).ToString();
-=======
->>>>>>> 7bce5ec17c3c2fe154cdfd6f77eb3070bdaa4e79
                 }
             }
 
@@ -189,6 +189,7 @@ namespace AyzPaymentWizard.Forms
                         debit.InternetSubCategory = drv.Cells["InternetSubCategory"].Value.ToString();
                         debit.DD1REF = Convert.ToInt32(drv.Cells["DD1REF"].Value);
                         debit.DD2REF = Convert.ToInt32(drv.Cells["DD2REF"].Value);
+                       
                         debit.DD3REF = Convert.ToInt32(drv.Cells["DD3REF"].Value);
                         debit.DD4REF = Convert.ToInt32(drv.Cells["DD4REF"].Value);
                         debit.DD5REF = Convert.ToInt32(drv.Cells["DD5REF"].Value);
@@ -198,7 +199,6 @@ namespace AyzPaymentWizard.Forms
                     PacketEditsLeftList.Add(debit);
                     var select = PacketEditsRightList.Where(x => x.PayRef == debit.PayRef).ToList();
                     PacketEditsRightList.Remove(select[0]);
-<<<<<<< HEAD
                     //Right Row Text Update
                     textBox_totalREd.Text = (Convert.ToInt32(textBox_totalREd.Text) - select.Count).ToString();
                     textBox_totalLEd.Text = (Convert.ToInt32(textBox_totalLEd.Text) + select.Count).ToString();
@@ -206,15 +206,16 @@ namespace AyzPaymentWizard.Forms
                     //Adding Selected Rightt Total to Left and Removing from Right
                     foreach (var sel in select)
                     {
-
+                        
                         textBoxsumREd.Text = (Convert.ToDecimal(textBoxsumREd.Text) - sel.Total).ToString();
                         textBoxSumLEd.Text = (Convert.ToDecimal(textBoxSumLEd.Text) + sel.Total).ToString();
                         //Getting the Currency Code
                         labelCurLEd.Text = debit.CurCode.ToString();
-                    }
-=======
 
->>>>>>> 7bce5ec17c3c2fe154cdfd6f77eb3070bdaa4e79
+                        //Updated odenecek
+                        textBoxodenecek.Text = (Convert.ToDecimal(textBoxodenecek.Text) - Convert.ToDecimal(sel.Paid)).ToString();
+                    }
+
                 }
             }
 
@@ -227,87 +228,96 @@ namespace AyzPaymentWizard.Forms
             DGVLeftEdit.DataSource = source2;
         }
 
-        private void DGVLeftEdit_SortStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
+        private void DGVRightEdit_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            try
+            decimal sumP = 0;
+            for (int counter = 0; counter < DGVRightEdit.Rows.Count; counter++)
             {
-                if (string.IsNullOrEmpty(DGVLeftEdit.SortString) == true)
-                    return;
-
-                var sortStr = DGVLeftEdit.SortString.Replace("[", "").Replace("]", "");
-
-                if (string.IsNullOrEmpty(DGVLeftEdit.FilterString) == true)
+                if (DGVRightEdit.Rows[counter].Cells["Paid"].Value != null)
                 {
-                    // the grid is not filtered!
-                    PacketEditsLeftList = PacketEditsLeftList.OrderBy(sortStr).ToList();
-                    DGVLeftEdit.DataSource = PacketEditsLeftList;
-                }
-                else
-                {
-                    // the grid is filtered!
-                    PacketEditsLeftList = PacketEditsLeftList.OrderBy(sortStr).ToList();
-                    DGVLeftEdit.DataSource = PacketEditsLeftList;
-                }
+                    // Verify that the cell value is not an empty string.
+                    if (DGVRightEdit.Rows[counter]
+                        .Cells["Paid"].Value.ToString().Length != 0)
+                    {
+                    Decimal res= Decimal.Parse(DGVRightEdit.Rows[counter].Cells["Paid"].Value.ToString());
+                     sumP+= res;
+                    textBoxodenecek.Text= sumP.ToString();
 
-                //textBox_sort.Text = sortStr;
+                    }
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Hata: \n" + ex.Message);
-            }
+
         }
-
-        private void DGVLeftEdit_FilterStringChanged(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
-        {
-            try
+           
+            private void DGVLeftEdit_FilterStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
             {
-                if (string.IsNullOrEmpty(DGVLeftEdit.FilterString))
+                try
                 {
-                    PacketEditsLeftList.Clear();
-                    var source = new BindingSource();
-                    FillLeftList();
-                    source.DataSource = PacketEditsLeftList;
-                    DGVLeftEdit.DataSource = source;
+                    if (string.IsNullOrEmpty(DGVLeftEdit.FilterString))
+                    {
+                        PacketEditsLeftList.Clear();
+                        var source = new BindingSource();
+                        FillLeftList();
+                        source.DataSource = PacketEditsLeftList;
+                        DGVLeftEdit.DataSource = source;
+                    }
+                    else
+                    {
+                        IEnumerable<Debit> enumerable = PacketEditsLeftList.AsEnumerable();
+                        PacketEditsLeftList = FilterAndSortDataStr(enumerable, DGVLeftEdit.FilterString, DGVLeftEdit.SortString);
+                    }
+                    DGVLeftEdit.DataSource = PacketEditsLeftList;
+                    //Total Rows in Left Grid after filtering
+                    textBox_totalLEd.Text = PacketEditsLeftList.Count.ToString();
+                    //Sum in LeftGrid After Filtering
+                    //Getting the total value
+                    decimal sumL = 0.00m;
+                    for (int i = 0; i < DGVLeftEdit.Rows.Count; ++i)
+                    {
+                        sumL += Convert.ToDecimal(DGVLeftEdit.Rows[i].Cells["Total"].Value);
+                    }
+                    textBoxSumLEd.Text = sumL.ToString();
                 }
-                else
+                catch (Exception ex)
                 {
-                    IEnumerable<Debit> enumerable = PacketEditsLeftList.AsEnumerable();
-                    PacketEditsLeftList = FilterAndSortDataStr(enumerable, DGVLeftEdit.FilterString, DGVLeftEdit.SortString);
+                    MessageBox.Show("Hata: \n" + ex.Message);
                 }
-                DGVLeftEdit.DataSource = PacketEditsLeftList;
             }
-            catch (Exception ex)
+
+            private void DGVLeftEdit_SortStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
             {
-                MessageBox.Show("Hata: \n" + ex.Message);
+                try
+                {
+                    if (string.IsNullOrEmpty(DGVLeftEdit.SortString) == true)
+                        return;
+
+                    var sortStr = DGVLeftEdit.SortString.Replace("[", "").Replace("]", "");
+
+                    if (string.IsNullOrEmpty(DGVLeftEdit.FilterString) == true)
+                    {
+                        // the grid is not filtered!
+                        PacketEditsLeftList = PacketEditsLeftList.OrderBy(sortStr).ToList();
+                        DGVLeftEdit.DataSource = PacketEditsLeftList;
+                    }
+                    else
+                    {
+                        // the grid is filtered!
+                        PacketEditsLeftList = PacketEditsLeftList.OrderBy(sortStr).ToList();
+                        DGVLeftEdit.DataSource = PacketEditsLeftList;
+                    }
+
+                    //textBox_sort.Text = sortStr;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Hata: \n" + ex.Message);
+                }
             }
-            //try
-            //{
-            //    if (string.IsNullOrEmpty(DGVLeftEdit.FilterString) == true)
-            //    {
-            //        PacketEditsLeftList.Clear();
-            //        var source = new BindingSource();
-            //        FillLeftList();
-            //        source.DataSource = PacketEditsLeftList;
-            //        DGVLeftEdit.DataSource = source;
-            //    }
-            //    else
-            //    {
-            //        var listfilter = FilterStringConverter(DGVLeftEdit.FilterString);
 
-            //        PacketEditsLeftList = PacketEditsLeftList.Where(listfilter).ToList();
 
-            //        DGVLeftEdit.DataSource = PacketEditsLeftList;
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("Hata: \n" + ex.Message);
-            //}
-        }
-
-        //Filtereleme Metodu 
-        private List<Debit> FilterAndSortDataStr(IEnumerable<Debit> collection, string filter, string sort)
-        {
+            //Filtereleme Metodu 
+            private List<Debit> FilterAndSortDataStr(IEnumerable<Debit> collection, string filter, string sort)
+            {
             if (collection == null)
             {
                 return new List<Debit>();
@@ -1233,6 +1243,9 @@ namespace AyzPaymentWizard.Forms
                         textBoxsumREd.Text = (Convert.ToDecimal(textBoxsumREd.Text) + sel.Total).ToString();
                         //Getting the Currency Code
                         labelCurREd.Text = debit.CurCode.ToString();
+
+                        //Updated odenecek
+                        textBoxodenecek.Text = (Convert.ToDecimal(textBoxodenecek.Text) + Convert.ToDecimal(sel.Total)).ToString();
                     }
 
                     //Updating the number of Rows
@@ -1321,6 +1334,9 @@ namespace AyzPaymentWizard.Forms
                         textBoxSumLEd.Text = (Convert.ToDecimal(textBoxSumLEd.Text) + sel.Total).ToString();
                         //Getting the Currency Code
                         labelCurLEd.Text = debit.CurCode.ToString();
+
+                        //Updated odenecek
+                        textBoxodenecek.Text = (Convert.ToDecimal(textBoxodenecek.Text) - Convert.ToDecimal(sel.Paid)).ToString();
                     }
                 }
             }

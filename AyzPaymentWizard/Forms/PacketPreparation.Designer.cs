@@ -38,6 +38,7 @@
             this.btnRightsel = new System.Windows.Forms.Button();
             this.btnLeftsel = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.labelCurL = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxSumL = new System.Windows.Forms.TextBox();
             this.textBox_totalL = new System.Windows.Forms.TextBox();
@@ -46,22 +47,17 @@
             this.dataGridViewLeft = new Zuby.ADGV.AdvancedDataGridView();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridViewRight = new System.Windows.Forms.DataGridView();
-<<<<<<< HEAD
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.labelCurR = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox_totalR = new System.Windows.Forms.TextBox();
             this.textBoxsumR = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.labelCurL = new System.Windows.Forms.Label();
-            this.labelCurR = new System.Windows.Forms.Label();
+            this.labelodenR = new System.Windows.Forms.Label();
+            this.textBoxodenecekR = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-=======
-            this.txtPacketExp = new System.Windows.Forms.TextBox();
-            this.btnRightsel = new System.Windows.Forms.Button();
-            this.btnLeftsel = new System.Windows.Forms.Button();
->>>>>>> 7bce5ec17c3c2fe154cdfd6f77eb3070bdaa4e79
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLeft)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRight)).BeginInit();
@@ -89,11 +85,7 @@
             // btnRight
             // 
             this.btnRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-<<<<<<< HEAD
             this.btnRight.Location = new System.Drawing.Point(642, 295);
-=======
-            this.btnRight.Location = new System.Drawing.Point(639, 295);
->>>>>>> 7bce5ec17c3c2fe154cdfd6f77eb3070bdaa4e79
             this.btnRight.Name = "btnRight";
             this.btnRight.Size = new System.Drawing.Size(47, 44);
             this.btnRight.TabIndex = 11;
@@ -104,11 +96,7 @@
             // btnLeft
             // 
             this.btnLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-<<<<<<< HEAD
             this.btnLeft.Location = new System.Drawing.Point(642, 345);
-=======
-            this.btnLeft.Location = new System.Drawing.Point(639, 345);
->>>>>>> 7bce5ec17c3c2fe154cdfd6f77eb3070bdaa4e79
             this.btnLeft.Name = "btnLeft";
             this.btnLeft.Size = new System.Drawing.Size(47, 44);
             this.btnLeft.TabIndex = 12;
@@ -158,7 +146,7 @@
             this.txtPacketExp.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.txtPacketExp.Location = new System.Drawing.Point(161, 8);
             this.txtPacketExp.Name = "txtPacketExp";
-            this.txtPacketExp.Size = new System.Drawing.Size(179, 26);
+            this.txtPacketExp.Size = new System.Drawing.Size(466, 26);
             this.txtPacketExp.TabIndex = 21;
             // 
             // btnRightsel
@@ -194,6 +182,14 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(634, 38);
             this.panel1.TabIndex = 24;
+            // 
+            // labelCurL
+            // 
+            this.labelCurL.AutoSize = true;
+            this.labelCurL.Location = new System.Drawing.Point(596, 17);
+            this.labelCurL.Name = "labelCurL";
+            this.labelCurL.Size = new System.Drawing.Size(0, 13);
+            this.labelCurL.TabIndex = 21;
             // 
             // label2
             // 
@@ -249,6 +245,8 @@
             this.dataGridViewLeft.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewLeft.Size = new System.Drawing.Size(628, 634);
             this.dataGridViewLeft.TabIndex = 20;
+            this.dataGridViewLeft.SortStringChanged += new System.EventHandler<Zuby.ADGV.AdvancedDataGridView.SortEventArgs>(this.dataGridViewLeft_SortStringChanged_1);
+            this.dataGridViewLeft.FilterStringChanged += new System.EventHandler<Zuby.ADGV.AdvancedDataGridView.FilterEventArgs>(this.dataGridViewLeft_FilterStringChanged_1);
             this.dataGridViewLeft.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewLeft_CellValueChanged);
             // 
             // panel3
@@ -274,6 +272,7 @@
             this.dataGridViewRight.Size = new System.Drawing.Size(626, 510);
             this.dataGridViewRight.TabIndex = 24;
             this.dataGridViewRight.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewRight_CellContentClick);
+            this.dataGridViewRight.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewRight_CellValueChanged);
             // 
             // panel4
             // 
@@ -289,6 +288,8 @@
             // 
             // panel5
             // 
+            this.panel5.Controls.Add(this.labelodenR);
+            this.panel5.Controls.Add(this.textBoxodenecekR);
             this.panel5.Controls.Add(this.labelCurR);
             this.panel5.Controls.Add(this.label3);
             this.panel5.Controls.Add(this.textBox_totalR);
@@ -298,6 +299,14 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(632, 39);
             this.panel5.TabIndex = 27;
+            // 
+            // labelCurR
+            // 
+            this.labelCurR.AutoSize = true;
+            this.labelCurR.Location = new System.Drawing.Point(597, 14);
+            this.labelCurR.Name = "labelCurR";
+            this.labelCurR.Size = new System.Drawing.Size(0, 13);
+            this.labelCurR.TabIndex = 23;
             // 
             // label3
             // 
@@ -333,50 +342,28 @@
             this.label1.TabIndex = 18;
             this.label1.Text = "Total rows:";
             // 
-            // labelCurL
+            // labelodenR
             // 
-            this.labelCurL.AutoSize = true;
-            this.labelCurL.Location = new System.Drawing.Point(596, 17);
-            this.labelCurL.Name = "labelCurL";
-            this.labelCurL.Size = new System.Drawing.Size(0, 13);
-            this.labelCurL.TabIndex = 21;
+            this.labelodenR.AutoSize = true;
+            this.labelodenR.Location = new System.Drawing.Point(201, 14);
+            this.labelodenR.Name = "labelodenR";
+            this.labelodenR.Size = new System.Drawing.Size(58, 13);
+            this.labelodenR.TabIndex = 27;
+            this.labelodenR.Text = "odenecek:";
             // 
-            // labelCurR
+            // textBoxodenecekR
             // 
-            this.labelCurR.AutoSize = true;
-            this.labelCurR.Location = new System.Drawing.Point(597, 14);
-            this.labelCurR.Name = "labelCurR";
-            this.labelCurR.Size = new System.Drawing.Size(0, 13);
-            this.labelCurR.TabIndex = 23;
-            // 
-            // btnRightsel
-            // 
-            this.btnRightsel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnRightsel.Location = new System.Drawing.Point(639, 191);
-            this.btnRightsel.Name = "btnRightsel";
-            this.btnRightsel.Size = new System.Drawing.Size(47, 44);
-            this.btnRightsel.TabIndex = 22;
-            this.btnRightsel.Text = ">";
-            this.btnRightsel.UseVisualStyleBackColor = true;
-            this.btnRightsel.Click += new System.EventHandler(this.btnRightsel_Click);
-            // 
-            // btnLeftsel
-            // 
-            this.btnLeftsel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnLeftsel.Location = new System.Drawing.Point(639, 241);
-            this.btnLeftsel.Name = "btnLeftsel";
-            this.btnLeftsel.Size = new System.Drawing.Size(47, 44);
-            this.btnLeftsel.TabIndex = 23;
-            this.btnLeftsel.Text = "<";
-            this.btnLeftsel.UseVisualStyleBackColor = true;
-            this.btnLeftsel.Click += new System.EventHandler(this.btnLeftsel_Click);
+            this.textBoxodenecekR.Location = new System.Drawing.Point(265, 10);
+            this.textBoxodenecekR.Name = "textBoxodenecekR";
+            this.textBoxodenecekR.ReadOnly = true;
+            this.textBoxodenecekR.Size = new System.Drawing.Size(139, 20);
+            this.textBoxodenecekR.TabIndex = 26;
             // 
             // PacketPreparation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1324, 681);
-<<<<<<< HEAD
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
@@ -384,16 +371,6 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnLeftsel);
             this.Controls.Add(this.btnRightsel);
-=======
-            this.Controls.Add(this.btnLeftsel);
-            this.Controls.Add(this.btnRightsel);
-            this.Controls.Add(this.txtPacketExp);
-            this.Controls.Add(this.dataGridViewRight);
-            this.Controls.Add(this.dataGridViewLeft);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.cmbOutAccountInfo);
-            this.Controls.Add(this.label4);
->>>>>>> 7bce5ec17c3c2fe154cdfd6f77eb3070bdaa4e79
             this.Controls.Add(this.btnLeft);
             this.Controls.Add(this.btnRight);
             this.Name = "PacketPreparation";
@@ -432,7 +409,6 @@
         private Zuby.ADGV.AdvancedDataGridView dataGridViewLeft;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.DataGridView dataGridViewRight;
-<<<<<<< HEAD
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.TextBox textBox_totalR;
@@ -443,10 +419,7 @@
         private System.Windows.Forms.TextBox textBoxsumR;
         private System.Windows.Forms.Label labelCurL;
         private System.Windows.Forms.Label labelCurR;
-=======
-        private System.Windows.Forms.TextBox txtPacketExp;
-        private System.Windows.Forms.Button btnRightsel;
-        private System.Windows.Forms.Button btnLeftsel;
->>>>>>> 7bce5ec17c3c2fe154cdfd6f77eb3070bdaa4e79
+        private System.Windows.Forms.Label labelodenR;
+        private System.Windows.Forms.TextBox textBoxodenecekR;
     }
 }
