@@ -68,10 +68,10 @@ namespace AyzPaymentWizard.Forms
                 payment.TRANSACTIONNO = DetailResult[i].TRANSACTIONNO;
                 payment.EFTQUERYNO = DetailResult[i].EFTQUERYNO;
                 payment.IBAN = DetailResult[i].IBAN;
-                payment.TYPE = DetailResult[i].TYPE;                
+                payment.TYPE = DetailResult[i].TYPE;
                 using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
-                    CommandText = "SELECT C.CODE FROM AYZ_PW_SUMMARY AS S " +
+                    CommandText = "SELECT C.CODE,C.LOGICALREF FROM AYZ_PW_SUMMARY AS S " +
                                   "\nLEFT JOIN LG_" + Helper.FIRMANO + "_CLCARD AS C ON C.LOGICALREF = S.CLIENTREF " +
                                   "\nWHERE S.RETURNKEY = '" + payment.COMPANYREF + "'";
                     komut.CommandText = CommandText;
@@ -81,10 +81,11 @@ namespace AyzPaymentWizard.Forms
                     while (dr.Read())
                     {
                         payment.CLCODE = dr["CODE"].ToString();
+                        payment.CLCARDID = Convert.ToInt32(dr["LOGICALREF"].ToString());
                     }
                 }
                 liste.Add(payment);
-            }            
+            }
 
             var source = new BindingSource();
             source.DataSource = liste;
@@ -184,6 +185,99 @@ namespace AyzPaymentWizard.Forms
                     if (bankvo.Post() == true)
                     {
                         MessageBox.Show("POST OK !");
+                        int BANKFICHEREF = bankvo.DataFields.FieldByName("INTERNAL_REFERENCE").Value; // Gönderilen Havale-EFT'nin referansı
+                        int BANKFICHELINEREF = 0;                                                     // Gönderilen Havale-EFT'nin satır referansı
+                        int BANKFICHELINEPAYTRANSREF = 0;
+                        int INVOICEPAYTRANSREF = 0;
+                        int invoiceRef = 0;
+                        #region Gönderilen Havale-EFT'nin LG_XXX_BNFLINE referansını elde ediyoruz.
+                        using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                        {
+                            CommandText = "SELECT LOGICALREF " +
+                                          "\nFROM LG_" + Helper.FIRMANO + "_01_BNFLINE L WHERE L.SOURCEFREF = '" + BANKFICHEREF + "' AND CLIENTREF = '" + item.CLCARDID + "' " +
+                                          "\nAND MODULENR = 7 AND TRCODE = 4";
+                            komut.CommandText = CommandText;
+                            komut.Connection = conn;
+                            conn.Open();
+                            dr = komut.ExecuteReader();
+                            while (dr.Read())
+                            {
+                                BANKFICHELINEREF = Convert.ToInt32(dr["LOGICALREF"].ToString());
+                            }
+                        }
+                        #endregion
+                        #region Gönderilen Havale-EFT'nin oluşturduğu Ödeme Hareketinin PAYTRANSREF'i
+                        using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                        {
+                            CommandText = "SELECT LOGICALREF FROM LG_" + Helper.FIRMANO + "_01_PAYTRANS P " +
+                                          "\nWHERE MODULENR = 7 AND TRCODE = 4 AND P.FICHEREF = " + BANKFICHELINEREF + "";
+                            komut.CommandText = CommandText;
+                            komut.Connection = conn;
+                            conn.Open();
+                            dr = komut.ExecuteReader();
+                            while (dr.Read())
+                            {
+                                BANKFICHELINEPAYTRANSREF = Convert.ToInt32(dr["LOGICALREF"].ToString());
+                            }
+                            conn.Close();
+                        }
+                        #endregion
+
+                        var temp = item.COMPANYREF.Split('-');
+                        int packetId = Convert.ToInt32(temp[0]);
+                        int clientref = Convert.ToInt32(temp[1]);
+                        List<Debit> debitList = new List<Debit>();
+                        #region MyRegion
+                        using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                        {
+                            CommandText = "SELECT * FROM AYZ_PW_PACKET_DETAIL WHERE PACKETID = '" + PacketID + "' AND CLIENTREF = '" + clientref + "'";
+                            komut.CommandText = CommandText;
+                            komut.Connection = conn;
+                            conn.Open();
+                            dr = komut.ExecuteReader();
+                            while (dr.Read())
+                            {
+                                Debit d = new Debit();
+                                d.Paid = Convert.ToDecimal(dr["AMOUNT_REQUIRED"].ToString());
+                                d.PayRef = Convert.ToInt32(dr["PAYTRANSREF"].ToString());
+                                debitList.Add(d);
+                            }
+                        }
+                        // Gönderilen Havele-Eft ile yolladığımız para yetene kadar Paket Detail tablosundaki tüm satırları kapatıcam.
+                        double totalAmount = Convert.ToDouble(item.AMOUNT);
+                        #endregion
+                        if (debitList.Count == 1)
+                        {
+                            double NecessaryAmountPaid = Convert.ToDouble(debitList[0].Paid);
+                            if (totalAmount >= NecessaryAmountPaid)
+                            {
+                                bool foo = UnityApp.DebtClose(BANKFICHELINEPAYTRANSREF, debitList[0].PayRef, NecessaryAmountPaid);
+                                if (foo == true)
+                                    MessageBox.Show("Borç Kapama Tamamlandı!");
+                                else
+                                    MessageBox.Show("Borç Kapama Emri Sırasında Hata Oluştu!");
+                            }
+                        }
+                        else if (debitList.Count > 0)
+                        {
+                            for (int i = 0; i <= 0; i++)
+                            {
+                                double NecessaryAmountPaid = Convert.ToDouble(debitList[i].Paid);
+                                if (totalAmount > 0)
+                                {
+                                    bool foo = UnityApp.DebtClose(BANKFICHELINEPAYTRANSREF, debitList[i].PayRef, NecessaryAmountPaid);
+                                    if (foo == true)
+                                    {
+                                        totalAmount = totalAmount - NecessaryAmountPaid;
+                                        MessageBox.Show("Borç Kapama Tamamlandı!");
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Borç Kapama Emri Sırasında Hata Oluştu!");
+                                    }
+                                }
+                            }
+                        }
                     }
                     else
                     {
@@ -405,5 +499,6 @@ namespace AyzPaymentWizard.Forms
                 MessageBox.Show("Hata: \n" + ex.Message);
             }
         }
+
     }
 }

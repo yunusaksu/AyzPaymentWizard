@@ -133,6 +133,7 @@ namespace AyzPaymentWizard.Model
     public class SUB_PAYMENTOUTCOME
     {
         public string CLCODE { get; set; }
+        public int CLCARDID { get; set; }    // LG_XXX_CLCARD'ın LogicalReferansı
         public string TYPE { get; set; }
         public int BANKCODE { get; set; }
         public int BRANCHCODE { get; set; }
