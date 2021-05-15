@@ -1,2 +1,5 @@
-*.vs
+.gitignore
+.vs/AyzPaymentWizard/v16/.suo
 .ConnectionHelper.cs
+.lock
+.vs/AyzPaymentWizard/v16/Server/sqlite3/db.lock
