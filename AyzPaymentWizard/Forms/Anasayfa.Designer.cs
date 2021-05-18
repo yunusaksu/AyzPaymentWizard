@@ -33,8 +33,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.imageListPacketIcon = new System.Windows.Forms.ImageList(this.components);
             this.btnAkibetSorgulama = new System.Windows.Forms.Button();
+            this.imageListPacketIcon = new System.Windows.Forms.ImageList(this.components);
             this.btnArchive = new System.Windows.Forms.Button();
             this.btnSendToBank = new System.Windows.Forms.Button();
             this.btnReject = new System.Windows.Forms.Button();
@@ -56,6 +56,7 @@
             this.btnBankAndBankAccAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripAnasayfa = new System.Windows.Forms.ToolStrip();
+            this.logoUserSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPacket)).BeginInit();
@@ -107,19 +108,6 @@
             this.panel3.Size = new System.Drawing.Size(1159, 85);
             this.panel3.TabIndex = 2;
             // 
-            // imageListPacketIcon
-            // 
-            this.imageListPacketIcon.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListPacketIcon.ImageStream")));
-            this.imageListPacketIcon.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListPacketIcon.Images.SetKeyName(0, "editButton.png");
-            this.imageListPacketIcon.Images.SetKeyName(1, "reviewButton.png");
-            this.imageListPacketIcon.Images.SetKeyName(2, "approveButton.png");
-            this.imageListPacketIcon.Images.SetKeyName(3, "sendToApprove.png");
-            this.imageListPacketIcon.Images.SetKeyName(4, "rejectButton.png");
-            this.imageListPacketIcon.Images.SetKeyName(5, "bank.png");
-            this.imageListPacketIcon.Images.SetKeyName(6, "archive.png");
-            this.imageListPacketIcon.Images.SetKeyName(7, "performed_process.png");
-            // 
             // btnAkibetSorgulama
             // 
             this.btnAkibetSorgulama.BackColor = System.Drawing.Color.Transparent;
@@ -134,6 +122,19 @@
             this.btnAkibetSorgulama.Tag = "";
             this.btnAkibetSorgulama.UseVisualStyleBackColor = false;
             this.btnAkibetSorgulama.Click += new System.EventHandler(this.btnAkibetSorgulama_Click);
+            // 
+            // imageListPacketIcon
+            // 
+            this.imageListPacketIcon.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListPacketIcon.ImageStream")));
+            this.imageListPacketIcon.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListPacketIcon.Images.SetKeyName(0, "editButton.png");
+            this.imageListPacketIcon.Images.SetKeyName(1, "reviewButton.png");
+            this.imageListPacketIcon.Images.SetKeyName(2, "approveButton.png");
+            this.imageListPacketIcon.Images.SetKeyName(3, "sendToApprove.png");
+            this.imageListPacketIcon.Images.SetKeyName(4, "rejectButton.png");
+            this.imageListPacketIcon.Images.SetKeyName(5, "bank.png");
+            this.imageListPacketIcon.Images.SetKeyName(6, "archive.png");
+            this.imageListPacketIcon.Images.SetKeyName(7, "performed_process.png");
             // 
             // btnArchive
             // 
@@ -327,7 +328,8 @@
             // 
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sFTPAyarlarıToolStripMenuItem,
-            this.btnBankAndBankAccAdd});
+            this.btnBankAndBankAccAdd,
+            this.logoUserSettingsToolStripMenuItem});
             this.toolStripDropDownButton1.Font = new System.Drawing.Font("Segoe UI", 13F);
             this.toolStripDropDownButton1.ForeColor = System.Drawing.SystemColors.GrayText;
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -339,7 +341,7 @@
             // 
             this.sFTPAyarlarıToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
             this.sFTPAyarlarıToolStripMenuItem.Name = "sFTPAyarlarıToolStripMenuItem";
-            this.sFTPAyarlarıToolStripMenuItem.Size = new System.Drawing.Size(218, 30);
+            this.sFTPAyarlarıToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
             this.sFTPAyarlarıToolStripMenuItem.Text = "SFTP Ayarları";
             this.sFTPAyarlarıToolStripMenuItem.Click += new System.EventHandler(this.sFTPAyarlarıToolStripMenuItem_Click);
             // 
@@ -347,7 +349,7 @@
             // 
             this.btnBankAndBankAccAdd.ForeColor = System.Drawing.SystemColors.GrayText;
             this.btnBankAndBankAccAdd.Name = "btnBankAndBankAccAdd";
-            this.btnBankAndBankAccAdd.Size = new System.Drawing.Size(218, 30);
+            this.btnBankAndBankAccAdd.Size = new System.Drawing.Size(257, 30);
             this.btnBankAndBankAccAdd.Text = "Çalışılan Bankalar";
             this.btnBankAndBankAccAdd.Click += new System.EventHandler(this.btnBankAndBankAccAdd_Click_1);
             // 
@@ -374,6 +376,14 @@
             this.toolStripAnasayfa.Size = new System.Drawing.Size(1174, 32);
             this.toolStripAnasayfa.TabIndex = 0;
             this.toolStripAnasayfa.Text = "AnasayfaToolStrip";
+            // 
+            // logoUserSettingsToolStripMenuItem
+            // 
+            this.logoUserSettingsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.logoUserSettingsToolStripMenuItem.Name = "logoUserSettingsToolStripMenuItem";
+            this.logoUserSettingsToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
+            this.logoUserSettingsToolStripMenuItem.Text = "Logo Kullanıcı Ayarları";
+            this.logoUserSettingsToolStripMenuItem.Click += new System.EventHandler(this.logoUserSettingsToolStripMenuItem_Click);
             // 
             // Anasayfa
             // 
@@ -428,5 +438,6 @@
         private System.Windows.Forms.Button btnAkibetSorgulama;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripAnasayfa;
         private System.Windows.Forms.ToolStripMenuItem akibetiİnceleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem logoUserSettingsToolStripMenuItem;
     }
 }

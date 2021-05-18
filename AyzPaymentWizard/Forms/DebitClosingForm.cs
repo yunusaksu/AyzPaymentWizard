@@ -111,7 +111,7 @@ namespace AyzPaymentWizard.Forms
                 dr = komut.ExecuteReader();
                 SUB_PAYMENTOUTCOME payment = new SUB_PAYMENTOUTCOME();
                 while (dr.Read())
-                {                    
+                {
                     payment.ACCOUNTNO = dr["TARGET_ACCNO"].ToString();
                     payment.BRANCHCODE = Convert.ToInt32(dr["TARGET_BRANCH"].ToString());
                     payment.BANKCODE = Convert.ToInt32(dr["TARGET_BANK"].ToString());
@@ -126,7 +126,7 @@ namespace AyzPaymentWizard.Forms
                     payment.TYPE = dr["RECORD_TYPE"].ToString();
                     payment.CLCARDID = Convert.ToInt32(dr["CLIENTREF"].ToString());
                     liste.Add(payment);
-                }                
+                }
             }
 
             var source = new BindingSource();
@@ -158,7 +158,7 @@ namespace AyzPaymentWizard.Forms
             #endregion
 
             UnityObjects.UnityApplication UnityApp = new UnityObjects.UnityApplication();
-            if (UnityApp.Login("Logo", "logo", 1))
+            if (UnityApp.Login("" + Helper.LOGOUSERNAME + "", "" + Helper.LOGOUSERPASS + "", Helper.FIRMNR))
             {
                 foreach (var item in liste)
                 {
@@ -265,7 +265,7 @@ namespace AyzPaymentWizard.Forms
                             while (dr.Read())
                             {
                                 Debit d = new Debit();
-                                d.Paid = Convert.ToDecimal(dr["AMOUNT_REQUIRED"].ToString());
+                                d.Paid = Convert.ToDecimal(dr["AMOUNT_PAID"].ToString());
                                 d.PayRef = Convert.ToInt32(dr["PAYTRANSREF"].ToString());
                                 debitList.Add(d);
                             }

@@ -89,6 +89,12 @@
     <Compile Include="Forms\DebitClosingForm.Designer.cs">
       <DependentUpon>DebitClosingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\LogoUserInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LogoUserInfo.Designer.cs">
+      <DependentUpon>LogoUserInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PacketEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,6 +168,9 @@
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LogoUserInfo.resx">
+      <DependentUpon>LogoUserInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PacketEditForm.resx">
       <DependentUpon>PacketEditForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -203,6 +212,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\hide_icon.png" />
     <Content Include="Images\homepage.ico" />
     <Content Include="Images\HomepageSubBarImages\approveButton.png" />
     <Content Include="Images\HomepageSubBarImages\archive.png" />
@@ -212,6 +222,7 @@
     <Content Include="Images\HomepageSubBarImages\rejectButton.png" />
     <Content Include="Images\HomepageSubBarImages\reviewButton.png" />
     <Content Include="Images\HomepageSubBarImages\sendToApprove.png" />
+    <Content Include="Images\show_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="UnityObjects">

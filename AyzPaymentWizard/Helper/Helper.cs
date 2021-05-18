@@ -13,6 +13,8 @@ namespace AyzPaymentWizard
         static SqlDataReader dr;
         static string CommandText = "";
 
+        static public string LOGOUSERNAME { get; set; }
+        static public string LOGOUSERPASS { get; set; }
         static public string FIRMANO { get { return LStr(FIRMNR.ToString(), 3); } }  // Sadece Logo tablolarında kullanılır.
         public static string USERNAME { get; set; }
         public static int USERID { get; set; }
@@ -49,7 +51,7 @@ namespace AyzPaymentWizard
 
         public enum PacketStatus
         {
-            NewPacket = 0,            
+            NewPacket = 0,
             Approved = 2,
             Rejected = 3,
             SentToBank = 4,

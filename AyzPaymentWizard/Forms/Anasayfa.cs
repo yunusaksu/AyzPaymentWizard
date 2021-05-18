@@ -858,8 +858,14 @@ namespace AyzPaymentWizard
             {
                 bool review = true;
                 DebitClosingForm form = new DebitClosingForm(packetId, review);
-                form.Show();
+                form.ShowDialog();
             }
+        }
+
+        private void logoUserSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LogoUserInfo info = new LogoUserInfo();
+            info.ShowDialog();
         }
     }
 }

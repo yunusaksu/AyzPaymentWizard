@@ -62,6 +62,7 @@ namespace AyzPaymentWizard
                     Helper.USERID = 0; // Admin için USERID SIFIRDIR(0).
                     Helper.USERNAME = userName;
                     Helper.FIRMNR = Convert.ToInt32(cmbFirms.Text);
+                    GetLogoUsernameAndUserPassword();
                     Anasayfa form = new Anasayfa();
                     form.Show();
                     this.Hide();
@@ -88,6 +89,23 @@ namespace AyzPaymentWizard
                 }
             }
             conn.Close();
+        }
+
+        private void GetLogoUsernameAndUserPassword()
+        {
+            string username = "", userpassword = "";
+            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                command.CommandText = "SELECT * FROM AYZ_PW_LOGO_ACCINFO";
+                command.Connection = conn;
+                conn.Open();
+                dr = command.ExecuteReader();
+                while (dr.Read())
+                {
+                    Helper.LOGOUSERNAME = dr["LOGO_USERNAME"].ToString();
+                    Helper.LOGOUSERPASS = dr["LOGO_USERPASSWORD"].ToString();
+                }
+            }
         }
 
         private string UserRead()
@@ -122,6 +140,11 @@ namespace AyzPaymentWizard
             cmbFirms.ValueMember = "NR";
             cmbFirms.Hide();
             labelFirma.Hide();
+
+            ToolTip showBtnToolTip = new ToolTip();
+            showBtnToolTip.SetToolTip(btnShow, "Şifre Göster");
+            ToolTip hideBtnToolTip = new ToolTip();
+            hideBtnToolTip.SetToolTip(btnHide, "Şifre Gizle");
         }
 
         private void txtLoginName_DoubleClick(object sender, EventArgs e)
@@ -154,6 +177,24 @@ namespace AyzPaymentWizard
                 cmbFirms.Hide();
                 labelFirma.Hide();
                 LoginForm.ActiveForm.Size = new Size(351, 348);
+            }
+        }
+
+        private void btnShow_Click(object sender, EventArgs e)
+        {
+            if (txtLoginPassword.PasswordChar == '*')
+            {
+                btnHide.BringToFront();
+                txtLoginPassword.PasswordChar = '\0';
+            }
+        }
+
+        private void btnHide_Click(object sender, EventArgs e)
+        {
+            if (txtLoginPassword.PasswordChar == '\0')
+            {
+                btnShow.BringToFront();
+                txtLoginPassword.PasswordChar = '*';
             }
         }
     }
