@@ -50,3 +50,4 @@ C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csp
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csproj.CoreCompileInputs.cache
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csproj.CopyComplete
 C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.Forms.LogoUserInfo.resources
+C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.Forms.LogoUserInfo.resources

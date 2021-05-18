@@ -333,8 +333,7 @@ namespace AyzPaymentWizard
 
                 //Total Rows in Left Grid after filtering
                 textBox_totalL.Text = LeftList.Count.ToString();
-                //Sum in LeftGrid After Filtering
-                //Getting the total value
+                //Sum in LeftGrid After Filtering//Getting the total value
                 decimal sumL = 0.00m;
                 for (int i = 0; i < dataGridViewLeft.Rows.Count; ++i)
                 {
@@ -449,78 +448,127 @@ namespace AyzPaymentWizard
 
             if (detailSendingValue == 2) // Değer 2 ise Ödeme Satırları Üzerinden ödeme yapılacaktır anlamına gelir. Bu yüzden boyut kolonlarını göstermicem.
             {
-                dataGridViewLeft.Columns["MecraType"].Visible = false;
-                dataGridViewLeft.Columns["Mecra"].Visible = false;
-                dataGridViewLeft.Columns["MarketingCompany"].Visible = false;
-                dataGridViewLeft.Columns["Customer"].Visible = false;
-                dataGridViewLeft.Columns["PlanCode"].Visible = false;
-                dataGridViewLeft.Columns["InternetMainCategory"].Visible = false;
-                dataGridViewLeft.Columns["InternetSubCategory"].Visible = false;
-                dataGridViewLeft.Columns["DD1REF"].Visible = false;
-                dataGridViewLeft.Columns["DD2REF"].Visible = false;
-                dataGridViewLeft.Columns["DD3REF"].Visible = false;
-                dataGridViewLeft.Columns["DD4REF"].Visible = false;
-                dataGridViewLeft.Columns["DD5REF"].Visible = false;
-                dataGridViewLeft.Columns["DD6REF"].Visible = false;
-                dataGridViewLeft.Columns["DD7REF"].Visible = false;
-                dataGridViewLeft.Columns["NotInPayTrans"].Visible = false;
-                dataGridViewLeft.Columns["NotInPayTransFrame"].Visible = false;
+                //dataGridViewLeft.Columns["MecraType"].Visible = false;
+                //dataGridViewLeft.Columns["Mecra"].Visible = false;
+                //dataGridViewLeft.Columns["MarketingCompany"].Visible = false;
+                //dataGridViewLeft.Columns["Customer"].Visible = false;
+                //dataGridViewLeft.Columns["PlanCode"].Visible = false;
+                //dataGridViewLeft.Columns["InternetMainCategory"].Visible = false;
+                //dataGridViewLeft.Columns["InternetSubCategory"].Visible = false;
+                //dataGridViewLeft.Columns["DD1REF"].Visible = false;
+                //dataGridViewLeft.Columns["DD2REF"].Visible = false;
+                //dataGridViewLeft.Columns["DD3REF"].Visible = false;
+                //dataGridViewLeft.Columns["DD4REF"].Visible = false;
+                //dataGridViewLeft.Columns["DD5REF"].Visible = false;
+                //dataGridViewLeft.Columns["DD6REF"].Visible = false;
+                //dataGridViewLeft.Columns["DD7REF"].Visible = false;
+                //dataGridViewLeft.Columns["NotInPayTrans"].Visible = false;
+                //dataGridViewLeft.Columns["NotInPayTransFrame"].Visible = false;
+
+                string[] gosterilmeyecekodemeL = {
+                                            "MecraType" , "Mecra" , "MarketingCompany" , "Customer" , "PlanCode" ,
+                                            "InternetMainCategory","InternetSubCategory","DD1REF","DD2REF","DD3REF",
+                                            "DD4REF","DD5REF","DD6REF","DD7REF","NotInPayTrans","NotInPayTransFrame"
+                                            };
+                foreach(var gostermeodeL in gosterilmeyecekodemeL)
+                {
+                    dataGridViewLeft.Columns[gostermeodeL].Visible = false;
+                }
             }
             else if (detailSendingValue == 3) // Değer 3 ise Boyut Satırları Üzerinden ödeme yapılacaktır anlamına gelir.
             {
-                dataGridViewLeft.Columns["MecraType"].HeaderText = "Mecra Türü";
-                dataGridViewLeft.Columns["MarketingCompany"].HeaderText = "Pazarlama Şirketi";
-                dataGridViewLeft.Columns["Customer"].HeaderText = "Müşteri";
-                dataGridViewLeft.Columns["PlanCode"].HeaderText = "Plan Kodu";
-                dataGridViewLeft.Columns["InternetMainCategory"].HeaderText = "İnternet Ana Kategori";
-                dataGridViewLeft.Columns["InternetSubCategory"].HeaderText = "İnternet Alt Kategori";
-                dataGridViewLeft.Columns["MecraType"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-                dataGridViewLeft.Columns["Mecra"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-                dataGridViewLeft.Columns["MarketingCompany"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-                dataGridViewLeft.Columns["Customer"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-                dataGridViewLeft.Columns["PlanCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-                dataGridViewLeft.Columns["InternetMainCategory"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-                dataGridViewLeft.Columns["InternetSubCategory"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                //BOYUT HEADER LEFTGRID Dictionary
+                var boyutHeaderL = new Dictionary<string, string>()
+                {
+                  { "MecraType","Mecra Türü"},{ "MarketingCompany","Pazarlama Şirketi"},{"Customer","Müşteri" },{ "PlanCode","Plan Kodu"},
+                  {"InternetMainCategory","İnternet Ana Kategori"}, {"InternetSubCategory","İnternet Alt Kategori" },
+                };
+                foreach(var boyutheadL in boyutHeaderL)
+                {
+                    dataGridViewLeft.Columns[boyutheadL.Key].HeaderText = boyutheadL.Value;
+                    dataGridViewLeft.Columns[boyutheadL.Key].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                }
+                //dataGridViewLeft.Columns["MecraType"].HeaderText = "Mecra Türü";
+                //dataGridViewLeft.Columns["MarketingCompany"].HeaderText = "Pazarlama Şirketi";
+                //dataGridViewLeft.Columns["Customer"].HeaderText = "Müşteri";
+                //dataGridViewLeft.Columns["PlanCode"].HeaderText = "Plan Kodu";
+                //dataGridViewLeft.Columns["InternetMainCategory"].HeaderText = "İnternet Ana Kategori";
+                //dataGridViewLeft.Columns["InternetSubCategory"].HeaderText = "İnternet Alt Kategori";
+
+                //dataGridViewLeft.Columns["MecraType"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                //dataGridViewLeft.Columns["Mecra"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                //dataGridViewLeft.Columns["MarketingCompany"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                //dataGridViewLeft.Columns["Customer"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                //dataGridViewLeft.Columns["PlanCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                //dataGridViewLeft.Columns["InternetMainCategory"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                //dataGridViewLeft.Columns["InternetSubCategory"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             }
-            dataGridViewLeft.Columns["PayRef"].Visible = false;
-            dataGridViewLeft.Columns["ClCardRef"].Visible = false;
-            dataGridViewLeft.Columns["FicheRef"].Visible = false;
-            dataGridViewLeft.Columns["ModuleNr"].Visible = false;
-            dataGridViewLeft.Columns["TrCode"].Visible = false;
-            dataGridViewLeft.Columns["IsPerson"].Visible = false;
-            dataGridViewLeft.Columns["Branch"].Visible = false;
-            dataGridViewLeft.Columns["TrType"].Visible = false;
-            dataGridViewLeft.Columns["Paid"].Visible = false;
-            dataGridViewLeft.Columns["GenExp1"].Visible = false;
-            dataGridViewLeft.Columns["EmailAdres"].Visible = false;
-            dataGridViewLeft.Columns["TrCode"].Visible = false;
-            dataGridViewLeft.Columns["TrCurr"].Visible = false;
-            dataGridViewLeft.Columns["TaxNr"].Visible = false;
-            dataGridViewLeft.Columns["TaxOffice"].Visible = false;
-            dataGridViewLeft.Columns["DD1REF"].Visible = false;
-            dataGridViewLeft.Columns["DD2REF"].Visible = false;
-            dataGridViewLeft.Columns["DD3REF"].Visible = false;
-            dataGridViewLeft.Columns["DD4REF"].Visible = false;
-            dataGridViewLeft.Columns["DD5REF"].Visible = false;
-            dataGridViewLeft.Columns["DD6REF"].Visible = false;
-            dataGridViewLeft.Columns["DD7REF"].Visible = false;
-            dataGridViewLeft.Columns["NotInPayTrans"].Visible = false;
-            dataGridViewLeft.Columns["NotInPayTransFrame"].Visible = false;
-            dataGridViewLeft.Columns["DueDate"].HeaderText = "Vade Tarihi";
-            dataGridViewLeft.Columns["CurCode"].HeaderText = "Döviz";
-            dataGridViewLeft.Columns["Total"].HeaderText = "Tutar";
-            dataGridViewLeft.Columns["ClCode"].HeaderText = "Cari Kod";
-            dataGridViewLeft.Columns["ClDef"].HeaderText = "Cari Hesap Tanımı";
-            dataGridViewLeft.Columns["FicheDate"].HeaderText = "Fiş Tarihi";
-            dataGridViewLeft.Columns["FicheNo"].HeaderText = "Fiş Numarası";
-            dataGridViewLeft.Columns["DoCode"].HeaderText = "Belge Numarası";
-            dataGridViewLeft.Columns["NotInPayTransFrame"].HeaderText = "Active";
-            dataGridViewLeft.Columns["Total"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewLeft.Columns["ClCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewLeft.Columns["ClDef"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewLeft.Columns["IBAN"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewLeft.Columns["DoCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewLeft.Columns["CurCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            string[] gosterilmeyecekL = { "PayRef", "ClCardRef", "FicheRef", "ModuleNr", "TrCode", "IsPerson", "Branch",
+                                           "TrType", "Paid", "GenExp1", "EmailAdres", "TrCode","TrCurr","TaxNr","TaxOffice",
+                                           "DD1REF","DD2REF","DD3REF","DD4REF","DD5REF","DD6REF","DD7REF","NotInPayTrans",
+                                           "NotInPayTrans","NotInPayTransFrame" };
+            foreach(var gostermeL in gosterilmeyecekL)
+            {
+                dataGridViewLeft.Columns[gostermeL].Visible = false;
+            }
+            //dataGridViewLeft.Columns["PayRef"].Visible = false;
+            //dataGridViewLeft.Columns["ClCardRef"].Visible = false;
+            //dataGridViewLeft.Columns["FicheRef"].Visible = false;
+            //dataGridViewLeft.Columns["ModuleNr"].Visible = false;
+            //dataGridViewLeft.Columns["TrCode"].Visible = false;
+            //dataGridViewLeft.Columns["IsPerson"].Visible = false;
+            //dataGridViewLeft.Columns["Branch"].Visible = false;
+            //dataGridViewLeft.Columns["TrType"].Visible = false;
+            //dataGridViewLeft.Columns["Paid"].Visible = false;
+            //dataGridViewLeft.Columns["GenExp1"].Visible = false;
+            //dataGridViewLeft.Columns["EmailAdres"].Visible = false;
+            //dataGridViewLeft.Columns["TrCode"].Visible = false;
+            //dataGridViewLeft.Columns["TrCurr"].Visible = false;
+            //dataGridViewLeft.Columns["TaxNr"].Visible = false;
+            //dataGridViewLeft.Columns["TaxOffice"].Visible = false;
+            //dataGridViewLeft.Columns["DD1REF"].Visible = false;
+            //dataGridViewLeft.Columns["DD2REF"].Visible = false;
+            //dataGridViewLeft.Columns["DD3REF"].Visible = false;
+            //dataGridViewLeft.Columns["DD4REF"].Visible = false;
+            //dataGridViewLeft.Columns["DD5REF"].Visible = false;
+            //dataGridViewLeft.Columns["DD6REF"].Visible = false;
+            //dataGridViewLeft.Columns["DD7REF"].Visible = false;
+            //dataGridViewLeft.Columns["NotInPayTrans"].Visible = false;
+            //dataGridViewLeft.Columns["NotInPayTransFrame"].Visible = false;
+
+            var HeaderL = new Dictionary<string, string>()
+            { 
+                { "DueDate", "Vade Tarihi" },{"CurCode", "Döviz"}, {"Total","Tutar" },{"ClCode","Cari Kod" }, {"ClDef","Cari Hesap Tanımı" },
+                {"FicheDate","Fiş Tarihi"},{"FicheNo","FicheNo"},{"DoCode","Belge Numarası"},{ "NotInPayTransFrame","Active" }
+            };
+            
+            foreach(var headL in HeaderL)
+            {
+                dataGridViewLeft.Columns[headL.Key].HeaderText = headL.Value;
+            }
+           
+            //dataGridViewLeft.Columns["DueDate"].HeaderText = "Vade Tarihi";
+            //dataGridViewLeft.Columns["CurCode"].HeaderText = "Döviz";
+            //dataGridViewLeft.Columns["Total"].HeaderText = "Tutar";
+            //dataGridViewLeft.Columns["ClCode"].HeaderText = "Cari Kod";
+            //dataGridViewLeft.Columns["ClDef"].HeaderText = "Cari Hesap Tanımı";
+            //dataGridViewLeft.Columns["FicheDate"].HeaderText = "Fiş Tarihi";
+            //dataGridViewLeft.Columns["FicheNo"].HeaderText = "Fiş Numarası";
+            //dataGridViewLeft.Columns["DoCode"].HeaderText = "Belge Numarası";
+            //dataGridViewLeft.Columns["NotInPayTransFrame"].HeaderText = "Active";
+
+            string[] Autosized = { "Total", "ClCode", "ClDef", "IBAN", "DoCode","CurCode"};
+            foreach(var auto in Autosized)
+            {
+                dataGridViewLeft.Columns[auto].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            }
+            //dataGridViewLeft.Columns["Total"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            //dataGridViewLeft.Columns["ClCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            //dataGridViewLeft.Columns["ClDef"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            //dataGridViewLeft.Columns["IBAN"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            //dataGridViewLeft.Columns["DoCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            //dataGridViewLeft.Columns["CurCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+
             dataGridViewLeft.Columns["FicheDate"].Width = 75;
             dataGridViewLeft.Columns["FicheNo"].Width = 90;
 
@@ -551,57 +599,93 @@ namespace AyzPaymentWizard
             dataGridViewRight.ColumnHeadersDefaultCellStyle.Font = new Font("Tahoma", 9.75F, FontStyle.Regular);
             dataGridViewRight.EnableHeadersVisualStyles = false;
 
-            dataGridViewRight.Columns["PayRef"].Visible = false;
-            dataGridViewRight.Columns["ClCardRef"].Visible = false;
-            dataGridViewRight.Columns["FicheRef"].Visible = false;
-            dataGridViewRight.Columns["ModuleNr"].Visible = false;
-            dataGridViewRight.Columns["TrCode"].Visible = false;
-            dataGridViewRight.Columns["GenExp1"].Visible = false;
-            dataGridViewRight.Columns["TrType"].Visible = false;
-            dataGridViewRight.Columns["EmailAdres"].Visible = false;
-            dataGridViewRight.Columns["IsPerson"].Visible = false;
+            //RGridde Gosterilmeyecekleri
+            string[] gosterilmeyecekR = { "PayRef", "ClCardRef", "FicheRef", "ModuleNr", "TrCode", "IsPerson", "Branch",
+                                           "TrType", "GenExp1", "EmailAdres", "TrCode","TrCurr","TaxNr","TaxOffice",
+                                           "DD1REF","DD2REF","DD3REF","DD4REF","DD5REF","DD6REF","DD7REF","NotInPayTrans",
+                                           "NotInPayTrans","NotInPayTransFrame" };
+
+            foreach(var gostermeR in gosterilmeyecekR)
+            {
+                dataGridViewRight.Columns[gostermeR].Visible = false;
+            }
             dataGridViewRight.Columns["CurCode"].HeaderText = "Döviz";
-            dataGridViewRight.Columns["Branch"].Visible = false;
-            dataGridViewRight.Columns["TaxNr"].Visible = false;
-            dataGridViewRight.Columns["TaxOffice"].Visible = false;
-            dataGridViewRight.Columns["TrCurr"].Visible = false;
-            dataGridViewRight.Columns["DD1REF"].Visible = false;
-            dataGridViewRight.Columns["DD2REF"].Visible = false;
-            dataGridViewRight.Columns["DD3REF"].Visible = false;
-            dataGridViewRight.Columns["DD4REF"].Visible = false;
-            dataGridViewRight.Columns["DD5REF"].Visible = false;
-            dataGridViewRight.Columns["DD6REF"].Visible = false;
-            dataGridViewRight.Columns["DD7REF"].Visible = false;
-            dataGridViewRight.Columns["NotInPayTrans"].Visible = false;
-            dataGridViewRight.Columns["NotInPayTransFrame"].Visible = false;
-            dataGridViewRight.Columns["Paid"].HeaderText = "Ödenecek";
-            dataGridViewRight.Columns["Paid"].HeaderCell.Style.BackColor = Color.Red;
-            dataGridViewRight.Columns["Total"].HeaderText = "Ödenmesi Gereken";
-            dataGridViewRight.Columns["DueDate"].HeaderText = "Vade Tarihi";
-            dataGridViewRight.Columns["ClDef"].HeaderText = "Cari Hesap Tanımı";
-            dataGridViewRight.Columns["ClCode"].HeaderText = "Cari Kod";
-            dataGridViewRight.Columns["FicheDate"].HeaderText = "Fiş Tarihi";
-            dataGridViewRight.Columns["FicheNo"].HeaderText = "Fiş Numarası";
-            dataGridViewRight.Columns["DoCode"].HeaderText = "Belge Numarası";
-            dataGridViewRight.Columns["MecraType"].HeaderText = "Mecra Türü";
-            dataGridViewRight.Columns["MarketingCompany"].HeaderText = "Pazarlama Şirketi";
-            dataGridViewRight.Columns["Customer"].HeaderText = "Müşteri";
-            dataGridViewRight.Columns["PlanCode"].HeaderText = "Plan Kodu";
-            dataGridViewRight.Columns["InternetMainCategory"].HeaderText = "İnternet Ana Kategori";
-            dataGridViewRight.Columns["InternetSubCategory"].HeaderText = "İnternet Alt Kategori";
-            dataGridViewRight.Columns["Total"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewRight.Columns["ClCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewRight.Columns["ClDef"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewRight.Columns["IBAN"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewRight.Columns["DoCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewRight.Columns["CurCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewRight.Columns["MecraType"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewRight.Columns["Mecra"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewRight.Columns["MarketingCompany"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewRight.Columns["Customer"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewRight.Columns["PlanCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewRight.Columns["InternetMainCategory"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            dataGridViewRight.Columns["InternetSubCategory"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+
+            //dataGridViewRight.Columns["PayRef"].Visible = false;
+            //dataGridViewRight.Columns["ClCardRef"].Visible = false;
+            //dataGridViewRight.Columns["FicheRef"].Visible = false;
+            //dataGridViewRight.Columns["ModuleNr"].Visible = false;
+            //dataGridViewRight.Columns["TrCode"].Visible = false;
+            //dataGridViewRight.Columns["GenExp1"].Visible = false;
+            //dataGridViewRight.Columns["TrType"].Visible = false;
+            //dataGridViewRight.Columns["EmailAdres"].Visible = false;
+            //dataGridViewRight.Columns["IsPerson"].Visible = false;
+            //dataGridViewRight.Columns["CurCode"].HeaderText = "Döviz";
+            //dataGridViewRight.Columns["Branch"].Visible = false;
+            //dataGridViewRight.Columns["TaxNr"].Visible = false;
+            //dataGridViewRight.Columns["TaxOffice"].Visible = false;
+            //dataGridViewRight.Columns["TrCurr"].Visible = false;
+            //dataGridViewRight.Columns["DD1REF"].Visible = false;
+            //dataGridViewRight.Columns["DD2REF"].Visible = false;
+            //dataGridViewRight.Columns["DD3REF"].Visible = false;
+            //dataGridViewRight.Columns["DD4REF"].Visible = false;
+            //dataGridViewRight.Columns["DD5REF"].Visible = false;
+            //dataGridViewRight.Columns["DD6REF"].Visible = false;
+            //dataGridViewRight.Columns["DD7REF"].Visible = false;
+            //dataGridViewRight.Columns["NotInPayTrans"].Visible = false;
+            //dataGridViewRight.Columns["NotInPayTransFrame"].Visible = false;
+
+            var gosterilecekRHeader = new Dictionary<string, string>()
+            {
+                { "Paid", "Ödenecek" }, { "Total", "Ödenmesi Gereken" },{ "DueDate", "Vade Tarihi"},{ "ClDef", "Cari Hesap Tanımı" },
+                {"ClCode","Cari Kod" },{"FicheDate","Fiş Tarihi"},{"FicheNo","Fiş Numarası"},{"DoCode","Belge Numarası"},{"MecraType","Mecra Türü"},
+                { "MarketingCompany","Pazarlama Şirketi"},{"Customer","Müşteri"},{"PlanCode","Plan Kodu"},{"InternetMainCategory","İnternet Ana Kategori"},
+                {"InternetSubCategory","İnternet Alt Kategori" }
+            };
+
+            foreach (var gosterRHead in gosterilecekRHeader)
+            {
+                dataGridViewRight.Columns[gosterRHead.Key].HeaderText = gosterRHead.Value;
+
+                dataGridViewRight.Columns["Paid"].HeaderCell.Style.BackColor = Color.Red;
+            }
+
+            //dataGridViewRight.Columns["Paid"].HeaderCell.Style.BackColor = Color.Red;
+            //dataGridViewRight.Columns["Paid"].HeaderText = "Ödenecek";
+            //dataGridViewRight.Columns["Paid"].HeaderCell.Style.BackColor = Color.Red;
+            //dataGridViewRight.Columns["Total"].HeaderText = "Ödenmesi Gereken";
+            //dataGridViewRight.Columns["DueDate"].HeaderText = "Vade Tarihi";
+            //dataGridViewRight.Columns["ClDef"].HeaderText = "Cari Hesap Tanımı";
+            //dataGridViewRight.Columns["ClCode"].HeaderText = "Cari Kod";
+            //dataGridViewRight.Columns["FicheDate"].HeaderText = "Fiş Tarihi";
+            //dataGridViewRight.Columns["FicheNo"].HeaderText = "Fiş Numarası";
+            //dataGridViewRight.Columns["DoCode"].HeaderText = "Belge Numarası";
+            //dataGridViewRight.Columns["MecraType"].HeaderText = "Mecra Türü";
+            //dataGridViewRight.Columns["MarketingCompany"].HeaderText = "Pazarlama Şirketi";
+            //dataGridViewRight.Columns["Customer"].HeaderText = "Müşteri";
+            //dataGridViewRight.Columns["PlanCode"].HeaderText = "Plan Kodu";
+            //dataGridViewRight.Columns["InternetMainCategory"].HeaderText = "İnternet Ana Kategori";
+            //dataGridViewRight.Columns["InternetSubCategory"].HeaderText = "İnternet Alt Kategori";
+            string[] AutosizeR = {
+                                   "Total", "ClCode", "ClDef", "IBAN", "DoCode", "CurCode", "MecraType", "Mecra", 
+                                   "MarketingCompany", "Customer", "PlanCode", "InternetMainCategory","InternetSubCategory" };
+            foreach(var autoR in AutosizeR)
+            {
+                dataGridViewRight.Columns[autoR].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            }
+            //dataGridViewRight.Columns["Total"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            //dataGridViewRight.Columns["ClCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            //dataGridViewRight.Columns["ClDef"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            //dataGridViewRight.Columns["IBAN"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            //dataGridViewRight.Columns["DoCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            //dataGridViewRight.Columns["CurCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            //dataGridViewRight.Columns["MecraType"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            //dataGridViewRight.Columns["Mecra"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            //dataGridViewRight.Columns["MarketingCompany"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            //dataGridViewRight.Columns["Customer"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            //dataGridViewRight.Columns["PlanCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            //dataGridViewRight.Columns["InternetMainCategory"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            //dataGridViewRight.Columns["InternetSubCategory"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
 
             //MiddleCenter Align  alligned for Right Grid
             Dictionary<string,DataGridView > RGCentered = new Dictionary<string,DataGridView >();
@@ -620,22 +704,34 @@ namespace AyzPaymentWizard
             
             if (detailSendingValue == 2) // Ödeme Satırları Üzerinden
             {
-                dataGridViewRight.Columns["MecraType"].Visible = false;
-                dataGridViewRight.Columns["Mecra"].Visible = false;
-                dataGridViewRight.Columns["MarketingCompany"].Visible = false;
-                dataGridViewRight.Columns["Customer"].Visible = false;
-                dataGridViewRight.Columns["PlanCode"].Visible = false;
-                dataGridViewRight.Columns["InternetMainCategory"].Visible = false;
-                dataGridViewRight.Columns["InternetSubCategory"].Visible = false;
-                dataGridViewRight.Columns["DD1REF"].Visible = false;
-                dataGridViewRight.Columns["DD2REF"].Visible = false;
-                dataGridViewRight.Columns["DD3REF"].Visible = false;
-                dataGridViewRight.Columns["DD4REF"].Visible = false;
-                dataGridViewRight.Columns["DD5REF"].Visible = false;
-                dataGridViewRight.Columns["DD6REF"].Visible = false;
-                dataGridViewRight.Columns["DD7REF"].Visible = false;
-                dataGridViewRight.Columns["NotInPayTrans"].Visible = false;
-                dataGridViewRight.Columns["NotInPayTransFrame"].Visible = false;
+                //dataGridViewRight.Columns["MecraType"].Visible = false;
+                //dataGridViewRight.Columns["Mecra"].Visible = false;
+                //dataGridViewRight.Columns["MarketingCompany"].Visible = false;
+                //dataGridViewRight.Columns["Customer"].Visible = false;
+                //dataGridViewRight.Columns["PlanCode"].Visible = false;
+                //dataGridViewRight.Columns["InternetMainCategory"].Visible = false;
+                //dataGridViewRight.Columns["InternetSubCategory"].Visible = false;
+                //dataGridViewRight.Columns["DD1REF"].Visible = false;
+                //dataGridViewRight.Columns["DD2REF"].Visible = false;
+                //dataGridViewRight.Columns["DD3REF"].Visible = false;
+                //dataGridViewRight.Columns["DD4REF"].Visible = false;
+                //dataGridViewRight.Columns["DD5REF"].Visible = false;
+                //dataGridViewRight.Columns["DD6REF"].Visible = false;
+                //dataGridViewRight.Columns["DD7REF"].Visible = false;
+                //dataGridViewRight.Columns["NotInPayTrans"].Visible = false;
+                //dataGridViewRight.Columns["NotInPayTransFrame"].Visible = false;
+
+                string[] gosterilmeyecekodeme = {
+                                            "MecraType" , "Mecra" , "MarketingCompany" , "Customer" , "PlanCode" ,
+                                            "InternetMainCategory","InternetSubCategory","DD1REF","DD2REF","DD3REF",
+                                            "DD4REF","DD5REF","DD6REF","DD7REF","NotInPayTrans","NotInPayTransFrame"
+                                            };
+
+                foreach(var gostermeode in gosterilmeyecekodeme)
+                {
+                    dataGridViewRight.Columns[gostermeode].Visible = false;
+                }
+
             }
             #endregion
 
@@ -969,6 +1065,12 @@ namespace AyzPaymentWizard
                     #endregion
                     if (detailSendingValue == 3)     // Boyutlu Ödeme Satırları Üzerinden
                     {
+                        string[] strboyutlular = { "MecraType" , "Mecra" , "MarketingCompany" , "Customer" , "PlanCode" ,
+                                            "InternetMainCategory","InternetSubCategory"};
+                        foreach(var strboyut in strboyutlular)
+                        {
+                            debit.MecraType = drv.Cells[strboyut].Value.ToString();
+                        }
                         debit.MecraType = drv.Cells["MecraType"].Value.ToString();
                         debit.Mecra = drv.Cells["Mecra"].Value.ToString();
                         debit.MarketingCompany = drv.Cells["MarketingCompany"].Value.ToString();
@@ -976,6 +1078,8 @@ namespace AyzPaymentWizard
                         debit.PlanCode = drv.Cells["PlanCode"].Value.ToString();
                         debit.InternetMainCategory = drv.Cells["InternetMainCategory"].Value.ToString();
                         debit.InternetSubCategory = drv.Cells["InternetSubCategory"].Value.ToString();
+
+
                         debit.DD1REF = Convert.ToInt32(drv.Cells["DD1REF"].Value);
                         debit.DD2REF = Convert.ToInt32(drv.Cells["DD2REF"].Value);
                         debit.DD3REF = Convert.ToInt32(drv.Cells["DD3REF"].Value);
