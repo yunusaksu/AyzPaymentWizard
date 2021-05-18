@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             this.btnLogin = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtLoginName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -38,6 +38,8 @@
             this.LoginScreenExitLabel = new System.Windows.Forms.Label();
             this.cmbFirms = new System.Windows.Forms.ComboBox();
             this.labelFirma = new System.Windows.Forms.Label();
+            this.btnHide = new System.Windows.Forms.Button();
+            this.btnShow = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnLogin
@@ -54,18 +56,6 @@
             this.btnLogin.Text = "Login";
             this.btnLogin.UseVisualStyleBackColor = false;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.checkBox1.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.checkBox1.Location = new System.Drawing.Point(60, 218);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(119, 21);
-            this.checkBox1.TabIndex = 1;
-            this.checkBox1.Text = "Remember me";
-            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -150,12 +140,38 @@
             this.labelFirma.TabIndex = 9;
             this.labelFirma.Text = "Firma Numarası Seç";
             // 
+            // btnHide
+            // 
+            this.btnHide.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHide.ForeColor = System.Drawing.Color.Black;
+            this.btnHide.Image = ((System.Drawing.Image)(resources.GetObject("btnHide.Image")));
+            this.btnHide.Location = new System.Drawing.Point(274, 185);
+            this.btnHide.Name = "btnHide";
+            this.btnHide.Size = new System.Drawing.Size(29, 27);
+            this.btnHide.TabIndex = 10;
+            this.btnHide.UseVisualStyleBackColor = true;
+            this.btnHide.Click += new System.EventHandler(this.btnHide_Click);
+            // 
+            // btnShow
+            // 
+            this.btnShow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnShow.ForeColor = System.Drawing.Color.Black;
+            this.btnShow.Image = ((System.Drawing.Image)(resources.GetObject("btnShow.Image")));
+            this.btnShow.Location = new System.Drawing.Point(274, 185);
+            this.btnShow.Name = "btnShow";
+            this.btnShow.Size = new System.Drawing.Size(29, 27);
+            this.btnShow.TabIndex = 11;
+            this.btnShow.UseVisualStyleBackColor = true;
+            this.btnShow.Click += new System.EventHandler(this.btnShow_Click);
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(351, 348);
+            this.Controls.Add(this.btnShow);
+            this.Controls.Add(this.btnHide);
             this.Controls.Add(this.labelFirma);
             this.Controls.Add(this.cmbFirms);
             this.Controls.Add(this.LoginScreenExitLabel);
@@ -164,7 +180,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtLoginName);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.btnLogin);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "LoginForm";
@@ -179,7 +194,6 @@
         #endregion
 
         private System.Windows.Forms.Button btnLogin;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtLoginName;
         private System.Windows.Forms.Label label2;
@@ -188,6 +202,8 @@
         private System.Windows.Forms.Label LoginScreenExitLabel;
         private System.Windows.Forms.ComboBox cmbFirms;
         private System.Windows.Forms.Label labelFirma;
+        private System.Windows.Forms.Button btnHide;
+        private System.Windows.Forms.Button btnShow;
     }
 }
 

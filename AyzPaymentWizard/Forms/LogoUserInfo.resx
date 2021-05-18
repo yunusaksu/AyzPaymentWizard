@@ -118,6 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnShow.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        EwAACxMBAJqcGAAAAU5JREFUSEvtk71OAkEURtfChk4rrbHSJ8BEShWjL4A+ARbSSIuJFr6GWou9Nlpo
+        Aw+j8ScxUeQcMhM3QJCNJDT7JSc38+3cmTuzc5NcuWauRdiGQ2iE6Fj/X5qDPbiDL/gZgb7fnef8TFqB
+        B3ChLjxCE47gNMQT0Pe785xv3kTyGl7AxBasQgGu4Bv0jZegvwY3oG/eFozVDnzCB1Q1gtzARdpwHqJj
+        N4raB/PMr2iMkhW9whtsaAQtg5W78LxGiB3QX9IIKsM7uI43MKRrsDrvPK110PcEaTnWL/VHvzoDfdcb
+        kjtbgZVYUZSVTu0kKv1PvOMo797qXNgTGB1fQNQB/PlPonwdz+Aivhr/la/Ijaxc3+gGg6/LvE2YSL73
+        ezDRPngC+6IO6T7Rj33i/CJkUuz4WxjX8X7fhcwdP6gFsElrcByi16qfK9fMlCQ9WLZsB9wKuRIAAAAA
+        SUVORK5CYII=
+</value>
+  </data>
   <data name="btnHide.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -132,18 +144,6 @@
         013TrI+u7S4LvkGDHNAQalbUpqMEmbVzohIpA2z7SM3Ld/nfeE4suJHm5YjbVpBbQCWyE/8X2In/ogzD
         YghdSUxtO2+jpiBQ59tFVq4e2H67/oVQEn2uIWhagtuiaybBz/Vt0JXkLvGfkfT6f5frus4FRB7DNfrX
         njcAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="btnShow.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EwAACxMBAJqcGAAAAU5JREFUSEvtk71OAkEURtfChk4rrbHSJ8BEShWjL4A+ARbSSIuJFr6GWou9Nlpo
-        Aw+j8ScxUeQcMhM3QJCNJDT7JSc38+3cmTuzc5NcuWauRdiGQ2iE6Fj/X5qDPbiDL/gZgb7fnef8TFqB
-        B3ChLjxCE47gNMQT0Pe785xv3kTyGl7AxBasQgGu4Bv0jZegvwY3oG/eFozVDnzCB1Q1gtzARdpwHqJj
-        N4raB/PMr2iMkhW9whtsaAQtg5W78LxGiB3QX9IIKsM7uI43MKRrsDrvPK110PcEaTnWL/VHvzoDfdcb
-        kjtbgZVYUZSVTu0kKv1PvOMo797qXNgTGB1fQNQB/PlPonwdz+Aivhr/la/Ijaxc3+gGg6/LvE2YSL73
-        ezDRPngC+6IO6T7Rj33i/CJkUuz4WxjX8X7fhcwdP6gFsElrcByi16qfK9fMlCQ9WLZsB9wKuRIAAAAA
-        SUVORK5CYII=
 </value>
   </data>
 </root>

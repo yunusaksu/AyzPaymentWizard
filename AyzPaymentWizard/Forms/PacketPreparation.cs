@@ -635,37 +635,37 @@ namespace AyzPaymentWizard
             //dataGridViewRight.Columns["NotInPayTrans"].Visible = false;
             //dataGridViewRight.Columns["NotInPayTransFrame"].Visible = false;
 
-            //var gosterilecekRHeader = new Dictionary<string, string>() 
-            //{
-            //    { "Paid", "Ödenecek" }, { "Total", "Ödenmesi Gereken" },{ "DueDate", "Vade Tarihi"},{ "ClDef", "Cari Hesap Tanımı" },
-            //    {"ClCode","Cari Kod" },{"FicheDate","Fiş Tarihi"},{"FicheNo","Fiş Numarası"},{"DoCode","Belge Numarası"},{"MecraType","Mecra Türü"},
-            //    { "MarketingCompany","Pazarlama Şirketi"},{"Customer","Müşteri"},{"PlanCode","Plan Kodu"},{"InternetMainCategory","İnternet Ana Kategori"},
-            //    {"InternetSubCategory","İnternet Alt Kategori" }
-            //};
+            var gosterilecekRHeader = new Dictionary<string, string>()
+            {
+                { "Paid", "Ödenecek" }, { "Total", "Ödenmesi Gereken" },{ "DueDate", "Vade Tarihi"},{ "ClDef", "Cari Hesap Tanımı" },
+                {"ClCode","Cari Kod" },{"FicheDate","Fiş Tarihi"},{"FicheNo","Fiş Numarası"},{"DoCode","Belge Numarası"},{"MecraType","Mecra Türü"},
+                { "MarketingCompany","Pazarlama Şirketi"},{"Customer","Müşteri"},{"PlanCode","Plan Kodu"},{"InternetMainCategory","İnternet Ana Kategori"},
+                {"InternetSubCategory","İnternet Alt Kategori" }
+            };
 
-            //foreach (var gosterRHead in gosterilecekRHeader)
-            //{
-            //    dataGridViewRight.Columns[gosterRHead.Key].HeaderText = gosterRHead.Value;
+            foreach (var gosterRHead in gosterilecekRHeader)
+            {
+                dataGridViewRight.Columns[gosterRHead.Key].HeaderText = gosterRHead.Value;
 
-            //    dataGridViewRight.Columns["Paid"].HeaderCell.Style.BackColor = Color.Red;
-            //}
+                dataGridViewRight.Columns["Paid"].HeaderCell.Style.BackColor = Color.Red;
+            }
 
-            dataGridViewRight.Columns["Paid"].HeaderCell.Style.BackColor = Color.Red;
-            dataGridViewRight.Columns["Paid"].HeaderText = "Ödenecek";
-            dataGridViewRight.Columns["Paid"].HeaderCell.Style.BackColor = Color.Red;
-            dataGridViewRight.Columns["Total"].HeaderText = "Ödenmesi Gereken";
-            dataGridViewRight.Columns["DueDate"].HeaderText = "Vade Tarihi";
-            dataGridViewRight.Columns["ClDef"].HeaderText = "Cari Hesap Tanımı";
-            dataGridViewRight.Columns["ClCode"].HeaderText = "Cari Kod";
-            dataGridViewRight.Columns["FicheDate"].HeaderText = "Fiş Tarihi";
-            dataGridViewRight.Columns["FicheNo"].HeaderText = "Fiş Numarası";
-            dataGridViewRight.Columns["DoCode"].HeaderText = "Belge Numarası";
-            dataGridViewRight.Columns["MecraType"].HeaderText = "Mecra Türü";
-            dataGridViewRight.Columns["MarketingCompany"].HeaderText = "Pazarlama Şirketi";
-            dataGridViewRight.Columns["Customer"].HeaderText = "Müşteri";
-            dataGridViewRight.Columns["PlanCode"].HeaderText = "Plan Kodu";
-            dataGridViewRight.Columns["InternetMainCategory"].HeaderText = "İnternet Ana Kategori";
-            dataGridViewRight.Columns["InternetSubCategory"].HeaderText = "İnternet Alt Kategori";
+            //dataGridViewRight.Columns["Paid"].HeaderCell.Style.BackColor = Color.Red;
+            //dataGridViewRight.Columns["Paid"].HeaderText = "Ödenecek";
+            //dataGridViewRight.Columns["Paid"].HeaderCell.Style.BackColor = Color.Red;
+            //dataGridViewRight.Columns["Total"].HeaderText = "Ödenmesi Gereken";
+            //dataGridViewRight.Columns["DueDate"].HeaderText = "Vade Tarihi";
+            //dataGridViewRight.Columns["ClDef"].HeaderText = "Cari Hesap Tanımı";
+            //dataGridViewRight.Columns["ClCode"].HeaderText = "Cari Kod";
+            //dataGridViewRight.Columns["FicheDate"].HeaderText = "Fiş Tarihi";
+            //dataGridViewRight.Columns["FicheNo"].HeaderText = "Fiş Numarası";
+            //dataGridViewRight.Columns["DoCode"].HeaderText = "Belge Numarası";
+            //dataGridViewRight.Columns["MecraType"].HeaderText = "Mecra Türü";
+            //dataGridViewRight.Columns["MarketingCompany"].HeaderText = "Pazarlama Şirketi";
+            //dataGridViewRight.Columns["Customer"].HeaderText = "Müşteri";
+            //dataGridViewRight.Columns["PlanCode"].HeaderText = "Plan Kodu";
+            //dataGridViewRight.Columns["InternetMainCategory"].HeaderText = "İnternet Ana Kategori";
+            //dataGridViewRight.Columns["InternetSubCategory"].HeaderText = "İnternet Alt Kategori";
             string[] AutosizeR = {
                                    "Total", "ClCode", "ClDef", "IBAN", "DoCode", "CurCode", "MecraType", "Mecra", 
                                    "MarketingCompany", "Customer", "PlanCode", "InternetMainCategory","InternetSubCategory" };

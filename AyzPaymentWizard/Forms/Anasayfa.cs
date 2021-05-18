@@ -553,7 +553,7 @@ namespace AyzPaymentWizard
                         //  HEADER ----Buradaki Bazı bilgileri Veritabandan çekebiliriz 
                         // KurusHesabı                        
                         string OdemeninHesaptanCikisTarihi = DateTime.Now.Year + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd");
-                        int kurusHesabi = 00012345;
+                        int kurusHesabi = 0001882345;
                         string fileHeader = "H6" + DateTime.Now.Year + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + BankaKodu.ToString().PadLeft(4, '0') + SubeKodu.ToString().PadLeft(5, '0') + MusteriNo.ToString().PadLeft(8, '0') + HesapNo.ToString().PadLeft(8, '0') + OdemeninHesaptanCikisTarihi + DateTime.Now.Hour.ToString().PadLeft(2, '0') + DateTime.Now.Minute.ToString().PadLeft(2, '0') + kurusHesabi.ToString().PadLeft(8, '0');
                         Engine.HeaderText = fileHeader;                 //Dosyanın Headerı
 
@@ -808,37 +808,7 @@ namespace AyzPaymentWizard
                             MessageBox.Show("Hata: \n" + ex.Message);
                         }
                     }
-                }
-
-                //using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-                //{
-                //    CommandText = "SELECT PAYMENT_STATUS FROM AYZ_PW_SUMMARY WHERE PAYMENT_STATUS IS NOT NULL AND PACKETID = '" + packetId + "'";
-                //    komut.CommandText = CommandText;
-                //    komut.Connection = conn;
-                //    conn.Open();
-                //    dr = komut.ExecuteReader();
-                //    if (dr.HasRows)
-                //    {
-                //        using (SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString))
-                //        {
-                //            // Güncellenecek Alanlar: STATUS                        
-                //            CommandText = "UPDATE AYZ_PW_PACKET" +
-                //                          "\nSET STATUS = " + (int)Helper.PacketStatus.AnswerReceivedBank + "" +
-                //                          "\nWHERE ID = " + packetId + "";
-                //            komut.CommandText = CommandText;
-                //            komut.Connection = conn2;
-                //            conn2.Open();
-                //            komut.ExecuteNonQuery();
-                //            conn2.Close();
-                //        }
-                //        Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
-                //        form.FillPacketList();
-                //    }
-                //    else
-                //    {
-                //        MessageBox.Show("Bu Paketin Banka Tarafından Henüz Akibet Dosyası Yollanmamıştır!", "BANKADAN GELEN CEVAP");
-                //    }
-                //}
+                }                
             }
         }
 
@@ -888,8 +858,14 @@ namespace AyzPaymentWizard
             {
                 bool review = true;
                 DebitClosingForm form = new DebitClosingForm(packetId, review);
-                form.Show();
+                form.ShowDialog();
             }
+        }
+
+        private void logoUserSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LogoUserInfo info = new LogoUserInfo();
+            info.ShowDialog();
         }
     }
 }

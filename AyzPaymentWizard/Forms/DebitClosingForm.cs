@@ -47,9 +47,15 @@ namespace AyzPaymentWizard.Forms
 
         private void DebitClosingForm_Load(object sender, EventArgs e)
         {
-            fillDGVDebitClosing();
-            if (Review)
+            if (Review == false)
+            {
+                fillDGVDebitClosing();
+            }
+            else
+            {
+                ReviewfillDGVDebitClosing();
                 btnDebitClosing.Enabled = false;
+            }
         }
 
         private void fillDGVDebitClosing()
@@ -92,6 +98,42 @@ namespace AyzPaymentWizard.Forms
             DGVDebitClosing.DataSource = source;
         }
 
+        private void ReviewfillDGVDebitClosing()
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                CommandText = "SELECT D.*, S.CLIENTREF FROM AYZ_PW_SUMMARY AS S " +
+                              "\nLEFT JOIN AYZ_PW_DOWNLOADED_FILE_DETAIL AS D ON S.RETURNKEY = D.COMPANY_REF " +
+                              "\nWHERE S.PACKETID = " + PacketID + "";
+                komut.CommandText = CommandText;
+                komut.Connection = conn;
+                conn.Open();
+                dr = komut.ExecuteReader();
+                SUB_PAYMENTOUTCOME payment = new SUB_PAYMENTOUTCOME();
+                while (dr.Read())
+                {
+                    payment.ACCOUNTNO = dr["TARGET_ACCNO"].ToString();
+                    payment.BRANCHCODE = Convert.ToInt32(dr["TARGET_BRANCH"].ToString());
+                    payment.BANKCODE = Convert.ToInt32(dr["TARGET_BANK"].ToString());
+                    payment.PAYMENTSTATUS = Convert.ToInt32(dr["PAYMENT_STATUS"].ToString());
+                    payment.CURRENCYCODE = dr["CURRCODE"].ToString();
+                    payment.AMOUNT = dr["AMOUNT"].ToString();
+                    payment.DESCRIPTION = dr["EXPLAIN"].ToString();
+                    payment.COMPANYREF = dr["COMPANY_REF"].ToString();
+                    payment.TRANSACTIONNO = Convert.ToInt32(dr["TRANSACTIONNO"].ToString());
+                    payment.EFTQUERYNO = Convert.ToInt32(dr["EFTQUERY_NO"].ToString());
+                    payment.IBAN = dr["IBAN"].ToString();
+                    payment.TYPE = dr["RECORD_TYPE"].ToString();
+                    payment.CLCARDID = Convert.ToInt32(dr["CLIENTREF"].ToString());
+                    liste.Add(payment);
+                }
+            }
+
+            var source = new BindingSource();
+            source.DataSource = liste;
+            DGVDebitClosing.DataSource = source;
+        }
+
         private void btnDebitClosing_Click(object sender, EventArgs e)
         {
             string TigerBankAccNo = "";
@@ -115,15 +157,15 @@ namespace AyzPaymentWizard.Forms
             }
             #endregion
 
-            foreach (var item in liste)
+            UnityObjects.UnityApplication UnityApp = new UnityObjects.UnityApplication();
+            if (UnityApp.Login("" + Helper.LOGOUSERNAME + "", "" + Helper.LOGOUSERPASS + "", Helper.FIRMNR))
             {
-                int CurType = GetCurType(item.CURRENCYCODE);
-                decimal CurRate = GetCurRate(item.CURRENCYCODE);
-                decimal ReportCurRate = GetReportCurRate();
-
-                UnityObjects.UnityApplication UnityApp = new UnityObjects.UnityApplication();
-                if (UnityApp.Login("Logo", "logo", 1))
+                foreach (var item in liste)
                 {
+                    int CurType = GetCurType(item.CURRENCYCODE);
+                    decimal CurRate = GetCurRate(item.CURRENCYCODE);
+                    decimal ReportCurRate = GetReportCurRate();
+
                     UnityObjects.Data bankvo = UnityApp.NewDataObject(UnityObjects.DataObjectType.doBankVoucher);
                     bankvo.New();
                     bankvo.DataFields.FieldByName("INTERNAL_REFERENCE").Value = "~";
@@ -169,7 +211,8 @@ namespace AyzPaymentWizard.Forms
                     payment_list0[payment_list0.Count - 1].FieldByName("MODULENR").Value = 7;
                     payment_list0[payment_list0.Count - 1].FieldByName("TRCODE").Value = 4;
                     //payment_list0[payment_list0.Count - 1].FieldByName("TOTAL").Value = 128.84;
-                    //payment_list0[payment_list0.Count - 1].FieldByName("PROCDATE").Value = "27.07.2020";
+                    payment_list0[payment_list0.Count - 1].FieldByName("PROCDATE").Value = "" + DateTime.Now.Day + "." + DateTime.Now.Month + "." + DateTime.Now.Year + "";
+                    payment_list0[payment_list0.Count - 1].FieldByName("DATE").Value = "" + DateTime.Now.Day + "." + DateTime.Now.Month + "." + DateTime.Now.Year + "";
                     //payment_list0[payment_list0.Count - 1].FieldByName("REPORTRATE").Value = 8;
                     payment_list0[payment_list0.Count - 1].FieldByName("DATA_REFERENCE").Value = 0;
                     payment_list0[payment_list0.Count - 1].FieldByName("DISCTRDELLIST").Value = 0;
@@ -205,29 +248,13 @@ namespace AyzPaymentWizard.Forms
                                 BANKFICHELINEREF = Convert.ToInt32(dr["LOGICALREF"].ToString());
                             }
                         }
-                        #endregion
-                        #region Gönderilen Havale-EFT'nin oluşturduğu Ödeme Hareketinin PAYTRANSREF'i
-                        using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-                        {
-                            CommandText = "SELECT LOGICALREF FROM LG_" + Helper.FIRMANO + "_01_PAYTRANS P " +
-                                          "\nWHERE MODULENR = 7 AND TRCODE = 4 AND P.FICHEREF = " + BANKFICHELINEREF + "";
-                            komut.CommandText = CommandText;
-                            komut.Connection = conn;
-                            conn.Open();
-                            dr = komut.ExecuteReader();
-                            while (dr.Read())
-                            {
-                                BANKFICHELINEPAYTRANSREF = Convert.ToInt32(dr["LOGICALREF"].ToString());
-                            }
-                            conn.Close();
-                        }
-                        #endregion
+                        #endregion                        
 
                         var temp = item.COMPANYREF.Split('-');
                         int packetId = Convert.ToInt32(temp[0]);
                         int clientref = Convert.ToInt32(temp[1]);
                         List<Debit> debitList = new List<Debit>();
-                        #region MyRegion
+                        #region Packet Detail Tablosundan Yapılacak Ödemeyi ve Faturanın PayTransRef'ini Getirme
                         using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                         {
                             CommandText = "SELECT * FROM AYZ_PW_PACKET_DETAIL WHERE PACKETID = '" + PacketID + "' AND CLIENTREF = '" + clientref + "'";
@@ -238,20 +265,23 @@ namespace AyzPaymentWizard.Forms
                             while (dr.Read())
                             {
                                 Debit d = new Debit();
-                                d.Paid = Convert.ToDecimal(dr["AMOUNT_REQUIRED"].ToString());
+                                d.Paid = Convert.ToDecimal(dr["AMOUNT_PAID"].ToString());
                                 d.PayRef = Convert.ToInt32(dr["PAYTRANSREF"].ToString());
                                 debitList.Add(d);
                             }
                         }
                         // Gönderilen Havele-Eft ile yolladığımız para yetene kadar Paket Detail tablosundaki tüm satırları kapatıcam.
-                        double totalAmount = Convert.ToDouble(item.AMOUNT);
+                        decimal totalAmount = Convert.ToDecimal(item.AMOUNT.Replace('.', ','));
                         #endregion
                         if (debitList.Count == 1)
                         {
-                            double NecessaryAmountPaid = Convert.ToDouble(debitList[0].Paid);
+                            decimal NecessaryAmountPaid = Convert.ToDecimal(debitList[0].Paid);
                             if (totalAmount >= NecessaryAmountPaid)
                             {
-                                bool foo = UnityApp.DebtClose(BANKFICHELINEPAYTRANSREF, debitList[0].PayRef, NecessaryAmountPaid);
+                                #region Gönderilen Havale-EFT'nin oluşturduğu Ödeme Hareketinin PAYTRANSREF'i                        
+                                BANKFICHELINEPAYTRANSREF = GetBankFicheLinePayTransRef(BANKFICHELINEREF);
+                                #endregion
+                                bool foo = UnityApp.DebtClose(BANKFICHELINEPAYTRANSREF, debitList[0].PayRef, Convert.ToDouble(NecessaryAmountPaid));
                                 if (foo == true)
                                     MessageBox.Show("Borç Kapama Tamamlandı!");
                                 else
@@ -260,12 +290,15 @@ namespace AyzPaymentWizard.Forms
                         }
                         else if (debitList.Count > 0)
                         {
-                            for (int i = 0; i <= 0; i++)
+                            for (int i = 0; i < debitList.Count; i++)
                             {
-                                double NecessaryAmountPaid = Convert.ToDouble(debitList[i].Paid);
+                                decimal NecessaryAmountPaid = Convert.ToDecimal(debitList[i].Paid);
                                 if (totalAmount > 0)
                                 {
-                                    bool foo = UnityApp.DebtClose(BANKFICHELINEPAYTRANSREF, debitList[i].PayRef, NecessaryAmountPaid);
+                                    #region Gönderilen Havale-EFT'nin oluşturduğu Ödeme Hareketinin PAYTRANSREF'i                        
+                                    BANKFICHELINEPAYTRANSREF = GetBankFicheLinePayTransRef(BANKFICHELINEREF);
+                                    #endregion
+                                    bool foo = UnityApp.DebtClose(BANKFICHELINEPAYTRANSREF, debitList[i].PayRef, Convert.ToDouble(NecessaryAmountPaid));
                                     if (foo == true)
                                     {
                                         totalAmount = totalAmount - NecessaryAmountPaid;
@@ -274,6 +307,7 @@ namespace AyzPaymentWizard.Forms
                                     else
                                     {
                                         MessageBox.Show("Borç Kapama Emri Sırasında Hata Oluştu!");
+                                        MessageBox.Show(UnityApp.GetLastError() + " " + UnityApp.GetLastErrorString());
                                     }
                                 }
                             }
@@ -296,11 +330,12 @@ namespace AyzPaymentWizard.Forms
                         }
                     }
                 }
-                else
-                {
-                    MessageBox.Show("Hatalı");
-                }
             }
+            else
+            {
+                MessageBox.Show("Hatalı Logo Giriş Bilgileri Tespit Edildi!");
+            }
+
 
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
@@ -332,6 +367,26 @@ namespace AyzPaymentWizard.Forms
                     MessageBox.Show("Bu Paketin Banka Tarafından Henüz Akibet Dosyası Yollanmamıştır!", "BANKADAN GELEN CEVAP");
                 }
             }
+        }
+
+        private int GetBankFicheLinePayTransRef(int bankfichelineref)
+        {
+            int result = 0;
+            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                CommandText = "SELECT LOGICALREF FROM LG_" + Helper.FIRMANO + "_01_PAYTRANS P " +
+                              "\nWHERE MODULENR = 7 AND TRCODE = 4 AND CROSSREF = 0 AND P.FICHEREF = " + bankfichelineref + "";
+                komut.CommandText = CommandText;
+                komut.Connection = conn;
+                conn.Open();
+                dr = komut.ExecuteReader();
+                while (dr.Read())
+                {
+                    result = Convert.ToInt32(dr["LOGICALREF"].ToString());
+                }
+                conn.Close();
+            }
+            return result;
         }
 
         private string GetClCardEmuhaccCode(string clCode)
