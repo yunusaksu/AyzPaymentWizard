@@ -22,7 +22,6 @@ C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\Interop.
 C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csproj.ResolveComReference.cache
 C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.Forms.DebitClosingForm.resources
 C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\bin\Debug\Renci.SshNet.dll
-C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csprojAssemblyReference.cache
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.exe
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.pdb
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\bin\Debug\AyzPaymentWizard.exe.config

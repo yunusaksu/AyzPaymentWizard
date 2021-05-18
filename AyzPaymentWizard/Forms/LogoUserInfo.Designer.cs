@@ -145,7 +145,7 @@
             this.MaximizeBox = false;
             this.Name = "LogoUserInfo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "LogoUserInfo";
+            this.Text = "LOGO KULLANICI BİLGİLERİ";
             this.Load += new System.EventHandler(this.LogoUserInfo_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
