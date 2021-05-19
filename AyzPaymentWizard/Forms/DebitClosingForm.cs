@@ -361,6 +361,7 @@ namespace AyzPaymentWizard.Forms
                     saveDownloadedFiles(Item, DetailResult, FooterResult);
                     Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
                     form.FillPacketList();
+                    this.Hide();
                 }
                 else
                 {
