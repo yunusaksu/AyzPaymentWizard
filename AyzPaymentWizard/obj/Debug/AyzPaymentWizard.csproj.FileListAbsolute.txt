@@ -22,15 +22,14 @@ C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\Interop.
 C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csproj.ResolveComReference.cache
 C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.Forms.DebitClosingForm.resources
 C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\bin\Debug\Renci.SshNet.dll
-C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.exe
-C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.pdb
+C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.Forms.LogoUserInfo.resources
+C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csprojAssemblyReference.cache
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\bin\Debug\AyzPaymentWizard.exe.config
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\bin\Debug\AyzPaymentWizard.exe
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\bin\Debug\AyzPaymentWizard.pdb
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\bin\Debug\DocumentFormat.OpenXml.dll
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\bin\Debug\Newtonsoft.Json.dll
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\bin\Debug\Renci.SshNet.dll
-C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csprojAssemblyReference.cache
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\Interop.UnityObjects.dll
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csproj.ResolveComReference.cache
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.Anasayfa.resources
@@ -40,6 +39,7 @@ C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.For
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.FiltersForm.resources
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.GroupAddForm.resources
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.LoginForm.resources
+C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.Forms.LogoUserInfo.resources
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.Forms.PacketEditForm.resources
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.PacketPreparation.resources
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.Forms.sftpForm.resources
@@ -48,6 +48,6 @@ C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.Use
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csproj.GenerateResource.cache
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csproj.CoreCompileInputs.cache
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csproj.CopyComplete
-C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.Forms.LogoUserInfo.resources
-C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.Forms.LogoUserInfo.resources
-C:\Users\yunus\source\repos\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csprojAssemblyReference.cache
+C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.exe
+C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.pdb
+C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csprojAssemblyReference.cache
