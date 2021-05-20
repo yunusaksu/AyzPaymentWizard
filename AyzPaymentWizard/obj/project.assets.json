@@ -383,20 +383,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\yunus\\.nuget\\packages\\": {}
+    "C:\\Users\\Shiraz\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\yunus\\source\\repos\\AyzPaymentWizard\\AyzPaymentWizard\\AyzPaymentWizard.csproj",
+      "projectUniqueName": "C:\\WorkPrograms\\AyzPaymentWizard\\AyzPaymentWizard\\AyzPaymentWizard.csproj",
       "projectName": "AyzPaymentWizard",
-      "projectPath": "C:\\Users\\yunus\\source\\repos\\AyzPaymentWizard\\AyzPaymentWizard\\AyzPaymentWizard.csproj",
-      "packagesPath": "C:\\Users\\yunus\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\yunus\\source\\repos\\AyzPaymentWizard\\AyzPaymentWizard\\obj\\",
+      "projectPath": "C:\\WorkPrograms\\AyzPaymentWizard\\AyzPaymentWizard\\AyzPaymentWizard.csproj",
+      "packagesPath": "C:\\Users\\Shiraz\\.nuget\\packages\\",
+      "outputPath": "C:\\WorkPrograms\\AyzPaymentWizard\\AyzPaymentWizard\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\yunus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Shiraz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

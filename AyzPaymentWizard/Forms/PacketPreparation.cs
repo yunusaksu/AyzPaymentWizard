@@ -351,8 +351,27 @@ namespace AyzPaymentWizard
                         .Cells["Paid"].Value.ToString().Length != 0)
                     {
                         Decimal res = Decimal.Parse(dataGridViewRight.Rows[counter].Cells["Paid"].Value.ToString());
-                        sumP += res;
-                        textBoxodenecekR.Text = sumP.ToString();
+                        Decimal total = Decimal.Parse(dataGridViewRight.Rows[counter].Cells["Total"].Value.ToString());
+                        if(res >total ||res<0)
+                        {
+                            if (res > total)
+                            {
+                                MessageBox.Show("Borcunuzdan daha fazlasını ödeme yapamazsınız!!!. Borcunuzun tamini veya daha azını girin ");
+                                sumP = total;
+                            }
+                            else if (res < 0)
+                            {
+                                MessageBox.Show(" Sifirdan Daha az bir ödeme yoktur. Pozitif bir değeri giriniz");
+                                sumP = total;
+                            }
+                            
+                        }
+                        else 
+                        {
+                            sumP += res;
+                            textBoxodenecekR.Text = sumP.ToString();
+                            
+                        }
                         
                     }
                 }

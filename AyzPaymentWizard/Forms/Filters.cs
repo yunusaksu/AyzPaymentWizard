@@ -17,6 +17,7 @@ namespace AyzPaymentWizard
         public FiltersForm()
         {
             InitializeComponent();
+            
         }
 
         private void btnFiltreApply_Click(object sender, EventArgs e)
@@ -637,7 +638,7 @@ namespace AyzPaymentWizard
                 checkedListBoxMecraType.DataSource = new BindingSource(checkListBoxMecraType, null);
                 checkedListBoxMecraType.DisplayMember = "Value";
                 checkedListBoxMecraType.ValueMember = "Key";
-
+                
                 // Selected olanları atama satırları
                 komut.CommandText = CommandText;
                 komut.Connection = conn;
@@ -676,6 +677,7 @@ namespace AyzPaymentWizard
                 }
                 conn.Close();
                 checkedListBoxMecra.DataSource = new BindingSource(checkListBoxMecra, null);
+               // checkedListBoxMecraType.Items.Insert(0,checked)
                 checkedListBoxMecra.DisplayMember = "Value";
                 checkedListBoxMecra.ValueMember = "Key";
 
@@ -970,6 +972,114 @@ namespace AyzPaymentWizard
                 lblClBegin.Show();
                 lblClEnd.Hide();
             }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < checkedListBoxMecraType.Items.Count; i++)
+            {
+                if (checkBoxMaceraType.Checked==true)
+                {
+                    checkedListBoxMecraType.SetItemChecked(i, true);
+                }
+                else if (checkBoxMaceraType.Checked == false)
+                {
+                    checkedListBoxMecraType.SetItemChecked(i, false);
+                }
+            }
+               
+        }
+
+        private void checkBoxPazar_CheckedChanged(object sender, EventArgs e)
+        {
+            for (int j = 0; j < checkedListBoxMarketingCompany.Items.Count; j++)
+            {
+                if (checkBoxPazar.Checked)
+                {
+                    checkedListBoxMarketingCompany.SetItemChecked(j, true);
+                }
+                else if (checkBoxPazar.Checked==false)
+                {
+                    checkedListBoxMarketingCompany.SetItemChecked(j, false);
+                }
+            }
+        }
+
+        private void checkBoxMacera_CheckedChanged(object sender, EventArgs e)
+        {
+            for (int j = 0; j < checkedListBoxMecra.Items.Count; j++)
+            {
+                if (checkBoxMacera.Checked==true)
+                {
+                    checkedListBoxMecra.SetItemChecked(j, true);
+                }
+                else if (checkBoxMacera.Checked == false)
+                {
+                    checkedListBoxMecra.SetItemChecked(j, false);
+                }
+            }
+        }
+
+        private void checkBoxMusteri_CheckedChanged(object sender, EventArgs e)
+        {
+            for (int j = 0; j < checkedListBoxCustomer.Items.Count; j++)
+            {
+                if (checkBoxMusteri.Checked==true)
+                {
+                    checkedListBoxCustomer.SetItemChecked(j, true);
+                }
+                else if (checkBoxMusteri.Checked == false)
+                {
+                    checkedListBoxCustomer.SetItemChecked(j, false);
+                }
+            }
+        }
+
+        private void checkBoxPlanKod_CheckedChanged(object sender, EventArgs e)
+        {
+            for (int j = 0; j < checkedListBoxPlanCode.Items.Count; j++)
+            {
+                if (checkBoxPlanKod.Checked == true)
+                {
+                    checkedListBoxPlanCode.SetItemChecked(j, true);
+                }
+                else if (checkBoxPlanKod.Checked == false)
+                {
+                    checkedListBoxPlanCode.SetItemChecked(j, false);
+                }
+            }
+        }
+
+        private void checkBoxInAlKat_CheckedChanged(object sender, EventArgs e)
+        {
+            for (int j = 0; j < checkedListBoxInternetSubCategory.Items.Count; j++)
+            {
+                if (checkBoxInAlKat.Checked == true)
+                {
+                    checkedListBoxInternetSubCategory.SetItemChecked(j, true);
+                }
+                else if (checkBoxInAlKat.Checked == false)
+                {
+                    checkedListBoxInternetSubCategory.SetItemChecked(j, false);
+                }
+            }
+
+        }
+
+        private void checkBoxIntAnaKat_CheckedChanged(object sender, EventArgs e)
+        {
+            for (int j = 0; j < checkedListBoxInternetMainCategory.Items.Count; j++)
+            {
+                if (checkBoxIntAnaKat.Checked == true)
+                {
+                    checkedListBoxInternetMainCategory.SetItemChecked(j, true);
+                }
+                else if (checkBoxIntAnaKat.Checked == false)
+                {
+                    checkedListBoxInternetMainCategory.SetItemChecked(j, false);
+                }
+            }
+
         }
     }
 }
