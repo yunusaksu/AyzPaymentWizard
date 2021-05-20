@@ -228,6 +228,31 @@ namespace AyzPaymentWizard.Forms
             DGVLeftEdit.DataSource = source2;
         }
 
+        private void DGVRightEdit_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            DataGridViewCell cell = DGVRightEdit.Rows[e.RowIndex].Cells["NotInPayTrans"];
+            string value = cell.Value == null ? string.Empty : cell.Value.ToString();
+            bool foo = false;
+            if (value != "")
+                foo = Convert.ToBoolean(value);
+
+            if (foo)
+            {
+                //DGVRightEdit.Rows[e.RowIndex].Cells["NotInPayTransFrame"].Style.BackColor = Color.Green;
+                //DGVRightEdit.Rows[e.RowIndex].Cells["NotInPayTransFrame"].Style.ForeColor = Color.White;
+                DGVRightEdit.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Green;
+                DGVRightEdit.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.White;
+
+            }
+            else if (foo == false)
+            {
+                //DGVRightEdit.Rows[e.RowIndex].Cells["NotInPayTransFrame"].Style.BackColor = Color.Red;
+                //DGVRightEdit.Rows[e.RowIndex].Cells["NotInPayTransFrame"].Style.ForeColor = Color.White;
+                DGVRightEdit.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
+                DGVRightEdit.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.White;
+            }
+        }
+
         private void DGVRightEdit_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             decimal sumP = 0;
@@ -246,10 +271,9 @@ namespace AyzPaymentWizard.Forms
                     }
                 }
             }
-
         }
-           
-            private void DGVLeftEdit_FilterStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
+        
+        private void DGVLeftEdit_FilterStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
             {
                 try
                 {
@@ -1532,31 +1556,6 @@ namespace AyzPaymentWizard.Forms
                 }
 
             }
-        }
-
-        private void DGVRightEdit_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            DataGridViewCell cell = DGVRightEdit.Rows[e.RowIndex].Cells["NotInPayTrans"];
-            string value = cell.Value == null ? string.Empty : cell.Value.ToString();
-            bool foo = false;
-            if (value != "")
-                foo = Convert.ToBoolean(value);
-
-            if (foo)
-            {
-                //DGVRightEdit.Rows[e.RowIndex].Cells["NotInPayTransFrame"].Style.BackColor = Color.Green;
-                //DGVRightEdit.Rows[e.RowIndex].Cells["NotInPayTransFrame"].Style.ForeColor = Color.White;
-                DGVRightEdit.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Green;
-                DGVRightEdit.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.White;
-
-            }
-            else if (foo == false)
-            {
-                //DGVRightEdit.Rows[e.RowIndex].Cells["NotInPayTransFrame"].Style.BackColor = Color.Red;
-                //DGVRightEdit.Rows[e.RowIndex].Cells["NotInPayTransFrame"].Style.ForeColor = Color.White;
-                DGVRightEdit.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
-                DGVRightEdit.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.White;
-            }
-        }
+        }        
     }
 }

@@ -52,11 +52,11 @@ namespace AyzPaymentWizard
         public enum PacketStatus
         {
             NewPacket = 0,
-            Approved = 2,
-            Rejected = 3,
-            SentToBank = 4,
-            AnswerReceivedBank = 5,
-            SendToApproval = 6
+            Approved = 1,
+            Rejected = 2,
+            SentToBank = 3,
+            AnswerReceivedBank = 4,
+            SendToApproval = 5
         }
         public enum ArchiveStatus
         {
