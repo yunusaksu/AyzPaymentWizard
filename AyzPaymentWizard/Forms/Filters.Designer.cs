@@ -78,6 +78,13 @@
             this.groupBox14 = new System.Windows.Forms.GroupBox();
             this.checkedListBoxPlanCode = new System.Windows.Forms.CheckedListBox();
             this.btnFiltreApply = new System.Windows.Forms.Button();
+            this.checkBoxMaceraType = new System.Windows.Forms.CheckBox();
+            this.checkBoxPazar = new System.Windows.Forms.CheckBox();
+            this.checkBoxMacera = new System.Windows.Forms.CheckBox();
+            this.checkBoxMusteri = new System.Windows.Forms.CheckBox();
+            this.checkBoxPlanKod = new System.Windows.Forms.CheckBox();
+            this.checkBoxInAlKat = new System.Windows.Forms.CheckBox();
+            this.checkBoxIntAnaKat = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox17.SuspendLayout();
@@ -471,6 +478,7 @@
             // groupBox12
             // 
             this.groupBox12.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox12.Controls.Add(this.checkBoxMusteri);
             this.groupBox12.Controls.Add(this.checkedListBoxCustomer);
             this.groupBox12.Location = new System.Drawing.Point(626, 293);
             this.groupBox12.Name = "groupBox12";
@@ -482,14 +490,15 @@
             // checkedListBoxCustomer
             // 
             this.checkedListBoxCustomer.FormattingEnabled = true;
-            this.checkedListBoxCustomer.Location = new System.Drawing.Point(13, 25);
+            this.checkedListBoxCustomer.Location = new System.Drawing.Point(13, 46);
             this.checkedListBoxCustomer.Name = "checkedListBoxCustomer";
-            this.checkedListBoxCustomer.Size = new System.Drawing.Size(602, 214);
+            this.checkedListBoxCustomer.Size = new System.Drawing.Size(602, 193);
             this.checkedListBoxCustomer.TabIndex = 3;
             // 
             // groupBox13
             // 
             this.groupBox13.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox13.Controls.Add(this.checkBoxPazar);
             this.groupBox13.Controls.Add(this.checkedListBoxMarketingCompany);
             this.groupBox13.Location = new System.Drawing.Point(626, 21);
             this.groupBox13.Name = "groupBox13";
@@ -501,14 +510,15 @@
             // checkedListBoxMarketingCompany
             // 
             this.checkedListBoxMarketingCompany.FormattingEnabled = true;
-            this.checkedListBoxMarketingCompany.Location = new System.Drawing.Point(13, 26);
+            this.checkedListBoxMarketingCompany.Location = new System.Drawing.Point(13, 47);
             this.checkedListBoxMarketingCompany.Name = "checkedListBoxMarketingCompany";
-            this.checkedListBoxMarketingCompany.Size = new System.Drawing.Size(602, 214);
+            this.checkedListBoxMarketingCompany.Size = new System.Drawing.Size(602, 193);
             this.checkedListBoxMarketingCompany.TabIndex = 2;
             // 
             // groupBox11
             // 
             this.groupBox11.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox11.Controls.Add(this.checkBoxMacera);
             this.groupBox11.Controls.Add(this.checkedListBoxMecra);
             this.groupBox11.Location = new System.Drawing.Point(21, 293);
             this.groupBox11.Name = "groupBox11";
@@ -520,14 +530,15 @@
             // checkedListBoxMecra
             // 
             this.checkedListBoxMecra.FormattingEnabled = true;
-            this.checkedListBoxMecra.Location = new System.Drawing.Point(7, 25);
+            this.checkedListBoxMecra.Location = new System.Drawing.Point(7, 46);
             this.checkedListBoxMecra.Name = "checkedListBoxMecra";
-            this.checkedListBoxMecra.Size = new System.Drawing.Size(567, 214);
+            this.checkedListBoxMecra.Size = new System.Drawing.Size(567, 193);
             this.checkedListBoxMecra.TabIndex = 1;
             // 
             // groupBox10
             // 
             this.groupBox10.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox10.Controls.Add(this.checkBoxMaceraType);
             this.groupBox10.Controls.Add(this.checkedListBoxMecraType);
             this.groupBox10.Location = new System.Drawing.Point(21, 21);
             this.groupBox10.Name = "groupBox10";
@@ -539,9 +550,9 @@
             // checkedListBoxMecraType
             // 
             this.checkedListBoxMecraType.FormattingEnabled = true;
-            this.checkedListBoxMecraType.Location = new System.Drawing.Point(7, 26);
+            this.checkedListBoxMecraType.Location = new System.Drawing.Point(7, 47);
             this.checkedListBoxMecraType.Name = "checkedListBoxMecraType";
-            this.checkedListBoxMecraType.Size = new System.Drawing.Size(567, 214);
+            this.checkedListBoxMecraType.Size = new System.Drawing.Size(567, 193);
             this.checkedListBoxMecraType.TabIndex = 0;
             // 
             // tabPage3
@@ -559,6 +570,7 @@
             // groupBox16
             // 
             this.groupBox16.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox16.Controls.Add(this.checkBoxInAlKat);
             this.groupBox16.Controls.Add(this.checkedListBoxInternetSubCategory);
             this.groupBox16.Location = new System.Drawing.Point(661, 26);
             this.groupBox16.Name = "groupBox16";
@@ -570,14 +582,15 @@
             // checkedListBoxInternetSubCategory
             // 
             this.checkedListBoxInternetSubCategory.FormattingEnabled = true;
-            this.checkedListBoxInternetSubCategory.Location = new System.Drawing.Point(13, 27);
+            this.checkedListBoxInternetSubCategory.Location = new System.Drawing.Point(13, 48);
             this.checkedListBoxInternetSubCategory.Name = "checkedListBoxInternetSubCategory";
-            this.checkedListBoxInternetSubCategory.Size = new System.Drawing.Size(567, 214);
+            this.checkedListBoxInternetSubCategory.Size = new System.Drawing.Size(567, 193);
             this.checkedListBoxInternetSubCategory.TabIndex = 1;
             // 
             // groupBox15
             // 
             this.groupBox15.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox15.Controls.Add(this.checkBoxIntAnaKat);
             this.groupBox15.Controls.Add(this.checkedListBoxInternetMainCategory);
             this.groupBox15.Location = new System.Drawing.Point(26, 301);
             this.groupBox15.Name = "groupBox15";
@@ -589,14 +602,15 @@
             // checkedListBoxInternetMainCategory
             // 
             this.checkedListBoxInternetMainCategory.FormattingEnabled = true;
-            this.checkedListBoxInternetMainCategory.Location = new System.Drawing.Point(7, 24);
+            this.checkedListBoxInternetMainCategory.Location = new System.Drawing.Point(7, 45);
             this.checkedListBoxInternetMainCategory.Name = "checkedListBoxInternetMainCategory";
-            this.checkedListBoxInternetMainCategory.Size = new System.Drawing.Size(600, 214);
+            this.checkedListBoxInternetMainCategory.Size = new System.Drawing.Size(600, 193);
             this.checkedListBoxInternetMainCategory.TabIndex = 1;
             // 
             // groupBox14
             // 
             this.groupBox14.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox14.Controls.Add(this.checkBoxPlanKod);
             this.groupBox14.Controls.Add(this.checkedListBoxPlanCode);
             this.groupBox14.Location = new System.Drawing.Point(26, 26);
             this.groupBox14.Name = "groupBox14";
@@ -609,9 +623,9 @@
             // 
             this.checkedListBoxPlanCode.FormattingEnabled = true;
             this.checkedListBoxPlanCode.HorizontalScrollbar = true;
-            this.checkedListBoxPlanCode.Location = new System.Drawing.Point(7, 27);
+            this.checkedListBoxPlanCode.Location = new System.Drawing.Point(7, 48);
             this.checkedListBoxPlanCode.Name = "checkedListBoxPlanCode";
-            this.checkedListBoxPlanCode.Size = new System.Drawing.Size(600, 214);
+            this.checkedListBoxPlanCode.Size = new System.Drawing.Size(600, 193);
             this.checkedListBoxPlanCode.TabIndex = 1;
             // 
             // btnFiltreApply
@@ -627,6 +641,76 @@
             this.btnFiltreApply.Text = "Filtereleri Uygula ve Listelemeye Geç";
             this.btnFiltreApply.UseVisualStyleBackColor = false;
             this.btnFiltreApply.Click += new System.EventHandler(this.btnFiltreApply_Click);
+            // 
+            // checkBoxMaceraType
+            // 
+            this.checkBoxMaceraType.Location = new System.Drawing.Point(7, 17);
+            this.checkBoxMaceraType.Name = "checkBoxMaceraType";
+            this.checkBoxMaceraType.Size = new System.Drawing.Size(106, 24);
+            this.checkBoxMaceraType.TabIndex = 0;
+            this.checkBoxMaceraType.Text = "Hepsi Seç";
+            this.checkBoxMaceraType.UseVisualStyleBackColor = true;
+            this.checkBoxMaceraType.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // checkBoxPazar
+            // 
+            this.checkBoxPazar.Location = new System.Drawing.Point(13, 17);
+            this.checkBoxPazar.Name = "checkBoxPazar";
+            this.checkBoxPazar.Size = new System.Drawing.Size(106, 24);
+            this.checkBoxPazar.TabIndex = 3;
+            this.checkBoxPazar.Text = "Hepsi Seç";
+            this.checkBoxPazar.UseVisualStyleBackColor = true;
+            this.checkBoxPazar.CheckedChanged += new System.EventHandler(this.checkBoxPazar_CheckedChanged);
+            // 
+            // checkBoxMacera
+            // 
+            this.checkBoxMacera.Location = new System.Drawing.Point(7, 16);
+            this.checkBoxMacera.Name = "checkBoxMacera";
+            this.checkBoxMacera.Size = new System.Drawing.Size(106, 24);
+            this.checkBoxMacera.TabIndex = 2;
+            this.checkBoxMacera.Text = "Hepsi Seç";
+            this.checkBoxMacera.UseVisualStyleBackColor = true;
+            this.checkBoxMacera.CheckedChanged += new System.EventHandler(this.checkBoxMacera_CheckedChanged);
+            // 
+            // checkBoxMusteri
+            // 
+            this.checkBoxMusteri.Location = new System.Drawing.Point(13, 16);
+            this.checkBoxMusteri.Name = "checkBoxMusteri";
+            this.checkBoxMusteri.Size = new System.Drawing.Size(106, 24);
+            this.checkBoxMusteri.TabIndex = 4;
+            this.checkBoxMusteri.Text = "Hepsi Seç";
+            this.checkBoxMusteri.UseVisualStyleBackColor = true;
+            this.checkBoxMusteri.CheckedChanged += new System.EventHandler(this.checkBoxMusteri_CheckedChanged);
+            // 
+            // checkBoxPlanKod
+            // 
+            this.checkBoxPlanKod.Location = new System.Drawing.Point(7, 18);
+            this.checkBoxPlanKod.Name = "checkBoxPlanKod";
+            this.checkBoxPlanKod.Size = new System.Drawing.Size(106, 24);
+            this.checkBoxPlanKod.TabIndex = 5;
+            this.checkBoxPlanKod.Text = "Hepsi Seç";
+            this.checkBoxPlanKod.UseVisualStyleBackColor = true;
+            this.checkBoxPlanKod.CheckedChanged += new System.EventHandler(this.checkBoxPlanKod_CheckedChanged);
+            // 
+            // checkBoxInAlKat
+            // 
+            this.checkBoxInAlKat.Location = new System.Drawing.Point(13, 18);
+            this.checkBoxInAlKat.Name = "checkBoxInAlKat";
+            this.checkBoxInAlKat.Size = new System.Drawing.Size(106, 24);
+            this.checkBoxInAlKat.TabIndex = 5;
+            this.checkBoxInAlKat.Text = "Hepsi Seç";
+            this.checkBoxInAlKat.UseVisualStyleBackColor = true;
+            this.checkBoxInAlKat.CheckedChanged += new System.EventHandler(this.checkBoxInAlKat_CheckedChanged);
+            // 
+            // checkBoxIntAnaKat
+            // 
+            this.checkBoxIntAnaKat.Location = new System.Drawing.Point(7, 15);
+            this.checkBoxIntAnaKat.Name = "checkBoxIntAnaKat";
+            this.checkBoxIntAnaKat.Size = new System.Drawing.Size(106, 24);
+            this.checkBoxIntAnaKat.TabIndex = 5;
+            this.checkBoxIntAnaKat.Text = "Hepsi Seç";
+            this.checkBoxIntAnaKat.UseVisualStyleBackColor = true;
+            this.checkBoxIntAnaKat.CheckedChanged += new System.EventHandler(this.checkBoxIntAnaKat_CheckedChanged);
             // 
             // FiltersForm
             // 
@@ -723,5 +807,12 @@
         private System.Windows.Forms.ComboBox cmbClFiltreType;
         private System.Windows.Forms.Label lblClEnd;
         private System.Windows.Forms.Label lblClBegin;
+        private System.Windows.Forms.CheckBox checkBoxMaceraType;
+        private System.Windows.Forms.CheckBox checkBoxMusteri;
+        private System.Windows.Forms.CheckBox checkBoxPazar;
+        private System.Windows.Forms.CheckBox checkBoxMacera;
+        private System.Windows.Forms.CheckBox checkBoxInAlKat;
+        private System.Windows.Forms.CheckBox checkBoxIntAnaKat;
+        private System.Windows.Forms.CheckBox checkBoxPlanKod;
     }
 }
