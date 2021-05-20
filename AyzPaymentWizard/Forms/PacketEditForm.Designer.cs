@@ -272,6 +272,7 @@
             this.DGVRightEdit.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGVRightEdit.Size = new System.Drawing.Size(625, 513);
             this.DGVRightEdit.TabIndex = 13;
+            this.DGVRightEdit.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DGVRightEdit_CellFormatting);
             this.DGVRightEdit.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGVRightEdit_CellValueChanged);
             // 
             // panel5
