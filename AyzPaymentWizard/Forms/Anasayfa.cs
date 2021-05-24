@@ -234,32 +234,35 @@ namespace AyzPaymentWizard
                 {
                     packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
                 }
-                string approvalExp = Interaction.InputBox("Onay Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250);
-                if (approvalExp.Length > 0)
+                if (packetId != 0)
                 {
-                    // Paketin statüsü onaya gönderildi yapılacak ve Onay Notu Güncellenecek
-                    using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                    string approvalExp = Interaction.InputBox("Onay Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250);
+                    if (approvalExp.Length > 0)
                     {
-                        CommandText = "UPDATE AYZ_PW_PACKET " +
-                                      "\nSET STATUS = " + (int)Helper.PacketStatus.SendToApproval + "," +
-                                      "\nAPPROVALNOTE = '" + approvalExp + "'" +
-                                      "\nWHERE ID = " + packetId + "";
-                        komut.CommandText = CommandText;
-                        komut.Connection = conn;
-                        conn.Open();
-                        komut.ExecuteNonQuery();
-                        conn.Close();
-                    }
+                        // Paketin statüsü onaya gönderildi yapılacak ve Onay Notu Güncellenecek
+                        using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                        {
+                            CommandText = "UPDATE AYZ_PW_PACKET " +
+                                          "\nSET STATUS = " + (int)Helper.PacketStatus.SendToApproval + "," +
+                                          "\nAPPROVALNOTE = '" + approvalExp + "'" +
+                                          "\nWHERE ID = " + packetId + "";
+                            komut.CommandText = CommandText;
+                            komut.Connection = conn;
+                            conn.Open();
+                            komut.ExecuteNonQuery();
+                            conn.Close();
+                        }
 
-                    // Anasayfayı yenilemek için 2 yöntem vardır.
-                    // 1. Yöntem
-                    Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
-                    form.FillPacketList();
-                    // 2. Yöntem
-                    //FillPacketList();
-                    //var source = new BindingSource();
-                    //source.DataSource = packets;
-                    //dataGridViewPacket.DataSource = source;
+                        // Anasayfayı yenilemek için 2 yöntem vardır.
+                        // 1. Yöntem
+                        Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
+                        form.FillPacketList();
+                        // 2. Yöntem
+                        //FillPacketList();
+                        //var source = new BindingSource();
+                        //source.DataSource = packets;
+                        //dataGridViewPacket.DataSource = source;
+                    }
                 }
             }
             catch (Exception ex)
@@ -277,41 +280,44 @@ namespace AyzPaymentWizard
                 {
                     packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
                 }
-                string approvalExp = Interaction.InputBox("Onay Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250);
-                if (approvalExp.Length > 0)
+                if (packetId != 0)
                 {
-                    using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                    string approvalExp = Interaction.InputBox("Onay Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250);
+                    if (approvalExp.Length > 0)
                     {
-                        // Güncellenecek Alanlar
-                        // STATUS
-                        // APPROVED_BY
-                        // APPROVED_DATE
-                        // APPROVED_TIME
-                        // APPROVALNOTE
-                        CommandText = "UPDATE AYZ_PW_PACKET" +
-                                      "\nSET STATUS = " + (int)Helper.PacketStatus.Approved + ", " +
-                                      "\nAPPROVED_BY = " + Helper.USERID + "," +
-                                      "\nAPPROVED_DATE = CONVERT(DATE, GETDATE(), 104)," +
-                                      "\nAPPROVED_TIME = " + Helper.GetTime() + "," +
-                                      "\nAPPROVED_NAME = '" + Helper.USERNAME + "'," +
-                                      "\nAPPROVALNOTE = '" + approvalExp + "'" +
-                                      "\nWHERE ID = " + packetId + "";
-                        komut.CommandText = CommandText;
-                        komut.Connection = conn;
-                        conn.Open();
-                        komut.ExecuteNonQuery();
-                        conn.Close();
-                    }
+                        using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                        {
+                            // Güncellenecek Alanlar
+                            // STATUS
+                            // APPROVED_BY
+                            // APPROVED_DATE
+                            // APPROVED_TIME
+                            // APPROVALNOTE
+                            CommandText = "UPDATE AYZ_PW_PACKET" +
+                                          "\nSET STATUS = " + (int)Helper.PacketStatus.Approved + ", " +
+                                          "\nAPPROVED_BY = " + Helper.USERID + "," +
+                                          "\nAPPROVED_DATE = CONVERT(DATE, GETDATE(), 104)," +
+                                          "\nAPPROVED_TIME = " + Helper.GetTime() + "," +
+                                          "\nAPPROVED_NAME = '" + Helper.USERNAME + "'," +
+                                          "\nAPPROVALNOTE = '" + approvalExp + "'" +
+                                          "\nWHERE ID = " + packetId + "";
+                            komut.CommandText = CommandText;
+                            komut.Connection = conn;
+                            conn.Open();
+                            komut.ExecuteNonQuery();
+                            conn.Close();
+                        }
 
-                    // Anasayfayı yenilemek için 2 yöntem vardır.
-                    // 1. Yöntem
-                    Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
-                    form.FillPacketList();
-                    // 2. Yöntem
-                    //FillPacketList();
-                    //var source = new BindingSource();
-                    //source.DataSource = packets;
-                    //dataGridViewPacket.DataSource = source;
+                        // Anasayfayı yenilemek için 2 yöntem vardır.
+                        // 1. Yöntem
+                        Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
+                        form.FillPacketList();
+                        // 2. Yöntem
+                        //FillPacketList();
+                        //var source = new BindingSource();
+                        //source.DataSource = packets;
+                        //dataGridViewPacket.DataSource = source;
+                    }
                 }
             }
             catch (Exception ex)
@@ -329,35 +335,38 @@ namespace AyzPaymentWizard
                 {
                     packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
                 }
-                string approvalExp = Interaction.InputBox("Red Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250);
-                if (approvalExp.Length > 0)
+                if (packetId != 0)
                 {
-                    using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                    string approvalExp = Interaction.InputBox("Red Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250);
+                    if (approvalExp.Length > 0)
                     {
-                        // Güncellenecek Alanlar
-                        // STATUS
-                        // APPROVALNOTE
-                        CommandText = "UPDATE AYZ_PW_PACKET" +
-                                      "\nSET STATUS = " + (int)Helper.PacketStatus.Rejected + ", " +
-                                      "\nAPPROVALNOTE = '" + approvalExp + "'" +
-                                      "\nWHERE ID = " + packetId + "";
-                        komut.CommandText = CommandText;
-                        komut.Connection = conn;
-                        conn.Open();
-                        komut.ExecuteNonQuery();
-                        conn.Close();
+                        using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                        {
+                            // Güncellenecek Alanlar
+                            // STATUS
+                            // APPROVALNOTE
+                            CommandText = "UPDATE AYZ_PW_PACKET" +
+                                          "\nSET STATUS = " + (int)Helper.PacketStatus.Rejected + ", " +
+                                          "\nAPPROVALNOTE = '" + approvalExp + "'" +
+                                          "\nWHERE ID = " + packetId + "";
+                            komut.CommandText = CommandText;
+                            komut.Connection = conn;
+                            conn.Open();
+                            komut.ExecuteNonQuery();
+                            conn.Close();
+                        }
+
+                        // Anasayfayı yenilemek için 2 yöntem vardır.
+                        // 1. Yöntem
+                        Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
+                        form.FillPacketList();
+                        // 2. Yöntem
+                        //FillPacketList();
+                        //var source = new BindingSource();
+                        //source.DataSource = packets;
+                        //dataGridViewPacket.DataSource = source;
+
                     }
-
-                    // Anasayfayı yenilemek için 2 yöntem vardır.
-                    // 1. Yöntem
-                    Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
-                    form.FillPacketList();
-                    // 2. Yöntem
-                    //FillPacketList();
-                    //var source = new BindingSource();
-                    //source.DataSource = packets;
-                    //dataGridViewPacket.DataSource = source;
-
                 }
             }
             catch (Exception ex)
@@ -375,244 +384,247 @@ namespace AyzPaymentWizard
             {
                 packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
             }
-            List<string> returnKeyList = new List<string>();
-            List<string> currCodeList = new List<string>();
-            List<int> clientRefList = new List<int>();
-            List<decimal> amountList = new List<decimal>();
-            bool check = false;
+            if (packetId != 0)
+            {
+                List<string> returnKeyList = new List<string>();
+                List<string> currCodeList = new List<string>();
+                List<int> clientRefList = new List<int>();
+                List<decimal> amountList = new List<decimal>();
+                bool check = false;
 
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT * FROM AYZ_PW_SUMMARY WHERE PACKETID = " + packetId + "";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                if (dr.HasRows)
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
-                    check = true;
-                }
-            }
-
-            if (check)
-            {
-                MessageBox.Show("Bu Paket daha önce bankaya iletildi!", "UYARI");
-            }
-            else
-            {
-                try
-                {
-                    using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                    CommandText = "SELECT * FROM AYZ_PW_SUMMARY WHERE PACKETID = " + packetId + "";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    if (dr.HasRows)
                     {
-                        CommandText = "SELECT " +
-                                       "\nRIGHT('000000000' + CAST(D.PACKETID AS VARCHAR(9)), 9) + '-' + RIGHT('0000000000' + CAST(D.CLIENTREF AS VARCHAR(10)), 10) RETURNKEY, " +
-                                       "\nD.PACKETID, " +
-                                       "\nD.CLIENTREF, " +
-                                       "\nSUM(D.AMOUNT_PAID) AMOUNT, " +
-                                       "\nD.CURRCODE " +
-                                       "\nFROM AYZ_PW_PACKET_DETAIL D " +
-                                       "\nWHERE PACKETID = " + packetId + " " +
-                                       "\nGROUP BY D.PACKETID, D.CLIENTREF, D.CURRCODE";
-                        komut.CommandText = CommandText;
-                        komut.Connection = conn;
-                        conn.Open();
-                        dr = komut.ExecuteReader();
-                        if (dr.HasRows)
-                        {
-                            while (dr.Read())
-                            {
-                                returnKeyList.Add(dr["RETURNKEY"].ToString());
-                                clientRefList.Add(Convert.ToInt32(dr["CLIENTREF"].ToString()));
-                                amountList.Add(Convert.ToDecimal(dr["AMOUNT"].ToString()));
-                                currCodeList.Add(dr["CURRCODE"].ToString());
-                            }
-                            conn.Close();
-                        }
+                        check = true;
                     }
+                }
 
-                    for (int i = 0; i < returnKeyList.Count; i++)
+                if (check)
+                {
+                    MessageBox.Show("Bu Paket daha önce bankaya iletildi!", "UYARI");
+                }
+                else
+                {
+                    try
                     {
                         using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                         {
-                            CommandText = "INSERT INTO AYZ_PW_SUMMARY(RETURNKEY,PACKETID,CLIENTREF,AMOUNT,CURRCODE,CREATED_DATE,CREATED_TIME) " +
-                                              "\nVALUES(" +
-                                              "\n'" + returnKeyList[i] + "'," +
-                                              "\n" + packetId + "," +
-                                              "\n" + clientRefList[i] + "," +
-                                              "\n" + amountList[i].ToString().Replace(',', '.') + "," +
-                                              "\n'" + currCodeList[i] + "'," +
-                                              "\nCONVERT(DATE, GETDATE(), 104)," +
-                                              "\n" + Helper.GetTime() + ")";
+                            CommandText = "SELECT " +
+                                           "\nRIGHT('000000000' + CAST(D.PACKETID AS VARCHAR(9)), 9) + '-' + RIGHT('0000000000' + CAST(D.CLIENTREF AS VARCHAR(10)), 10) RETURNKEY, " +
+                                           "\nD.PACKETID, " +
+                                           "\nD.CLIENTREF, " +
+                                           "\nSUM(D.AMOUNT_PAID) AMOUNT, " +
+                                           "\nD.CURRCODE " +
+                                           "\nFROM AYZ_PW_PACKET_DETAIL D " +
+                                           "\nWHERE PACKETID = " + packetId + " " +
+                                           "\nGROUP BY D.PACKETID, D.CLIENTREF, D.CURRCODE";
                             komut.CommandText = CommandText;
                             komut.Connection = conn;
                             conn.Open();
-                            dr = komut.ExecuteReader();
-                        }
-                    }
-
-                    decimal sum = 0;
-                    using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-                    {
-                        CommandText = "SELECT DISTINCT BA.BANKACCOUNTNO,S.AMOUNT,PD.IBAN,S.RETURNKEY,S.CURRCODE,BANKCODE = B.BANKNR," +
-                                      "\nOUTBRANCHCODE = B.BRANCHNR, P.NOTE, PD.CL_TAXNR,PD.CL_EMAIL,PD.CL_TAXOFFICE,CUSTOMERNO = B.CUSTOMERNR,B.FIRMNAME  " +
-                                      "\nFROM AYZ_PW_SUMMARY AS S " +
-                                      "\nLEFT JOIN AYZ_PW_PACKET_DETAIL AS PD ON S.PACKETID = PD.PACKETID AND S.CLIENTREF = PD.CLIENTREF " +
-                                      "\nLEFT JOIN AYZ_PW_PACKET AS P ON P.ID = PD.PACKETID " +
-                                      "\nLEFT JOIN AYZ_PW_BANKACCOUNT AS BA ON BA.ID = P.ACCOUNTOUTID " +
-                                      "\nLEFT JOIN AYZ_PW_BANK AS B ON B.ID = BA.BANKID " +
-                                      "\nWHERE PD.PACKETID = " + packetId + "";
-                        komut.CommandText = CommandText;
-                        komut.Connection = conn;
-                        conn.Open();
-
-                        SqlDataAdapter da = new SqlDataAdapter();
-                        da.SelectCommand = komut;
-                        DataTable dt = new DataTable();
-                        da.Fill(dt);
-
-                        var Engine = new FileHelperEngine<RecordDetails>();
-                        List<RecordDetails> Records = new List<RecordDetails>();
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            //string sabitD = "D";
-                            string HEDEFBANKA1 = (string)dr["BANKCODE"].ToString();
-                            string HEDEFSUBE1 = (string)dr["OUTBRANCHCODE"].ToString();
-                            string HEDEFHESAPNUMARASI1 = (string)dr["BANKACCOUNTNO"].ToString();
-                            string PARAKODU1 = (string)dr["CURRCODE"].ToString();
-                            decimal TUTAR1 = (decimal)dr["AMOUNT"];
-                            string ACIKLAMA1 = (string)dr["NOTE"].ToString();
-                            string FIRMAREFERANS1 = (string)dr["RETURNKEY"].ToString();
-                            //string UNVAN1 = (string)dr["UNVAN"];
-                            //string ADDRESS1 = (string)dr["ADDRESS"];
-                            //string TELEFON1 = (string)dr["TELEFON"];
-                            string VERGIKIMLIKNO1 = (string)dr["CL_TAXNR"].ToString();
-                            string VERGIDAIRESI1 = (string)dr["CL_TAXOFFICE"].ToString();
-                            string EMAIL1 = (string)dr["CL_EMAIL"].ToString();
-                            string IBAN1 = (string)dr["IBAN"].ToString();
-                            //string TCKN1 = (string)dr["TCKN"];
-                            BankaKodu = Convert.ToInt32(dr["BANKCODE"].ToString());
-                            SubeKodu = Convert.ToInt32(dr["OUTBRANCHCODE"].ToString());
-                            MusteriNo = Convert.ToInt32(dr["CUSTOMERNO"].ToString());
-                            HesapNo = Convert.ToInt32(dr["BANKACCOUNTNO"].ToString());
-                            FirmaAdi = dr["FIRMNAME"].ToString();
-                            //ToplamTutarını alması
-                            sum = sum + Convert.ToDecimal(TUTAR1);
-
-                            var infos = new RecordDetails
-                            {
-                                Dstring = "D",
-                                HEDEFBANKA = HEDEFBANKA1,
-                                HEDEFSUBE = HEDEFSUBE1,
-                                HEDEFHESAPNUMARASI = HEDEFHESAPNUMARASI1,
-                                PARAKODU = PARAKODU1,
-                                TUTAR = TUTAR1,
-                                ACIKLAMA = ACIKLAMA1,
-                                FIRMAREFERANS = FIRMAREFERANS1,
-                                //UNVAN = UNVAN1,
-                                //ADDRESS = ADDRESS1,
-                                //TELEFON = TELEFON1,
-                                VERGIKIMLIKNO = VERGIKIMLIKNO1,
-                                VERGIDAIRESI = VERGIDAIRESI1,
-                                EMAIL = EMAIL1,
-                                IBAN = IBAN1//,
-                                //TCKN = TCKN1
-                            };
-
-                            Records.Add(infos);
-                        }
-                        //string tempFilePath = @"C:\d";        // Bunu kullanıcıdan alıcaz. Örn: Dosya Yolu Seçin dicez.                             
-                        //string filePath = tempFilePath + "\\";
-                        #region SFTP Bilgilerini AYZ_PW_SFTP_SETTING tablosundan alma
-                        string hostName = "", sftpUserName = "", password = "", folderPath = "", filePath = "";
-                        int port = 22;
-
-                        using (SqlConnection connNEW = new SqlConnection(ConnectionHelper.ConnectionString))
-                        {
-                            CommandText = "SELECT * FROM AYZ_PW_SFTP_SETTING WHERE BANKCODE = '" + BankaKodu + "' AND FIRMNR = '" + Helper.FIRMNR + "' ";
-                            komut.CommandText = CommandText;
-                            komut.Connection = connNEW;
-                            connNEW.Open();
                             dr = komut.ExecuteReader();
                             if (dr.HasRows)
                             {
                                 while (dr.Read())
                                 {
-                                    hostName = dr["HOSTNAME"].ToString();
-                                    port = Convert.ToInt32(dr["PORT"].ToString());
-                                    sftpUserName = dr["USERNAME"].ToString();
-                                    password = dr["PASSWORD"].ToString();
-                                    folderPath = dr["FOLDERPATH"].ToString() + "/";
-                                    filePath = dr["PAYMENTORDERLOGFOLDER"].ToString() + "\\";
+                                    returnKeyList.Add(dr["RETURNKEY"].ToString());
+                                    clientRefList.Add(Convert.ToInt32(dr["CLIENTREF"].ToString()));
+                                    amountList.Add(Convert.ToDecimal(dr["AMOUNT"].ToString()));
+                                    currCodeList.Add(dr["CURRCODE"].ToString());
                                 }
-                                connNEW.Close();
+                                conn.Close();
                             }
                         }
-                        #endregion
 
-
-                        //  HEADER ----Buradaki Bazı bilgileri Veritabandan çekebiliriz 
-                        // KurusHesabı                        
-                        string OdemeninHesaptanCikisTarihi = DateTime.Now.Year + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd");
-                        int kurusHesabi = 0001882345;
-                        string fileHeader = "H6" + DateTime.Now.Year + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + BankaKodu.ToString().PadLeft(4, '0') + SubeKodu.ToString().PadLeft(5, '0') + MusteriNo.ToString().PadLeft(8, '0') + HesapNo.ToString().PadLeft(8, '0') + OdemeninHesaptanCikisTarihi + DateTime.Now.Hour.ToString().PadLeft(2, '0') + DateTime.Now.Minute.ToString().PadLeft(2, '0') + kurusHesabi.ToString().PadLeft(8, '0');
-                        Engine.HeaderText = fileHeader;                 //Dosyanın Headerı
-
-                        //DECİMAL  Format
-                        CultureInfo myCI = new CultureInfo("tr-TR", false);
-                        CultureInfo myCIclone = (CultureInfo)myCI.Clone();
-                        myCIclone.NumberFormat.NumberDecimalSeparator = ".";
-
-                        //FOOTER BÖLGESİ
-                        string Tfoot = "T";
-                        string Odemeadedi = dt.Rows.Count.ToString().PadLeft(12, '0');
-                        string OdemeToplamTutar = sum.ToString(myCIclone).PadLeft(20, '0');
-                        string FileFooter = Tfoot + Odemeadedi + OdemeToplamTutar;
-                        Engine.FooterText = FileFooter;
-
-                        //Dosya ismi
-                        string fileName = "OD" + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.Hour.ToString().PadLeft(2, '0') + DateTime.Now.Minute.ToString().PadLeft(2, '0') + DateTime.Now.Second.ToString().PadLeft(2, '0') + "G" + HesapNo.ToString().PadLeft(8, '0') + SubeKodu.ToString().PadLeft(4, '0') + FirmaAdi + "$";
-
-                        //Dosyayı Yaz
-                        Engine.WriteFile("" + filePath + "" + fileName + ".txt", Records);
-
-                        string sendToBankFileName = filePath + fileName + ".txt";
-
-                        var result = SFTP.Upload(sendToBankFileName, hostName, port, sftpUserName, password, folderPath);
-                        JObject json = JObject.Parse(result);
-                        string message = json["Message_"].ToString();
-                        int resultCode = Convert.ToInt32(json["ResultCode"].ToString());
-
-                        if (resultCode == 1)
+                        for (int i = 0; i < returnKeyList.Count; i++)
                         {
-                            MessageBox.Show("Paket Bankaya İletildi!", "UYARI");
-
-                            using (SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString))
+                            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                             {
-                                // Güncellenecek Alanlar
-                                // STATUS                            
-                                CommandText = "UPDATE AYZ_PW_PACKET" +
-                                              "\nSET STATUS = " + (int)Helper.PacketStatus.SentToBank + " " +
-                                              "\nWHERE ID = " + packetId + "";
+                                CommandText = "INSERT INTO AYZ_PW_SUMMARY(RETURNKEY,PACKETID,CLIENTREF,AMOUNT,CURRCODE,CREATED_DATE,CREATED_TIME) " +
+                                                  "\nVALUES(" +
+                                                  "\n'" + returnKeyList[i] + "'," +
+                                                  "\n" + packetId + "," +
+                                                  "\n" + clientRefList[i] + "," +
+                                                  "\n" + amountList[i].ToString().Replace(',', '.') + "," +
+                                                  "\n'" + currCodeList[i] + "'," +
+                                                  "\nCONVERT(DATE, GETDATE(), 104)," +
+                                                  "\n" + Helper.GetTime() + ")";
                                 komut.CommandText = CommandText;
                                 komut.Connection = conn;
-                                conn2.Open();
-                                komut.ExecuteNonQuery();
-                                conn2.Close();
+                                conn.Open();
+                                dr = komut.ExecuteReader();
                             }
                         }
-                        else if (resultCode == 0)
-                        {
-                            MessageBox.Show("Paket Bankaya İletilirken bir sorun oluştu.!\n " + message + "", "UYARI");
-                        }
-                    }
 
-                    // Anasayfayı yenilemek için.                        
-                    Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
-                    form.FillPacketList();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Hata :\n" + ex.ToString());
+                        decimal sum = 0;
+                        using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                        {
+                            CommandText = "SELECT DISTINCT BA.BANKACCOUNTNO,S.AMOUNT,PD.IBAN,S.RETURNKEY,S.CURRCODE,BANKCODE = B.BANKNR," +
+                                          "\nOUTBRANCHCODE = B.BRANCHNR, P.NOTE, PD.CL_TAXNR,PD.CL_EMAIL,PD.CL_TAXOFFICE,CUSTOMERNO = B.CUSTOMERNR,B.FIRMNAME  " +
+                                          "\nFROM AYZ_PW_SUMMARY AS S " +
+                                          "\nLEFT JOIN AYZ_PW_PACKET_DETAIL AS PD ON S.PACKETID = PD.PACKETID AND S.CLIENTREF = PD.CLIENTREF " +
+                                          "\nLEFT JOIN AYZ_PW_PACKET AS P ON P.ID = PD.PACKETID " +
+                                          "\nLEFT JOIN AYZ_PW_BANKACCOUNT AS BA ON BA.ID = P.ACCOUNTOUTID " +
+                                          "\nLEFT JOIN AYZ_PW_BANK AS B ON B.ID = BA.BANKID " +
+                                          "\nWHERE PD.PACKETID = " + packetId + "";
+                            komut.CommandText = CommandText;
+                            komut.Connection = conn;
+                            conn.Open();
+
+                            SqlDataAdapter da = new SqlDataAdapter();
+                            da.SelectCommand = komut;
+                            DataTable dt = new DataTable();
+                            da.Fill(dt);
+
+                            var Engine = new FileHelperEngine<RecordDetails>();
+                            List<RecordDetails> Records = new List<RecordDetails>();
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                //string sabitD = "D";
+                                string HEDEFBANKA1 = (string)dr["BANKCODE"].ToString();
+                                string HEDEFSUBE1 = (string)dr["OUTBRANCHCODE"].ToString();
+                                string HEDEFHESAPNUMARASI1 = (string)dr["BANKACCOUNTNO"].ToString();
+                                string PARAKODU1 = (string)dr["CURRCODE"].ToString();
+                                decimal TUTAR1 = (decimal)dr["AMOUNT"];
+                                string ACIKLAMA1 = (string)dr["NOTE"].ToString();
+                                string FIRMAREFERANS1 = (string)dr["RETURNKEY"].ToString();
+                                //string UNVAN1 = (string)dr["UNVAN"];
+                                //string ADDRESS1 = (string)dr["ADDRESS"];
+                                //string TELEFON1 = (string)dr["TELEFON"];
+                                string VERGIKIMLIKNO1 = (string)dr["CL_TAXNR"].ToString();
+                                string VERGIDAIRESI1 = (string)dr["CL_TAXOFFICE"].ToString();
+                                string EMAIL1 = (string)dr["CL_EMAIL"].ToString();
+                                string IBAN1 = (string)dr["IBAN"].ToString();
+                                //string TCKN1 = (string)dr["TCKN"];
+                                BankaKodu = Convert.ToInt32(dr["BANKCODE"].ToString());
+                                SubeKodu = Convert.ToInt32(dr["OUTBRANCHCODE"].ToString());
+                                MusteriNo = Convert.ToInt32(dr["CUSTOMERNO"].ToString());
+                                HesapNo = Convert.ToInt32(dr["BANKACCOUNTNO"].ToString());
+                                FirmaAdi = dr["FIRMNAME"].ToString();
+                                //ToplamTutarını alması
+                                sum = sum + Convert.ToDecimal(TUTAR1);
+
+                                var infos = new RecordDetails
+                                {
+                                    Dstring = "D",
+                                    HEDEFBANKA = HEDEFBANKA1,
+                                    HEDEFSUBE = HEDEFSUBE1,
+                                    HEDEFHESAPNUMARASI = HEDEFHESAPNUMARASI1,
+                                    PARAKODU = PARAKODU1,
+                                    TUTAR = TUTAR1,
+                                    ACIKLAMA = ACIKLAMA1,
+                                    FIRMAREFERANS = FIRMAREFERANS1,
+                                    //UNVAN = UNVAN1,
+                                    //ADDRESS = ADDRESS1,
+                                    //TELEFON = TELEFON1,
+                                    VERGIKIMLIKNO = VERGIKIMLIKNO1,
+                                    VERGIDAIRESI = VERGIDAIRESI1,
+                                    EMAIL = EMAIL1,
+                                    IBAN = IBAN1//,
+                                                //TCKN = TCKN1
+                                };
+
+                                Records.Add(infos);
+                            }
+                            //string tempFilePath = @"C:\d";        // Bunu kullanıcıdan alıcaz. Örn: Dosya Yolu Seçin dicez.                             
+                            //string filePath = tempFilePath + "\\";
+                            #region SFTP Bilgilerini AYZ_PW_SFTP_SETTING tablosundan alma
+                            string hostName = "", sftpUserName = "", password = "", folderPath = "", filePath = "";
+                            int port = 22;
+
+                            using (SqlConnection connNEW = new SqlConnection(ConnectionHelper.ConnectionString))
+                            {
+                                CommandText = "SELECT * FROM AYZ_PW_SFTP_SETTING WHERE BANKCODE = '" + BankaKodu + "' AND FIRMNR = '" + Helper.FIRMNR + "' ";
+                                komut.CommandText = CommandText;
+                                komut.Connection = connNEW;
+                                connNEW.Open();
+                                dr = komut.ExecuteReader();
+                                if (dr.HasRows)
+                                {
+                                    while (dr.Read())
+                                    {
+                                        hostName = dr["HOSTNAME"].ToString();
+                                        port = Convert.ToInt32(dr["PORT"].ToString());
+                                        sftpUserName = dr["USERNAME"].ToString();
+                                        password = dr["PASSWORD"].ToString();
+                                        folderPath = dr["FOLDERPATH"].ToString() + "/";
+                                        filePath = dr["PAYMENTORDERLOGFOLDER"].ToString() + "\\";
+                                    }
+                                    connNEW.Close();
+                                }
+                            }
+                            #endregion
+
+
+                            //  HEADER ----Buradaki Bazı bilgileri Veritabandan çekebiliriz 
+                            // KurusHesabı                        
+                            string OdemeninHesaptanCikisTarihi = DateTime.Now.Year + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd");
+                            int kurusHesabi = 0001882345;
+                            string fileHeader = "H6" + DateTime.Now.Year + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + BankaKodu.ToString().PadLeft(4, '0') + SubeKodu.ToString().PadLeft(5, '0') + MusteriNo.ToString().PadLeft(8, '0') + HesapNo.ToString().PadLeft(8, '0') + OdemeninHesaptanCikisTarihi + DateTime.Now.Hour.ToString().PadLeft(2, '0') + DateTime.Now.Minute.ToString().PadLeft(2, '0') + kurusHesabi.ToString().PadLeft(8, '0');
+                            Engine.HeaderText = fileHeader;                 //Dosyanın Headerı
+
+                            //DECİMAL  Format
+                            CultureInfo myCI = new CultureInfo("tr-TR", false);
+                            CultureInfo myCIclone = (CultureInfo)myCI.Clone();
+                            myCIclone.NumberFormat.NumberDecimalSeparator = ".";
+
+                            //FOOTER BÖLGESİ
+                            string Tfoot = "T";
+                            string Odemeadedi = dt.Rows.Count.ToString().PadLeft(12, '0');
+                            string OdemeToplamTutar = sum.ToString(myCIclone).PadLeft(20, '0');
+                            string FileFooter = Tfoot + Odemeadedi + OdemeToplamTutar;
+                            Engine.FooterText = FileFooter;
+
+                            //Dosya ismi
+                            string fileName = "OD" + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.Hour.ToString().PadLeft(2, '0') + DateTime.Now.Minute.ToString().PadLeft(2, '0') + DateTime.Now.Second.ToString().PadLeft(2, '0') + "G" + HesapNo.ToString().PadLeft(8, '0') + SubeKodu.ToString().PadLeft(4, '0') + FirmaAdi + "$";
+
+                            //Dosyayı Yaz
+                            Engine.WriteFile("" + filePath + "" + fileName + ".txt", Records);
+
+                            string sendToBankFileName = filePath + fileName + ".txt";
+
+                            var result = SFTP.Upload(sendToBankFileName, hostName, port, sftpUserName, password, folderPath);
+                            JObject json = JObject.Parse(result);
+                            string message = json["Message_"].ToString();
+                            int resultCode = Convert.ToInt32(json["ResultCode"].ToString());
+
+                            if (resultCode == 1)
+                            {
+                                MessageBox.Show("Paket Bankaya İletildi!", "UYARI");
+
+                                using (SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString))
+                                {
+                                    // Güncellenecek Alanlar
+                                    // STATUS                            
+                                    CommandText = "UPDATE AYZ_PW_PACKET" +
+                                                  "\nSET STATUS = " + (int)Helper.PacketStatus.SentToBank + " " +
+                                                  "\nWHERE ID = " + packetId + "";
+                                    komut.CommandText = CommandText;
+                                    komut.Connection = conn;
+                                    conn2.Open();
+                                    komut.ExecuteNonQuery();
+                                    conn2.Close();
+                                }
+                            }
+                            else if (resultCode == 0)
+                            {
+                                MessageBox.Show("Paket Bankaya İletilirken bir sorun oluştu.!\n " + message + "", "UYARI");
+                            }
+                        }
+
+                        // Anasayfayı yenilemek için.                        
+                        Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
+                        form.FillPacketList();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Hata :\n" + ex.ToString());
+                    }
                 }
             }
         }
@@ -626,28 +638,31 @@ namespace AyzPaymentWizard
                 {
                     packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
                 }
-                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                if (packetId != 0)
                 {
-                    // Güncellenecek Alanlar : STATUS, APPROVALNOTE
-                    CommandText = "UPDATE AYZ_PW_PACKET" +
-                                  "\nSET ARCHIVED = " + (int)Helper.ArchiveStatus.Archived + "" +
-                                  "\nWHERE ID = " + packetId + "";
-                    komut.CommandText = CommandText;
-                    komut.Connection = conn;
-                    conn.Open();
-                    komut.ExecuteNonQuery();
-                    conn.Close();
-                }
+                    using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                    {
+                        // Güncellenecek Alanlar : STATUS, APPROVALNOTE
+                        CommandText = "UPDATE AYZ_PW_PACKET" +
+                                      "\nSET ARCHIVED = " + (int)Helper.ArchiveStatus.Archived + "" +
+                                      "\nWHERE ID = " + packetId + "";
+                        komut.CommandText = CommandText;
+                        komut.Connection = conn;
+                        conn.Open();
+                        komut.ExecuteNonQuery();
+                        conn.Close();
+                    }
 
-                // Anasayfayı yenilemek için 2 yöntem vardır.
-                // 1. Yöntem
-                Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
-                form.FillPacketList();
-                // 2. Yöntem
-                //FillPacketList();
-                //var source = new BindingSource();
-                //source.DataSource = packets;
-                //dataGridViewPacket.DataSource = source;
+                    // Anasayfayı yenilemek için 2 yöntem vardır.
+                    // 1. Yöntem
+                    Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
+                    form.FillPacketList();
+                    // 2. Yöntem
+                    //FillPacketList();
+                    //var source = new BindingSource();
+                    //source.DataSource = packets;
+                    //dataGridViewPacket.DataSource = source;
+                }
             }
             catch (Exception ex)
             {
@@ -679,11 +694,7 @@ namespace AyzPaymentWizard
             {
                 packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
             }
-            if (packetId == 0)
-            {
-                MessageBox.Show("Lütfen Bir Paket Seçiniz!");
-            }
-            else
+            if (packetId != 0)
             {
                 #region engine 1
                 FileHelperEngine<PAYMENTOUTCOME> engineDetail = new FileHelperEngine<PAYMENTOUTCOME>(); // Detail için
@@ -716,7 +727,6 @@ namespace AyzPaymentWizard
                         f.SkipThisRecord = true;
                 };
                 #endregion
-
 
                 #region SFTP Bilgilerini AYZ_PW_SFTP_SETTING tablosundan alma
                 string hostName = "", sftpUserName = "", password = "", folderPath = "", filePath = "";
@@ -808,7 +818,7 @@ namespace AyzPaymentWizard
                             MessageBox.Show("Hata: \n" + ex.Message);
                         }
                     }
-                }                
+                }
             }
         }
 
@@ -838,7 +848,7 @@ namespace AyzPaymentWizard
             List<string> names = jsonList["FileNameList"].ToString().Split(',').Where(x => x.Contains("OA")).ToList();
             names = names.Except(oldDownloadedList).ToList();     // Except, names listesinde olup oldDownloadedList listesinde olmayanları bulur ve listeler.
             return names;
-        }       
+        }
 
         private void dataGridViewPacket_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
