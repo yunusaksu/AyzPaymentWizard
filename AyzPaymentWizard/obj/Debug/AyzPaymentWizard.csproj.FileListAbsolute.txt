@@ -50,4 +50,3 @@ C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csp
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csproj.CopyComplete
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.exe
 C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.pdb
-C:\WorkPrograms\AyzPaymentWizard\AyzPaymentWizard\obj\Debug\AyzPaymentWizard.csprojAssemblyReference.cache
