@@ -479,6 +479,7 @@ namespace AyzPaymentWizard
                 {
                     dataGridViewLeft.Columns[boyutheadL.Key].HeaderText = boyutheadL.Value;
                     dataGridViewLeft.Columns[boyutheadL.Key].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                    dataGridViewLeft.Columns[boyutheadL.Key].ReadOnly = true;
                 }
             }
 
@@ -500,6 +501,7 @@ namespace AyzPaymentWizard
             foreach(var headL in HeaderL)
             {
                 dataGridViewLeft.Columns[headL.Key].HeaderText = headL.Value;
+                dataGridViewLeft.Columns[headL.Key].ReadOnly = true;
             }
            
             string[] Autosized = { "Total", "ClCode", "ClDef", "IBAN", "DoCode","CurCode"};
@@ -560,7 +562,12 @@ namespace AyzPaymentWizard
 
             foreach (var gosterRHead in gosterilecekRHeader)
             {
-                dataGridViewRight.Columns[gosterRHead.Key].HeaderText = gosterRHead.Value;                
+                dataGridViewRight.Columns[gosterRHead.Key].HeaderText = gosterRHead.Value;
+                if(dataGridViewRight.Columns[gosterRHead.Key].HeaderText!= "Ödenecek")
+                {
+                    dataGridViewRight.Columns[gosterRHead.Key].ReadOnly = true;
+                }
+               
             }
             dataGridViewRight.Columns["Paid"].HeaderCell.Style.BackColor = Color.Red;
 

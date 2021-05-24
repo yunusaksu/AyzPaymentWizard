@@ -266,14 +266,17 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.DGVRightEdit.BackgroundColor = System.Drawing.Color.White;
+            this.DGVRightEdit.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
             this.DGVRightEdit.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVRightEdit.Location = new System.Drawing.Point(4, 3);
             this.DGVRightEdit.Name = "DGVRightEdit";
             this.DGVRightEdit.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGVRightEdit.Size = new System.Drawing.Size(625, 513);
             this.DGVRightEdit.TabIndex = 13;
+            this.DGVRightEdit.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.DGVRightEdit_CellBeginEdit);
+            this.DGVRightEdit.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGVRightEdit_CellEndEdit);
             this.DGVRightEdit.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DGVRightEdit_CellFormatting);
-            this.DGVRightEdit.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGVRightEdit_CellValueChanged);
+            this.DGVRightEdit.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.DGVRightEdit_EditingControlShowing);
             // 
             // panel5
             // 

@@ -54,9 +54,9 @@
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.sFTPAyarlarıToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnBankAndBankAccAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.logoUserSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripAnasayfa = new System.Windows.Forms.ToolStrip();
-            this.logoUserSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPacket)).BeginInit();
@@ -353,6 +353,14 @@
             this.btnBankAndBankAccAdd.Text = "Çalışılan Bankalar";
             this.btnBankAndBankAccAdd.Click += new System.EventHandler(this.btnBankAndBankAccAdd_Click_1);
             // 
+            // logoUserSettingsToolStripMenuItem
+            // 
+            this.logoUserSettingsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.logoUserSettingsToolStripMenuItem.Name = "logoUserSettingsToolStripMenuItem";
+            this.logoUserSettingsToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
+            this.logoUserSettingsToolStripMenuItem.Text = "Logo Kullanıcı Ayarları";
+            this.logoUserSettingsToolStripMenuItem.Click += new System.EventHandler(this.logoUserSettingsToolStripMenuItem_Click);
+            // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
@@ -376,14 +384,6 @@
             this.toolStripAnasayfa.Size = new System.Drawing.Size(1174, 32);
             this.toolStripAnasayfa.TabIndex = 0;
             this.toolStripAnasayfa.Text = "AnasayfaToolStrip";
-            // 
-            // logoUserSettingsToolStripMenuItem
-            // 
-            this.logoUserSettingsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.logoUserSettingsToolStripMenuItem.Name = "logoUserSettingsToolStripMenuItem";
-            this.logoUserSettingsToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
-            this.logoUserSettingsToolStripMenuItem.Text = "Logo Kullanıcı Ayarları";
-            this.logoUserSettingsToolStripMenuItem.Click += new System.EventHandler(this.logoUserSettingsToolStripMenuItem_Click);
             // 
             // Anasayfa
             // 

@@ -1,6 +1,7 @@
 ﻿using AyzPaymentWizard.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
@@ -12,6 +13,7 @@ using System.Windows.Forms;
 using System.Linq.Dynamic;
 using System.Reflection;
 using System.Runtime.Serialization;
+using System.Collections;
 
 namespace AyzPaymentWizard.Forms
 {
@@ -28,6 +30,7 @@ namespace AyzPaymentWizard.Forms
         List<Debit> PacketDetailList = new List<Debit>();
         List<Debit> FilteredList = new List<Debit>();
 
+        decimal newvalue, oldvalue;
         public PacketEditForm()
         {
             InitializeComponent();
@@ -37,6 +40,8 @@ namespace AyzPaymentWizard.Forms
             PacketId = packetId;
             Review = review;
             InitializeComponent();
+            DGVRightEdit.ClipboardCopyMode = DataGridViewClipboardCopyMode.Disable;
+            DGVRightEdit.EditingControlShowing +=DGVRightEdit_EditingControlShowing;
         }
 
         #region Her Pakete Özel, Ön Filtre Değerlerini Tutan Değişkenler       
@@ -55,7 +60,7 @@ namespace AyzPaymentWizard.Forms
         {
             for (int i = DGVLeftEdit.Rows.Count - 1; i >= 0; i--)
             {
-                
+
                 DataGridViewRow drv = DGVLeftEdit.Rows[i];
                 bool selectedRow = Convert.ToBoolean(drv.Selected);
                 if (selectedRow)
@@ -125,7 +130,7 @@ namespace AyzPaymentWizard.Forms
                     }
 
                     //Updating the number of Rows
-                    
+
                     textBox_totalLEd.Text = (Convert.ToInt32(textBox_totalLEd.Text) - select.Count).ToString();
                     textBox_totalREd.Text = (Convert.ToInt32(textBox_totalREd.Text) + select.Count).ToString();
                 }
@@ -145,7 +150,7 @@ namespace AyzPaymentWizard.Forms
         {
             for (int i = DGVRightEdit.Rows.Count - 1; i >= 0; i--)
             {
-                
+
                 DataGridViewRow drv = DGVRightEdit.Rows[i];
                 bool selectedRow = Convert.ToBoolean(drv.Selected);
                 if (selectedRow)
@@ -189,7 +194,7 @@ namespace AyzPaymentWizard.Forms
                         debit.InternetSubCategory = drv.Cells["InternetSubCategory"].Value.ToString();
                         debit.DD1REF = Convert.ToInt32(drv.Cells["DD1REF"].Value);
                         debit.DD2REF = Convert.ToInt32(drv.Cells["DD2REF"].Value);
-                       
+
                         debit.DD3REF = Convert.ToInt32(drv.Cells["DD3REF"].Value);
                         debit.DD4REF = Convert.ToInt32(drv.Cells["DD4REF"].Value);
                         debit.DD5REF = Convert.ToInt32(drv.Cells["DD5REF"].Value);
@@ -206,7 +211,7 @@ namespace AyzPaymentWizard.Forms
                     //Adding Selected Rightt Total to Left and Removing from Right
                     foreach (var sel in select)
                     {
-                        
+
                         textBoxsumREd.Text = (Convert.ToDecimal(textBoxsumREd.Text) - sel.Total).ToString();
                         textBoxSumLEd.Text = (Convert.ToDecimal(textBoxSumLEd.Text) + sel.Total).ToString();
                         //Getting the Currency Code
@@ -253,136 +258,204 @@ namespace AyzPaymentWizard.Forms
             }
         }        
 
-        private void DGVRightEdit_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void DGVRightEdit_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            //decimal sumP = 0;
-            //for (int counter = 0; counter < DGVRightEdit.Rows.Count; counter++)
-            //{
-            //    if (DGVRightEdit.Rows[counter].Cells["Paid"].Value != null)
-            //    {
-            //        // Verify that the cell value is not an empty string.
-            //        if (DGVRightEdit.Rows[counter]
-            //            .Cells["Paid"].Value.ToString().Length != 0)
-            //        {
-            //        Decimal res= Decimal.Parse(DGVRightEdit.Rows[counter].Cells["Paid"].Value.ToString());
-            //         sumP+= res;
-            //        textBoxodenecek.Text= sumP.ToString();
-
-            //        }
-
-            //    }
-            //}
-
-
-            decimal sumP = 0m;
-            for (int counter = 0; counter < DGVRightEdit.Rows.Count; counter++)
+            if (DGVRightEdit.CurrentCell.ColumnIndex == DGVRightEdit.Columns["Paid"].Index)
             {
-                if (DGVRightEdit.Rows[counter].Cells["Paid"].Value != null)
+                //DGVRightEdit.Columns["Paid"].
+                //extBox textBox = new TextBox();
+                if (e.Control is TextBox && e.Control != null)
                 {
-                    // Verify that the cell value is not an empty string.
-                    if (DGVRightEdit.Rows[counter]
-                        .Cells["Paid"].Value.ToString().Length != 0)
-                    {
-                        Decimal res = Decimal.Parse(DGVRightEdit.Rows[counter].Cells["Paid"].Value.ToString());
-                        Decimal total = Decimal.Parse(DGVRightEdit.Rows[counter].Cells["Total"].Value.ToString());
-                        if (res > total || res < 0)
-                        {
-                            if (res > total)
-                            {
-                                MessageBox.Show("Borcunuzdan daha fazlasını ödeme yapamazsınız!!!. Borcunuzun tamini veya daha azını girin ");
-                                // sumP = total;
-                                
+
+                    e.Control.KeyPress += delegate (Object Mysender, KeyPressEventArgs kk)
+                     {
+                         if (!char.IsDigit(kk.KeyChar) && !char.IsControl(kk.KeyChar) && kk.KeyChar != ',')
+                         {
+                             kk.Handled = true;
+                         }
+                     };
 
 
-                            }
-                            else if (res < 0)
-                            {
-                                MessageBox.Show(" Sifirdan Daha az bir ödeme yoktur. Pozitif bir değeri giriniz");
-                                //  sumP = total;
-                                DGVRightEdit.Rows[counter].Cells["Total"].Value = total;
-                            }
-                            
-                        }
-                        else
-                        {
-                            sumP += res;
-                            textBoxodenecek.Text = sumP.ToString();
-                        }
+                    //e.Control.KeyDown += delegate (Object Mm, KeyEventArgs kd)
+                    //  {
+                    //      if (kd.KeyCode == Keys.C | kd.KeyCode == Keys.V)
+                    //      {
+                    //          kd.SuppressKeyPress = true;
+                    //      };
+                    //  };                    
+                }
 
-                    }
+                TextBox tb = e.Control as TextBox;
+                if (tb != null)
+                {
+                    tb.ContextMenuStrip = new ContextMenuStrip();
+                    tb.KeyDown -= TextBox_KeyDown;
+                    tb.KeyDown += TextBox_KeyDown;
+
                 }
             }
         }
-        
+
+        private void DGVRightEdit_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            oldvalue = (decimal)DGVRightEdit[e.ColumnIndex, e.RowIndex].Value;
+            MessageBox.Show(oldvalue.ToString());
+        }
+
+        private void DGVRightEdit_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+          newvalue= (decimal)DGVRightEdit[e.ColumnIndex, e.RowIndex].Value;
+            if (newvalue > oldvalue )
+            {
+                DGVRightEdit[e.ColumnIndex, e.RowIndex].Value = oldvalue;
+                MessageBox.Show("Borcundan Fazla odeme yapamazsin!!.Tekrar Deneyin");
+            }
+            else
+            {
+                DGVRightEdit[e.ColumnIndex, e.RowIndex].Value = newvalue;
+
+            }
+         MessageBox.Show(oldvalue.ToString());
+        }
+
+        void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && (e.KeyCode == Keys.C | e.KeyCode == Keys.V)|e.KeyCode==Keys.X| e.KeyCode==Keys.A)
+            {
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        //private void DGVRightEdit_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    //decimal sumP = 0;
+        //    //for (int counter = 0; counter < DGVRightEdit.Rows.Count; counter++)
+        //    //{
+        //    //    if (DGVRightEdit.Rows[counter].Cells["Paid"].Value != null)
+        //    //    {
+        //    //        // Verify that the cell value is not an empty string.
+        //    //        if (DGVRightEdit.Rows[counter]
+        //    //            .Cells["Paid"].Value.ToString().Length != 0)
+        //    //        {
+        //    //        Decimal res= Decimal.Parse(DGVRightEdit.Rows[counter].Cells["Paid"].Value.ToString());
+        //    //         sumP+= res;
+        //    //        textBoxodenecek.Text= sumP.ToString();
+
+        //    //        }
+
+        //    //    }
+        //    //}
+
+
+        //    decimal sumP = 0m;
+        //    for (int counter = 0; counter < DGVRightEdit.Rows.Count; counter++)
+        //    {
+        //        if (DGVRightEdit.Rows[counter].Cells["Paid"].Value != null)
+        //        {
+        //            // Verify that the cell value is not an empty string.
+        //            if (DGVRightEdit.Rows[counter]
+        //                .Cells["Paid"].Value.ToString().Length != 0)
+        //            {
+        //                Decimal res = Decimal.Parse(DGVRightEdit.Rows[counter].Cells["Paid"].Value.ToString());
+        //                Decimal total = Decimal.Parse(DGVRightEdit.Rows[counter].Cells["Total"].Value.ToString());
+        //                if (res > total || res < 0)
+        //                {
+        //                    if (res > total)
+        //                    {
+        //                        MessageBox.Show("Borcunuzdan daha fazlasını ödeme yapamazsınız!!!. Borcunuzun tamini veya daha azını girin ");
+        //                        // sumP = total;
+
+
+
+        //                    }
+        //                    else if (res < 0)
+        //                    {
+        //                        MessageBox.Show(" Sifirdan Daha az bir ödeme yoktur. Pozitif bir değeri giriniz");
+        //                        //  sumP = total;
+        //                        DGVRightEdit.Rows[counter].Cells["Total"].Value = total;
+        //                    }
+
+        //                }
+        //                else
+        //                {
+        //                    sumP += res;
+        //                    textBoxodenecek.Text = sumP.ToString();
+        //                }
+
+        //            }
+        //        }
+        //    }
+        //}
+
         private void DGVLeftEdit_FilterStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
+        {
+            try
             {
-                try
+                if (string.IsNullOrEmpty(DGVLeftEdit.FilterString))
                 {
-                    if (string.IsNullOrEmpty(DGVLeftEdit.FilterString))
-                    {
-                        PacketEditsLeftList.Clear();
-                        var source = new BindingSource();
-                        FillLeftList();
-                        source.DataSource = PacketEditsLeftList;
-                        DGVLeftEdit.DataSource = source;
-                    }
-                    else
-                    {
-                        IEnumerable<Debit> enumerable = PacketEditsLeftList.AsEnumerable();
-                        PacketEditsLeftList = FilterAndSortDataStr(enumerable, DGVLeftEdit.FilterString, DGVLeftEdit.SortString);
-                    }
+                    PacketEditsLeftList.Clear();
+                    var source = new BindingSource();
+                    FillLeftList();
+                    source.DataSource = PacketEditsLeftList;
+                    DGVLeftEdit.DataSource = source;
+                }
+                else
+                {
+                    IEnumerable<Debit> enumerable = PacketEditsLeftList.AsEnumerable();
+                    PacketEditsLeftList = FilterAndSortDataStr(enumerable, DGVLeftEdit.FilterString, DGVLeftEdit.SortString);
+                }
+                DGVLeftEdit.DataSource = PacketEditsLeftList;
+                //Total Rows in Left Grid after filtering
+                textBox_totalLEd.Text = PacketEditsLeftList.Count.ToString();
+                //Sum in LeftGrid After Filtering
+                //Getting the total value
+                decimal sumL = 0.00m;
+                for (int i = 0; i < DGVLeftEdit.Rows.Count; ++i)
+                {
+                    sumL += Convert.ToDecimal(DGVLeftEdit.Rows[i].Cells["Total"].Value);
+                }
+                textBoxSumLEd.Text = sumL.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hata: \n" + ex.Message);
+            }
+        }
+
+        private void DGVLeftEdit_SortStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(DGVLeftEdit.SortString) == true)
+                    return;
+
+                var sortStr = DGVLeftEdit.SortString.Replace("[", "").Replace("]", "");
+
+                if (string.IsNullOrEmpty(DGVLeftEdit.FilterString) == true)
+                {
+                    // the grid is not filtered!
+                    PacketEditsLeftList = PacketEditsLeftList.OrderBy(sortStr).ToList();
                     DGVLeftEdit.DataSource = PacketEditsLeftList;
-                    //Total Rows in Left Grid after filtering
-                    textBox_totalLEd.Text = PacketEditsLeftList.Count.ToString();
-                    //Sum in LeftGrid After Filtering
-                    //Getting the total value
-                    decimal sumL = 0.00m;
-                    for (int i = 0; i < DGVLeftEdit.Rows.Count; ++i)
-                    {
-                        sumL += Convert.ToDecimal(DGVLeftEdit.Rows[i].Cells["Total"].Value);
-                    }
-                    textBoxSumLEd.Text = sumL.ToString();
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show("Hata: \n" + ex.Message);
+                    // the grid is filtered!
+                    PacketEditsLeftList = PacketEditsLeftList.OrderBy(sortStr).ToList();
+                    DGVLeftEdit.DataSource = PacketEditsLeftList;
                 }
+
+                //textBox_sort.Text = sortStr;
             }
-
-            private void DGVLeftEdit_SortStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
+            catch (Exception ex)
             {
-                try
-                {
-                    if (string.IsNullOrEmpty(DGVLeftEdit.SortString) == true)
-                        return;
-
-                    var sortStr = DGVLeftEdit.SortString.Replace("[", "").Replace("]", "");
-
-                    if (string.IsNullOrEmpty(DGVLeftEdit.FilterString) == true)
-                    {
-                        // the grid is not filtered!
-                        PacketEditsLeftList = PacketEditsLeftList.OrderBy(sortStr).ToList();
-                        DGVLeftEdit.DataSource = PacketEditsLeftList;
-                    }
-                    else
-                    {
-                        // the grid is filtered!
-                        PacketEditsLeftList = PacketEditsLeftList.OrderBy(sortStr).ToList();
-                        DGVLeftEdit.DataSource = PacketEditsLeftList;
-                    }
-
-                    //textBox_sort.Text = sortStr;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Hata: \n" + ex.Message);
-                }
+                MessageBox.Show("Hata: \n" + ex.Message);
             }
+        }
 
 
-            //Filtereleme Metodu 
-            private List<Debit> FilterAndSortDataStr(IEnumerable<Debit> collection, string filter, string sort)
-            {
+        //Filtereleme Metodu 
+        private List<Debit> FilterAndSortDataStr(IEnumerable<Debit> collection, string filter, string sort)
+        {
             if (collection == null)
             {
                 return new List<Debit>();
@@ -489,7 +562,7 @@ namespace AyzPaymentWizard.Forms
                 string[] gostermeyecekDGVL = { "MecraType", "Mecra", "MarketingCompany", "Customer", "PlanCode", "InternetMainCategory",
                                               "InternetSubCategory", "DD1REF", "DD2REF", "DD3REF", "DD4REF", "DD5REF", "DD6REF", "DD7REF",
                                               "NotInPayTrans", "NotInPayTransFrame" };
-                foreach(var gostermeDGVL in gostermeyecekDGVL)
+                foreach (var gostermeDGVL in gostermeyecekDGVL)
                 {
                     DGVLeftEdit.Columns[gostermeDGVL].Visible = false;
                 }
@@ -525,6 +598,7 @@ namespace AyzPaymentWizard.Forms
                 //DGVLeftEdit.Columns["PlanCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
                 //DGVLeftEdit.Columns["InternetMainCategory"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
                 //DGVLeftEdit.Columns["InternetSubCategory"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+
                 //BOYUT HEADER DGVLEFTGRID Dictionary
                 var boyutHeaderDGVL = new Dictionary<string, string>()
                 {
@@ -535,6 +609,7 @@ namespace AyzPaymentWizard.Forms
                 {
                     DGVLeftEdit.Columns[boyutheadDGVL.Key].HeaderText = boyutheadDGVL.Value;
                     DGVLeftEdit.Columns[boyutheadDGVL.Key].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                    DGVLeftEdit.Columns[boyutheadDGVL.Key].ReadOnly = true;
                 }
             }
             //DGVLeftEdit.Columns["PayRef"].Visible = false;
@@ -565,7 +640,7 @@ namespace AyzPaymentWizard.Forms
             string[] boyutgosterilmeyecekDGVL = { "PayRef", "ClCardRef", "FicheRef", "ModuleNr", "TrCode", "IsPerson", "Branch", "TrType", "Paid", "GenExp1",
                                                   "EmailAdres", "TrCode", "TrCurr", "TaxNr", "TaxOffice", "DD1REF", "DD2REF", "DD3REF", "DD4REF", "DD5REF",
                                                   "DD6REF", "DD7REF", "NotInPayTrans", "NotInPayTransFrame" };
-            foreach(var boyutgostermeDGVL in boyutgosterilmeyecekDGVL)
+            foreach (var boyutgostermeDGVL in boyutgosterilmeyecekDGVL)
             {
                 DGVLeftEdit.Columns[boyutgostermeDGVL].Visible = false;
             }
@@ -593,6 +668,9 @@ namespace AyzPaymentWizard.Forms
             {
                 DGVLeftEdit.Columns[headDGVL.Key].HeaderText = headDGVL.Value;
                 DGVLeftEdit.Columns[headDGVL.Key].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+
+                DGVLeftEdit.Columns[headDGVL.Key].ReadOnly = true;
+
 
             }
 
@@ -647,7 +725,7 @@ namespace AyzPaymentWizard.Forms
             string[] gosterilmeyecekDGVR = { "NotInPayTrans", "PayRef", "ClCardRef", "FicheRef", "ModuleNr", "TrCode", "GenExp1", "TrType", "EmailAdres",
                                              "IsPerson", "Branch", "TaxNr", "TaxOffice", "TrCurr", "DD1REF", "DD2REF", "DD3REF", "DD4REF", "DD5REF",
                                              "DD6REF", "DD7REF", "NotInPayTrans" };
-            foreach(var gostermeDGVR in gosterilmeyecekDGVR)
+            foreach (var gostermeDGVR in gosterilmeyecekDGVR)
             {
                 DGVRightEdit.Columns[gostermeDGVR].Visible = false;
             }
@@ -692,10 +770,16 @@ namespace AyzPaymentWizard.Forms
                 {"InternetSubCategory","İnternet Alt Kategori" },{"NotInPayTransFrame","Active" }
             };
 
-            foreach(var gosterDGVRHead in gosterilecekDGVRHeader)
+            foreach (var gosterDGVRHead in gosterilecekDGVRHeader)
             {
                 DGVRightEdit.Columns[gosterDGVRHead.Key].HeaderText = gosterDGVRHead.Value;
                 DGVRightEdit.Columns[gosterDGVRHead.Key].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+
+                if (DGVRightEdit.Columns[gosterDGVRHead.Key].HeaderText != "Ödenecek")
+                {
+                    DGVRightEdit.Columns[gosterDGVRHead.Key].ReadOnly = true;
+                }
+
             }
 
             // Center Align of Columns of RGCenteredEd
@@ -731,12 +815,12 @@ namespace AyzPaymentWizard.Forms
 
                 string[] boyutgosterilmeyecekDGVR = { "MecraType", "Mecra", "MarketingCompany", "Customer", "PlanCode", "InternetMainCategory", "InternetSubCategory",
                                                       "DD1REF", "DD2REF", "DD3REF", "DD4REF", "DD5REF", "DD6REF", "DD7REF", "NotInPayTrans" };
-                foreach(var boyutgostermeDGVR in boyutgosterilmeyecekDGVR)
+                foreach (var boyutgostermeDGVR in boyutgosterilmeyecekDGVR)
                 {
                     DGVRightEdit.Columns[boyutgostermeDGVR].Visible = false;
                 }
 
-                
+
             }
             #endregion
             //Getting the total columns in 
@@ -1222,7 +1306,7 @@ namespace AyzPaymentWizard.Forms
             for (int i = DGVLeftEdit.Rows.Count - 1; i >= 0; i--)
             {
                 DGVLeftEdit.SelectAll();
-                DataGridViewRow drv = DGVLeftEdit.Rows[i];                
+                DataGridViewRow drv = DGVLeftEdit.Rows[i];
                 bool selectedRow = Convert.ToBoolean(drv.Selected);
                 if (selectedRow)
                 {
@@ -1391,7 +1475,7 @@ namespace AyzPaymentWizard.Forms
             var source2 = new BindingSource();
             source2.DataSource = PacketEditsLeftList;
             DGVLeftEdit.DataSource = source2;
-        }                
+        }
 
         private void btnFiltreRecoveryPacketEdit_Click(object sender, EventArgs e)
         {
@@ -1414,7 +1498,7 @@ namespace AyzPaymentWizard.Forms
         }
 
         private void btnEditPacket_Click(object sender, EventArgs e)
-        {            
+        {
             decimal sumRequire = PacketEditsRightList.Sum(x => x.Total);                                                       // Ödenmesi Gereken
             decimal sumPaid = PacketEditsRightList.Sum(x => x.Paid);                                                           // Ödenecek Tutar   
 
@@ -1575,6 +1659,6 @@ namespace AyzPaymentWizard.Forms
                 }
 
             }
-        }        
+        }
     }
 }
