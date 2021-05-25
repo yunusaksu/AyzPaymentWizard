@@ -41,7 +41,9 @@ namespace AyzPaymentWizard.Forms
             Review = review;
             InitializeComponent();
             DGVRightEdit.ClipboardCopyMode = DataGridViewClipboardCopyMode.Disable;
-            DGVRightEdit.EditingControlShowing +=DGVRightEdit_EditingControlShowing;
+            DGVRightEdit.EditingControlShowing += DGVRightEdit_EditingControlShowing;
+
+
         }
 
         #region Her Pakete Özel, Ön Filtre Değerlerini Tutan Değişkenler       
@@ -274,15 +276,6 @@ namespace AyzPaymentWizard.Forms
                              kk.Handled = true;
                          }
                      };
-
-
-                    //e.Control.KeyDown += delegate (Object Mm, KeyEventArgs kd)
-                    //  {
-                    //      if (kd.KeyCode == Keys.C | kd.KeyCode == Keys.V)
-                    //      {
-                    //          kd.SuppressKeyPress = true;
-                    //      };
-                    //  };                    
                 }
 
                 TextBox tb = e.Control as TextBox;
@@ -291,101 +284,71 @@ namespace AyzPaymentWizard.Forms
                     tb.ContextMenuStrip = new ContextMenuStrip();
                     tb.KeyDown -= TextBox_KeyDown;
                     tb.KeyDown += TextBox_KeyDown;
-
                 }
             }
         }
 
-        private void DGVRightEdit_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
-        {
-            oldvalue = (decimal)DGVRightEdit[e.ColumnIndex, e.RowIndex].Value;
-            MessageBox.Show(oldvalue.ToString());
-        }
-
         private void DGVRightEdit_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-          newvalue= (decimal)DGVRightEdit[e.ColumnIndex, e.RowIndex].Value;
-            if (newvalue > oldvalue )
-            {
-                DGVRightEdit[e.ColumnIndex, e.RowIndex].Value = oldvalue;
-                MessageBox.Show("Borcundan Fazla odeme yapamazsin!!.Tekrar Deneyin");
-            }
-            else
-            {
-                DGVRightEdit[e.ColumnIndex, e.RowIndex].Value = newvalue;
+            // Clear the row error in case the user presses ESC.
+            DGVRightEdit.Rows[e.RowIndex].ErrorText = String.Empty;
+        }
 
+        private void DGVRightEdit_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            decimal sumedup = 0m;
+
+            for (int i = 0; i < DGVRightEdit.Rows.Count; i++)
+            {
+                sumedup += decimal.Parse(DGVRightEdit.Rows[i].Cells["Paid"].Value.ToString());
             }
-         MessageBox.Show(oldvalue.ToString());
+
+            textBoxodenecek.Text = sumedup.ToString();
+        }
+
+        private void DGVRightEdit_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            decimal sumedup = 0m;
+
+            for (int i = 0; i < DGVRightEdit.Rows.Count; i++)
+            {
+                sumedup += decimal.Parse(DGVRightEdit.Rows[i].Cells["Paid"].Value.ToString());
+            }
+
+            textBoxodenecek.Text = sumedup.ToString();
+        }
+
+
+        private void DGVRightEdit_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+
+            var odenecekCol = DGVRightEdit.Columns["Paid"];
+
+            if (odenecekCol.HeaderCell.Value == "Ödenecek")
+            {
+                decimal odenmesigereken = decimal.Parse(DGVRightEdit[DGVRightEdit.Columns["Total"].Index, e.RowIndex].Value.ToString());
+                if (DGVRightEdit.Rows[e.RowIndex].IsNewRow) { return; }
+                decimal odenmekIstenen = Convert.ToDecimal(e.FormattedValue.ToString());
+                if (odenmekIstenen > odenmesigereken)
+                {
+                    // DGVRightEdit[e.ColumnIndex, e.RowIndex].Value = ab;
+                    e.Cancel = true;
+                    DGVRightEdit.Rows[e.RowIndex].ErrorText = $"Ödenmesi gereken'den fazla ödeyemeziniz!.\nTekrar Ödenecek Değerini giriniz ";
+                }
+                else
+                {
+                    e.Cancel = false;
+                }
+            }
         }
 
         void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Control && (e.KeyCode == Keys.C | e.KeyCode == Keys.V)|e.KeyCode==Keys.X| e.KeyCode==Keys.A)
+            if (e.Control && (e.KeyCode == Keys.C | e.KeyCode == Keys.V) | e.KeyCode == Keys.X | e.KeyCode == Keys.A)
             {
                 e.SuppressKeyPress = true;
             }
         }
-
-        //private void DGVRightEdit_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    //decimal sumP = 0;
-        //    //for (int counter = 0; counter < DGVRightEdit.Rows.Count; counter++)
-        //    //{
-        //    //    if (DGVRightEdit.Rows[counter].Cells["Paid"].Value != null)
-        //    //    {
-        //    //        // Verify that the cell value is not an empty string.
-        //    //        if (DGVRightEdit.Rows[counter]
-        //    //            .Cells["Paid"].Value.ToString().Length != 0)
-        //    //        {
-        //    //        Decimal res= Decimal.Parse(DGVRightEdit.Rows[counter].Cells["Paid"].Value.ToString());
-        //    //         sumP+= res;
-        //    //        textBoxodenecek.Text= sumP.ToString();
-
-        //    //        }
-
-        //    //    }
-        //    //}
-
-
-        //    decimal sumP = 0m;
-        //    for (int counter = 0; counter < DGVRightEdit.Rows.Count; counter++)
-        //    {
-        //        if (DGVRightEdit.Rows[counter].Cells["Paid"].Value != null)
-        //        {
-        //            // Verify that the cell value is not an empty string.
-        //            if (DGVRightEdit.Rows[counter]
-        //                .Cells["Paid"].Value.ToString().Length != 0)
-        //            {
-        //                Decimal res = Decimal.Parse(DGVRightEdit.Rows[counter].Cells["Paid"].Value.ToString());
-        //                Decimal total = Decimal.Parse(DGVRightEdit.Rows[counter].Cells["Total"].Value.ToString());
-        //                if (res > total || res < 0)
-        //                {
-        //                    if (res > total)
-        //                    {
-        //                        MessageBox.Show("Borcunuzdan daha fazlasını ödeme yapamazsınız!!!. Borcunuzun tamini veya daha azını girin ");
-        //                        // sumP = total;
-
-
-
-        //                    }
-        //                    else if (res < 0)
-        //                    {
-        //                        MessageBox.Show(" Sifirdan Daha az bir ödeme yoktur. Pozitif bir değeri giriniz");
-        //                        //  sumP = total;
-        //                        DGVRightEdit.Rows[counter].Cells["Total"].Value = total;
-        //                    }
-
-        //                }
-        //                else
-        //                {
-        //                    sumP += res;
-        //                    textBoxodenecek.Text = sumP.ToString();
-        //                }
-
-        //            }
-        //        }
-        //    }
-        //}
 
         private void DGVLeftEdit_FilterStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
         {
@@ -525,7 +488,13 @@ namespace AyzPaymentWizard.Forms
         private void PacketEditForm_Load(object sender, EventArgs e)
         {
             FillLeftList();
+            decimal sumedup = 0m;
+            for (int i = 0; i < DGVRightEdit.Rows.Count; i++)
+            {
+                sumedup += decimal.Parse(DGVRightEdit.Rows[i].Cells["Paid"].Value.ToString());
+            }
 
+            textBoxodenecek.Text = sumedup.ToString();
             // Ödeme çıkış hesap bilgilerini AYZ_PW_BANKACCOUNT tablosundan combobox'a getiren kod.
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
@@ -1051,7 +1020,9 @@ namespace AyzPaymentWizard.Forms
                                 debit.TrCurr = Convert.ToInt32(dr["TRCURR"].ToString());
                                 debit.ClCode = dr["CLCODE"].ToString();
                                 debit.ClDef = dr["CLDEF"].ToString();
-                                debit.IsPerson = dr["ISPERSON"].ToString() == "" ? 0 : Convert.ToInt32(dr["ISPERSON"].ToString());
+                                int isaperson;
+                                Int32.TryParse(dr["ISPERSON"].ToString(), out isaperson);
+                                debit.IsPerson = dr["ISPERSON"].ToString() == "" ? 0 : isaperson;
                                 debit.TaxNr = dr["TAXNR"].ToString();
                                 debit.TaxOffice = dr["TAXOFFICE"].ToString();
                                 debit.IBAN = dr["IBAN"].ToString();

@@ -273,9 +273,11 @@
             this.DGVRightEdit.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGVRightEdit.Size = new System.Drawing.Size(625, 513);
             this.DGVRightEdit.TabIndex = 13;
-            this.DGVRightEdit.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.DGVRightEdit_CellBeginEdit);
             this.DGVRightEdit.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGVRightEdit_CellEndEdit);
+            this.DGVRightEdit.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGVRightEdit_CellEnter);
             this.DGVRightEdit.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.DGVRightEdit_CellFormatting);
+            this.DGVRightEdit.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.DGVRightEdit_CellValidating);
+            this.DGVRightEdit.CurrentCellDirtyStateChanged += new System.EventHandler(this.DGVRightEdit_CurrentCellDirtyStateChanged);
             this.DGVRightEdit.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.DGVRightEdit_EditingControlShowing);
             // 
             // panel5
