@@ -21,7 +21,7 @@ namespace AyzPaymentWizard.Model
         public string ClCode { get; set; }      // Cari Hesap Kodunu tutar.
         public string ClDef { get; set; }       // Cari Hesap'ın Unvanını tutar.
         public int IsPerson { get; set; }      // Borçlu Olunan Kişi mi Kurum mu Bilgisini tutar.
-        public string TaxNr { get; set; }         // Vergi Numarasını tutar.
+        public string TaxNr { get; set; }      // Vergi Numarasını tutar.
         public string TaxOffice { get; set; }  // Vergi Dairesini Tutar.
         public string IBAN { get; set; }       // IBAN
         public string EmailAdres { get; set; } // Mail

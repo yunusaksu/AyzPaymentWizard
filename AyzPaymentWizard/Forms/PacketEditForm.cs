@@ -258,7 +258,7 @@ namespace AyzPaymentWizard.Forms
                 DGVRightEdit.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
                 DGVRightEdit.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.White;
             }
-        }
+        }        
 
         private void DGVRightEdit_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {

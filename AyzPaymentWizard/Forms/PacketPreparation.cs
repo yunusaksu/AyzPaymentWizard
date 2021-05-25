@@ -578,19 +578,6 @@ namespace AyzPaymentWizard
             {
                 dataGridViewRight.Columns[autoR].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             }
-            //dataGridViewRight.Columns["Total"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //dataGridViewRight.Columns["ClCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //dataGridViewRight.Columns["ClDef"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //dataGridViewRight.Columns["IBAN"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //dataGridViewRight.Columns["DoCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //dataGridViewRight.Columns["CurCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //dataGridViewRight.Columns["MecraType"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //dataGridViewRight.Columns["Mecra"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //dataGridViewRight.Columns["MarketingCompany"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //dataGridViewRight.Columns["Customer"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //dataGridViewRight.Columns["PlanCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //dataGridViewRight.Columns["InternetMainCategory"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //dataGridViewRight.Columns["InternetSubCategory"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
 
             //MiddleCenter Align  alligned for Right Grid
             Dictionary<string,DataGridView > RGCentered = new Dictionary<string,DataGridView >();
@@ -789,7 +776,7 @@ namespace AyzPaymentWizard
                                     debit.IsPerson = dr["ISPERSON"].ToString() == "" ? 0 : imageWidth;
                                     
                                 }
-                             //   debit.IsPerson = dr["ISPERSON"].ToString() == "" ? 0 : Convert.ToInt32(dr["ISPERSON"].ToString());
+                                //debit.IsPerson = dr["ISPERSON"].ToString() == "" ? 0 : Convert.ToInt32(dr["ISPERSON"].ToString());
                                 debit.TaxNr = dr["TAXNR"].ToString();
                                 debit.TaxOffice = dr["TAXOFFICE"].ToString();
                                 debit.IBAN = dr["IBAN"].ToString();
@@ -853,7 +840,10 @@ namespace AyzPaymentWizard
                                 debit.TrCurr = Convert.ToInt32(dr["TRCURR"].ToString());
                                 debit.ClCode = dr["CLCODE"].ToString();
                                 debit.ClDef = dr["CLDEF"].ToString();
-                                debit.IsPerson = dr["ISPERSON"].ToString() == "" ? 0 : Convert.ToInt32(dr["ISPERSON"].ToString());
+                                if(debit.IsPerson == 0)
+                                    debit.IsPerson = 0;
+                                else
+                                    debit.IsPerson = dr["ISPERSON"].ToString() == "" ? 0 : Convert.ToInt32(dr["ISPERSON"].ToString());
                                 debit.TaxNr = dr["TAXNR"].ToString();
                                 debit.TaxOffice = dr["TAXOFFICE"].ToString();
                                 debit.IBAN = dr["IBAN"].ToString();
@@ -879,7 +869,6 @@ namespace AyzPaymentWizard
                                 debit.DD6REF = Convert.ToInt32(dr["InternetMainRef"].ToString());
                                 debit.DD7REF = Convert.ToInt32(dr["InternetSubRef"].ToString());
                                 LeftList.Add(debit);
-                               
                             }
                         }
                         conn.Close();
