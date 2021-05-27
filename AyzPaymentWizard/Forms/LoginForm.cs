@@ -197,6 +197,6 @@ namespace AyzPaymentWizard
                 btnShow.BringToFront();
                 txtLoginPassword.PasswordChar = '*';
             }
-        }
+        }        
     }
 }

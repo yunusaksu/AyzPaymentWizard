@@ -309,9 +309,9 @@
             this.labelodenR.AutoSize = true;
             this.labelodenR.Location = new System.Drawing.Point(201, 14);
             this.labelodenR.Name = "labelodenR";
-            this.labelodenR.Size = new System.Drawing.Size(58, 13);
+            this.labelodenR.Size = new System.Drawing.Size(60, 13);
             this.labelodenR.TabIndex = 27;
-            this.labelodenR.Text = "odenecek:";
+            this.labelodenR.Text = "Ödenecek:";
             // 
             // textBoxodenecekR
             // 
