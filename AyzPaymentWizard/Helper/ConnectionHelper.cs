@@ -8,8 +8,15 @@ namespace AyzPaymentWizard
 {
     public static class ConnectionHelper
     {
+<<<<<<< HEAD
         //public static string ConnectionString = @"Data Source=DESKTOP-A527NHG\EXPRESSSONE;Initial Catalog=DAN_T3;Integrated Security=True";
       //  public static string ConnectionString = @"Data Source=DESKTOP-A527NHG\EXPRESSSONE;Initial Catalog=DAN_T3;User ID=sa;Password=as";
         public static string ConnectionString = @"Data Source=DESKTOP-N4DTKFB\SQLEXPRESS;Initial Catalog=DAN_T3; Persist Security Info=True;User ID=sa;Password=as";
+=======
+
+        public static string ConnectionString = @"Data Source=DESKTOP-A527NHG\SQLEXPRESS;Initial Catalog=DAN_T3;Integrated Security=True";
+
+      //  public static string ConnectionString = @"Data Source=DESKTOP-N4DTKFB\SQLEXPRESS;Initial Catalog=DAN_T3; Persist Security Info=True;User ID=sa;Password=as";
+>>>>>>> 7c3b8941a74fa3d43bf65dbada0b86cc90676a34
     }
 }
