@@ -49,13 +49,13 @@
             this.dataGridViewRight = new System.Windows.Forms.DataGridView();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.labelodenR = new System.Windows.Forms.Label();
+            this.textBoxodenecekR = new System.Windows.Forms.TextBox();
             this.labelCurR = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox_totalR = new System.Windows.Forms.TextBox();
             this.textBoxsumR = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.labelodenR = new System.Windows.Forms.Label();
-            this.textBoxodenecekR = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLeft)).BeginInit();
@@ -271,7 +271,12 @@
             this.dataGridViewRight.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewRight.Size = new System.Drawing.Size(626, 510);
             this.dataGridViewRight.TabIndex = 24;
+            this.dataGridViewRight.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewRight_CellEndEdit);
+            this.dataGridViewRight.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewRight_CellEnter);
+            this.dataGridViewRight.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridViewRight_CellValidating);
             this.dataGridViewRight.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewRight_CellValueChanged);
+            this.dataGridViewRight.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridViewRight_CurrentCellDirtyStateChanged);
+            this.dataGridViewRight.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridViewRight_EditingControlShowing);
             // 
             // panel4
             // 
@@ -298,6 +303,23 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(632, 39);
             this.panel5.TabIndex = 27;
+            // 
+            // labelodenR
+            // 
+            this.labelodenR.AutoSize = true;
+            this.labelodenR.Location = new System.Drawing.Point(201, 14);
+            this.labelodenR.Name = "labelodenR";
+            this.labelodenR.Size = new System.Drawing.Size(58, 13);
+            this.labelodenR.TabIndex = 27;
+            this.labelodenR.Text = "odenecek:";
+            // 
+            // textBoxodenecekR
+            // 
+            this.textBoxodenecekR.Location = new System.Drawing.Point(265, 10);
+            this.textBoxodenecekR.Name = "textBoxodenecekR";
+            this.textBoxodenecekR.ReadOnly = true;
+            this.textBoxodenecekR.Size = new System.Drawing.Size(139, 20);
+            this.textBoxodenecekR.TabIndex = 26;
             // 
             // labelCurR
             // 
@@ -340,23 +362,6 @@
             this.label1.Size = new System.Drawing.Size(59, 13);
             this.label1.TabIndex = 18;
             this.label1.Text = "Total rows:";
-            // 
-            // labelodenR
-            // 
-            this.labelodenR.AutoSize = true;
-            this.labelodenR.Location = new System.Drawing.Point(201, 14);
-            this.labelodenR.Name = "labelodenR";
-            this.labelodenR.Size = new System.Drawing.Size(58, 13);
-            this.labelodenR.TabIndex = 27;
-            this.labelodenR.Text = "odenecek:";
-            // 
-            // textBoxodenecekR
-            // 
-            this.textBoxodenecekR.Location = new System.Drawing.Point(265, 10);
-            this.textBoxodenecekR.Name = "textBoxodenecekR";
-            this.textBoxodenecekR.ReadOnly = true;
-            this.textBoxodenecekR.Size = new System.Drawing.Size(139, 20);
-            this.textBoxodenecekR.TabIndex = 26;
             // 
             // PacketPreparation
             // 

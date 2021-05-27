@@ -374,3 +374,5 @@ Temporary Items
 # Ignore "InteropTests/NativeTests/out"
 InteropTests/NativeTests/out
 /src/System.Windows.Forms/src/comctl32.dll
+
+.vs/AyzPaymentWizard/v16/.suo
