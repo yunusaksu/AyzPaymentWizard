@@ -28,20 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnRightPacketEdit = new System.Windows.Forms.Button();
-            this.btnLeftPacketEdit = new System.Windows.Forms.Button();
+            this.btnAllToRight = new System.Windows.Forms.Button();
+            this.btnAllToLeft = new System.Windows.Forms.Button();
             this.btnEditPacket = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.cmbOutAccountInfoEdit = new System.Windows.Forms.ComboBox();
             this.txtPacketEditExp = new System.Windows.Forms.TextBox();
-            this.btnPLeft = new System.Windows.Forms.Button();
-            this.btnPRight = new System.Windows.Forms.Button();
+            this.btnToRight = new System.Windows.Forms.Button();
+            this.btnToLeft = new System.Windows.Forms.Button();
             this.panelLEd = new System.Windows.Forms.Panel();
             this.labelCurLEd = new System.Windows.Forms.Label();
             this.labelsumLEd = new System.Windows.Forms.Label();
-            this.textBoxSumLEd = new System.Windows.Forms.TextBox();
-            this.textBox_totalLEd = new System.Windows.Forms.TextBox();
+            this.txtSumLeftDGV = new System.Windows.Forms.TextBox();
+            this.txtTotalLeftDGV = new System.Windows.Forms.TextBox();
             this.label_totalEd = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.DGVLeftEdit = new Zuby.ADGV.AdvancedDataGridView();
@@ -50,11 +50,11 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.labelodenecek = new System.Windows.Forms.Label();
-            this.textBoxodenecek = new System.Windows.Forms.TextBox();
+            this.txtPaid = new System.Windows.Forms.TextBox();
             this.labelCurREd = new System.Windows.Forms.Label();
             this.labelSumEd = new System.Windows.Forms.Label();
-            this.textBox_totalREd = new System.Windows.Forms.TextBox();
-            this.textBoxsumREd = new System.Windows.Forms.TextBox();
+            this.txtTotalRightDGV = new System.Windows.Forms.TextBox();
+            this.txtSumRightDGV = new System.Windows.Forms.TextBox();
             this.labelsumREd = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panelLEd.SuspendLayout();
@@ -66,27 +66,27 @@
             this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
-            // btnRightPacketEdit
+            // btnAllToRight
             // 
-            this.btnRightPacketEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnRightPacketEdit.Location = new System.Drawing.Point(639, 257);
-            this.btnRightPacketEdit.Name = "btnRightPacketEdit";
-            this.btnRightPacketEdit.Size = new System.Drawing.Size(47, 44);
-            this.btnRightPacketEdit.TabIndex = 10;
-            this.btnRightPacketEdit.Text = ">>";
-            this.btnRightPacketEdit.UseVisualStyleBackColor = true;
-            this.btnRightPacketEdit.Click += new System.EventHandler(this.btnRightPacketEdit_Click);
+            this.btnAllToRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnAllToRight.Location = new System.Drawing.Point(639, 257);
+            this.btnAllToRight.Name = "btnAllToRight";
+            this.btnAllToRight.Size = new System.Drawing.Size(47, 44);
+            this.btnAllToRight.TabIndex = 10;
+            this.btnAllToRight.Text = ">>";
+            this.btnAllToRight.UseVisualStyleBackColor = true;
+            this.btnAllToRight.Click += new System.EventHandler(this.btnRightPacketEdit_Click);
             // 
-            // btnLeftPacketEdit
+            // btnAllToLeft
             // 
-            this.btnLeftPacketEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnLeftPacketEdit.Location = new System.Drawing.Point(639, 307);
-            this.btnLeftPacketEdit.Name = "btnLeftPacketEdit";
-            this.btnLeftPacketEdit.Size = new System.Drawing.Size(47, 44);
-            this.btnLeftPacketEdit.TabIndex = 11;
-            this.btnLeftPacketEdit.Text = "<<";
-            this.btnLeftPacketEdit.UseVisualStyleBackColor = true;
-            this.btnLeftPacketEdit.Click += new System.EventHandler(this.btnLeftPacketEdit_Click);
+            this.btnAllToLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnAllToLeft.Location = new System.Drawing.Point(639, 307);
+            this.btnAllToLeft.Name = "btnAllToLeft";
+            this.btnAllToLeft.Size = new System.Drawing.Size(47, 44);
+            this.btnAllToLeft.TabIndex = 11;
+            this.btnAllToLeft.Text = "<<";
+            this.btnAllToLeft.UseVisualStyleBackColor = true;
+            this.btnAllToLeft.Click += new System.EventHandler(this.btnLeftPacketEdit_Click);
             // 
             // btnEditPacket
             // 
@@ -149,34 +149,34 @@
             this.txtPacketEditExp.Size = new System.Drawing.Size(466, 26);
             this.txtPacketEditExp.TabIndex = 19;
             // 
-            // btnPLeft
+            // btnToRight
             // 
-            this.btnPLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnPLeft.Location = new System.Drawing.Point(639, 157);
-            this.btnPLeft.Name = "btnPLeft";
-            this.btnPLeft.Size = new System.Drawing.Size(47, 44);
-            this.btnPLeft.TabIndex = 20;
-            this.btnPLeft.Text = ">";
-            this.btnPLeft.UseVisualStyleBackColor = true;
-            this.btnPLeft.Click += new System.EventHandler(this.btnPLeft_Click);
+            this.btnToRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnToRight.Location = new System.Drawing.Point(639, 157);
+            this.btnToRight.Name = "btnToRight";
+            this.btnToRight.Size = new System.Drawing.Size(47, 44);
+            this.btnToRight.TabIndex = 20;
+            this.btnToRight.Text = ">";
+            this.btnToRight.UseVisualStyleBackColor = true;
+            this.btnToRight.Click += new System.EventHandler(this.btnPLeft_Click);
             // 
-            // btnPRight
+            // btnToLeft
             // 
-            this.btnPRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnPRight.Location = new System.Drawing.Point(639, 207);
-            this.btnPRight.Name = "btnPRight";
-            this.btnPRight.Size = new System.Drawing.Size(47, 44);
-            this.btnPRight.TabIndex = 21;
-            this.btnPRight.Text = "<";
-            this.btnPRight.UseVisualStyleBackColor = true;
-            this.btnPRight.Click += new System.EventHandler(this.btnPRight_Click);
+            this.btnToLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnToLeft.Location = new System.Drawing.Point(639, 207);
+            this.btnToLeft.Name = "btnToLeft";
+            this.btnToLeft.Size = new System.Drawing.Size(47, 44);
+            this.btnToLeft.TabIndex = 21;
+            this.btnToLeft.Text = "<";
+            this.btnToLeft.UseVisualStyleBackColor = true;
+            this.btnToLeft.Click += new System.EventHandler(this.btnPRight_Click);
             // 
             // panelLEd
             // 
             this.panelLEd.Controls.Add(this.labelCurLEd);
             this.panelLEd.Controls.Add(this.labelsumLEd);
-            this.panelLEd.Controls.Add(this.textBoxSumLEd);
-            this.panelLEd.Controls.Add(this.textBox_totalLEd);
+            this.panelLEd.Controls.Add(this.txtSumLeftDGV);
+            this.panelLEd.Controls.Add(this.txtTotalLeftDGV);
             this.panelLEd.Controls.Add(this.label_totalEd);
             this.panelLEd.Location = new System.Drawing.Point(2, 653);
             this.panelLEd.Name = "panelLEd";
@@ -200,21 +200,21 @@
             this.labelsumLEd.TabIndex = 20;
             this.labelsumLEd.Text = "Sum:";
             // 
-            // textBoxSumLEd
+            // txtSumLeftDGV
             // 
-            this.textBoxSumLEd.Location = new System.Drawing.Point(451, 4);
-            this.textBoxSumLEd.Name = "textBoxSumLEd";
-            this.textBoxSumLEd.ReadOnly = true;
-            this.textBoxSumLEd.Size = new System.Drawing.Size(139, 20);
-            this.textBoxSumLEd.TabIndex = 19;
+            this.txtSumLeftDGV.Location = new System.Drawing.Point(451, 4);
+            this.txtSumLeftDGV.Name = "txtSumLeftDGV";
+            this.txtSumLeftDGV.ReadOnly = true;
+            this.txtSumLeftDGV.Size = new System.Drawing.Size(139, 20);
+            this.txtSumLeftDGV.TabIndex = 19;
             // 
-            // textBox_totalLEd
+            // txtTotalLeftDGV
             // 
-            this.textBox_totalLEd.Location = new System.Drawing.Point(68, 3);
-            this.textBox_totalLEd.Name = "textBox_totalLEd";
-            this.textBox_totalLEd.ReadOnly = true;
-            this.textBox_totalLEd.Size = new System.Drawing.Size(70, 20);
-            this.textBox_totalLEd.TabIndex = 17;
+            this.txtTotalLeftDGV.Location = new System.Drawing.Point(68, 3);
+            this.txtTotalLeftDGV.Name = "txtTotalLeftDGV";
+            this.txtTotalLeftDGV.ReadOnly = true;
+            this.txtTotalLeftDGV.Size = new System.Drawing.Size(70, 20);
+            this.txtTotalLeftDGV.TabIndex = 17;
             // 
             // label_totalEd
             // 
@@ -284,11 +284,11 @@
             // 
             this.panel5.Controls.Add(this.label1);
             this.panel5.Controls.Add(this.labelodenecek);
-            this.panel5.Controls.Add(this.textBoxodenecek);
+            this.panel5.Controls.Add(this.txtPaid);
             this.panel5.Controls.Add(this.labelCurREd);
             this.panel5.Controls.Add(this.labelSumEd);
-            this.panel5.Controls.Add(this.textBox_totalREd);
-            this.panel5.Controls.Add(this.textBoxsumREd);
+            this.panel5.Controls.Add(this.txtTotalRightDGV);
+            this.panel5.Controls.Add(this.txtSumRightDGV);
             this.panel5.Controls.Add(this.labelsumREd);
             this.panel5.Location = new System.Drawing.Point(692, 529);
             this.panel5.Name = "panel5";
@@ -313,13 +313,13 @@
             this.labelodenecek.TabIndex = 25;
             this.labelodenecek.Text = "odenecek:";
             // 
-            // textBoxodenecek
+            // txtPaid
             // 
-            this.textBoxodenecek.Location = new System.Drawing.Point(242, 11);
-            this.textBoxodenecek.Name = "textBoxodenecek";
-            this.textBoxodenecek.ReadOnly = true;
-            this.textBoxodenecek.Size = new System.Drawing.Size(139, 20);
-            this.textBoxodenecek.TabIndex = 24;
+            this.txtPaid.Location = new System.Drawing.Point(242, 11);
+            this.txtPaid.Name = "txtPaid";
+            this.txtPaid.ReadOnly = true;
+            this.txtPaid.Size = new System.Drawing.Size(139, 20);
+            this.txtPaid.TabIndex = 24;
             // 
             // labelCurREd
             // 
@@ -338,21 +338,21 @@
             this.labelSumEd.TabIndex = 22;
             this.labelSumEd.Text = "Sum:";
             // 
-            // textBox_totalREd
+            // txtTotalRightDGV
             // 
-            this.textBox_totalREd.Location = new System.Drawing.Point(69, 11);
-            this.textBox_totalREd.Name = "textBox_totalREd";
-            this.textBox_totalREd.ReadOnly = true;
-            this.textBox_totalREd.Size = new System.Drawing.Size(70, 20);
-            this.textBox_totalREd.TabIndex = 17;
+            this.txtTotalRightDGV.Location = new System.Drawing.Point(69, 11);
+            this.txtTotalRightDGV.Name = "txtTotalRightDGV";
+            this.txtTotalRightDGV.ReadOnly = true;
+            this.txtTotalRightDGV.Size = new System.Drawing.Size(70, 20);
+            this.txtTotalRightDGV.TabIndex = 17;
             // 
-            // textBoxsumREd
+            // txtSumRightDGV
             // 
-            this.textBoxsumREd.Location = new System.Drawing.Point(452, 11);
-            this.textBoxsumREd.Name = "textBoxsumREd";
-            this.textBoxsumREd.ReadOnly = true;
-            this.textBoxsumREd.Size = new System.Drawing.Size(139, 20);
-            this.textBoxsumREd.TabIndex = 21;
+            this.txtSumRightDGV.Location = new System.Drawing.Point(452, 11);
+            this.txtSumRightDGV.Name = "txtSumRightDGV";
+            this.txtSumRightDGV.ReadOnly = true;
+            this.txtSumRightDGV.Size = new System.Drawing.Size(139, 20);
+            this.txtSumRightDGV.TabIndex = 21;
             // 
             // labelsumREd
             // 
@@ -385,10 +385,10 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panelLEd);
-            this.Controls.Add(this.btnPRight);
-            this.Controls.Add(this.btnPLeft);
-            this.Controls.Add(this.btnLeftPacketEdit);
-            this.Controls.Add(this.btnRightPacketEdit);
+            this.Controls.Add(this.btnToLeft);
+            this.Controls.Add(this.btnToRight);
+            this.Controls.Add(this.btnAllToLeft);
+            this.Controls.Add(this.btnAllToRight);
             this.Name = "PacketEditForm";
             this.Text = "Paket Düzenleme Ekranı";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -408,20 +408,20 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button btnRightPacketEdit;
-        private System.Windows.Forms.Button btnLeftPacketEdit;
+        private System.Windows.Forms.Button btnAllToRight;
+        private System.Windows.Forms.Button btnAllToLeft;
         private System.Windows.Forms.Button btnEditPacket;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cmbOutAccountInfoEdit;
         private System.Windows.Forms.TextBox txtPacketEditExp;
-        private System.Windows.Forms.Button btnPLeft;
-        private System.Windows.Forms.Button btnPRight;
+        private System.Windows.Forms.Button btnToRight;
+        private System.Windows.Forms.Button btnToLeft;
         private System.Windows.Forms.Panel panelLEd;
         private System.Windows.Forms.Label labelCurLEd;
         private System.Windows.Forms.Label labelsumLEd;
-        private System.Windows.Forms.TextBox textBoxSumLEd;
-        private System.Windows.Forms.TextBox textBox_totalLEd;
+        private System.Windows.Forms.TextBox txtSumLeftDGV;
+        private System.Windows.Forms.TextBox txtTotalLeftDGV;
         private System.Windows.Forms.Label label_totalEd;
         private System.Windows.Forms.Panel panel2;
         private Zuby.ADGV.AdvancedDataGridView DGVLeftEdit;
@@ -430,12 +430,12 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label labelCurREd;
         private System.Windows.Forms.Label labelSumEd;
-        private System.Windows.Forms.TextBox textBox_totalREd;
-        private System.Windows.Forms.TextBox textBoxsumREd;
+        private System.Windows.Forms.TextBox txtTotalRightDGV;
+        private System.Windows.Forms.TextBox txtSumRightDGV;
         private System.Windows.Forms.Label labelsumREd;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelodenecek;
-        private System.Windows.Forms.TextBox textBoxodenecek;
+        private System.Windows.Forms.TextBox txtPaid;
     }
 }

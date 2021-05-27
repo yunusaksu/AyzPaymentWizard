@@ -122,19 +122,19 @@ namespace AyzPaymentWizard.Forms
                     //Adding Selected Left Total to Right and Removing from Left
                     foreach (var sel in select)
                     {
-                        textBoxSumLEd.Text = (Convert.ToDecimal(textBoxSumLEd.Text) - sel.Total).ToString();
-                        textBoxsumREd.Text = (Convert.ToDecimal(textBoxsumREd.Text) + sel.Total).ToString();
+                        txtSumLeftDGV.Text = (Convert.ToDecimal(txtSumLeftDGV.Text) - sel.Total).ToString();
+                        txtSumRightDGV.Text = (Convert.ToDecimal(txtSumRightDGV.Text) + sel.Total).ToString();
                         //Getting the Currency Code
                         labelCurREd.Text = debit.CurCode.ToString();
 
                         //Updated odenecek
-                        textBoxodenecek.Text = (Convert.ToDecimal(textBoxodenecek.Text) + Convert.ToDecimal(sel.Total)).ToString();
+                        txtPaid.Text = (Convert.ToDecimal(txtPaid.Text) + Convert.ToDecimal(sel.Total)).ToString();
                     }
 
                     //Updating the number of Rows
 
-                    textBox_totalLEd.Text = (Convert.ToInt32(textBox_totalLEd.Text) - select.Count).ToString();
-                    textBox_totalREd.Text = (Convert.ToInt32(textBox_totalREd.Text) + select.Count).ToString();
+                    txtTotalLeftDGV.Text = (Convert.ToInt32(txtTotalLeftDGV.Text) - select.Count).ToString();
+                    txtTotalRightDGV.Text = (Convert.ToInt32(txtTotalRightDGV.Text) + select.Count).ToString();
                 }
             }
 
@@ -207,20 +207,20 @@ namespace AyzPaymentWizard.Forms
                     var select = PacketEditsRightList.Where(x => x.PayRef == debit.PayRef).ToList();
                     PacketEditsRightList.Remove(select[0]);
                     //Right Row Text Update
-                    textBox_totalREd.Text = (Convert.ToInt32(textBox_totalREd.Text) - select.Count).ToString();
-                    textBox_totalLEd.Text = (Convert.ToInt32(textBox_totalLEd.Text) + select.Count).ToString();
+                    txtTotalRightDGV.Text = (Convert.ToInt32(txtTotalRightDGV.Text) - select.Count).ToString();
+                    txtTotalLeftDGV.Text = (Convert.ToInt32(txtTotalLeftDGV.Text) + select.Count).ToString();
 
                     //Adding Selected Rightt Total to Left and Removing from Right
                     foreach (var sel in select)
                     {
 
-                        textBoxsumREd.Text = (Convert.ToDecimal(textBoxsumREd.Text) - sel.Total).ToString();
-                        textBoxSumLEd.Text = (Convert.ToDecimal(textBoxSumLEd.Text) + sel.Total).ToString();
+                        txtSumRightDGV.Text = (Convert.ToDecimal(txtSumRightDGV.Text) - sel.Total).ToString();
+                        txtSumLeftDGV.Text = (Convert.ToDecimal(txtSumLeftDGV.Text) + sel.Total).ToString();
                         //Getting the Currency Code
                         labelCurLEd.Text = debit.CurCode.ToString();
 
                         //Updated odenecek
-                        textBoxodenecek.Text = (Convert.ToDecimal(textBoxodenecek.Text) - Convert.ToDecimal(sel.Paid)).ToString();
+                        txtPaid.Text = (Convert.ToDecimal(txtPaid.Text) - Convert.ToDecimal(sel.Paid)).ToString();
                     }
 
                 }
@@ -303,7 +303,7 @@ namespace AyzPaymentWizard.Forms
                 sumedup += decimal.Parse(DGVRightEdit.Rows[i].Cells["Paid"].Value.ToString());
             }
 
-            textBoxodenecek.Text = sumedup.ToString();
+            txtPaid.Text = sumedup.ToString();
         }
 
         private void DGVRightEdit_CurrentCellDirtyStateChanged(object sender, EventArgs e)
@@ -315,7 +315,7 @@ namespace AyzPaymentWizard.Forms
                 sumedup += decimal.Parse(DGVRightEdit.Rows[i].Cells["Paid"].Value.ToString());
             }
 
-            textBoxodenecek.Text = sumedup.ToString();
+            txtPaid.Text = sumedup.ToString();
         }
 
 
@@ -351,8 +351,8 @@ namespace AyzPaymentWizard.Forms
                     else
                     {
                         e.Cancel = false;
-
-                        DGVRightEdit.Rows[e.RowIndex].Cells["Paid"].Value = String.Format("{0:0,00}", odenmekIstenen.ToString());   
+                       string odenmekIstenenF= String.Format("{0:#,##}", odenmekIstenen.ToString());
+                        DGVRightEdit.Rows[e.RowIndex].Cells["Paid"].Value = odenmekIstenenF;   
                     }
                     
                 }
@@ -395,7 +395,7 @@ namespace AyzPaymentWizard.Forms
                 }
                 DGVLeftEdit.DataSource = PacketEditsLeftList;
                 //Total Rows in Left Grid after filtering
-                textBox_totalLEd.Text = PacketEditsLeftList.Count.ToString();
+                txtTotalLeftDGV.Text = PacketEditsLeftList.Count.ToString();
                 //Sum in LeftGrid After Filtering
                 //Getting the total value
                 decimal sumL = 0.00m;
@@ -403,7 +403,7 @@ namespace AyzPaymentWizard.Forms
                 {
                     sumL += Convert.ToDecimal(DGVLeftEdit.Rows[i].Cells["Total"].Value);
                 }
-                textBoxSumLEd.Text = sumL.ToString();
+                txtSumLeftDGV.Text = sumL.ToString();
             }
             catch (Exception ex)
             {
@@ -520,7 +520,7 @@ namespace AyzPaymentWizard.Forms
                 sumedup += decimal.Parse(DGVRightEdit.Rows[i].Cells["Paid"].Value.ToString());
             }
 
-            textBoxodenecek.Text = sumedup.ToString();            
+            txtPaid.Text = sumedup.ToString();            
 
             // Ödeme çıkış hesap bilgilerini AYZ_PW_BANKACCOUNT tablosundan combobox'a getiren kod.
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
@@ -540,8 +540,8 @@ namespace AyzPaymentWizard.Forms
 
             if (Review == true)
             {
-                btnRightPacketEdit.Enabled = false;
-                btnLeftPacketEdit.Enabled = false;
+                btnAllToRight.Enabled = false;
+                btnAllToLeft.Enabled = false;
                 btnEditPacket.Enabled = false;
                 txtPacketEditExp.Enabled = false;
                 cmbOutAccountInfoEdit.Enabled = false;
@@ -685,9 +685,9 @@ namespace AyzPaymentWizard.Forms
             }
             #endregion
             //Getting the total columns in 
-            textBox_totalLEd.Text = DGVLeftEdit.Rows.Count.ToString();
+            txtTotalLeftDGV.Text = DGVLeftEdit.Rows.Count.ToString();
 
-            textBox_totalREd.Text = DGVRightEdit.Rows.Count.ToString();
+            txtTotalRightDGV.Text = DGVRightEdit.Rows.Count.ToString();
 
             //Getting the total value
             decimal sumL = 0.00m;
@@ -697,7 +697,7 @@ namespace AyzPaymentWizard.Forms
                 //Getting Currency Code for Left Grid
                 labelCurLEd.Text = DGVLeftEdit.Rows[i].Cells["CurCode"].Value.ToString();
             }
-            textBoxSumLEd.Text = sumL.ToString();
+            txtSumLeftDGV.Text = sumL.ToString();
 
             //Getting the total columns in RGRID
 
@@ -706,7 +706,7 @@ namespace AyzPaymentWizard.Forms
             {
                 sumR += Convert.ToDecimal(DGVRightEdit.Rows[i].Cells["Total"].Value);
             }
-            textBoxsumREd.Text = sumR.ToString();
+            txtSumRightDGV.Text = sumR.ToString();
 
         }
 
@@ -1233,19 +1233,19 @@ namespace AyzPaymentWizard.Forms
                     //Adding Selected Left Total to Right and Removing from Left
                     foreach (var sel in select)
                     {
-                        textBoxSumLEd.Text = (Convert.ToDecimal(textBoxSumLEd.Text) - sel.Total).ToString();
-                        textBoxsumREd.Text = (Convert.ToDecimal(textBoxsumREd.Text) + sel.Total).ToString();
+                        txtSumLeftDGV.Text = (Convert.ToDecimal(txtSumLeftDGV.Text) - sel.Total).ToString();
+                        txtSumRightDGV.Text = (Convert.ToDecimal(txtSumRightDGV.Text) + sel.Total).ToString();
                         //Getting the Currency Code
                         labelCurREd.Text = debit.CurCode.ToString();
 
                         //Updated odenecek
-                        textBoxodenecek.Text = (Convert.ToDecimal(textBoxodenecek.Text) + Convert.ToDecimal(sel.Total)).ToString();
+                        txtPaid.Text = (Convert.ToDecimal(txtPaid.Text) + Convert.ToDecimal(sel.Total)).ToString();
                     }
 
                     //Updating the number of Rows
 
-                    textBox_totalLEd.Text = (Convert.ToInt32(textBox_totalLEd.Text) - select.Count).ToString();
-                    textBox_totalREd.Text = (Convert.ToInt32(textBox_totalREd.Text) + select.Count).ToString();
+                    txtTotalLeftDGV.Text = (Convert.ToInt32(txtTotalLeftDGV.Text) - select.Count).ToString();
+                    txtTotalRightDGV.Text = (Convert.ToInt32(txtTotalRightDGV.Text) + select.Count).ToString();
                 }
             }
 
@@ -1317,20 +1317,20 @@ namespace AyzPaymentWizard.Forms
                     var select = PacketEditsRightList.Where(x => x.PayRef == debit.PayRef).ToList();
                     PacketEditsRightList.Remove(select[0]);
                     //Right Row Text Update
-                    textBox_totalREd.Text = (Convert.ToInt32(textBox_totalREd.Text) - select.Count).ToString();
-                    textBox_totalLEd.Text = (Convert.ToInt32(textBox_totalLEd.Text) + select.Count).ToString();
+                    txtTotalRightDGV.Text = (Convert.ToInt32(txtTotalRightDGV.Text) - select.Count).ToString();
+                    txtTotalLeftDGV.Text = (Convert.ToInt32(txtTotalLeftDGV.Text) + select.Count).ToString();
 
                     //Adding Selected Rightt Total to Left and Removing from Right
                     foreach (var sel in select)
                     {
 
-                        textBoxsumREd.Text = (Convert.ToDecimal(textBoxsumREd.Text) - sel.Total).ToString();
-                        textBoxSumLEd.Text = (Convert.ToDecimal(textBoxSumLEd.Text) + sel.Total).ToString();
+                        txtSumRightDGV.Text = (Convert.ToDecimal(txtSumRightDGV.Text) - sel.Total).ToString();
+                        txtSumLeftDGV.Text = (Convert.ToDecimal(txtSumLeftDGV.Text) + sel.Total).ToString();
                         //Getting the Currency Code
                         labelCurLEd.Text = debit.CurCode.ToString();
 
                         //Updated odenecek
-                        textBoxodenecek.Text = (Convert.ToDecimal(textBoxodenecek.Text) - Convert.ToDecimal(sel.Paid)).ToString();
+                        txtPaid.Text = (Convert.ToDecimal(txtPaid.Text) - Convert.ToDecimal(sel.Paid)).ToString();
                     }
                 }
             }
