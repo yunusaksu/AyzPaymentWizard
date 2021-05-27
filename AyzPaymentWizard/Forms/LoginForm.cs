@@ -93,7 +93,6 @@ namespace AyzPaymentWizard
 
         private void GetLogoUsernameAndUserPassword()
         {
-            string username = "", userpassword = "";
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
                 command.CommandText = "SELECT * FROM AYZ_PW_LOGO_ACCINFO";

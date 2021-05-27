@@ -494,7 +494,8 @@ namespace AyzPaymentWizard.Forms
                 sumedup += decimal.Parse(DGVRightEdit.Rows[i].Cells["Paid"].Value.ToString());
             }
 
-            textBoxodenecek.Text = sumedup.ToString();
+            textBoxodenecek.Text = sumedup.ToString();            
+
             // Ödeme çıkış hesap bilgilerini AYZ_PW_BANKACCOUNT tablosundan combobox'a getiren kod.
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
@@ -957,7 +958,10 @@ namespace AyzPaymentWizard.Forms
                                 debit.TrCurr = Convert.ToInt32(dr["TRCURR"].ToString());
                                 debit.ClCode = dr["CLCODE"].ToString();
                                 debit.ClDef = dr["CLDEF"].ToString();
-                                debit.IsPerson = dr["ISPERSON"].ToString() == "" ? 0 : Convert.ToInt32(dr["ISPERSON"].ToString());
+                                if (debit.IsPerson == 0)
+                                    debit.IsPerson = 0;
+                                else
+                                    debit.IsPerson = dr["ISPERSON"].ToString() == "" ? 0 : Convert.ToInt32(dr["ISPERSON"].ToString());
                                 debit.TaxNr = dr["TAXNR"].ToString();
                                 debit.TaxOffice = dr["TAXOFFICE"].ToString();
                                 debit.IBAN = dr["IBAN"].ToString();
