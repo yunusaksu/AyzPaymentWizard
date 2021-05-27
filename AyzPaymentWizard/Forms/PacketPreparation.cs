@@ -379,6 +379,121 @@ namespace AyzPaymentWizard
 
         }
 
+        private void dataGridViewRight_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            DataGridViewTextBoxCell cell = dataGridViewRight[dataGridViewRight.Columns["Paid"].Index, e.RowIndex] as DataGridViewTextBoxCell;
+
+            if (cell != null)
+            {
+                decimal odenmekIstenen;
+                var success = Decimal.TryParse(dataGridViewRight.Rows[e.RowIndex].Cells["Paid"].EditedFormattedValue.ToString(), out odenmekIstenen);
+                decimal odenmesigereken;
+                Decimal.TryParse(dataGridViewRight.Rows[e.RowIndex].Cells["Total"].Value.ToString(), out odenmesigereken);
+                if (success)
+                {
+                    decimal sifirkontrolu = 0m;
+                    if (odenmekIstenen > odenmesigereken || odenmekIstenen <= sifirkontrolu)
+                    {
+                        if (odenmekIstenen > odenmesigereken)
+                        {
+                            dataGridViewRight.Rows[e.RowIndex].ErrorText = $"Ödenmesi gereken'den fazla ödeyemeziniz!.\nTekrar Ödenecek Değerini giriniz ";
+                            e.Cancel = true;
+                        }
+                        if (odenmekIstenen <= sifirkontrolu)
+                        {
+                            dataGridViewRight.Rows[e.RowIndex].ErrorText = $"Sıfır ve daha küçük değerinde ödeme olamaz ";
+                            e.Cancel = true;
+                        }
+
+
+                    }
+                    else
+                    {
+                        e.Cancel = false;
+
+                        dataGridViewRight.Rows[e.RowIndex].Cells["Paid"].Value = String.Format("{0:0,00}", odenmekIstenen.ToString());
+                    }
+
+                }
+                else if (!success)
+                {
+                    if (string.IsNullOrEmpty(dataGridViewRight.Rows[e.RowIndex].Cells["Paid"].EditedFormattedValue.ToString()))
+                    {
+                        dataGridViewRight.Rows[e.RowIndex].ErrorText = $"Boş geçilemez ";
+                        e.Cancel = true;
+                    }
+                }
+
+            }
+        }
+
+        private void dataGridViewRight_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+
+            if (dataGridViewRight.CurrentCell.ColumnIndex == dataGridViewRight.Columns["Paid"].Index)
+            {
+                //DGVRightEdit.Columns["Paid"].
+                //extBox textBox = new TextBox();
+                if (e.Control is TextBox && e.Control != null)
+                {
+
+                    e.Control.KeyPress += delegate (Object Mysender, KeyPressEventArgs kk)
+                    {
+                        if (!char.IsDigit(kk.KeyChar) && !char.IsControl(kk.KeyChar) && kk.KeyChar != ',')
+                        {
+                            kk.Handled = true;
+                        }
+                    };
+                }
+
+                TextBox tb = e.Control as TextBox;
+                if (tb != null)
+                {
+                    tb.ContextMenuStrip = new ContextMenuStrip();
+                    tb.KeyDown -= TextBox_KeyDown;
+                    tb.KeyDown += TextBox_KeyDown;
+                }
+            }
+        }
+
+        void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && (e.KeyCode == Keys.C | e.KeyCode == Keys.V) | e.KeyCode == Keys.X | e.KeyCode == Keys.A)
+            {
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void dataGridViewRight_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            decimal sumedup = 0m;
+
+            for (int i = 0; i < dataGridViewRight.Rows.Count; i++)
+            {
+                sumedup += decimal.Parse(dataGridViewRight.Rows[i].Cells["Paid"].Value.ToString());
+            }
+
+            textBoxodenecekR.Text = sumedup.ToString();
+        }
+
+        private void dataGridViewRight_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            decimal sumedup = 0m;
+
+            for (int i = 0; i < dataGridViewRight.Rows.Count; i++)
+            {
+                sumedup += decimal.Parse(dataGridViewRight.Rows[i].Cells["Paid"].Value.ToString());
+            }
+
+            textBoxodenecekR.Text = sumedup.ToString();
+        }
+
+        private void dataGridViewRight_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            // Clear the row error in case the user presses ESC.
+            dataGridViewRight.Rows[e.RowIndex].ErrorText = String.Empty;
+        }
+
         private void dataGridViewLeft_SortStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
         {
             try
@@ -472,7 +587,7 @@ namespace AyzPaymentWizard
                 //BOYUT HEADER LEFTGRID Dictionary
                 var boyutHeaderL = new Dictionary<string, string>()
                 {
-                  { "MecraType","Mecra Türü"},{ "MarketingCompany","Pazarlama Şirketi"},{"Customer","Müşteri" },{ "PlanCode","Plan Kodu"},
+                  { "MecraType","Mecra Türü"},{ "MarketingCompany","Pazarlama Şirketi"},{"Customer","Müşteri" },{ "PlanCode","Plan Kodu"},{"IBAN","IBAN" },
                   {"InternetMainCategory","İnternet Ana Kategori"}, {"InternetSubCategory","İnternet Alt Kategori" },
                 };
                 foreach(var boyutheadL in boyutHeaderL)
@@ -494,7 +609,7 @@ namespace AyzPaymentWizard
 
             var HeaderL = new Dictionary<string, string>()
             { 
-                { "DueDate", "Vade Tarihi" },{"CurCode", "Döviz"}, {"Total","Tutar" },{"ClCode","Cari Kod" }, {"ClDef","Cari Hesap Tanımı" },
+                { "DueDate", "Vade Tarihi" },{"CurCode", "Döviz"}, {"Total","Tutar" },{"ClCode","Cari Kod" }, {"ClDef","Cari Hesap Tanımı" },{"IBAN","IBAN" },
                 {"FicheDate","Fiş Tarihi"},{"FicheNo","FicheNo"},{"DoCode","Belge Numarası"},{ "NotInPayTransFrame","Active" }
             };
             
@@ -554,7 +669,7 @@ namespace AyzPaymentWizard
 
             var gosterilecekRHeader = new Dictionary<string, string>()
             {
-                { "Paid", "Ödenecek" }, { "Total", "Ödenmesi Gereken" },{ "DueDate", "Vade Tarihi"},{ "ClDef", "Cari Hesap Tanımı" },
+                { "Paid", "Ödenecek" }, { "Total", "Ödenmesi Gereken" },{ "DueDate", "Vade Tarihi"},{ "ClDef", "Cari Hesap Tanımı" },{"IBAN","IBAN" },
                 {"ClCode","Cari Kod" },{"FicheDate","Fiş Tarihi"},{"FicheNo","Fiş Numarası"},{"DoCode","Belge Numarası"},{"MecraType","Mecra Türü"},
                 { "MarketingCompany","Pazarlama Şirketi"},{"Customer","Müşteri"},{"PlanCode","Plan Kodu"},{"InternetMainCategory","İnternet Ana Kategori"},
                 {"InternetSubCategory","İnternet Alt Kategori" }

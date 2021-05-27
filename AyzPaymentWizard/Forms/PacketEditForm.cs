@@ -321,66 +321,7 @@ namespace AyzPaymentWizard.Forms
 
         private void DGVRightEdit_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            // DataGridViewTextBoxCell cell = DGVRightEdit[DGVRightEdit.Columns["Total"].Index, e.RowIndex] as DataGridViewTextBoxCell;
-            // var odenecekCol = DGVRightEdit.Columns["Paid"];
-            //// odenecekCol.HeaderCell.Value == "Ödenecek"
-            // if (cell!=null)
-            // {
-            //     if(odenecekCol.HeaderCell.Value == "Ödenecek")
-            //     {
-            //         decimal odenmesigereken = decimal.Parse(DGVRightEdit[DGVRightEdit.Columns["Total"].Index, e.RowIndex].Value.ToString());
-            //         if (DGVRightEdit.Rows[e.RowIndex].IsNewRow) { return; }
-            //         decimal odenmekIstenen = Convert.ToDecimal(e.FormattedValue.ToString());
-            //         if (odenmekIstenen > odenmesigereken)
-            //         {
-            //             // DGVRightEdit[e.ColumnIndex, e.RowIndex].Value = ab;
-            //             e.Cancel = true;
-            //             DGVRightEdit.Rows[e.RowIndex].ErrorText = $"Ödenmesi gereken'den fazla ödeyemeziniz!.\nTekrar Ödenecek Değerini giriniz ";
-            //         }
-            //         else
-            //         {
-            //             e.Cancel = false;
-            //         }
-            //     }
-            // }
-            //DataGridViewTextBoxCell cell = DGVRightEdit[DGVRightEdit.Columns["Total"].Index, e.RowIndex] as DataGridViewTextBoxCell;
-
-            //if (cell != null)
-            //{
-            //    if (e.ColumnIndex == DGVRightEdit.Columns["Total"].Index)
-            //    {
-            //        //char[] chars = e.FormattedValue.ToString().ToCharArray();
-            //        //foreach (char c in chars)
-            //        //{
-            //        //    if (char.IsDigit(c) == false)
-            //        //    {
-            //        //        MessageBox.Show("You have to enter digits only");
-
-            //        //        e.Cancel = true;
-            //        //        break;
-            //        //    }
-            //        //}
-            //        var odenecekCol = DGVRightEdit.Columns["Paid"];
-            //        if (odenecekCol.HeaderCell.Value == "Ödenecek")
-            //        {
-            //            decimal odenmesigereken = decimal.Parse(DGVRightEdit[DGVRightEdit.Columns["Total"].Index, e.RowIndex].Value.ToString());
-            //            //         if (DGVRightEdit.Rows[e.RowIndex].IsNewRow) { return; }
-            //            //         decimal odenmekIstenen = Convert.ToDecimal(e.FormattedValue.ToString());
-            //            if (DGVRightEdit.Rows[e.RowIndex].IsNewRow) { return; }
-            //            decimal odenmekIstenen = Convert.ToDecimal(e.FormattedValue.ToString());
-            //            if (odenmekIstenen > odenmesigereken)
-            //            {
-            //                // DGVRightEdit[e.ColumnIndex, e.RowIndex].Value = ab;
-            //                e.Cancel = true;
-            //                DGVRightEdit.Rows[e.RowIndex].ErrorText = $"Ödenmesi gereken'den fazla ödeyemeziniz!.\nTekrar Ödenecek Değerini giriniz ";
-            //            }
-            //            else
-            //            {
-            //                e.Cancel = false;
-            //            }
-            //        }
-            //    }
-            //}
+           
             DataGridViewTextBoxCell cell = DGVRightEdit[DGVRightEdit.Columns["Paid"].Index, e.RowIndex] as DataGridViewTextBoxCell;
             
             if (cell!=null)
@@ -391,10 +332,21 @@ namespace AyzPaymentWizard.Forms
                 Decimal.TryParse(DGVRightEdit.Rows[e.RowIndex].Cells["Total"].Value.ToString(),out odenmesigereken);
                 if (success)
                 {
-                    if (odenmekIstenen > odenmesigereken )
+                    decimal sifirkontrolu = 0m;
+                    if (odenmekIstenen > odenmesigereken ||odenmekIstenen<=sifirkontrolu)
                     {
-                        DGVRightEdit.Rows[e.RowIndex].ErrorText = $"Ödenmesi gereken'den fazla ödeyemeziniz!.\nTekrar Ödenecek Değerini giriniz ";
-                        e.Cancel = true;
+                        if(odenmekIstenen > odenmesigereken)
+                        {
+                            DGVRightEdit.Rows[e.RowIndex].ErrorText = $"Ödenmesi gereken'den fazla ödeyemeziniz!.\nTekrar Ödenecek Değerini giriniz ";
+                            e.Cancel = true;
+                        }
+                        if(odenmekIstenen <= sifirkontrolu)
+                        {
+                            DGVRightEdit.Rows[e.RowIndex].ErrorText = $"Sıfır ve daha küçük değerinde ödeme olamaz ";
+                            e.Cancel = true;
+                        }
+                        
+                        
                     }
                     else
                     {
@@ -402,34 +354,20 @@ namespace AyzPaymentWizard.Forms
 
                         DGVRightEdit.Rows[e.RowIndex].Cells["Paid"].Value = String.Format("{0:0,00}", odenmekIstenen.ToString());   
                     }
-
-                    //if (!success)
-                    //{
-                    //    if (odenmekIstenen.Equals(null))
-                    //    {
-                    //        e.Cancel = true;
-                    //        DGVRightEdit.Rows[e.RowIndex].ErrorText = $"Boş olamaz ";
-                    //    }
-                    //}
+                    
                 }
-                //else if (!success)
-                //{
-                //    if (DGVRightEdit.Rows[e.RowIndex].Cells["Paid"].EditedFormattedValue.Empty)
-                //    {
-                //        e.Cancel = true;
-                //        DGVRightEdit.Rows[e.RowIndex].ErrorText = $"Boş olamaz ";
-                //    }
-                //}
-
-                //if (odenmekIstenen==null)
-                //{
-                //    odenmekIstenen = 0;
-                //    MessageBox.Show("You must enter a value");
-                //    e.Cancel = true;
-                //}
+                else if(!success)
+                {
+                    if (string.IsNullOrEmpty(DGVRightEdit.Rows[e.RowIndex].Cells["Paid"].EditedFormattedValue.ToString()))
+                    {
+                        DGVRightEdit.Rows[e.RowIndex].ErrorText = $"Boş geçilemez ";
+                        e.Cancel = true;
+                    }
+                }
+               
             }
         }
-
+        //TextBox Key down 
         void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control && (e.KeyCode == Keys.C | e.KeyCode == Keys.V) | e.KeyCode == Keys.X | e.KeyCode == Keys.A)
@@ -718,7 +656,7 @@ namespace AyzPaymentWizard.Forms
             //DGVLeftEdit.Columns["CurCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             var HeaderDGVL = new Dictionary<string, string>()
             {
-                { "DueDate", "Vade Tarihi" },{"CurCode", "Döviz"}, {"Total","Tutar" },{"ClCode","Cari Kod" }, {"ClDef","Cari Hesap Tanımı" },
+                { "DueDate", "Vade Tarihi" },{"CurCode", "Döviz"}, {"Total","Tutar" },{"ClCode","Cari Kod" }, {"ClDef","Cari Hesap Tanımı" },{"IBAN","IBAN" },
                 {"FicheDate","Fiş Tarihi"},{"FicheNo","FicheNo"},{"DoCode","Belge Numarası"}
             };
             
