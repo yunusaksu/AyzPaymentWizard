@@ -75,6 +75,7 @@ namespace AyzPaymentWizard.Forms
                 payment.EFTQUERYNO = DetailResult[i].EFTQUERYNO;
                 payment.IBAN = DetailResult[i].IBAN;
                 payment.TYPE = DetailResult[i].TYPE;
+                payment.TRANSACTION_DATE = DetailResult[i].TRANSACTION_DATE;
                 using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
                     CommandText = "SELECT C.CODE,C.LOGICALREF FROM AYZ_PW_SUMMARY AS S " +
@@ -123,7 +124,7 @@ namespace AyzPaymentWizard.Forms
                     payment.TRANSACTIONNO = Convert.ToInt32(dr["TRANSACTIONNO"].ToString());
                     payment.EFTQUERYNO = Convert.ToInt32(dr["EFTQUERY_NO"].ToString());
                     payment.IBAN = dr["IBAN"].ToString();
-                    payment.TYPE = dr["RECORD_TYPE"].ToString();
+                    payment.TYPE = dr["RECORD_TYPE"].ToString();                    
                     payment.CLCARDID = Convert.ToInt32(dr["CLIENTREF"].ToString());
                     liste.Add(payment);
                 }
@@ -165,11 +166,13 @@ namespace AyzPaymentWizard.Forms
                     int CurType = GetCurType(item.CURRENCYCODE);
                     decimal CurRate = GetCurRate(item.CURRENCYCODE);
                     decimal ReportCurRate = GetReportCurRate();
-
+                    string day = item.TRANSACTION_DATE.ToString().Substring(0,2);
+                    string month = item.TRANSACTION_DATE.ToString().Substring(2, 2);
+                    string year = item.TRANSACTION_DATE.ToString().Substring(4,4);
                     UnityObjects.Data bankvo = UnityApp.NewDataObject(UnityObjects.DataObjectType.doBankVoucher);
                     bankvo.New();
                     bankvo.DataFields.FieldByName("INTERNAL_REFERENCE").Value = "~";
-                    bankvo.DataFields.FieldByName("DATE").Value = "" + DateTime.Now.Day + "." + DateTime.Now.Month + "." + DateTime.Now.Year + "";
+                    bankvo.DataFields.FieldByName("DATE").Value = "" + day + "." + month + "." + year + "";
                     bankvo.DataFields.FieldByName("NUMBER").Value = "~";
                     bankvo.DataFields.FieldByName("DIVISION").Value = 0;
                     bankvo.DataFields.FieldByName("DEPARMENT").Value = 0;
@@ -187,7 +190,6 @@ namespace AyzPaymentWizard.Forms
                     transactions_lines[transactions_lines.Count - 1].FieldByName("BANKACC_CODE").Value = "" + TigerBankAccNo + "";
                     transactions_lines[transactions_lines.Count - 1].FieldByName("ARP_CODE").Value = "" + item.CLCODE + "";
                     transactions_lines[transactions_lines.Count - 1].FieldByName("GL_CODE1").Value = "" + GetClCardEmuhaccCode(item.CLCODE) + "";
-                    //transactions_lines[transactions_lines.Count - 1].FieldByName("GL_CODE2").Value = "102.001.001.0003";
                     transactions_lines[transactions_lines.Count - 1].FieldByName("SOURCEFREF").Value = "~";
                     transactions_lines[transactions_lines.Count - 1].FieldByName("SIGN").Value = 1;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("TRCODE").Value = 4;
@@ -210,20 +212,14 @@ namespace AyzPaymentWizard.Forms
                     payment_list0[payment_list0.Count - 1].FieldByName("INTERNAL_REFERENCE").Value = "~";
                     payment_list0[payment_list0.Count - 1].FieldByName("MODULENR").Value = 7;
                     payment_list0[payment_list0.Count - 1].FieldByName("TRCODE").Value = 4;
-                    //payment_list0[payment_list0.Count - 1].FieldByName("TOTAL").Value = 128.84;
-                    payment_list0[payment_list0.Count - 1].FieldByName("PROCDATE").Value = "" + DateTime.Now.Day + "." + DateTime.Now.Month + "." + DateTime.Now.Year + "";
-                    payment_list0[payment_list0.Count - 1].FieldByName("DATE").Value = "" + DateTime.Now.Day + "." + DateTime.Now.Month + "." + DateTime.Now.Year + "";
-                    //payment_list0[payment_list0.Count - 1].FieldByName("REPORTRATE").Value = 8;
+                    payment_list0[payment_list0.Count - 1].FieldByName("PROCDATE").Value = "" + day + "." + month + "." + year + "";
+                    payment_list0[payment_list0.Count - 1].FieldByName("DATE").Value = "" + day + "." + month + "." + year + "";
                     payment_list0[payment_list0.Count - 1].FieldByName("DATA_REFERENCE").Value = 0;
                     payment_list0[payment_list0.Count - 1].FieldByName("DISCTRDELLIST").Value = 0;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("BN_CRDTYPE").Value = 1;
                     transactions_lines[transactions_lines.Count - 1].FieldByName("DIVISION").Value = 0;
                     bankvo.DataFields.FieldByName("EBOOK_DOCTYPE").Value = 99;
                     bankvo.FillAccCodes();
-                    // Muhasebe Kodlarının otomatik gelmesi için Tigerda Genel Muhasebe > Ana Kayıtlar > Muhasebe Bağlantı Kodları > Cari Hesap Bağlantı Kodları 
-                    // içerisine girerek ilgili cari hesaba gerekli muhasebe kodu tanımlanmalıdır. Sonrasında tekrar Muhasebe bağlantı Kodları'na girerek
-                    // Bu sefer Banka Kodları > Banka Cari Hesap Kodları kısmını açarak orada da ilgili banka hesabını gerekli muhasebe koduyla ilişkilendirilmesi
-                    // gerekmektedir.
 
                     if (bankvo.Post() == true)
                     {
@@ -333,7 +329,7 @@ namespace AyzPaymentWizard.Forms
             }
             else
             {
-                MessageBox.Show("Hatalı Logo Giriş Bilgileri Tespit Edildi!");
+                MessageBox.Show("Hatalı Logo Giriş Bilgileri Tespit Edildi!","Logo Bilgileri Hatalı!");
             }
 
 

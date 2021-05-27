@@ -830,11 +830,14 @@ namespace AyzPaymentWizard
                             }
                         }
                     }
-
+                    #region Paket Statü Check
                     int status = 0;
+                    int? paymentStatus = 0;
                     using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                     {
-                        CommandText = "SELECT * FROM AYZ_PW_PACKET WHERE ID = " + packetId + "";
+                        CommandText = "SELECT TOP 1 P.STATUS,S.PAYMENT_STATUS " +
+                                      "\nFROM AYZ_PW_SUMMARY AS S LEFT JOIN AYZ_PW_PACKET P ON S.PACKETID = P.ID " +
+                                      "\nWHERE P.ID = " + packetId + " AND S.PAYMENT_STATUS = 1";
                         komut.CommandText = CommandText;
                         komut.Connection = conn;
                         conn.Open();
@@ -844,13 +847,15 @@ namespace AyzPaymentWizard
                             while (dr.Read())
                             {
                                 status = Convert.ToInt32(dr["STATUS"].ToString());
+                                paymentStatus = Convert.ToInt32(dr["PAYMENT_STATUS"].ToString());
                             }
                         }
                     }
-                    if (status != (int)Helper.PacketStatus.AnswerReceivedBank)
+                    if (status != (int)Helper.PacketStatus.AnswerReceivedBank && (paymentStatus == 0 || paymentStatus == null))
                     {
                         MessageBox.Show("Banka Henüz Ödeme Paketinizi İşleme Almamıştır!", "Bankadan Gelen Cevap");
                     }
+                    #endregion                    
                 }
             }
         }
