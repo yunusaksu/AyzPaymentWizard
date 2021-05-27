@@ -520,7 +520,8 @@ namespace AyzPaymentWizard.Forms
                 sumedup += decimal.Parse(DGVRightEdit.Rows[i].Cells["Paid"].Value.ToString());
             }
 
-            textBoxodenecek.Text = sumedup.ToString();
+            textBoxodenecek.Text = sumedup.ToString();            
+
             // Ödeme çıkış hesap bilgilerini AYZ_PW_BANKACCOUNT tablosundan combobox'a getiren kod.
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {

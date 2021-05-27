@@ -93,7 +93,6 @@ namespace AyzPaymentWizard
 
         private void GetLogoUsernameAndUserPassword()
         {
-            string username = "", userpassword = "";
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
                 command.CommandText = "SELECT * FROM AYZ_PW_LOGO_ACCINFO";
@@ -111,8 +110,8 @@ namespace AyzPaymentWizard
         private string UserRead()
         {
             StringBuilder sb = new StringBuilder(5000);
-          //  GetPrivateProfileString("KullaniciBaslik", "KullaniciAdi", "", sb, sb.Capacity, "C:\\Users\\yunus\\Desktop\\System.ini");
-            GetPrivateProfileString("KullaniciBaslik", "KullaniciAdi", "", sb, sb.Capacity, @"C:\WorkPrograms\AyzPaymentWizard\System.ini");
+            GetPrivateProfileString("KullaniciBaslik", "KullaniciAdi", "", sb, sb.Capacity, "C:\\Users\\yunus\\Desktop\\System.ini");
+            //GetPrivateProfileString("KullaniciBaslik", "KullaniciAdi", "", sb, sb.Capacity, @"C:\WorkPrograms\AyzPaymentWizard\System.ini");
             string user = sb.ToString();
             return user;
         }
@@ -120,8 +119,8 @@ namespace AyzPaymentWizard
         private string PasswordRead()
         {
             StringBuilder sb2 = new StringBuilder(5000);
-           // GetPrivateProfileString("PasswordBaslik", "Password", "", sb2, sb2.Capacity, "C:\\Users\\yunus\\Desktop\\System.ini");
-            GetPrivateProfileString("PasswordBaslik", "Password", "", sb2, sb2.Capacity, @"C:\WorkPrograms\AyzPaymentWizard\System.ini");
+            GetPrivateProfileString("PasswordBaslik", "Password", "", sb2, sb2.Capacity, "C:\\Users\\yunus\\Desktop\\System.ini");
+            //GetPrivateProfileString("PasswordBaslik", "Password", "", sb2, sb2.Capacity, @"C:\WorkPrograms\AyzPaymentWizard\System.ini");
             string password = sb2.ToString();
             return password;
         }             
