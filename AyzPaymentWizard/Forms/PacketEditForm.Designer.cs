@@ -300,9 +300,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(178, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(58, 13);
+            this.label1.Size = new System.Drawing.Size(60, 13);
             this.label1.TabIndex = 25;
-            this.label1.Text = "odenecek:";
+            this.label1.Text = "Ödenecek:";
             // 
             // labelodenecek
             // 

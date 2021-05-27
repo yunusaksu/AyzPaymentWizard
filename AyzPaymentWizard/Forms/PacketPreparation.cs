@@ -396,12 +396,12 @@ namespace AyzPaymentWizard
                     {
                         if (odenmekIstenen > odenmesigereken)
                         {
-                            dataGridViewRight.Rows[e.RowIndex].ErrorText = $"Ödenmesi gereken'den fazla ödeyemeziniz!.\nTekrar Ödenecek Değerini giriniz ";
+                            dataGridViewRight.Rows[e.RowIndex].ErrorText = $"Ödenecek tutar, Ödenmesi gereken'den dafa fazla olamaz!.\nÖdenecek tutarı tekrar giriniz!";
                             e.Cancel = true;
                         }
                         if (odenmekIstenen <= sifirkontrolu)
                         {
-                            dataGridViewRight.Rows[e.RowIndex].ErrorText = $"Sıfır ve daha küçük değerinde ödeme olamaz ";
+                            dataGridViewRight.Rows[e.RowIndex].ErrorText = $"Sıfırdan daha büyük bir değer giriniz!";
                             e.Cancel = true;
                         }
 
@@ -410,7 +410,6 @@ namespace AyzPaymentWizard
                     else
                     {
                         e.Cancel = false;
-
                         dataGridViewRight.Rows[e.RowIndex].Cells["Paid"].Value = String.Format("{0:0,00}", odenmekIstenen.ToString());
                     }
 
@@ -419,7 +418,7 @@ namespace AyzPaymentWizard
                 {
                     if (string.IsNullOrEmpty(dataGridViewRight.Rows[e.RowIndex].Cells["Paid"].EditedFormattedValue.ToString()))
                     {
-                        dataGridViewRight.Rows[e.RowIndex].ErrorText = $"Boş geçilemez ";
+                        dataGridViewRight.Rows[e.RowIndex].ErrorText = $"Boş geçilemez!";
                         e.Cancel = true;
                     }
                 }
@@ -884,14 +883,10 @@ namespace AyzPaymentWizard
                                 debit.TrCurr = Convert.ToInt32(dr["TRCURR"].ToString());
                                 debit.ClCode = dr["CLCODE"].ToString();
                                 debit.ClDef = dr["CLDEF"].ToString();
-
-                                int imageWidth;
-                                if (Int32.TryParse(dr["ISPERSON"].ToString(), out imageWidth))
-                                {
-                                    debit.IsPerson = dr["ISPERSON"].ToString() == "" ? 0 : imageWidth;
-                                    
-                                }
-                                //debit.IsPerson = dr["ISPERSON"].ToString() == "" ? 0 : Convert.ToInt32(dr["ISPERSON"].ToString());
+                                if (debit.IsPerson == 0)
+                                    debit.IsPerson = 0;
+                                else
+                                    debit.IsPerson = Convert.ToInt32(dr["ISPERSON"].ToString());
                                 debit.TaxNr = dr["TAXNR"].ToString();
                                 debit.TaxOffice = dr["TAXOFFICE"].ToString();
                                 debit.IBAN = dr["IBAN"].ToString();
@@ -958,7 +953,7 @@ namespace AyzPaymentWizard
                                 if(debit.IsPerson == 0)
                                     debit.IsPerson = 0;
                                 else
-                                    debit.IsPerson = dr["ISPERSON"].ToString() == "" ? 0 : Convert.ToInt32(dr["ISPERSON"].ToString());
+                                    debit.IsPerson = Convert.ToInt32(dr["ISPERSON"].ToString());
                                 debit.TaxNr = dr["TAXNR"].ToString();
                                 debit.TaxOffice = dr["TAXOFFICE"].ToString();
                                 debit.IBAN = dr["IBAN"].ToString();

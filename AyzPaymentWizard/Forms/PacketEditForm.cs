@@ -337,12 +337,12 @@ namespace AyzPaymentWizard.Forms
                     {
                         if(odenmekIstenen > odenmesigereken)
                         {
-                            DGVRightEdit.Rows[e.RowIndex].ErrorText = $"Ödenmesi gereken'den fazla ödeyemeziniz!.\nTekrar Ödenecek Değerini giriniz ";
+                            DGVRightEdit.Rows[e.RowIndex].ErrorText = $"Ödenecek tutar, Ödenmesi gereken'den dafa fazla olamaz!.\nÖdenecek değeri tekrar giriniz!";
                             e.Cancel = true;
                         }
                         if(odenmekIstenen <= sifirkontrolu)
                         {
-                            DGVRightEdit.Rows[e.RowIndex].ErrorText = $"Sıfır ve daha küçük değerinde ödeme olamaz ";
+                            DGVRightEdit.Rows[e.RowIndex].ErrorText = $"Sıfırdan daha büyük bir değer giriniz!";
                             e.Cancel = true;
                         }
                         
@@ -360,7 +360,7 @@ namespace AyzPaymentWizard.Forms
                 {
                     if (string.IsNullOrEmpty(DGVRightEdit.Rows[e.RowIndex].Cells["Paid"].EditedFormattedValue.ToString()))
                     {
-                        DGVRightEdit.Rows[e.RowIndex].ErrorText = $"Boş geçilemez ";
+                        DGVRightEdit.Rows[e.RowIndex].ErrorText = $"Boş geçilemez!";
                         e.Cancel = true;
                     }
                 }
@@ -561,40 +561,10 @@ namespace AyzPaymentWizard.Forms
                 foreach (var gostermeDGVL in gostermeyecekDGVL)
                 {
                     DGVLeftEdit.Columns[gostermeDGVL].Visible = false;
-                }
-                //DGVLeftEdit.Columns["MecraType"].Visible = false;
-                //DGVLeftEdit.Columns["Mecra"].Visible = false;
-                //DGVLeftEdit.Columns["MarketingCompany"].Visible = false;
-                //DGVLeftEdit.Columns["Customer"].Visible = false;
-                //DGVLeftEdit.Columns["PlanCode"].Visible = false;
-                //DGVLeftEdit.Columns["InternetMainCategory"].Visible = false;
-                //DGVLeftEdit.Columns["InternetSubCategory"].Visible = false;
-                //DGVLeftEdit.Columns["DD1REF"].Visible = false;
-                //DGVLeftEdit.Columns["DD2REF"].Visible = false;
-                //DGVLeftEdit.Columns["DD3REF"].Visible = false;
-                //DGVLeftEdit.Columns["DD4REF"].Visible = false;
-                //DGVLeftEdit.Columns["DD5REF"].Visible = false;
-                //DGVLeftEdit.Columns["DD6REF"].Visible = false;
-                //DGVLeftEdit.Columns["DD7REF"].Visible = false;
-                //DGVLeftEdit.Columns["NotInPayTrans"].Visible = false;
-                //DGVLeftEdit.Columns["NotInPayTransFrame"].Visible = false;
+                }                
             }
             else if (detailSendingValue == 3) // Değer 3 ise Boyut Satırları Üzerinden ödeme yapılacaktır anlamına gelir.
             {
-                //DGVLeftEdit.Columns["MecraType"].HeaderText = "Mecra Türü";
-                //DGVLeftEdit.Columns["MarketingCompany"].HeaderText = "Pazarlama Şirketi";
-                //DGVLeftEdit.Columns["Customer"].HeaderText = "Müşteri";
-                //DGVLeftEdit.Columns["PlanCode"].HeaderText = "Plan Kodu";
-                //DGVLeftEdit.Columns["InternetMainCategory"].HeaderText = "İnternet Ana Kategori";
-                //DGVLeftEdit.Columns["InternetSubCategory"].HeaderText = "İnternet Alt Kategori";
-                //DGVLeftEdit.Columns["MecraType"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-                //DGVLeftEdit.Columns["Mecra"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-                //DGVLeftEdit.Columns["MarketingCompany"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-                //DGVLeftEdit.Columns["Customer"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-                //DGVLeftEdit.Columns["PlanCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-                //DGVLeftEdit.Columns["InternetMainCategory"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-                //DGVLeftEdit.Columns["InternetSubCategory"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-
                 //BOYUT HEADER DGVLEFTGRID Dictionary
                 var boyutHeaderDGVL = new Dictionary<string, string>()
                 {
@@ -608,30 +578,7 @@ namespace AyzPaymentWizard.Forms
                     DGVLeftEdit.Columns[boyutheadDGVL.Key].ReadOnly = true;
                 }
             }
-            //DGVLeftEdit.Columns["PayRef"].Visible = false;
-            //DGVLeftEdit.Columns["ClCardRef"].Visible = false;
-            //DGVLeftEdit.Columns["FicheRef"].Visible = false;
-            //DGVLeftEdit.Columns["ModuleNr"].Visible = false;
-            //DGVLeftEdit.Columns["TrCode"].Visible = false;
-            //DGVLeftEdit.Columns["IsPerson"].Visible = false;
-            //DGVLeftEdit.Columns["Branch"].Visible = false;
-            //DGVLeftEdit.Columns["TrType"].Visible = false;
-            //DGVLeftEdit.Columns["Paid"].Visible = false;
-            //DGVLeftEdit.Columns["GenExp1"].Visible = false;
-            //DGVLeftEdit.Columns["EmailAdres"].Visible = false;
-            //DGVLeftEdit.Columns["TrCode"].Visible = false;
-            //DGVLeftEdit.Columns["TrCurr"].Visible = false;
-            //DGVLeftEdit.Columns["TaxNr"].Visible = false;
-            //DGVLeftEdit.Columns["TaxOffice"].Visible = false;
-            //DGVLeftEdit.Columns["DD1REF"].Visible = false;
-            //DGVLeftEdit.Columns["DD2REF"].Visible = false;
-            //DGVLeftEdit.Columns["DD3REF"].Visible = false;
-            //DGVLeftEdit.Columns["DD4REF"].Visible = false;
-            //DGVLeftEdit.Columns["DD5REF"].Visible = false;
-            //DGVLeftEdit.Columns["DD6REF"].Visible = false;
-            //DGVLeftEdit.Columns["DD7REF"].Visible = false;
-            //DGVLeftEdit.Columns["NotInPayTrans"].Visible = false;
-            //DGVLeftEdit.Columns["NotInPayTransFrame"].Visible = false;
+            
 
             string[] boyutgosterilmeyecekDGVL = { "PayRef", "ClCardRef", "FicheRef", "ModuleNr", "TrCode", "IsPerson", "Branch", "TrType", "Paid", "GenExp1",
                                                   "EmailAdres", "TrCode", "TrCurr", "TaxNr", "TaxOffice", "DD1REF", "DD2REF", "DD3REF", "DD4REF", "DD5REF",
@@ -640,20 +587,7 @@ namespace AyzPaymentWizard.Forms
             {
                 DGVLeftEdit.Columns[boyutgostermeDGVL].Visible = false;
             }
-            //DGVLeftEdit.Columns["DueDate"].HeaderText = "Vade Tarihi";
-            //DGVLeftEdit.Columns["CurCode"].HeaderText = "Döviz";
-            //DGVLeftEdit.Columns["Total"].HeaderText = "Tutar";
-            //DGVLeftEdit.Columns["ClCode"].HeaderText = "Cari Kod";
-            //DGVLeftEdit.Columns["ClDef"].HeaderText = "Cari Hesap Tanımı";
-            //DGVLeftEdit.Columns["FicheDate"].HeaderText = "Fiş Tarihi";
-            //DGVLeftEdit.Columns["FicheNo"].HeaderText = "Fiş Numarası";
-            //DGVLeftEdit.Columns["DoCode"].HeaderText = "Belge Numarası";
-            //DGVLeftEdit.Columns["Total"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //DGVLeftEdit.Columns["ClCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //DGVLeftEdit.Columns["ClDef"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //DGVLeftEdit.Columns["IBAN"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //DGVLeftEdit.Columns["DoCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //DGVLeftEdit.Columns["CurCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+           
             var HeaderDGVL = new Dictionary<string, string>()
             {
                 { "DueDate", "Vade Tarihi" },{"CurCode", "Döviz"}, {"Total","Tutar" },{"ClCode","Cari Kod" }, {"ClDef","Cari Hesap Tanımı" },{"IBAN","IBAN" },
@@ -695,29 +629,6 @@ namespace AyzPaymentWizard.Forms
             DGVRightEdit.ColumnHeadersDefaultCellStyle.Font = new Font("Tahoma", 9.75F, FontStyle.Regular);
             DGVRightEdit.EnableHeadersVisualStyles = false;
 
-            //DGVRightEdit.Columns["NotInPayTrans"].ValueType = typeof(string);
-            //DGVRightEdit.Columns["PayRef"].Visible = false;
-            //DGVRightEdit.Columns["ClCardRef"].Visible = false;
-            //DGVRightEdit.Columns["FicheRef"].Visible = false;
-            //DGVRightEdit.Columns["ModuleNr"].Visible = false;
-            //DGVRightEdit.Columns["TrCode"].Visible = false;
-            //DGVRightEdit.Columns["GenExp1"].Visible = false;
-            //DGVRightEdit.Columns["TrType"].Visible = false;            
-            //DGVRightEdit.Columns["EmailAdres"].Visible = false;
-            //DGVRightEdit.Columns["IsPerson"].Visible = false;
-            //DGVRightEdit.Columns["Branch"].Visible = false;
-            //DGVRightEdit.Columns["TaxNr"].Visible = false;
-            //DGVRightEdit.Columns["TaxOffice"].Visible = false;
-            //DGVRightEdit.Columns["TrCurr"].Visible = false;
-            //DGVRightEdit.Columns["DD1REF"].Visible = false;
-            //DGVRightEdit.Columns["DD2REF"].Visible = false;
-            //DGVRightEdit.Columns["DD3REF"].Visible = false;
-            //DGVRightEdit.Columns["DD4REF"].Visible = false;
-            //DGVRightEdit.Columns["DD5REF"].Visible = false;
-            //DGVRightEdit.Columns["DD6REF"].Visible = false;
-            //DGVRightEdit.Columns["DD7REF"].Visible = false;
-            //DGVRightEdit.Columns["NotInPayTrans"].Visible = false;
-
             string[] gosterilmeyecekDGVR = { "NotInPayTrans", "PayRef", "ClCardRef", "FicheRef", "ModuleNr", "TrCode", "GenExp1", "TrType", "EmailAdres",
                                              "IsPerson", "Branch", "TaxNr", "TaxOffice", "TrCurr", "DD1REF", "DD2REF", "DD3REF", "DD4REF", "DD5REF",
                                              "DD6REF", "DD7REF", "NotInPayTrans" };
@@ -727,37 +638,6 @@ namespace AyzPaymentWizard.Forms
             }
             DGVRightEdit.Columns["Paid"].HeaderCell.Style.BackColor = Color.Red;
            
-            //DGVRightEdit.Columns["CurCode"].HeaderText = "Döviz";
-            //DGVRightEdit.Columns["Paid"].HeaderText = "Ödenecek";
-            //DGVRightEdit.Columns["Paid"].HeaderCell.Style.BackColor = Color.Red;
-            //DGVRightEdit.Columns["Total"].HeaderText = "Ödenmesi Gereken";
-            //DGVRightEdit.Columns["DueDate"].HeaderText = "Vade Tarihi";
-            //DGVRightEdit.Columns["ClDef"].HeaderText = "Cari Hesap Tanımı";
-            //DGVRightEdit.Columns["ClCode"].HeaderText = "Cari Kod";
-            //DGVRightEdit.Columns["FicheDate"].HeaderText = "Fiş Tarihi";
-            //DGVRightEdit.Columns["FicheNo"].HeaderText = "Fiş Numarası";
-            //DGVRightEdit.Columns["DoCode"].HeaderText = "Belge Numarası";
-            //DGVRightEdit.Columns["MecraType"].HeaderText = "Mecra Türü";
-            //DGVRightEdit.Columns["MarketingCompany"].HeaderText = "Pazarlama Şirketi";
-            //DGVRightEdit.Columns["Customer"].HeaderText = "Müşteri";
-            //DGVRightEdit.Columns["PlanCode"].HeaderText = "Plan Kodu";
-            //DGVRightEdit.Columns["InternetMainCategory"].HeaderText = "İnternet Ana Kategori";
-            //DGVRightEdit.Columns["InternetSubCategory"].HeaderText = "İnternet Alt Kategori";
-            //DGVRightEdit.Columns["NotInPayTransFrame"].HeaderText = "Active";
-
-            //DGVRightEdit.Columns["Total"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //DGVRightEdit.Columns["ClCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //DGVRightEdit.Columns["ClDef"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //DGVRightEdit.Columns["IBAN"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //DGVRightEdit.Columns["DoCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //DGVRightEdit.Columns["CurCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //DGVRightEdit.Columns["MecraType"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //DGVRightEdit.Columns["Mecra"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //DGVRightEdit.Columns["MarketingCompany"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //DGVRightEdit.Columns["Customer"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //DGVRightEdit.Columns["PlanCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //DGVRightEdit.Columns["InternetMainCategory"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            //DGVRightEdit.Columns["InternetSubCategory"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             var gosterilecekDGVRHeader = new Dictionary<string, string>()
             {
                 {"CurCode","Döviz" }, { "Paid", "Ödenecek" }, { "Total", "Ödenmesi Gereken" },{ "DueDate", "Vade Tarihi"},{ "ClDef", "Cari Hesap Tanımı" },{"IBAN","IBAN" },
@@ -794,22 +674,6 @@ namespace AyzPaymentWizard.Forms
 
             if (detailSendingValue == 2) // Ödeme Satırları Üzerinden
             {
-                //DGVRightEdit.Columns["MecraType"].Visible = false;
-                //DGVRightEdit.Columns["Mecra"].Visible = false;
-                //DGVRightEdit.Columns["MarketingCompany"].Visible = false;
-                //DGVRightEdit.Columns["Customer"].Visible = false;
-                //DGVRightEdit.Columns["PlanCode"].Visible = false;
-                //DGVRightEdit.Columns["InternetMainCategory"].Visible = false;
-                //DGVRightEdit.Columns["InternetSubCategory"].Visible = false;
-                //DGVRightEdit.Columns["DD1REF"].Visible = false;
-                //DGVRightEdit.Columns["DD2REF"].Visible = false;
-                //DGVRightEdit.Columns["DD3REF"].Visible = false;
-                //DGVRightEdit.Columns["DD4REF"].Visible = false;
-                //DGVRightEdit.Columns["DD5REF"].Visible = false;
-                //DGVRightEdit.Columns["DD6REF"].Visible = false;
-                //DGVRightEdit.Columns["DD7REF"].Visible = false;
-                //DGVRightEdit.Columns["NotInPayTrans"].Visible = false;
-
                 string[] boyutgosterilmeyecekDGVR = { "MecraType", "Mecra", "MarketingCompany", "Customer", "PlanCode", "InternetMainCategory", "InternetSubCategory",
                                                       "DD1REF", "DD2REF", "DD3REF", "DD4REF", "DD5REF", "DD6REF", "DD7REF", "NotInPayTrans" };
                 foreach (var boyutgostermeDGVR in boyutgosterilmeyecekDGVR)
@@ -988,7 +852,7 @@ namespace AyzPaymentWizard.Forms
                                 if (debit.IsPerson == 0)
                                     debit.IsPerson = 0;
                                 else
-                                    debit.IsPerson = dr["ISPERSON"].ToString() == "" ? 0 : Convert.ToInt32(dr["ISPERSON"].ToString());
+                                    debit.IsPerson = Convert.ToInt32(dr["ISPERSON"].ToString());
                                 debit.TaxNr = dr["TAXNR"].ToString();
                                 debit.TaxOffice = dr["TAXOFFICE"].ToString();
                                 debit.IBAN = dr["IBAN"].ToString();
@@ -1051,9 +915,10 @@ namespace AyzPaymentWizard.Forms
                                 debit.TrCurr = Convert.ToInt32(dr["TRCURR"].ToString());
                                 debit.ClCode = dr["CLCODE"].ToString();
                                 debit.ClDef = dr["CLDEF"].ToString();
-                                int isaperson;
-                                Int32.TryParse(dr["ISPERSON"].ToString(), out isaperson);
-                                debit.IsPerson = dr["ISPERSON"].ToString() == "" ? 0 : isaperson;
+                                if (debit.IsPerson == 0)
+                                    debit.IsPerson = 0;
+                                else
+                                    debit.IsPerson = Convert.ToInt32(dr["ISPERSON"].ToString());
                                 debit.TaxNr = dr["TAXNR"].ToString();
                                 debit.TaxOffice = dr["TAXOFFICE"].ToString();
                                 debit.IBAN = dr["IBAN"].ToString();
