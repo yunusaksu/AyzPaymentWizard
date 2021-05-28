@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,7 +73,7 @@ namespace AyzPaymentWizard
                 {
                     int id = 0;
                     int firmNr = 0;
-                    while(dr.Read())
+                    while (dr.Read())
                     {
                         id = Convert.ToInt32(dr["ID"].ToString());
                         firmNr = Convert.ToInt32(dr["FIRMNR"].ToString());
@@ -110,7 +112,7 @@ namespace AyzPaymentWizard
         private string UserRead()
         {
             StringBuilder sb = new StringBuilder(5000);
-            GetPrivateProfileString("KullaniciBaslik", "KullaniciAdi", "", sb, sb.Capacity, ConnectionHelper.SystemIniPath);            
+            GetPrivateProfileString("KullaniciBaslik", "KullaniciAdi", "", sb, sb.Capacity, ConnectionHelper.SystemIniPath);
             string user = sb.ToString();
             return user;
         }
@@ -121,7 +123,7 @@ namespace AyzPaymentWizard
             GetPrivateProfileString("PasswordBaslik", "Password", "", sb2, sb2.Capacity, ConnectionHelper.SystemIniPath);
             string password = sb2.ToString();
             return password;
-        }             
+        }
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
@@ -195,6 +197,6 @@ namespace AyzPaymentWizard
                 btnShow.BringToFront();
                 txtLoginPassword.PasswordChar = '*';
             }
-        }        
+        }
     }
 }

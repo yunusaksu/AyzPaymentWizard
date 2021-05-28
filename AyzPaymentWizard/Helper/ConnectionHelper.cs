@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -16,7 +17,8 @@ namespace AyzPaymentWizard
         // Projeyi Müşteriye Yüklerken Şu Şekilde Yüklücem
         // AYZ ÖDEME SİHİRBAZI adında bir tane klasör oluşturucam. Bu klasörün içine .exe dosyasını ve System.INI dosyasını yüklücem ve .exe dosyasının ShortCutini 
         // oluşturucam Masaüstünde
-        public static string SystemIniPath = Application.StartupPath + "\\System.INI";        
+
+        public static string SystemIniPath = Application.StartupPath + @"\System.ini";
 
         [DllImport("kernel32.dll")]
         static extern uint GetPrivateProfileString(string lpAppName, string lpKeyName, string lpDefault, StringBuilder lpReturnedString, int nSize, string lpFileName);
