@@ -915,5 +915,6 @@ namespace AyzPaymentWizard
             LogoUserInfo info = new LogoUserInfo();
             info.ShowDialog();
         }
+
     }
 }
