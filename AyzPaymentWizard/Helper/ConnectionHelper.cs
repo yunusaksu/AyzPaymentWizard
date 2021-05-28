@@ -12,7 +12,7 @@ namespace AyzPaymentWizard
 {
     public static class ConnectionHelper
     {
-
+        //
         // Projeyi Müşteriye Yüklerken Şu Şekilde Yüklücem
         // AYZ ÖDEME SİHİRBAZI adında bir tane klasör oluşturucam. Bu klasörün içine .exe dosyasını ve System.INI dosyasını yüklücem ve .exe dosyasının ShortCutini 
         // oluşturucam Masaüstünde
