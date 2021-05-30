@@ -153,7 +153,7 @@
             this.Controls.Add(this.txtTitle);
             this.Name = "BankAccounts";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Banka Hesapları";
+            this.Text = "BANKA HESAPLARI";
             this.Load += new System.EventHandler(this.BankAccounts_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGVBankAccount)).EndInit();
             this.ResumeLayout(false);

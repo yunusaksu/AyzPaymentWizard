@@ -281,7 +281,7 @@
             this.Controls.Add(this.label3);
             this.Name = "BanksForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Çalışılan Bankalar";
+            this.Text = "ÇALIŞILAN BANKALAR";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.BanksAndBankAccountsForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGVBank)).EndInit();

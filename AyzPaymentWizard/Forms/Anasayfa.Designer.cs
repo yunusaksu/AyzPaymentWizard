@@ -57,6 +57,7 @@
             this.logoUserSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripAnasayfa = new System.Windows.Forms.ToolStrip();
+            this.btnsqlBağlantiAyarlariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPacket)).BeginInit();
@@ -329,7 +330,8 @@
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sFTPAyarlarıToolStripMenuItem,
             this.btnBankAndBankAccAdd,
-            this.logoUserSettingsToolStripMenuItem});
+            this.logoUserSettingsToolStripMenuItem,
+            this.btnsqlBağlantiAyarlariToolStripMenuItem});
             this.toolStripDropDownButton1.Font = new System.Drawing.Font("Segoe UI", 13F);
             this.toolStripDropDownButton1.ForeColor = System.Drawing.SystemColors.GrayText;
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -385,6 +387,14 @@
             this.toolStripAnasayfa.TabIndex = 0;
             this.toolStripAnasayfa.Text = "AnasayfaToolStrip";
             // 
+            // btnsqlBağlantiAyarlariToolStripMenuItem
+            // 
+            this.btnsqlBağlantiAyarlariToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.btnsqlBağlantiAyarlariToolStripMenuItem.Name = "btnsqlBağlantiAyarlariToolStripMenuItem";
+            this.btnsqlBağlantiAyarlariToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
+            this.btnsqlBağlantiAyarlariToolStripMenuItem.Text = "Sql Bağlantı Ayarları";
+            this.btnsqlBağlantiAyarlariToolStripMenuItem.Click += new System.EventHandler(this.btnsqlBağlantiAyarlariToolStripMenuItem_Click);
+            // 
             // Anasayfa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -439,5 +449,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStripAnasayfa;
         private System.Windows.Forms.ToolStripMenuItem akibetiİnceleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem logoUserSettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem btnsqlBağlantiAyarlariToolStripMenuItem;
     }
 }

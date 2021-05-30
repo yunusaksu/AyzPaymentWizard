@@ -72,7 +72,7 @@
             this.Controls.Add(this.btnDebitClosing);
             this.Name = "DebitClosingForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Borç Kapatma Ekranı";
+            this.Text = "BORÇ KAPAMA EKRANI";
             this.Load += new System.EventHandler(this.DebitClosingForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGVDebitClosing)).EndInit();
             this.ResumeLayout(false);

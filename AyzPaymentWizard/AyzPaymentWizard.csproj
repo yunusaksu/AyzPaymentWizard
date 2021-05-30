@@ -150,7 +150,14 @@
     <Compile Include="Forms\GroupAddForm.Designer.cs">
       <DependentUpon>GroupAddForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SqlServerInfosForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SqlServerInfosForm.Designer.cs">
+      <DependentUpon>SqlServerInfosForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helper\ConnectionHelper.cs" />
+    <Compile Include="Helper\EncryptionAlgorithm.cs" />
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
@@ -210,6 +217,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\sftpForm.resx">
       <DependentUpon>sftpForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SqlServerInfosForm.resx">
+      <DependentUpon>SqlServerInfosForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

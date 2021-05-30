@@ -63,28 +63,28 @@
             this.cmbPaymentType = new System.Windows.Forms.ComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.checkBoxMusteri = new System.Windows.Forms.CheckBox();
             this.checkedListBoxCustomer = new System.Windows.Forms.CheckedListBox();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.checkBoxPazar = new System.Windows.Forms.CheckBox();
             this.checkedListBoxMarketingCompany = new System.Windows.Forms.CheckedListBox();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.checkBoxMacera = new System.Windows.Forms.CheckBox();
             this.checkedListBoxMecra = new System.Windows.Forms.CheckedListBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.checkBoxMaceraType = new System.Windows.Forms.CheckBox();
             this.checkedListBoxMecraType = new System.Windows.Forms.CheckedListBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox16 = new System.Windows.Forms.GroupBox();
+            this.checkBoxInAlKat = new System.Windows.Forms.CheckBox();
             this.checkedListBoxInternetSubCategory = new System.Windows.Forms.CheckedListBox();
             this.groupBox15 = new System.Windows.Forms.GroupBox();
+            this.checkBoxIntAnaKat = new System.Windows.Forms.CheckBox();
             this.checkedListBoxInternetMainCategory = new System.Windows.Forms.CheckedListBox();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
+            this.checkBoxPlanKod = new System.Windows.Forms.CheckBox();
             this.checkedListBoxPlanCode = new System.Windows.Forms.CheckedListBox();
             this.btnFiltreApply = new System.Windows.Forms.Button();
-            this.checkBoxMaceraType = new System.Windows.Forms.CheckBox();
-            this.checkBoxPazar = new System.Windows.Forms.CheckBox();
-            this.checkBoxMacera = new System.Windows.Forms.CheckBox();
-            this.checkBoxMusteri = new System.Windows.Forms.CheckBox();
-            this.checkBoxPlanKod = new System.Windows.Forms.CheckBox();
-            this.checkBoxInAlKat = new System.Windows.Forms.CheckBox();
-            this.checkBoxIntAnaKat = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox17.SuspendLayout();
@@ -487,6 +487,16 @@
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Müşteri";
             // 
+            // checkBoxMusteri
+            // 
+            this.checkBoxMusteri.Location = new System.Drawing.Point(13, 16);
+            this.checkBoxMusteri.Name = "checkBoxMusteri";
+            this.checkBoxMusteri.Size = new System.Drawing.Size(106, 24);
+            this.checkBoxMusteri.TabIndex = 4;
+            this.checkBoxMusteri.Text = "Hepsi Seç";
+            this.checkBoxMusteri.UseVisualStyleBackColor = true;
+            this.checkBoxMusteri.CheckedChanged += new System.EventHandler(this.checkBoxMusteri_CheckedChanged);
+            // 
             // checkedListBoxCustomer
             // 
             this.checkedListBoxCustomer.FormattingEnabled = true;
@@ -506,6 +516,16 @@
             this.groupBox13.TabIndex = 2;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Pazarlama Şirketi";
+            // 
+            // checkBoxPazar
+            // 
+            this.checkBoxPazar.Location = new System.Drawing.Point(13, 17);
+            this.checkBoxPazar.Name = "checkBoxPazar";
+            this.checkBoxPazar.Size = new System.Drawing.Size(106, 24);
+            this.checkBoxPazar.TabIndex = 3;
+            this.checkBoxPazar.Text = "Hepsi Seç";
+            this.checkBoxPazar.UseVisualStyleBackColor = true;
+            this.checkBoxPazar.CheckedChanged += new System.EventHandler(this.checkBoxPazar_CheckedChanged);
             // 
             // checkedListBoxMarketingCompany
             // 
@@ -527,6 +547,16 @@
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Mecra";
             // 
+            // checkBoxMacera
+            // 
+            this.checkBoxMacera.Location = new System.Drawing.Point(7, 16);
+            this.checkBoxMacera.Name = "checkBoxMacera";
+            this.checkBoxMacera.Size = new System.Drawing.Size(106, 24);
+            this.checkBoxMacera.TabIndex = 2;
+            this.checkBoxMacera.Text = "Hepsi Seç";
+            this.checkBoxMacera.UseVisualStyleBackColor = true;
+            this.checkBoxMacera.CheckedChanged += new System.EventHandler(this.checkBoxMacera_CheckedChanged);
+            // 
             // checkedListBoxMecra
             // 
             this.checkedListBoxMecra.FormattingEnabled = true;
@@ -546,6 +576,16 @@
             this.groupBox10.TabIndex = 0;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Mecra Türü";
+            // 
+            // checkBoxMaceraType
+            // 
+            this.checkBoxMaceraType.Location = new System.Drawing.Point(7, 17);
+            this.checkBoxMaceraType.Name = "checkBoxMaceraType";
+            this.checkBoxMaceraType.Size = new System.Drawing.Size(106, 24);
+            this.checkBoxMaceraType.TabIndex = 0;
+            this.checkBoxMaceraType.Text = "Hepsi Seç";
+            this.checkBoxMaceraType.UseVisualStyleBackColor = true;
+            this.checkBoxMaceraType.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // checkedListBoxMecraType
             // 
@@ -579,6 +619,16 @@
             this.groupBox16.TabStop = false;
             this.groupBox16.Text = "Internet Alt Kategori";
             // 
+            // checkBoxInAlKat
+            // 
+            this.checkBoxInAlKat.Location = new System.Drawing.Point(13, 18);
+            this.checkBoxInAlKat.Name = "checkBoxInAlKat";
+            this.checkBoxInAlKat.Size = new System.Drawing.Size(106, 24);
+            this.checkBoxInAlKat.TabIndex = 5;
+            this.checkBoxInAlKat.Text = "Hepsi Seç";
+            this.checkBoxInAlKat.UseVisualStyleBackColor = true;
+            this.checkBoxInAlKat.CheckedChanged += new System.EventHandler(this.checkBoxInAlKat_CheckedChanged);
+            // 
             // checkedListBoxInternetSubCategory
             // 
             this.checkedListBoxInternetSubCategory.FormattingEnabled = true;
@@ -599,6 +649,16 @@
             this.groupBox15.TabStop = false;
             this.groupBox15.Text = "İnternet Ana Katagori";
             // 
+            // checkBoxIntAnaKat
+            // 
+            this.checkBoxIntAnaKat.Location = new System.Drawing.Point(7, 15);
+            this.checkBoxIntAnaKat.Name = "checkBoxIntAnaKat";
+            this.checkBoxIntAnaKat.Size = new System.Drawing.Size(106, 24);
+            this.checkBoxIntAnaKat.TabIndex = 5;
+            this.checkBoxIntAnaKat.Text = "Hepsi Seç";
+            this.checkBoxIntAnaKat.UseVisualStyleBackColor = true;
+            this.checkBoxIntAnaKat.CheckedChanged += new System.EventHandler(this.checkBoxIntAnaKat_CheckedChanged);
+            // 
             // checkedListBoxInternetMainCategory
             // 
             this.checkedListBoxInternetMainCategory.FormattingEnabled = true;
@@ -618,6 +678,16 @@
             this.groupBox14.TabIndex = 0;
             this.groupBox14.TabStop = false;
             this.groupBox14.Text = "Plan Kodu";
+            // 
+            // checkBoxPlanKod
+            // 
+            this.checkBoxPlanKod.Location = new System.Drawing.Point(7, 18);
+            this.checkBoxPlanKod.Name = "checkBoxPlanKod";
+            this.checkBoxPlanKod.Size = new System.Drawing.Size(106, 24);
+            this.checkBoxPlanKod.TabIndex = 5;
+            this.checkBoxPlanKod.Text = "Hepsi Seç";
+            this.checkBoxPlanKod.UseVisualStyleBackColor = true;
+            this.checkBoxPlanKod.CheckedChanged += new System.EventHandler(this.checkBoxPlanKod_CheckedChanged);
             // 
             // checkedListBoxPlanCode
             // 
@@ -642,76 +712,6 @@
             this.btnFiltreApply.UseVisualStyleBackColor = false;
             this.btnFiltreApply.Click += new System.EventHandler(this.btnFiltreApply_Click);
             // 
-            // checkBoxMaceraType
-            // 
-            this.checkBoxMaceraType.Location = new System.Drawing.Point(7, 17);
-            this.checkBoxMaceraType.Name = "checkBoxMaceraType";
-            this.checkBoxMaceraType.Size = new System.Drawing.Size(106, 24);
-            this.checkBoxMaceraType.TabIndex = 0;
-            this.checkBoxMaceraType.Text = "Hepsi Seç";
-            this.checkBoxMaceraType.UseVisualStyleBackColor = true;
-            this.checkBoxMaceraType.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
-            // checkBoxPazar
-            // 
-            this.checkBoxPazar.Location = new System.Drawing.Point(13, 17);
-            this.checkBoxPazar.Name = "checkBoxPazar";
-            this.checkBoxPazar.Size = new System.Drawing.Size(106, 24);
-            this.checkBoxPazar.TabIndex = 3;
-            this.checkBoxPazar.Text = "Hepsi Seç";
-            this.checkBoxPazar.UseVisualStyleBackColor = true;
-            this.checkBoxPazar.CheckedChanged += new System.EventHandler(this.checkBoxPazar_CheckedChanged);
-            // 
-            // checkBoxMacera
-            // 
-            this.checkBoxMacera.Location = new System.Drawing.Point(7, 16);
-            this.checkBoxMacera.Name = "checkBoxMacera";
-            this.checkBoxMacera.Size = new System.Drawing.Size(106, 24);
-            this.checkBoxMacera.TabIndex = 2;
-            this.checkBoxMacera.Text = "Hepsi Seç";
-            this.checkBoxMacera.UseVisualStyleBackColor = true;
-            this.checkBoxMacera.CheckedChanged += new System.EventHandler(this.checkBoxMacera_CheckedChanged);
-            // 
-            // checkBoxMusteri
-            // 
-            this.checkBoxMusteri.Location = new System.Drawing.Point(13, 16);
-            this.checkBoxMusteri.Name = "checkBoxMusteri";
-            this.checkBoxMusteri.Size = new System.Drawing.Size(106, 24);
-            this.checkBoxMusteri.TabIndex = 4;
-            this.checkBoxMusteri.Text = "Hepsi Seç";
-            this.checkBoxMusteri.UseVisualStyleBackColor = true;
-            this.checkBoxMusteri.CheckedChanged += new System.EventHandler(this.checkBoxMusteri_CheckedChanged);
-            // 
-            // checkBoxPlanKod
-            // 
-            this.checkBoxPlanKod.Location = new System.Drawing.Point(7, 18);
-            this.checkBoxPlanKod.Name = "checkBoxPlanKod";
-            this.checkBoxPlanKod.Size = new System.Drawing.Size(106, 24);
-            this.checkBoxPlanKod.TabIndex = 5;
-            this.checkBoxPlanKod.Text = "Hepsi Seç";
-            this.checkBoxPlanKod.UseVisualStyleBackColor = true;
-            this.checkBoxPlanKod.CheckedChanged += new System.EventHandler(this.checkBoxPlanKod_CheckedChanged);
-            // 
-            // checkBoxInAlKat
-            // 
-            this.checkBoxInAlKat.Location = new System.Drawing.Point(13, 18);
-            this.checkBoxInAlKat.Name = "checkBoxInAlKat";
-            this.checkBoxInAlKat.Size = new System.Drawing.Size(106, 24);
-            this.checkBoxInAlKat.TabIndex = 5;
-            this.checkBoxInAlKat.Text = "Hepsi Seç";
-            this.checkBoxInAlKat.UseVisualStyleBackColor = true;
-            this.checkBoxInAlKat.CheckedChanged += new System.EventHandler(this.checkBoxInAlKat_CheckedChanged);
-            // 
-            // checkBoxIntAnaKat
-            // 
-            this.checkBoxIntAnaKat.Location = new System.Drawing.Point(7, 15);
-            this.checkBoxIntAnaKat.Name = "checkBoxIntAnaKat";
-            this.checkBoxIntAnaKat.Size = new System.Drawing.Size(106, 24);
-            this.checkBoxIntAnaKat.TabIndex = 5;
-            this.checkBoxIntAnaKat.Text = "Hepsi Seç";
-            this.checkBoxIntAnaKat.UseVisualStyleBackColor = true;
-            this.checkBoxIntAnaKat.CheckedChanged += new System.EventHandler(this.checkBoxIntAnaKat_CheckedChanged);
-            // 
             // FiltersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -722,7 +722,7 @@
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "FiltersForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Filtreler";
+            this.Text = "FİLTRELER";
             this.Load += new System.EventHandler(this.FiltersForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

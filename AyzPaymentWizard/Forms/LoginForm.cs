@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,7 +16,7 @@ using System.Windows.Forms;
 namespace AyzPaymentWizard
 {
     public partial class LoginForm : Form
-    {
+    {        
         SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString);
         SqlCommand command = new SqlCommand();
         SqlDataReader dr;
@@ -45,10 +46,12 @@ namespace AyzPaymentWizard
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
-        {
+        {                           
             var userName = txtLoginName.Text;
             var password = txtLoginPassword.Text;
-            command.CommandText = "SELECT ID, FIRMNR FROM [AYZ_PW_USER] WHERE NAME = '" + userName + "' AND PASSWORD = '" + password + "'";
+            string encryptionText = EncryptionAlgorithm.Encrytion(password);
+            string decryptionText = EncryptionAlgorithm.Decrytion(encryptionText);
+            command.CommandText = "SELECT ID, FIRMNR FROM [AYZ_PW_USER] WHERE NAME = '" + userName + "' AND PASSWORD = '" + encryptionText + "'";
             command.Connection = conn;
             conn.Open();
             dr = command.ExecuteReader();
@@ -104,7 +107,7 @@ namespace AyzPaymentWizard
                 while (dr.Read())
                 {
                     Helper.LOGOUSERNAME = dr["LOGO_USERNAME"].ToString();
-                    Helper.LOGOUSERPASS = dr["LOGO_USERPASSWORD"].ToString();
+                    Helper.LOGOUSERPASS = EncryptionAlgorithm.Decrytion(dr["LOGO_USERPASSWORD"].ToString());
                 }
             }
         }
@@ -113,7 +116,7 @@ namespace AyzPaymentWizard
         {
             StringBuilder sb = new StringBuilder(5000);
             GetPrivateProfileString("KullaniciBaslik", "KullaniciAdi", "", sb, sb.Capacity, ConnectionHelper.SystemIniPath);
-            string user = sb.ToString();
+            string user = EncryptionAlgorithm.Decrytion(sb.ToString());
             return user;
         }
 
@@ -121,14 +124,12 @@ namespace AyzPaymentWizard
         {
             StringBuilder sb2 = new StringBuilder(5000);
             GetPrivateProfileString("PasswordBaslik", "Password", "", sb2, sb2.Capacity, ConnectionHelper.SystemIniPath);
-            string password = sb2.ToString();
+            string password = EncryptionAlgorithm.Decrytion(sb2.ToString());
             return password;
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-            txtLoginName.Text = "Admin";
-            txtLoginPassword.Text = "admin";
             SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString);
             SqlCommand cmd2 = new SqlCommand("SELECT NR FROM L_CAPIFIRM", conn2);
             conn2.Open();
@@ -198,5 +199,6 @@ namespace AyzPaymentWizard
                 txtLoginPassword.PasswordChar = '*';
             }
         }
+        
     }
 }

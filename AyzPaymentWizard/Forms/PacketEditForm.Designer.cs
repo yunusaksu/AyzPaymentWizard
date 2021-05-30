@@ -390,7 +390,7 @@
             this.Controls.Add(this.btnAllToLeft);
             this.Controls.Add(this.btnAllToRight);
             this.Name = "PacketEditForm";
-            this.Text = "Paket Düzenleme Ekranı";
+            this.Text = "PAKET DÜZENLEME EKRANI";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.PacketEditForm_Load);
             this.panelLEd.ResumeLayout(false);

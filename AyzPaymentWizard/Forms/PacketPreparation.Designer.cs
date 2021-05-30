@@ -379,7 +379,7 @@
             this.Controls.Add(this.btnAllToRight);
             this.Name = "PacketPreparation";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Paket Hazırlama Ekranı";
+            this.Text = "PAKET HAZIRLAMA EKRANI";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Package_Load);
             this.panel1.ResumeLayout(false);
