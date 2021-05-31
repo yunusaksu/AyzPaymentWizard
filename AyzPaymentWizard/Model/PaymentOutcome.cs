@@ -138,8 +138,8 @@ namespace AyzPaymentWizard.Model
         public int BANKCODE { get; set; }
         public int BRANCHCODE { get; set; }
         public string ACCOUNTNO { get; set; }
-        public string CURRENCYCODE { get; set; }
         public string AMOUNT { get; set; }
+        public string CURRENCYCODE { get; set; }
         public string DESCRIPTION { get; set; }
         public string COMPANYREF { get; set; }
         public int PAYMENTSTATUS { get; set; }

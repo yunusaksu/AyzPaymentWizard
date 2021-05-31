@@ -99,5 +99,15 @@ namespace AyzPaymentWizard.Forms
                 MessageBox.Show("Hata:\n" + ex.Message);
             }
         }
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            UnityObjects.UnityApplication UnityApp = new UnityObjects.UnityApplication();
+            if (UnityApp.Login(txtLogoUserName.Text, txtLogoUserPassword.Text, Helper.FIRMNR))
+                MessageBox.Show("Logo Bağlantısı Kuruldu!","LOGO BAĞLANTISI TEST EKRANI");
+            else
+                MessageBox.Show("Hatalı Logo Giriş Bilgileri Tespit Edildi!", "Logo Bilgileri Hatalı!");
+
+        }
     }
 }
