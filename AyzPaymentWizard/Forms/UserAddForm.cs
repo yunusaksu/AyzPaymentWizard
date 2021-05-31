@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,7 +14,7 @@ using System.Windows.Forms;
 namespace AyzPaymentWizard
 {
     public partial class UserAddForm : Form
-    {
+    {        
         public UserAddForm()
         {
             InitializeComponent();
@@ -26,12 +28,12 @@ namespace AyzPaymentWizard
             // User Kaydederken UserType = 0 olmalıdır.
             var Username = txtUsername.Text;
             var Password = txtPassword.Text;
+            string encrytedPassword = EncryptionAlgorithm.Encrytion(Password);
             var GroupId = cmbGroup.SelectedValue;
-            var LogoFirmaNumber = cmbFirmNumber.SelectedValue;
-
+            var LogoFirmaNumber = cmbFirmNumber.SelectedValue;            
             try
             {
-                cmd.CommandText = "INSERT INTO [AYZ_PW_USER](NAME,PASSWORD,USERTYPE,FIRMNR,DATE)VALUES('" + Username + "','" + Password + "',0,'" + LogoFirmaNumber + "', GETDATE());SELECT SCOPE_IDENTITY()";
+                cmd.CommandText = "INSERT INTO [AYZ_PW_USER](NAME,PASSWORD,USERTYPE,FIRMNR,DATE)VALUES('" + Username + "','" + encrytedPassword + "',0,'" + LogoFirmaNumber + "', GETDATE());SELECT SCOPE_IDENTITY()";
                 cmd.Connection = conn;
                 conn.Open();
                 int userId = Convert.ToInt32(cmd.ExecuteScalar());
@@ -78,6 +80,34 @@ namespace AyzPaymentWizard
             ///
             // End
             ///
+
+            ToolTip showBtnToolTip = new ToolTip();
+            showBtnToolTip.SetToolTip(btnShow, "Şifre Göster");
+            ToolTip hideBtnToolTip = new ToolTip();
+            hideBtnToolTip.SetToolTip(btnHide, "Şifre Gizle");
         }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
+
+        private void btnShow_Click(object sender, EventArgs e)
+        {
+            if (txtPassword.PasswordChar == '*')
+            {
+                btnHide.BringToFront();
+                txtPassword.PasswordChar = '\0';
+            }
+        }
+
+        private void btnHide_Click(object sender, EventArgs e)
+        {
+            if (txtPassword.PasswordChar == '\0')
+            {
+                btnShow.BringToFront();
+                txtPassword.PasswordChar = '*';
+            }
+        }        
     }
 }

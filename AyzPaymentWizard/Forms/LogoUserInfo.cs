@@ -61,7 +61,7 @@ namespace AyzPaymentWizard.Forms
                 }
             }
             txtLogoUserName.Text = username;
-            txtLogoUserPassword.Text = userpassword;
+            txtLogoUserPassword.Text = EncryptionAlgorithm.Decrytion(userpassword);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -86,7 +86,7 @@ namespace AyzPaymentWizard.Forms
                 using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
                     CommandText = "INSERT INTO AYZ_PW_LOGO_ACCINFO(LOGO_USERNAME,LOGO_USERPASSWORD) " +
-                                  "\nVALUES('" + txtLogoUserName.Text + "','" + txtLogoUserPassword.Text + "')";
+                                  "\nVALUES('" + txtLogoUserName.Text + "','" + EncryptionAlgorithm.Encrytion(txtLogoUserPassword.Text) + "')";
                     komut.CommandText = CommandText;
                     komut.Connection = conn;
                     conn.Open();

@@ -12,7 +12,8 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <PublishUrl>publish\</PublishUrl>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\yunus\Desktop\AYZ ÖDEME SİHİRBAZI\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -22,10 +23,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>19</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -46,6 +47,21 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>BB3D1FDB9E56E7E3427BEF902A8BB11BB95D57C5</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>AyzPaymentWizard_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AdvancedDataGridView, Version=1.1.22318.2, Culture=neutral, processorArchitecture=MSIL">
@@ -134,7 +150,14 @@
     <Compile Include="Forms\GroupAddForm.Designer.cs">
       <DependentUpon>GroupAddForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SqlServerInfosForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SqlServerInfosForm.Designer.cs">
+      <DependentUpon>SqlServerInfosForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helper\ConnectionHelper.cs" />
+    <Compile Include="Helper\EncryptionAlgorithm.cs" />
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
@@ -195,6 +218,9 @@
     <EmbeddedResource Include="Forms\sftpForm.resx">
       <DependentUpon>sftpForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SqlServerInfosForm.resx">
+      <DependentUpon>SqlServerInfosForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -237,6 +263,7 @@
     <Content Include="Images\HomepageSubBarImages\rejectButton.png" />
     <Content Include="Images\HomepageSubBarImages\reviewButton.png" />
     <Content Include="Images\HomepageSubBarImages\sendToApprove.png" />
+    <Content Include="Images\logo.ico" />
     <Content Include="Images\show_icon.png" />
   </ItemGroup>
   <ItemGroup>

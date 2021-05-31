@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -10,13 +11,10 @@ using System.Windows.Forms;
 
 namespace AyzPaymentWizard
 {
-    public static class ConnectionHelper
+    public class ConnectionHelper
     {
-        //
-        // Projeyi Müşteriye Yüklerken Şu Şekilde Yüklücem
-        // AYZ ÖDEME SİHİRBAZI adında bir tane klasör oluşturucam. Bu klasörün içine .exe dosyasını ve System.INI dosyasını yüklücem ve .exe dosyasının ShortCutini 
-        // oluşturucam Masaüstünde
-        public static string SystemIniPath = Application.StartupPath + "\\System.INI";        
+
+        public static string SystemIniPath = Application.StartupPath + @"\System.ini";
 
         [DllImport("kernel32.dll")]
         static extern uint GetPrivateProfileString(string lpAppName, string lpKeyName, string lpDefault, StringBuilder lpReturnedString, int nSize, string lpFileName);
@@ -42,6 +40,10 @@ namespace AyzPaymentWizard
             return name;
         }
 
+        private static string DecryptionServername = EncryptionAlgorithm.Decrytion(GetServerName());
+        private static string DecryptionDatabasename = EncryptionAlgorithm.Decrytion(GetDatabaseName());
+        private static string DecryptionServerUsername = EncryptionAlgorithm.Decrytion(GetServerUserName());
+        private static string DecryptionServerUserPass = EncryptionAlgorithm.Decrytion(GetUserPass());
         private static string GetUserPass()
         {
             StringBuilder sb = new StringBuilder(5000);
@@ -50,6 +52,6 @@ namespace AyzPaymentWizard
             return pass;
         }
 
-        public static string ConnectionString = @"Data Source=" + GetServerName() + ";Initial Catalog=" + GetDatabaseName() + "; Persist Security Info=True;User ID=" + GetServerUserName() + ";Password=" + GetUserPass() + "";
+        public static string ConnectionString = @"Data Source=" + DecryptionServername + ";Initial Catalog=" + DecryptionDatabasename + "; Persist Security Info=True;User ID=" + DecryptionServerUsername + ";Password=" + DecryptionServerUserPass + "";
     }
 }

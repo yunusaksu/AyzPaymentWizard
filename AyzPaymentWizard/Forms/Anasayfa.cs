@@ -916,5 +916,10 @@ namespace AyzPaymentWizard
             info.ShowDialog();
         }
 
+        private void btnsqlBağlantiAyarlariToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SqlServerInfosForm form = new SqlServerInfosForm();
+            form.Show();
+        }
     }
 }

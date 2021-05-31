@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AyzPaymentWizard
 {
-    public static class Helper
+    public class Helper
     {
         static SqlCommand komut = new SqlCommand();
         static SqlDataReader dr;
