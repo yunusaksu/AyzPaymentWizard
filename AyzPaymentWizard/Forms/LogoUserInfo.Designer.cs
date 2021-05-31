@@ -33,10 +33,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtLogoUserName = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
-            this.btnShow = new System.Windows.Forms.Button();
-            this.btnHide = new System.Windows.Forms.Button();
             this.txtLogoUserPassword = new System.Windows.Forms.TextBox();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.btnShow = new System.Windows.Forms.Button();
+            this.btnHide = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -82,6 +82,26 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // txtLogoUserPassword
+            // 
+            this.txtLogoUserPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.txtLogoUserPassword.Location = new System.Drawing.Point(173, 148);
+            this.txtLogoUserPassword.Name = "txtLogoUserPassword";
+            this.txtLogoUserPassword.PasswordChar = '*';
+            this.txtLogoUserPassword.Size = new System.Drawing.Size(205, 24);
+            this.txtLogoUserPassword.TabIndex = 3;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnCancel.Location = new System.Drawing.Point(416, 230);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(121, 30);
+            this.btnCancel.TabIndex = 5;
+            this.btnCancel.Text = "Vazgeç";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
             // btnShow
             // 
             this.btnShow.BackColor = System.Drawing.Color.White;
@@ -108,26 +128,6 @@
             this.btnHide.TabIndex = 7;
             this.btnHide.UseVisualStyleBackColor = false;
             this.btnHide.Click += new System.EventHandler(this.btnHide_Click);
-            // 
-            // txtLogoUserPassword
-            // 
-            this.txtLogoUserPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtLogoUserPassword.Location = new System.Drawing.Point(173, 148);
-            this.txtLogoUserPassword.Name = "txtLogoUserPassword";
-            this.txtLogoUserPassword.PasswordChar = '*';
-            this.txtLogoUserPassword.Size = new System.Drawing.Size(205, 24);
-            this.txtLogoUserPassword.TabIndex = 3;
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnCancel.Location = new System.Drawing.Point(416, 230);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(121, 30);
-            this.btnCancel.TabIndex = 5;
-            this.btnCancel.Text = "Vazgeç";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // LogoUserInfo
             // 
