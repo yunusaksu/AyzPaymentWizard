@@ -48,7 +48,7 @@ namespace AyzPaymentWizard
         private void btnLogin_Click(object sender, EventArgs e)
         {                           
             var userName = txtLoginName.Text;
-            var password = txtLoginPassword.Text;
+            var password = txtLoginPassword.Text;            
             string encryptionText = EncryptionAlgorithm.Encrytion(password);
             string decryptionText = EncryptionAlgorithm.Decrytion(encryptionText);
             command.CommandText = "SELECT ID, FIRMNR FROM [AYZ_PW_USER] WHERE NAME = '" + userName + "' AND PASSWORD = '" + encryptionText + "'";
