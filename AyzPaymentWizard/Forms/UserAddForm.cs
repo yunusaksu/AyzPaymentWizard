@@ -14,7 +14,7 @@ using System.Windows.Forms;
 namespace AyzPaymentWizard
 {
     public partial class UserAddForm : Form
-    {        
+    {
         public UserAddForm()
         {
             InitializeComponent();
@@ -30,7 +30,7 @@ namespace AyzPaymentWizard
             var Password = txtPassword.Text;
             string encrytedPassword = EncryptionAlgorithm.Encrytion(Password);
             var GroupId = cmbGroup.SelectedValue;
-            var LogoFirmaNumber = cmbFirmNumber.SelectedValue;            
+            var LogoFirmaNumber = cmbFirmNumber.SelectedValue;
             try
             {
                 cmd.CommandText = "INSERT INTO [AYZ_PW_USER](NAME,PASSWORD,USERTYPE,FIRMNR,DATE)VALUES('" + Username + "','" + encrytedPassword + "',0,'" + LogoFirmaNumber + "', GETDATE());SELECT SCOPE_IDENTITY()";
@@ -41,13 +41,13 @@ namespace AyzPaymentWizard
                                         " '" + GroupId.ToString() + "', '" + userId.ToString() + "') ";
                 cmd.ExecuteNonQuery();
                 conn.Close();
-                MessageBox.Show("Kullanıcı başarılı bir şekilde kaydedildi!", "Kullanıcı Kayıt Ekranı");
+                MessageBox.Show("Kullanıcı başarılı bir şekilde kaydedildi!", "Kullanıcı Kayıt Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
                 conn.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hata: " + ex.Message.ToString());
+                MessageBox.Show("Hata: " + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -108,6 +108,6 @@ namespace AyzPaymentWizard
                 btnShow.BringToFront();
                 txtPassword.PasswordChar = '*';
             }
-        }        
+        }
     }
 }

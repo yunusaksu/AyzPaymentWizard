@@ -407,7 +407,7 @@ namespace AyzPaymentWizard.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hata: \n" + ex.Message);
+                MessageBox.Show("Hata: \n" + ex.Message,"Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -437,7 +437,7 @@ namespace AyzPaymentWizard.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hata: \n" + ex.Message);
+                MessageBox.Show("Hata: \n" + ex.Message,"Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -717,7 +717,7 @@ namespace AyzPaymentWizard.Forms
             {
                 try
                 {
-                    CommandText = "SELECT * FROM AYZ_PW_FILTER_VALUES WHERE USERNR = " + Helper.USERID + " AND FIRMNR = " + Helper.FIRMNR + " AND PACKETID = " + PacketId + "";
+                    CommandText = "SELECT * FROM AYZ_PW_FILTER_VALUES WHERE FIRMNR = " + Helper.FIRMNR + " AND PACKETID = " + PacketId + "";
                     komut.CommandText = CommandText;
                     komut.Connection = conn;
                     conn.Open();
@@ -767,7 +767,7 @@ namespace AyzPaymentWizard.Forms
                 }
                 catch (SqlException ex)
                 {
-                    MessageBox.Show("Hata: " + ex.Message.ToString());
+                    MessageBox.Show("Hata: " + ex.Message.ToString(),"Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
                 #region Vade Tarihi ve Fatura Tarihi Başlangıç, Bitiş atamasını yapma
@@ -1389,7 +1389,7 @@ namespace AyzPaymentWizard.Forms
                 }
                 catch (SqlException ex)
                 {
-                    MessageBox.Show("Hata: " + ex.Message.ToString());
+                    MessageBox.Show("Hata: " + ex.Message.ToString(),"Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             // 2. aşama olarak AYZ_PW_PACKET tablosundaki mevcut paket id'li kayıt'ın değerleri güncellenecek.
@@ -1422,7 +1422,7 @@ namespace AyzPaymentWizard.Forms
                 }
                 catch (SqlException ex)
                 {
-                    MessageBox.Show("Hata: " + ex.Message.ToString());
+                    MessageBox.Show("Hata: " + ex.Message,"Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
 
@@ -1516,19 +1516,19 @@ namespace AyzPaymentWizard.Forms
                             komut.ExecuteNonQuery();
                             conn.Close();
                         }
-                        MessageBox.Show("Paket başarılı bir şekilde güncellendi...!", "Paket Güncelleme Ekranı");
+                        MessageBox.Show("Paket başarılı bir şekilde güncellendi...!", "Paket Güncelleme Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Hide();
                         Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
                         form.FillPacketList();
                     }
                     else if (PacketEditsRightList.Count == 0)
                     {
-                        MessageBox.Show("Pakete eklenmiş bir ödeme yoktur!", "UYARI!");
+                        MessageBox.Show("Pakete eklenmiş bir ödeme yoktur!", "UYARI!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
                 catch (SqlException ex)
                 {
-                    MessageBox.Show("Hata: " + ex.Message.ToString());
+                    MessageBox.Show("Hata: " + ex.Message,"Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
             }

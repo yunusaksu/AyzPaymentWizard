@@ -39,9 +39,9 @@ namespace AyzPaymentWizard
         List<int> marketingCompantList = new List<int>(); List<int> customerList = new List<int>();
         List<int> planCodeList = new List<int>(); List<int> internetMainCategory = new List<int>(); List<int> internetSubCategory = new List<int>();
         DateTime payBegDate, payEndDate, invBegDate, invEndDate;
-        #endregion               
+        #endregion
 
-       
+
         //Filtereleme Metodu 
         private List<Debit> FilterAndSortDataStr(IEnumerable<Debit> collection, string filter, string sort)
         {
@@ -178,15 +178,15 @@ namespace AyzPaymentWizard
                         labelCurR.Text = debit.CurCode.ToString();
                         //odencekR update
                         txtPaidRightDGV.Text = (Convert.ToDecimal(txtPaidRightDGV.Text) + Convert.ToDecimal(sel.Total)).ToString();
-                        
+
                         //Decimal sumL = (Convert.ToDecimal(textBoxodenecekR.Text) + sel.Total);
                         //textBoxodenecekR.Text = sumL.ToString();
-                        
+
                     }
-                    
+
                     //Updating the number of Rows
                     txtTotalLeftDGV.Text = (Convert.ToInt32(txtTotalLeftDGV.Text) - select.Count).ToString();
-                    txtTotalRightDGV.Text= (Convert.ToInt32(txtTotalRightDGV.Text)+select.Count).ToString();
+                    txtTotalRightDGV.Text = (Convert.ToInt32(txtTotalRightDGV.Text) + select.Count).ToString();
                 }
             }
 
@@ -260,14 +260,14 @@ namespace AyzPaymentWizard
                     //Adding Selected Rightt Total to Left and Removing from Right
                     foreach (var sel in select)
                     {
-                        
+
                         txtSumRightDGV.Text = (Convert.ToDecimal(txtSumRightDGV.Text) - sel.Total).ToString();
                         txtSumLeftDGV.Text = (Convert.ToDecimal(txtSumLeftDGV.Text) + sel.Total).ToString();
                         //Getting the Currency Code
                         labelCurL.Text = debit.CurCode.ToString();
-                        
+
                         //odencekR update
-                      txtPaidRightDGV.Text = (Convert.ToDecimal(txtPaidRightDGV.Text) - Convert.ToDecimal(sel.Total)).ToString();
+                        txtPaidRightDGV.Text = (Convert.ToDecimal(txtPaidRightDGV.Text) - Convert.ToDecimal(sel.Total)).ToString();
                     }
 
                 }
@@ -281,12 +281,12 @@ namespace AyzPaymentWizard
             var source2 = new BindingSource();
             source2.DataSource = LeftList;
             dataGridViewLeft.DataSource = source2;
-        }        
+        }
 
         private void dataGridViewLeft_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-                if (e.ColumnIndex == 1)
-                    txtSumLeftDGV.Text = CellSum().ToString();
+            if (e.ColumnIndex == 1)
+                txtSumLeftDGV.Text = CellSum().ToString();
         }
 
         //Getting The Total Sum of LGRID
@@ -300,7 +300,7 @@ namespace AyzPaymentWizard
                 sum += d;
             }
             return sum;
-        }        
+        }
 
         private void dataGridViewLeft_FilterStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
         {
@@ -333,7 +333,7 @@ namespace AyzPaymentWizard
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hata: \n" + ex.Message);
+                MessageBox.Show("Hata: \n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -352,27 +352,27 @@ namespace AyzPaymentWizard
                     {
                         Decimal res = Decimal.Parse(dataGridViewRight.Rows[counter].Cells["Paid"].Value.ToString());
                         Decimal total = Decimal.Parse(dataGridViewRight.Rows[counter].Cells["Total"].Value.ToString());
-                        if(res >total ||res<0)
+                        if (res > total || res < 0)
                         {
                             if (res > total)
                             {
-                                MessageBox.Show("Borcunuzdan daha fazlasını ödeme yapamazsınız!!!. Borcunuzun tamini veya daha azını girin ");
+                                MessageBox.Show("Borcunuzdan daha fazla ödeme yapamazsınız!. Borcunuzu geçmeyen bir ödeme giriniz.", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 sumP = total;
                             }
                             else if (res < 0)
                             {
-                                MessageBox.Show(" Sifirdan Daha az bir ödeme yoktur. Pozitif bir değeri giriniz");
+                                MessageBox.Show("Ödenecek tutar sıfırdan küçük olamaz!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 sumP = total;
                             }
-                            
+
                         }
-                        else 
+                        else
                         {
                             sumP += res;
                             txtPaidRightDGV.Text = sumP.ToString();
-                            
+
                         }
-                        
+
                     }
                 }
             }
@@ -527,11 +527,11 @@ namespace AyzPaymentWizard
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hata: \n" + ex.Message);
+                MessageBox.Show("Hata: \n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
-       
+
         private void button_unloadfilters_Click(object sender, EventArgs e)
         {
             dataGridViewLeft.CleanFilterAndSort();
@@ -576,7 +576,7 @@ namespace AyzPaymentWizard
                                             "InternetMainCategory","InternetSubCategory","DD1REF","DD2REF","DD3REF",
                                             "DD4REF","DD5REF","DD6REF","DD7REF","NotInPayTrans","NotInPayTransFrame"
                                             };
-                foreach(var gostermeodeL in gosterilmeyecekodemeL)
+                foreach (var gostermeodeL in gosterilmeyecekodemeL)
                 {
                     dataGridViewLeft.Columns[gostermeodeL].Visible = false;
                 }
@@ -589,7 +589,7 @@ namespace AyzPaymentWizard
                   { "MecraType","Mecra Türü"},{ "MarketingCompany","Pazarlama Şirketi"},{"Customer","Müşteri" },{ "PlanCode","Plan Kodu"},{"IBAN","IBAN" },
                   {"InternetMainCategory","İnternet Ana Kategori"}, {"InternetSubCategory","İnternet Alt Kategori" },
                 };
-                foreach(var boyutheadL in boyutHeaderL)
+                foreach (var boyutheadL in boyutHeaderL)
                 {
                     dataGridViewLeft.Columns[boyutheadL.Key].HeaderText = boyutheadL.Value;
                     dataGridViewLeft.Columns[boyutheadL.Key].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -601,25 +601,25 @@ namespace AyzPaymentWizard
                                            "TrType", "Paid", "GenExp1", "EmailAdres", "TrCode","TrCurr","TaxNr","TaxOffice",
                                            "DD1REF","DD2REF","DD3REF","DD4REF","DD5REF","DD6REF","DD7REF",
                                            "NotInPayTrans","NotInPayTransFrame" };
-            foreach(var gostermeL in gosterilmeyecekL)
+            foreach (var gostermeL in gosterilmeyecekL)
             {
                 dataGridViewLeft.Columns[gostermeL].Visible = false;
             }
 
             var HeaderL = new Dictionary<string, string>()
-            { 
+            {
                 { "DueDate", "Vade Tarihi" },{"CurCode", "Döviz"}, {"Total","Tutar" },{"ClCode","Cari Kod" }, {"ClDef","Cari Hesap Tanımı" },{"IBAN","IBAN" },
                 {"FicheDate","Fiş Tarihi"},{"FicheNo","FicheNo"},{"DoCode","Belge Numarası"},{ "NotInPayTransFrame","Active" }
             };
-            
-            foreach(var headL in HeaderL)
+
+            foreach (var headL in HeaderL)
             {
                 dataGridViewLeft.Columns[headL.Key].HeaderText = headL.Value;
                 dataGridViewLeft.Columns[headL.Key].ReadOnly = true;
             }
-           
-            string[] Autosized = { "Total", "ClCode", "ClDef", "IBAN", "DoCode","CurCode"};
-            foreach(var auto in Autosized)
+
+            string[] Autosized = { "Total", "ClCode", "ClDef", "IBAN", "DoCode", "CurCode" };
+            foreach (var auto in Autosized)
             {
                 dataGridViewLeft.Columns[auto].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             }
@@ -627,7 +627,7 @@ namespace AyzPaymentWizard
             dataGridViewLeft.Columns["FicheDate"].Width = 75;
             dataGridViewLeft.Columns["FicheNo"].Width = 90;
 
-            
+
             //LEft Grid Middle Centered Aligned
             Dictionary<string, DataGridView> LGCentered = new Dictionary<string, DataGridView>();
             DataGridView dgl = dataGridViewLeft;
@@ -641,7 +641,7 @@ namespace AyzPaymentWizard
                 }
             }
 
-            
+
             #endregion
 
             var source2 = new BindingSource();
@@ -660,11 +660,11 @@ namespace AyzPaymentWizard
                                            "DD1REF","DD2REF","DD3REF","DD4REF","DD5REF","DD6REF","DD7REF",
                                            "NotInPayTrans","NotInPayTransFrame" };
 
-            foreach(var gostermeR in gosterilmeyecekR)
+            foreach (var gostermeR in gosterilmeyecekR)
             {
                 dataGridViewRight.Columns[gostermeR].Visible = false;
             }
-            dataGridViewRight.Columns["CurCode"].HeaderText = "Döviz";            
+            dataGridViewRight.Columns["CurCode"].HeaderText = "Döviz";
 
             var gosterilecekRHeader = new Dictionary<string, string>()
             {
@@ -677,27 +677,27 @@ namespace AyzPaymentWizard
             foreach (var gosterRHead in gosterilecekRHeader)
             {
                 dataGridViewRight.Columns[gosterRHead.Key].HeaderText = gosterRHead.Value;
-                if(dataGridViewRight.Columns[gosterRHead.Key].HeaderText!= "Ödenecek")
+                if (dataGridViewRight.Columns[gosterRHead.Key].HeaderText != "Ödenecek")
                 {
                     dataGridViewRight.Columns[gosterRHead.Key].ReadOnly = true;
                 }
-               
+
             }
             dataGridViewRight.Columns["Paid"].HeaderCell.Style.BackColor = Color.Red;
 
             string[] AutosizeR = {
-                                   "Total", "ClCode", "ClDef", "IBAN", "DoCode", "CurCode", "MecraType", "Mecra", 
+                                   "Total", "ClCode", "ClDef", "IBAN", "DoCode", "CurCode", "MecraType", "Mecra",
                                    "MarketingCompany", "Customer", "PlanCode", "InternetMainCategory","InternetSubCategory" };
-            foreach(var autoR in AutosizeR)
+            foreach (var autoR in AutosizeR)
             {
                 dataGridViewRight.Columns[autoR].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             }
 
             //MiddleCenter Align  alligned for Right Grid
-            Dictionary<string,DataGridView > RGCentered = new Dictionary<string,DataGridView >();
+            Dictionary<string, DataGridView> RGCentered = new Dictionary<string, DataGridView>();
             DataGridView dgr = dataGridViewRight;
             string[] strRight = { "Paid", "CurCode" };
-            foreach(var str in strRight)
+            foreach (var str in strRight)
             {
                 RGCentered.Add(str, dgr);
                 foreach (var ab in RGCentered)
@@ -705,9 +705,9 @@ namespace AyzPaymentWizard
                     ab.Value.Columns[ab.Key].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 }
             }
-            
-           
-            
+
+
+
             if (detailSendingValue == 2) // Ödeme Satırları Üzerinden
             {
                 string[] gosterilmeyecekodeme = {
@@ -716,7 +716,7 @@ namespace AyzPaymentWizard
                                             "DD4REF","DD5REF","DD6REF","DD7REF","NotInPayTrans","NotInPayTransFrame"
                                             };
 
-                foreach(var gostermeode in gosterilmeyecekodeme)
+                foreach (var gostermeode in gosterilmeyecekodeme)
                 {
                     dataGridViewRight.Columns[gostermeode].Visible = false;
                 }
@@ -728,7 +728,7 @@ namespace AyzPaymentWizard
             txtTotalLeftDGV.Text = dataGridViewLeft.Rows.Count.ToString();
 
             txtTotalRightDGV.Text = "0";
-            
+
             //Getting the total value
             decimal sumL = 0.00m;
             for (int i = 0; i < dataGridViewLeft.Rows.Count; ++i)
@@ -738,7 +738,7 @@ namespace AyzPaymentWizard
                 labelCurL.Text = dataGridViewLeft.Rows[i].Cells["CurCode"].Value.ToString();
             }
             txtSumLeftDGV.Text = sumL.ToString();
-            
+
             //Getting the total columns in RGRID
 
             decimal sumR = 0.00m;
@@ -747,7 +747,7 @@ namespace AyzPaymentWizard
                 sumR += Convert.ToDecimal(dataGridViewRight.Rows[i].Cells["Total"].Value);
             }
             txtSumRightDGV.Text = sumR.ToString();
-            
+
         }
 
 
@@ -950,7 +950,7 @@ namespace AyzPaymentWizard
                                 debit.TrCurr = Convert.ToInt32(dr["TRCURR"].ToString());
                                 debit.ClCode = dr["CLCODE"].ToString();
                                 debit.ClDef = dr["CLDEF"].ToString();
-                                if(debit.IsPerson == 0)
+                                if (debit.IsPerson == 0)
                                     debit.IsPerson = 0;
                                 else
                                     debit.IsPerson = Convert.ToInt32(dr["ISPERSON"].ToString());
@@ -1011,7 +1011,7 @@ namespace AyzPaymentWizard
                 if (select.Count > 0)
                     LeftList.Remove(select[0]);
             }
-            
+
             #endregion
         }
 
@@ -1054,7 +1054,7 @@ namespace AyzPaymentWizard
                     {
                         string[] strboyutlular = { "MecraType" , "Mecra" , "MarketingCompany" , "Customer" , "PlanCode" ,
                                             "InternetMainCategory","InternetSubCategory"};
-                        foreach(var strboyut in strboyutlular)
+                        foreach (var strboyut in strboyutlular)
                         {
                             debit.MecraType = drv.Cells[strboyut].Value.ToString();
                         }
@@ -1177,8 +1177,8 @@ namespace AyzPaymentWizard
                         //Getting the Currency Code
                         labelCurL.Text = debit.CurCode.ToString();
                         //odencekR update
-                        txtPaidRightDGV.Text= (Convert.ToDecimal(txtPaidRightDGV.Text) - Convert.ToDecimal(sel.Paid)).ToString();
-                        
+                        txtPaidRightDGV.Text = (Convert.ToDecimal(txtPaidRightDGV.Text) - Convert.ToDecimal(sel.Paid)).ToString();
+
                     }
 
                 }
@@ -1345,7 +1345,7 @@ namespace AyzPaymentWizard
                                                 "\n)";
                             komut.ExecuteNonQuery();
                         }
-                        MessageBox.Show("Paket başarılı bir şekilde kaydedildi!", "Paket Oluşturma Ekranı");
+                        MessageBox.Show("Paket başarılı bir şekilde kaydedildi!", "Paket Oluşturma Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         SavePacketFilters(PacketId);
                         this.Hide();
                         Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
@@ -1353,12 +1353,12 @@ namespace AyzPaymentWizard
                     }
                     else if (RightList.Count == 0)
                     {
-                        MessageBox.Show("Pakete eklenmiş bir ödeme yoktur!", "UYARI!");
+                        MessageBox.Show("Pakete eklenmiş bir ödeme yoktur!", "UYARI!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Hata: " + ex.Message.ToString());
+                    MessageBox.Show("Hata: " + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
         }
@@ -1366,7 +1366,7 @@ namespace AyzPaymentWizard
         private string getCurrency(int currencyValue)
         {
             string CurCode = "";
-            if(currencyValue !=0)
+            if (currencyValue != 0)
             {
                 using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {

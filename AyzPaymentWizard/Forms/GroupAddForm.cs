@@ -46,12 +46,12 @@ namespace AyzPaymentWizard
                                     " '" + groupId + "', '" + PackageAdd.ToString() + "','" + PackageEdit.ToString() + "', '" + PackageApprove.ToString() + "', '" + PackageReject.ToString() + "') ";
                 komut.ExecuteNonQuery();
                 conn.Close();
-                MessageBox.Show("Grup başarılı bir şekilde kaydedildi!", "Grup Kayıt Ekranı");
+                MessageBox.Show("Grup başarılı bir şekilde kaydedildi!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message.ToString(), "Hata");
+                MessageBox.Show(ex.Message.ToString(), "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

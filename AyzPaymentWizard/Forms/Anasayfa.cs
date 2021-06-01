@@ -195,13 +195,13 @@ namespace AyzPaymentWizard
             if ((status == (int)Helper.PacketStatus.SendToApproval) || (status == (int)Helper.PacketStatus.SentToBank) || (status == (int)Helper.PacketStatus.AnswerReceivedBank) || (status == (int)Helper.PacketStatus.Approved))
             {
                 if (status == (int)Helper.PacketStatus.SendToApproval)
-                    MessageBox.Show("Paket Onaya Yollandığı İçin Düzenlenemez!", "Uyarı");
+                    MessageBox.Show("Paket Onaya Yollandığı İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 else if (status == (int)Helper.PacketStatus.SentToBank)
-                    MessageBox.Show("Paket Bankaya Yollandığı İçin Düzenlenemez!", "Uyarı");
+                    MessageBox.Show("Paket Bankaya Yollandığı İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 else if (status == (int)Helper.PacketStatus.AnswerReceivedBank)
-                    MessageBox.Show("Paketin Akibeti Alındığı İçin Düzenlenemez!", "Uyarı");
+                    MessageBox.Show("Paketin Akibeti Alındığı İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 else if (status == (int)Helper.PacketStatus.Approved)
-                    MessageBox.Show("Paketin Onaylandığı İçin Düzenlenemez!", "Uyarı");
+                    MessageBox.Show("Paketin Onaylandığı İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -214,7 +214,7 @@ namespace AyzPaymentWizard
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Hata:\n" + ex.Message);
+                        MessageBox.Show("Hata:\n" + ex.Message,"Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
             }
@@ -237,7 +237,7 @@ namespace AyzPaymentWizard
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Hata:\n" + ex.Message);
+                    MessageBox.Show("Hata:\n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
         }
@@ -284,7 +284,7 @@ namespace AyzPaymentWizard
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hata: \n" + ex.Message.ToString());
+                MessageBox.Show("Hata: \n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -339,7 +339,7 @@ namespace AyzPaymentWizard
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hata: \n" + ex.Message);
+                MessageBox.Show("Hata: \n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -388,7 +388,7 @@ namespace AyzPaymentWizard
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hata: \n" + ex.Message);
+                MessageBox.Show("Hata: \n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -444,7 +444,7 @@ namespace AyzPaymentWizard
 
                 if (!SftpConnectionCheck())
                 {
-                    MessageBox.Show("SFTP Bağlantı Bilgilerinizi Kontrol Ediniz!", "SFTP Adresi Bilgilenirme Ekranı");
+                    MessageBox.Show("SFTP Bağlantı Bilgilerinizi Kontrol Ediniz!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -463,7 +463,7 @@ namespace AyzPaymentWizard
 
                     if (check)
                     {
-                        MessageBox.Show("Bu Paket daha önce bankaya iletildi!", "UYARI");
+                        MessageBox.Show("Bu Paket daha önce bankaya iletildi!", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
@@ -651,7 +651,7 @@ namespace AyzPaymentWizard
 
                                 if (resultCode == 1)
                                 {
-                                    MessageBox.Show("Paket Bankaya İletildi!", "UYARI");
+                                    MessageBox.Show("Paket Bankaya İletildi!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                                     using (SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString))
                                     {
@@ -669,7 +669,7 @@ namespace AyzPaymentWizard
                                 }
                                 else if (resultCode == 0)
                                 {
-                                    MessageBox.Show("Paket Bankaya İletilirken bir sorun oluştu.!\n " + message + "", "UYARI");
+                                    MessageBox.Show("Paket Bankaya İletilirken bir sorun oluştu.!\n " + message + "", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 }
                             }
 
@@ -679,7 +679,7 @@ namespace AyzPaymentWizard
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Hata :\n" + ex.ToString());
+                            MessageBox.Show("Hata :\n" + ex.ToString(),"Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                 }
@@ -723,7 +723,7 @@ namespace AyzPaymentWizard
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hata: \n" + ex.Message);
+                MessageBox.Show("Hata: \n" + ex.Message,"Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -756,7 +756,7 @@ namespace AyzPaymentWizard
 
             if (statu == (int)Helper.PacketStatus.AnswerReceivedBank)
             {
-                MessageBox.Show("Paketin Akibeti Alınmıştır!","Uyarı");
+                MessageBox.Show("Paketin Akibeti Alınmıştır!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -828,7 +828,7 @@ namespace AyzPaymentWizard
                     List<string> fileNameList = FileNameList(folderPath, hostName, port, sftpUserName, password);
                     if (fileNameList.Count == 0)
                     {
-                        MessageBox.Show("Banka Henüz Ödeme Paketinizi İşleme Almamıştır!", "Bankadan Gelen Cevap");
+                        MessageBox.Show("Banka Henüz Ödeme Paketinizi İşleme Almamıştır!", "Bankadan Gelen Cevap", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
@@ -894,7 +894,7 @@ namespace AyzPaymentWizard
                                 }
                                 catch (Exception ex)
                                 {
-                                    MessageBox.Show("Hata: \n" + ex.Message);
+                                    MessageBox.Show("Hata: \n" + ex.Message,"Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 }
                             }
                         }
@@ -921,7 +921,7 @@ namespace AyzPaymentWizard
                         }
                         if (status != (int)Helper.PacketStatus.AnswerReceivedBank && (paymentStatus == 0 || paymentStatus == null))
                         {
-                            MessageBox.Show("Banka Henüz Ödeme Paketinizi İşleme Almamıştır!", "Bankadan Gelen Cevap");
+                            MessageBox.Show("Banka Henüz Ödeme Paketinizi İşleme Almamıştır!", "Bankadan Gelen Cevap", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         #endregion
                     }

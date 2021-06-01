@@ -16,7 +16,7 @@ using System.Windows.Forms;
 namespace AyzPaymentWizard
 {
     public partial class LoginForm : Form
-    {        
+    {
         SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString);
         SqlCommand command = new SqlCommand();
         SqlDataReader dr;
@@ -46,9 +46,9 @@ namespace AyzPaymentWizard
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
-        {                           
+        {
             var userName = txtLoginName.Text;
-            var password = txtLoginPassword.Text;            
+            var password = txtLoginPassword.Text;
             string encryptionText = EncryptionAlgorithm.Encrytion(password);
             string decryptionText = EncryptionAlgorithm.Decrytion(encryptionText);
             command.CommandText = "SELECT ID, FIRMNR FROM [AYZ_PW_USER] WHERE NAME = '" + userName + "' AND PASSWORD = '" + encryptionText + "'";
@@ -58,7 +58,7 @@ namespace AyzPaymentWizard
 
             if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(password))
             {
-                MessageBox.Show("Kullanıcı adı ve/veya şifre boş geçilemez.", "Uyarı");
+                MessageBox.Show("Kullanıcı adı ve/veya şifre boş geçilemez.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -90,7 +90,7 @@ namespace AyzPaymentWizard
                 }
                 else
                 {
-                    MessageBox.Show("Kullanıcı adı ve/veya şifre yanlış.", "Uyarı");
+                    MessageBox.Show("Kullanıcı adı ve/veya şifre yanlış.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             conn.Close();
@@ -199,6 +199,6 @@ namespace AyzPaymentWizard
                 txtLoginPassword.PasswordChar = '*';
             }
         }
-        
+
     }
 }

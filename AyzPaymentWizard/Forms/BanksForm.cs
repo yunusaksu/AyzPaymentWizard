@@ -180,7 +180,7 @@ namespace AyzPaymentWizard.Forms
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Hata: \n" + ex.Message);
+                    MessageBox.Show("Hata: \n" + ex.Message,"Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
         }
@@ -282,7 +282,7 @@ namespace AyzPaymentWizard.Forms
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Hata: \n" + ex.Message);
+                    MessageBox.Show("Hata: \n" + ex.Message,"Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
         }

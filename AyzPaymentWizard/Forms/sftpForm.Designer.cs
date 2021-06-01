@@ -50,7 +50,6 @@
             this.dgvSftp.Size = new System.Drawing.Size(1232, 403);
             this.dgvSftp.TabIndex = 0;
             this.dgvSftp.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSftp_CellClick);
-            this.dgvSftp.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvSftp_CellMouseClick);
             this.dgvSftp.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvSftp_CellPainting);
             this.dgvSftp.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvSftp_KeyDown);
             // 

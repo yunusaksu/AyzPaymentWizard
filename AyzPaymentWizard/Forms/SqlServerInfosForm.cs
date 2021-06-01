@@ -52,7 +52,7 @@ namespace AyzPaymentWizard.Forms
             WriteINI("ServerUserPasswordBaslik", "ServerPass", EncryptedUserPassword, ConnectionHelper.SystemIniPath);
             string EncryptedDatabaseName = EncryptionAlgorithm.Encrytion(txtDatabaseName.Text);
             WriteINI("DatabaseNameBaslik", "Database", EncryptedDatabaseName, ConnectionHelper.SystemIniPath);
-            MessageBox.Show("Bilgiler Kaydedildi!", "Bilgi Ekranı");
+            MessageBox.Show("Bilgiler Kaydedildi!", "Bilgi Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
@@ -97,18 +97,18 @@ namespace AyzPaymentWizard.Forms
                     conn.Open();
                     if ((int)conn.State == 1)
                     {
-                        MessageBox.Show("Database Bağlantısı Kuruldu!", "Bağlantı Test Ekranı");
+                        MessageBox.Show("Database Bağlantısı Kuruldu!", "Bağlantı Test Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else if ((int)conn.State == 0)
                     {
-                        MessageBox.Show("Bağlantı Kapalı!", "Bağlantı Test Ekranı");
+                        MessageBox.Show("Bağlantı Kapalı!", "Bağlantı Test Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
 
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hata Meydana Geldi!\n" + ex.Message, "Hata Meydana Geldi");
+                MessageBox.Show("Hata Meydana Geldi!\n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
