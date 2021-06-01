@@ -40,9 +40,17 @@ namespace AyzPaymentWizard.Forms
             dgvSftp.Columns["FOLDERPATH"].HeaderText = "SFTP KLASÖR YOLU (/E/AYZ_FTP/Yunus/ şeklinde)";                                  
             dgvSftp.Columns["FOLDERPATH"].Width = 370;
             dgvSftp.Columns["PAYMENTORDERLOGFOLDER"].HeaderText = "ÖDEME EMİRLERİ KAYIT KLASÖRÜ";
-            dgvSftp.Columns["PAYMENTORDERLOGFOLDER"].Width = 300;                        
+            dgvSftp.Columns["PAYMENTORDERLOGFOLDER"].Width = 300;
+            dgvSftp.Columns.Add("Hello", "Hello");//["PAYMENTORDERLOGFOLDER"].HeaderText = "ÖDEME EMİRLERİ KAYIT KLASÖRÜ";
+            dgvSftp.Columns["Hello"].Width = 350;
             dgvSftp.DefaultCellStyle.Font = new Font("Time News Roman", 11);
             dgvSftp.ColumnHeadersDefaultCellStyle.Font = new Font("Time News Roman", 10);
+            //BUNU da Ekeldim
+            //----**------**--------**--**********----*-****---**
+            this.dgvSftp.Columns["Hello"].DefaultCellStyle.Padding =  new Padding(20, 0, 0, 0);
+            this.dgvSftp.CellPainting += new DataGridViewCellPaintingEventHandler(dgvSftp_CellPainting);
+            this.dgvSftp.CellClick += new DataGridViewCellEventHandler(dgvSftp_CellClick);
+
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -157,21 +165,82 @@ namespace AyzPaymentWizard.Forms
 
         private void dgvSftp_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            int selectedRowIndex = e.RowIndex;
-            var selectedAddressColumnIndex = dgvSftp.Rows[selectedRowIndex].Cells["PAYMENTORDERLOGFOLDER"].ColumnIndex;
-            if (e.ColumnIndex == selectedAddressColumnIndex)
-            {                
-                using (FolderBrowserDialog fbd = new FolderBrowserDialog() { Description = "Yolu Seçiniz" })
+            //int selectedRowIndex = e.RowIndex;
+            //var selectedAddressColumnIndex = dgvSftp.Rows[selectedRowIndex].Cells["PAYMENTORDERLOGFOLDER"].ColumnIndex;
+            //if (e.ColumnIndex == selectedAddressColumnIndex)
+            //{                
+            //    using (FolderBrowserDialog fbd = new FolderBrowserDialog() { Description = "Yolu Seçiniz" })
+            //    {
+            //        if (fbd.ShowDialog() == DialogResult.OK)
+            //        {
+            //            foreach (string item in Directory.GetFiles(fbd.SelectedPath))
+            //            {
+            //                FileInfo fi = new FileInfo(item);
+            //                dgvSftp[e.ColumnIndex, e.RowIndex].Value = fi.Directory;
+            //            }
+            //        }
+            //    }
+            //}
+        }
+        //Data Gridde Bu Eventi  Ekledim
+        private void dgvSftp_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                DataGridView grid = sender as DataGridView;
+                int pad =
+                grid.Columns[e.ColumnIndex].DefaultCellStyle.Padding.Left;
+                if (pad > 5)
                 {
-                    if (fbd.ShowDialog() == DialogResult.OK)
+                    Rectangle rect = grid.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, true);
+                    rect.X += rect.Width - pad;
+                    rect.Y += 2;
+                    rect.Width = pad;
+                    rect.Height = rect.Height - 4;
+
+                    if (rect.Contains(grid.PointToClient(Control.MousePosition)))
                     {
-                        foreach (string item in Directory.GetFiles(fbd.SelectedPath))
+                        using (FolderBrowserDialog fbd = new FolderBrowserDialog() { Description = "Yolu Seçiniz" })
                         {
-                            FileInfo fi = new FileInfo(item);
-                            dgvSftp[e.ColumnIndex, e.RowIndex].Value = fi.Directory;
+                            if (fbd.ShowDialog() == DialogResult.OK)
+                            {
+                                foreach (string item in Directory.GetFiles(fbd.SelectedPath))
+                                {
+                                    FileInfo fi = new FileInfo(item);
+                                    dgvSftp[e.ColumnIndex, e.RowIndex].Value = fi.Directory;
+                                }
+                            }
                         }
+
                     }
                 }
+            }
+            catch
+            {
+            }
+        }
+
+        //Data Gridde Bu Eventi  Ekledim
+        private void dgvSftp_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+
+            if (e.CellStyle.Padding.Left > 5)
+            {
+                DataGridView grid = sender as DataGridView;
+                e.Paint(e.ClipBounds, DataGridViewPaintParts.All);
+                Rectangle rect = e.CellBounds;
+                rect.X += rect.Width - (e.CellStyle.Padding.Left - 1);
+                rect.Y += 2;
+                rect.Width = e.CellStyle.Padding.Left - 1;
+                rect.Height = rect.Height - 4;
+                ButtonState state = (Control.MouseButtons == MouseButtons.Right &&
+                rect.Contains(grid.PointToClient(Control.MousePosition))) ? ButtonState.Pushed : ButtonState.Normal;
+                ControlPaint.DrawButton(e.Graphics, rect, state);
+
+                StringFormat formater = new StringFormat();//added
+                formater.Alignment = StringAlignment.Center;//added
+                e.Graphics.DrawString("...", e.CellStyle.Font, new SolidBrush(e.CellStyle.ForeColor), rect, formater);//added
+                e.Handled = true;
             }
         }
     }
