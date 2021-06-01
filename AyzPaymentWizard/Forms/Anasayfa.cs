@@ -71,6 +71,8 @@ namespace AyzPaymentWizard
             ArchiveToolTip.SetToolTip(btnArchive, "Paketi Arşivle");
             ToolTip AkibetToolTip = new ToolTip();
             AkibetToolTip.SetToolTip(btnAkibetSorgulama, "Akibet Sorgula");
+            ToolTip RefreshToolTip = new ToolTip();
+            RefreshToolTip.SetToolTip(btnRefresh, "Yenile");
             FillPacketList();
             #region Paket Kolon Görünüm,Header Text ve Display Index Ayarları
             dataGridViewPacket.ReadOnly = true;
@@ -182,22 +184,38 @@ namespace AyzPaymentWizard
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
+            int status = 0;
             int packetId = 0;
             for (int i = 0; i < dataGridViewPacket.SelectedRows.Count; i++)
             {
                 packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
+                status = (int)dataGridViewPacket.SelectedRows[i].Cells["STATUS"].Value;
             }
 
-            if (packetId != 0)
+            if ((status == (int)Helper.PacketStatus.SendToApproval) || (status == (int)Helper.PacketStatus.SentToBank) || (status == (int)Helper.PacketStatus.AnswerReceivedBank) || (status == (int)Helper.PacketStatus.Approved))
             {
-                try
+                if (status == (int)Helper.PacketStatus.SendToApproval)
+                    MessageBox.Show("Paket Onaya Yollandığı İçin Düzenlenemez!", "Uyarı");
+                else if (status == (int)Helper.PacketStatus.SentToBank)
+                    MessageBox.Show("Paket Bankaya Yollandığı İçin Düzenlenemez!", "Uyarı");
+                else if (status == (int)Helper.PacketStatus.AnswerReceivedBank)
+                    MessageBox.Show("Paketin Akibeti Alındığı İçin Düzenlenemez!", "Uyarı");
+                else if (status == (int)Helper.PacketStatus.Approved)
+                    MessageBox.Show("Paketin Onaylandığı İçin Düzenlenemez!", "Uyarı");
+            }
+            else
+            {
+                if (packetId != 0)
                 {
-                    PacketEditForm form = new PacketEditForm(packetId, false);
-                    form.ShowDialog();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Hata:\n" + ex.Message);
+                    try
+                    {
+                        PacketEditForm form = new PacketEditForm(packetId, false);
+                        form.ShowDialog();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Hata:\n" + ex.Message);
+                    }
                 }
             }
         }
@@ -423,10 +441,10 @@ namespace AyzPaymentWizard
                 List<decimal> amountList = new List<decimal>();
                 bool check = false;
 
-                
+
                 if (!SftpConnectionCheck())
                 {
-                    MessageBox.Show("SFTP Bağlantı Bilgilerinizi Kontrol Ediniz!","SFTP Adresi Bilgilenirme Ekranı");
+                    MessageBox.Show("SFTP Bağlantı Bilgilerinizi Kontrol Ediniz!", "SFTP Adresi Bilgilenirme Ekranı");
                 }
                 else
                 {
@@ -729,156 +747,64 @@ namespace AyzPaymentWizard
         private void btnAkibetSorgulama_Click(object sender, EventArgs e)
         {
             int packetId = 0;
+            int statu = 0;
             for (int i = 0; i < dataGridViewPacket.SelectedRows.Count; i++)
             {
                 packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
+                statu = (int)dataGridViewPacket.SelectedRows[i].Cells["STATUS"].Value;
             }
-            if (packetId != 0)
+
+            if (statu == (int)Helper.PacketStatus.AnswerReceivedBank)
             {
-                #region engine 1
-                FileHelperEngine<PAYMENTOUTCOME> engineDetail = new FileHelperEngine<PAYMENTOUTCOME>(); // Detail için
-                engineDetail.ErrorManager.ErrorMode = ErrorMode.SaveAndContinue;
-                engineDetail.BeforeReadRecord += (eng, i) =>
+                MessageBox.Show("Paketin Akibeti Alınmıştır!","Uyarı");
+            }
+            else
+            {
+                if (packetId != 0)
                 {
-                    if (i.RecordLine.StartsWith("!") ||
-                        i.RecordLine.StartsWith("-"))
-                        i.SkipThisRecord = true;
-                };
-                engineDetail.AfterReadRecord += (eng, xd) =>
-                {
-                    if (xd.Record.BANKCODE == 0)
-                        xd.SkipThisRecord = false;
-                };
-                #endregion
-
-                #region engine 2
-                FileHelperEngine<FOOTER> engineFooter = new FileHelperEngine<FOOTER>();
-                engineFooter.ErrorManager.ErrorMode = ErrorMode.SaveAndContinue;
-                engineFooter.BeforeReadRecord += (eng, f) =>
-                {
-                    if (f.RecordLine.StartsWith("H") ||
-                        f.RecordLine.StartsWith("D"))
-                        f.SkipThisRecord = true;
-                };
-                engineFooter.AfterReadRecord += (eng, f) =>
-                {
-                    if (f.RecordLine.StartsWith(" "))
-                        f.SkipThisRecord = true;
-                };
-                #endregion
-
-                #region SFTP Bilgilerini AYZ_PW_SFTP_SETTING tablosundan alma
-                string hostName = "", sftpUserName = "", password = "", folderPath = "", filePath = "";
-                int port = 22;
-
-                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-                {
-                    CommandText = "SELECT SETTING.* FROM AYZ_PW_PACKET AS P " +
-                                  "\nLEFT JOIN AYZ_PW_BANKACCOUNT AS BA ON P.ACCOUNTOUTID = BA.ID " +
-                                  "\nLEFT JOIN AYZ_PW_BANK AS BANK ON BANK.ID = BA.BANKID " +
-                                  "\nLEFT JOIN AYZ_PW_SFTP_SETTING AS SETTING ON SETTING.BANKCODE = BANK.BANKNR " +
-                                  "\nWHERE P.ID = '" + packetId + "' AND SETTING.FIRMNR = '" + Helper.FIRMNR + "'";
-                    komut.CommandText = CommandText;
-                    komut.Connection = conn;
-                    conn.Open();
-                    dr = komut.ExecuteReader();
-                    if (dr.HasRows)
+                    #region engine 1
+                    FileHelperEngine<PAYMENTOUTCOME> engineDetail = new FileHelperEngine<PAYMENTOUTCOME>(); // Detail için
+                    engineDetail.ErrorManager.ErrorMode = ErrorMode.SaveAndContinue;
+                    engineDetail.BeforeReadRecord += (eng, i) =>
                     {
-                        while (dr.Read())
-                        {
-                            hostName = dr["HOSTNAME"].ToString();
-                            port = Convert.ToInt32(dr["PORT"].ToString());
-                            sftpUserName = dr["USERNAME"].ToString();
-                            password = dr["PASSWORD"].ToString();
-                            folderPath = dr["FOLDERPATH"].ToString() + "/";
-                            filePath = dr["PAYMENTORDERLOGFOLDER"].ToString() + "\\";
-                        }
-                        conn.Close();
-                    }
-                }
-                #endregion
-
-                List<string> fileNameList = FileNameList(folderPath, hostName, port, sftpUserName, password);
-                if (fileNameList.Count == 0)
-                {
-                    MessageBox.Show("Banka Henüz Ödeme Paketinizi İşleme Almamıştır!", "Bankadan Gelen Cevap");
-                }
-                else
-                {
-                    foreach (var item in fileNameList)
+                        if (i.RecordLine.StartsWith("!") ||
+                            i.RecordLine.StartsWith("-"))
+                            i.SkipThisRecord = true;
+                    };
+                    engineDetail.AfterReadRecord += (eng, xd) =>
                     {
-                        int summaryId = 0;
-                        bool check = false;
-                        PAYMENTOUTCOME[] DetailResult;
-                        FOOTER[] FooterResult;
-                        string downloadResult = SFTP.Download(filePath, hostName, port, sftpUserName, password, folderPath + item);
-                        JObject jsonDownload = JObject.Parse(downloadResult);
-                        int downloadResultCode = Convert.ToInt32(jsonDownload["ResultCode"].ToString());
-                        if (downloadResultCode == 1)
-                        {
-                            try
-                            {
-                                DetailResult = engineDetail.ReadFile(filePath + item);
-                                FooterResult = engineFooter.ReadFile(filePath + item);
-                                if (DetailResult.Length > 0)
-                                {
-                                    int pID = Convert.ToInt32(DetailResult[0].COMPANYREF.Split('-')[0]);
-                                    if (packetId == pID)
-                                    {
-                                        foreach (var value in DetailResult)
-                                        {
-                                            string returnKey = value.COMPANYREF;
-                                            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-                                            {
-                                                CommandText = "SELECT * FROM AYZ_PW_SUMMARY WHERE RETURNKEY = '" + returnKey + "' AND PACKETID = '" + packetId + "'";
-                                                komut.CommandText = CommandText;
-                                                komut.Connection = conn;
-                                                conn.Open();
-                                                dr = komut.ExecuteReader();
-                                                if (dr.Read())
-                                                {
-                                                    summaryId = Convert.ToInt32(dr["ID"].ToString());
-                                                }
-                                                if (dr.HasRows)
-                                                {
-                                                    check = true;
-                                                }
-                                            }
-                                            if (check == true)
-                                            {
-                                                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-                                                {
-                                                    CommandText = "UPDATE AYZ_PW_SUMMARY SET PAYMENT_STATUS = '" + value.PAYMENTSTATUS + "' WHERE ID = '" + summaryId + "'";
-                                                    komut.CommandText = CommandText;
-                                                    komut.Connection = conn;
-                                                    conn.Open();
-                                                    komut.ExecuteNonQuery();
-                                                    conn.Close();
-                                                }
-                                            }
-                                        }
-                                        if (check == true)
-                                        {
-                                            DebitClosingForm form = new DebitClosingForm(packetId, item, DetailResult, FooterResult);
-                                            form.ShowDialog();
-                                        }
-                                    }
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show("Hata: \n" + ex.Message);
-                            }
-                        }
-                    }
-                    #region Paket Statü Check
-                    int status = 0;
-                    int? paymentStatus = 0;
+                        if (xd.Record.BANKCODE == 0)
+                            xd.SkipThisRecord = false;
+                    };
+                    #endregion
+
+                    #region engine 2
+                    FileHelperEngine<FOOTER> engineFooter = new FileHelperEngine<FOOTER>();
+                    engineFooter.ErrorManager.ErrorMode = ErrorMode.SaveAndContinue;
+                    engineFooter.BeforeReadRecord += (eng, f) =>
+                    {
+                        if (f.RecordLine.StartsWith("H") ||
+                            f.RecordLine.StartsWith("D"))
+                            f.SkipThisRecord = true;
+                    };
+                    engineFooter.AfterReadRecord += (eng, f) =>
+                    {
+                        if (f.RecordLine.StartsWith(" "))
+                            f.SkipThisRecord = true;
+                    };
+                    #endregion
+
+                    #region SFTP Bilgilerini AYZ_PW_SFTP_SETTING tablosundan alma
+                    string hostName = "", sftpUserName = "", password = "", folderPath = "", filePath = "";
+                    int port = 22;
+
                     using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                     {
-                        CommandText = "SELECT TOP 1 P.STATUS,S.PAYMENT_STATUS " +
-                                      "\nFROM AYZ_PW_SUMMARY AS S LEFT JOIN AYZ_PW_PACKET P ON S.PACKETID = P.ID " +
-                                      "\nWHERE P.ID = " + packetId + " AND S.PAYMENT_STATUS = 1";
+                        CommandText = "SELECT SETTING.* FROM AYZ_PW_PACKET AS P " +
+                                      "\nLEFT JOIN AYZ_PW_BANKACCOUNT AS BA ON P.ACCOUNTOUTID = BA.ID " +
+                                      "\nLEFT JOIN AYZ_PW_BANK AS BANK ON BANK.ID = BA.BANKID " +
+                                      "\nLEFT JOIN AYZ_PW_SFTP_SETTING AS SETTING ON SETTING.BANKCODE = BANK.BANKNR " +
+                                      "\nWHERE P.ID = '" + packetId + "' AND SETTING.FIRMNR = '" + Helper.FIRMNR + "'";
                         komut.CommandText = CommandText;
                         komut.Connection = conn;
                         conn.Open();
@@ -887,16 +813,118 @@ namespace AyzPaymentWizard
                         {
                             while (dr.Read())
                             {
-                                status = Convert.ToInt32(dr["STATUS"].ToString());
-                                paymentStatus = Convert.ToInt32(dr["PAYMENT_STATUS"].ToString());
+                                hostName = dr["HOSTNAME"].ToString();
+                                port = Convert.ToInt32(dr["PORT"].ToString());
+                                sftpUserName = dr["USERNAME"].ToString();
+                                password = dr["PASSWORD"].ToString();
+                                folderPath = dr["FOLDERPATH"].ToString() + "/";
+                                filePath = dr["PAYMENTORDERLOGFOLDER"].ToString() + "\\";
                             }
+                            conn.Close();
                         }
                     }
-                    if (status != (int)Helper.PacketStatus.AnswerReceivedBank && (paymentStatus == 0 || paymentStatus == null))
+                    #endregion
+
+                    List<string> fileNameList = FileNameList(folderPath, hostName, port, sftpUserName, password);
+                    if (fileNameList.Count == 0)
                     {
                         MessageBox.Show("Banka Henüz Ödeme Paketinizi İşleme Almamıştır!", "Bankadan Gelen Cevap");
                     }
-                    #endregion                    
+                    else
+                    {
+                        foreach (var item in fileNameList)
+                        {
+                            int summaryId = 0;
+                            bool check = false;
+                            PAYMENTOUTCOME[] DetailResult;
+                            FOOTER[] FooterResult;
+                            string downloadResult = SFTP.Download(filePath, hostName, port, sftpUserName, password, folderPath + item);
+                            JObject jsonDownload = JObject.Parse(downloadResult);
+                            int downloadResultCode = Convert.ToInt32(jsonDownload["ResultCode"].ToString());
+                            if (downloadResultCode == 1)
+                            {
+                                try
+                                {
+                                    DetailResult = engineDetail.ReadFile(filePath + item);
+                                    FooterResult = engineFooter.ReadFile(filePath + item);
+                                    if (DetailResult.Length > 0)
+                                    {
+                                        int pID = Convert.ToInt32(DetailResult[0].COMPANYREF.Split('-')[0]);
+                                        if (packetId == pID)
+                                        {
+                                            foreach (var value in DetailResult)
+                                            {
+                                                string returnKey = value.COMPANYREF;
+                                                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                                                {
+                                                    CommandText = "SELECT * FROM AYZ_PW_SUMMARY WHERE RETURNKEY = '" + returnKey + "' AND PACKETID = '" + packetId + "'";
+                                                    komut.CommandText = CommandText;
+                                                    komut.Connection = conn;
+                                                    conn.Open();
+                                                    dr = komut.ExecuteReader();
+                                                    if (dr.Read())
+                                                    {
+                                                        summaryId = Convert.ToInt32(dr["ID"].ToString());
+                                                    }
+                                                    if (dr.HasRows)
+                                                    {
+                                                        check = true;
+                                                    }
+                                                }
+                                                if (check == true)
+                                                {
+                                                    using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                                                    {
+                                                        CommandText = "UPDATE AYZ_PW_SUMMARY SET PAYMENT_STATUS = '" + value.PAYMENTSTATUS + "' WHERE ID = '" + summaryId + "'";
+                                                        komut.CommandText = CommandText;
+                                                        komut.Connection = conn;
+                                                        conn.Open();
+                                                        komut.ExecuteNonQuery();
+                                                        conn.Close();
+                                                    }
+                                                }
+                                            }
+                                            if (check == true)
+                                            {
+                                                DebitClosingForm form = new DebitClosingForm(packetId, item, DetailResult, FooterResult);
+                                                form.ShowDialog();
+                                            }
+                                        }
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show("Hata: \n" + ex.Message);
+                                }
+                            }
+                        }
+                        #region Paket Statü Check
+                        int status = 0;
+                        int? paymentStatus = 0;
+                        using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                        {
+                            CommandText = "SELECT TOP 1 P.STATUS,S.PAYMENT_STATUS " +
+                                          "\nFROM AYZ_PW_SUMMARY AS S LEFT JOIN AYZ_PW_PACKET P ON S.PACKETID = P.ID " +
+                                          "\nWHERE P.ID = " + packetId + " AND S.PAYMENT_STATUS = 1";
+                            komut.CommandText = CommandText;
+                            komut.Connection = conn;
+                            conn.Open();
+                            dr = komut.ExecuteReader();
+                            if (dr.HasRows)
+                            {
+                                while (dr.Read())
+                                {
+                                    status = Convert.ToInt32(dr["STATUS"].ToString());
+                                    paymentStatus = Convert.ToInt32(dr["PAYMENT_STATUS"].ToString());
+                                }
+                            }
+                        }
+                        if (status != (int)Helper.PacketStatus.AnswerReceivedBank && (paymentStatus == 0 || paymentStatus == null))
+                        {
+                            MessageBox.Show("Banka Henüz Ödeme Paketinizi İşleme Almamıştır!", "Bankadan Gelen Cevap");
+                        }
+                        #endregion
+                    }
                 }
             }
         }
@@ -961,6 +989,12 @@ namespace AyzPaymentWizard
         {
             SqlServerInfosForm form = new SqlServerInfosForm();
             form.Show();
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
+            form.FillPacketList();
         }
     }
 }

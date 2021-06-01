@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -86,7 +87,7 @@ namespace AyzPaymentWizard.Forms
                 payment.BANKCODE = DetailResult[i].BANKCODE;
                 payment.PAYMENTSTATUS = DetailResult[i].PAYMENTSTATUS;
                 payment.CURRENCYCODE = DetailResult[i].CURRENCYCODE;
-                payment.AMOUNT = DetailResult[i].AMOUNT;
+                payment.AMOUNT = Convert.ToDecimal(DetailResult[i].AMOUNT.Replace(".", ",")).ToString();
                 payment.DESCRIPTION = DetailResult[i].DESCRIPTION;
                 payment.COMPANYREF = DetailResult[i].COMPANYREF;
                 payment.TRANSACTIONNO = DetailResult[i].TRANSACTIONNO;
@@ -157,7 +158,7 @@ namespace AyzPaymentWizard.Forms
         }
 
         private void btnDebitClosing_Click(object sender, EventArgs e)
-        {
+        {            
             string TigerBankAccNo = "";
             string BankName = "";
             #region Paket Id'den paranın çıkacağı hesap bulunur. (AYZ_PW_BANKACCOUNT tablosundan)
