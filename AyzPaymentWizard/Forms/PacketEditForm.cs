@@ -258,7 +258,7 @@ namespace AyzPaymentWizard.Forms
                 DGVRightEdit.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
                 DGVRightEdit.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.White;
             }
-        }        
+        }
 
         private void DGVRightEdit_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
@@ -321,42 +321,42 @@ namespace AyzPaymentWizard.Forms
 
         private void DGVRightEdit_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-           
+
             DataGridViewTextBoxCell cell = DGVRightEdit[DGVRightEdit.Columns["Paid"].Index, e.RowIndex] as DataGridViewTextBoxCell;
-            
-            if (cell!=null)
+
+            if (cell != null)
             {
                 decimal odenmekIstenen;
-                var success=  Decimal.TryParse( DGVRightEdit.Rows[e.RowIndex].Cells["Paid"].EditedFormattedValue.ToString(),out odenmekIstenen);
+                var success = Decimal.TryParse(DGVRightEdit.Rows[e.RowIndex].Cells["Paid"].EditedFormattedValue.ToString(), out odenmekIstenen);
                 decimal odenmesigereken;
-                Decimal.TryParse(DGVRightEdit.Rows[e.RowIndex].Cells["Total"].Value.ToString(),out odenmesigereken);
+                Decimal.TryParse(DGVRightEdit.Rows[e.RowIndex].Cells["Total"].Value.ToString(), out odenmesigereken);
                 if (success)
                 {
                     decimal sifirkontrolu = 0m;
-                    if (odenmekIstenen > odenmesigereken ||odenmekIstenen<=sifirkontrolu)
+                    if (odenmekIstenen > odenmesigereken || odenmekIstenen <= sifirkontrolu)
                     {
-                        if(odenmekIstenen > odenmesigereken)
+                        if (odenmekIstenen > odenmesigereken)
                         {
                             DGVRightEdit.Rows[e.RowIndex].ErrorText = $"Ödenecek tutar, Ödenmesi gereken'den dafa fazla olamaz!.\nÖdenecek değeri tekrar giriniz!";
                             e.Cancel = true;
                         }
-                        if(odenmekIstenen <= sifirkontrolu)
+                        if (odenmekIstenen <= sifirkontrolu)
                         {
                             DGVRightEdit.Rows[e.RowIndex].ErrorText = $"Sıfırdan daha büyük bir değer giriniz!";
                             e.Cancel = true;
                         }
-                        
-                        
+
+
                     }
                     else
                     {
                         e.Cancel = false;
-                       string odenmekIstenenF= String.Format("{0:#,##}", odenmekIstenen.ToString());
-                        DGVRightEdit.Rows[e.RowIndex].Cells["Paid"].Value = odenmekIstenenF;   
+                        string odenmekIstenenF = String.Format("{0:#,##}", odenmekIstenen.ToString());
+                        DGVRightEdit.Rows[e.RowIndex].Cells["Paid"].Value = odenmekIstenenF;
                     }
-                    
+
                 }
-                else if(!success)
+                else if (!success)
                 {
                     if (string.IsNullOrEmpty(DGVRightEdit.Rows[e.RowIndex].Cells["Paid"].EditedFormattedValue.ToString()))
                     {
@@ -364,7 +364,7 @@ namespace AyzPaymentWizard.Forms
                         e.Cancel = true;
                     }
                 }
-               
+
             }
         }
         //TextBox Key down 
@@ -520,7 +520,7 @@ namespace AyzPaymentWizard.Forms
                 sumedup += decimal.Parse(DGVRightEdit.Rows[i].Cells["Paid"].Value.ToString());
             }
 
-            txtPaid.Text = sumedup.ToString();            
+            txtPaid.Text = sumedup.ToString();
 
             // Ödeme çıkış hesap bilgilerini AYZ_PW_BANKACCOUNT tablosundan combobox'a getiren kod.
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
@@ -561,7 +561,7 @@ namespace AyzPaymentWizard.Forms
                 foreach (var gostermeDGVL in gostermeyecekDGVL)
                 {
                     DGVLeftEdit.Columns[gostermeDGVL].Visible = false;
-                }                
+                }
             }
             else if (detailSendingValue == 3) // Değer 3 ise Boyut Satırları Üzerinden ödeme yapılacaktır anlamına gelir.
             {
@@ -578,7 +578,7 @@ namespace AyzPaymentWizard.Forms
                     DGVLeftEdit.Columns[boyutheadDGVL.Key].ReadOnly = true;
                 }
             }
-            
+
 
             string[] boyutgosterilmeyecekDGVL = { "PayRef", "ClCardRef", "FicheRef", "ModuleNr", "TrCode", "IsPerson", "Branch", "TrType", "Paid", "GenExp1",
                                                   "EmailAdres", "TrCode", "TrCurr", "TaxNr", "TaxOffice", "DD1REF", "DD2REF", "DD3REF", "DD4REF", "DD5REF",
@@ -587,20 +587,20 @@ namespace AyzPaymentWizard.Forms
             {
                 DGVLeftEdit.Columns[boyutgostermeDGVL].Visible = false;
             }
-           
+
             var HeaderDGVL = new Dictionary<string, string>()
             {
                 { "DueDate", "Vade Tarihi" },{"CurCode", "Döviz"}, {"Total","Tutar" },{"ClCode","Cari Kod" }, {"ClDef","Cari Hesap Tanımı" },{"IBAN","IBAN" },
                 {"FicheDate","Fiş Tarihi"},{"FicheNo","FicheNo"},{"DoCode","Belge Numarası"}
             };
-            
+
             foreach (var headDGVL in HeaderDGVL)
             {
                 DGVLeftEdit.Columns[headDGVL.Key].HeaderText = headDGVL.Value;
                 DGVLeftEdit.Columns[headDGVL.Key].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
 
                 DGVLeftEdit.Columns[headDGVL.Key].ReadOnly = true;
-                
+
 
             }
 
@@ -637,7 +637,7 @@ namespace AyzPaymentWizard.Forms
                 DGVRightEdit.Columns[gostermeDGVR].Visible = false;
             }
             DGVRightEdit.Columns["Paid"].HeaderCell.Style.BackColor = Color.Red;
-           
+
             var gosterilecekDGVRHeader = new Dictionary<string, string>()
             {
                 {"CurCode","Döviz" }, { "Paid", "Ödenecek" }, { "Total", "Ödenmesi Gereken" },{ "DueDate", "Vade Tarihi"},{ "ClDef", "Cari Hesap Tanımı" },{"IBAN","IBAN" },
@@ -654,7 +654,7 @@ namespace AyzPaymentWizard.Forms
                 if (DGVRightEdit.Columns[gosterDGVRHead.Key].HeaderText != "Ödenecek")
                 {
                     DGVRightEdit.Columns[gosterDGVRHead.Key].ReadOnly = true;
-                 //   DGVRightEdit.Columns["IBAN"].ReadOnly = true;
+                    //   DGVRightEdit.Columns["IBAN"].ReadOnly = true;
                 }
 
             }
@@ -1013,7 +1013,10 @@ namespace AyzPaymentWizard.Forms
                             debit.TrCurr = dr["TRCURR"].ToString() == "" ? 0 : Convert.ToInt32(dr["TRCURR"].ToString());
                             debit.ClCode = dr["CL_CODE"].ToString();
                             debit.ClDef = dr["CLIENTNAME"].ToString();
-                            debit.IsPerson = dr["ISPERSON"].ToString() == "" ? 0 : Convert.ToInt32(dr["ISPERSON"].ToString());
+                            if (debit.IsPerson == 0)
+                                debit.IsPerson = 0;
+                            else
+                                debit.IsPerson = Convert.ToInt32(dr["ISPERSON"].ToString());
                             debit.TaxNr = dr["CL_TAXNR"].ToString();
                             debit.TaxOffice = dr["CL_TAXOFFICE"].ToString();
                             debit.IBAN = dr["IBAN"].ToString();
@@ -1055,7 +1058,10 @@ namespace AyzPaymentWizard.Forms
                             debit.TrCurr = dr["TRCURR"].ToString() == "" ? 0 : Convert.ToInt32(dr["TRCURR"].ToString());
                             debit.ClCode = dr["CL_CODE"].ToString();
                             debit.ClDef = dr["CLIENTNAME"].ToString();
-                            debit.IsPerson = dr["ISPERSON"].ToString() == "" ? 0 : Convert.ToInt32(dr["ISPERSON"].ToString());
+                            if (debit.IsPerson == 0)
+                                debit.IsPerson = 0;
+                            else
+                                debit.IsPerson = Convert.ToInt32(dr["ISPERSON"].ToString());
                             debit.TaxNr = dr["CL_TAXNR"].ToString();
                             debit.TaxOffice = dr["CL_TAXOFFICE"].ToString();
                             debit.IBAN = dr["IBAN"].ToString();

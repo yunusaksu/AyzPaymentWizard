@@ -37,6 +37,7 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnShow = new System.Windows.Forms.Button();
             this.btnHide = new System.Windows.Forms.Button();
+            this.btnTest = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -74,7 +75,7 @@
             // btnSave
             // 
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnSave.Location = new System.Drawing.Point(273, 230);
+            this.btnSave.Location = new System.Drawing.Point(287, 230);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(121, 30);
             this.btnSave.TabIndex = 4;
@@ -94,7 +95,7 @@
             // btnCancel
             // 
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnCancel.Location = new System.Drawing.Point(416, 230);
+            this.btnCancel.Location = new System.Drawing.Point(419, 230);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(121, 30);
             this.btnCancel.TabIndex = 5;
@@ -129,11 +130,23 @@
             this.btnHide.UseVisualStyleBackColor = false;
             this.btnHide.Click += new System.EventHandler(this.btnHide_Click);
             // 
+            // btnTest
+            // 
+            this.btnTest.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnTest.Location = new System.Drawing.Point(12, 230);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(201, 30);
+            this.btnTest.TabIndex = 8;
+            this.btnTest.Text = "Logo Bağlantısını Test Et";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            // 
             // LogoUserInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(549, 272);
+            this.Controls.Add(this.btnTest);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnShow);
             this.Controls.Add(this.btnHide);
@@ -163,5 +176,6 @@
         private System.Windows.Forms.Button btnHide;
         private System.Windows.Forms.TextBox txtLogoUserPassword;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnTest;
     }
 }

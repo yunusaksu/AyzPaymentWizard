@@ -56,6 +56,24 @@ namespace AyzPaymentWizard.Forms
                 ReviewfillDGVDebitClosing();
                 btnDebitClosing.Enabled = false;
             }
+
+            #region DGVDebitClosing Gridinin Kolon Görünüm,Header Text ve Display Index Ayarları
+            DGVDebitClosing.Columns["CLCARDID"].Visible = false;
+            DGVDebitClosing.Columns["TYPE"].Visible = false;
+            DGVDebitClosing.Columns["COMPANYREF"].Visible = false;
+            DGVDebitClosing.Columns["PAYMENTSTATUS"].Visible = false;
+            DGVDebitClosing.Columns["EFTQUERYNO"].Visible = false;
+            DGVDebitClosing.Columns["TRANSACTIONNO"].HeaderText = "İŞLEM NO";
+            DGVDebitClosing.Columns["DESCRIPTION"].HeaderText = "AÇIKLAMA";
+            DGVDebitClosing.Columns["BANKCODE"].HeaderText = "BANKA KODU";
+            DGVDebitClosing.Columns["TRANSACTION_DATE"].HeaderText = "İŞLEM TARİHİ";
+            DGVDebitClosing.Columns["AMOUNT"].HeaderText = "İŞLEM TUTARI";
+            DGVDebitClosing.Columns["CURRENCYCODE"].HeaderText = "KUR";
+            DGVDebitClosing.Columns["BRANCHCODE"].HeaderText = "ŞUBE KODU";
+            DGVDebitClosing.Columns["CLCODE"].HeaderText = "CARİ HESAP KODU";
+            DGVDebitClosing.Columns["ACCOUNTNO"].HeaderText = "HESAP NO";
+            #endregion
+
         }
 
         private void fillDGVDebitClosing()
@@ -103,16 +121,19 @@ namespace AyzPaymentWizard.Forms
         {
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
-                CommandText = "SELECT D.*, S.CLIENTREF FROM AYZ_PW_SUMMARY AS S " +
+                CommandText = "SELECT D.*, S.CLIENTREF,CLIENT.CODE FROM AYZ_PW_SUMMARY AS S " +
                               "\nLEFT JOIN AYZ_PW_DOWNLOADED_FILE_DETAIL AS D ON S.RETURNKEY = D.COMPANY_REF " +
+                              "\nLEFT JOIN LG_" + Helper.FIRMANO + "_CLCARD AS CLIENT ON CLIENT.LOGICALREF  = S.CLIENTREF " +
                               "\nWHERE S.PACKETID = " + PacketID + "";
                 komut.CommandText = CommandText;
                 komut.Connection = conn;
                 conn.Open();
                 dr = komut.ExecuteReader();
-                SUB_PAYMENTOUTCOME payment = new SUB_PAYMENTOUTCOME();
+
                 while (dr.Read())
                 {
+                    SUB_PAYMENTOUTCOME payment = new SUB_PAYMENTOUTCOME();
+                    payment.CLCODE = dr["CODE"].ToString();
                     payment.ACCOUNTNO = dr["TARGET_ACCNO"].ToString();
                     payment.BRANCHCODE = Convert.ToInt32(dr["TARGET_BRANCH"].ToString());
                     payment.BANKCODE = Convert.ToInt32(dr["TARGET_BANK"].ToString());
@@ -124,7 +145,7 @@ namespace AyzPaymentWizard.Forms
                     payment.TRANSACTIONNO = Convert.ToInt32(dr["TRANSACTIONNO"].ToString());
                     payment.EFTQUERYNO = Convert.ToInt32(dr["EFTQUERY_NO"].ToString());
                     payment.IBAN = dr["IBAN"].ToString();
-                    payment.TYPE = dr["RECORD_TYPE"].ToString();                    
+                    payment.TYPE = dr["RECORD_TYPE"].ToString();
                     payment.CLCARDID = Convert.ToInt32(dr["CLIENTREF"].ToString());
                     liste.Add(payment);
                 }
@@ -166,9 +187,9 @@ namespace AyzPaymentWizard.Forms
                     int CurType = GetCurType(item.CURRENCYCODE);
                     decimal CurRate = GetCurRate(item.CURRENCYCODE);
                     decimal ReportCurRate = GetReportCurRate();
-                    string day = item.TRANSACTION_DATE.ToString().Substring(0,2);
+                    string day = item.TRANSACTION_DATE.ToString().Substring(0, 2);
                     string month = item.TRANSACTION_DATE.ToString().Substring(2, 2);
-                    string year = item.TRANSACTION_DATE.ToString().Substring(4,4);
+                    string year = item.TRANSACTION_DATE.ToString().Substring(4, 4);
                     UnityObjects.Data bankvo = UnityApp.NewDataObject(UnityObjects.DataObjectType.doBankVoucher);
                     bankvo.New();
                     bankvo.DataFields.FieldByName("INTERNAL_REFERENCE").Value = "~";
@@ -329,7 +350,7 @@ namespace AyzPaymentWizard.Forms
             }
             else
             {
-                MessageBox.Show("Hatalı Logo Giriş Bilgileri Tespit Edildi!","Logo Bilgileri Hatalı!");
+                MessageBox.Show("Hatalı Logo Giriş Bilgileri Tespit Edildi!", "Logo Bilgileri Hatalı!");
             }
 
 
