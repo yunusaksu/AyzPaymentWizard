@@ -55,9 +55,10 @@
             this.sFTPAyarlarıToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnBankAndBankAccAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.logoUserSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnsqlBağlantiAyarlariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripAnasayfa = new System.Windows.Forms.ToolStrip();
-            this.btnsqlBağlantiAyarlariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnRefresh = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPacket)).BeginInit();
@@ -96,6 +97,7 @@
             this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel3.Controls.Add(this.btnRefresh);
             this.panel3.Controls.Add(this.btnAkibetSorgulama);
             this.panel3.Controls.Add(this.btnArchive);
             this.panel3.Controls.Add(this.btnSendToBank);
@@ -363,6 +365,14 @@
             this.logoUserSettingsToolStripMenuItem.Text = "Logo Kullanıcı Ayarları";
             this.logoUserSettingsToolStripMenuItem.Click += new System.EventHandler(this.logoUserSettingsToolStripMenuItem_Click);
             // 
+            // btnsqlBağlantiAyarlariToolStripMenuItem
+            // 
+            this.btnsqlBağlantiAyarlariToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.btnsqlBağlantiAyarlariToolStripMenuItem.Name = "btnsqlBağlantiAyarlariToolStripMenuItem";
+            this.btnsqlBağlantiAyarlariToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
+            this.btnsqlBağlantiAyarlariToolStripMenuItem.Text = "Sql Bağlantı Ayarları";
+            this.btnsqlBağlantiAyarlariToolStripMenuItem.Click += new System.EventHandler(this.btnsqlBağlantiAyarlariToolStripMenuItem_Click);
+            // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
@@ -387,13 +397,20 @@
             this.toolStripAnasayfa.TabIndex = 0;
             this.toolStripAnasayfa.Text = "AnasayfaToolStrip";
             // 
-            // btnsqlBağlantiAyarlariToolStripMenuItem
+            // btnRefresh
             // 
-            this.btnsqlBağlantiAyarlariToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.btnsqlBağlantiAyarlariToolStripMenuItem.Name = "btnsqlBağlantiAyarlariToolStripMenuItem";
-            this.btnsqlBağlantiAyarlariToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
-            this.btnsqlBağlantiAyarlariToolStripMenuItem.Text = "Sql Bağlantı Ayarları";
-            this.btnsqlBağlantiAyarlariToolStripMenuItem.Click += new System.EventHandler(this.btnsqlBağlantiAyarlariToolStripMenuItem_Click);
+            this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRefresh.BackColor = System.Drawing.Color.Transparent;
+            this.btnRefresh.FlatAppearance.BorderSize = 0;
+            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
+            this.btnRefresh.Location = new System.Drawing.Point(1077, 4);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(68, 65);
+            this.btnRefresh.TabIndex = 8;
+            this.btnRefresh.Tag = "";
+            this.btnRefresh.UseVisualStyleBackColor = false;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // Anasayfa
             // 
@@ -450,5 +467,6 @@
         private System.Windows.Forms.ToolStripMenuItem akibetiİnceleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem logoUserSettingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem btnsqlBağlantiAyarlariToolStripMenuItem;
+        private System.Windows.Forms.Button btnRefresh;
     }
 }

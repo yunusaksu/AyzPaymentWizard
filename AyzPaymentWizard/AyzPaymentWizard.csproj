@@ -260,6 +260,7 @@
     <Content Include="Images\HomepageSubBarImages\bank.png" />
     <Content Include="Images\HomepageSubBarImages\editButton.png" />
     <Content Include="Images\HomepageSubBarImages\performed_process.png" />
+    <Content Include="Images\HomepageSubBarImages\refresh.png" />
     <Content Include="Images\HomepageSubBarImages\rejectButton.png" />
     <Content Include="Images\HomepageSubBarImages\reviewButton.png" />
     <Content Include="Images\HomepageSubBarImages\sendToApprove.png" />
