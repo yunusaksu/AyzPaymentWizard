@@ -45,6 +45,7 @@ namespace AyzPaymentWizard.Forms
             dgvSftp.Columns["Hello"].Width = 350;
             dgvSftp.DefaultCellStyle.Font = new Font("Time News Roman", 11);
             dgvSftp.ColumnHeadersDefaultCellStyle.Font = new Font("Time News Roman", 10);
+
             //BUNU da Ekeldim
             //----**------**--------**--**********----*-****---**
             this.dgvSftp.Columns["Hello"].DefaultCellStyle.Padding =  new Padding(20, 0, 0, 0);
@@ -165,22 +166,22 @@ namespace AyzPaymentWizard.Forms
 
         private void dgvSftp_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            //int selectedRowIndex = e.RowIndex;
-            //var selectedAddressColumnIndex = dgvSftp.Rows[selectedRowIndex].Cells["PAYMENTORDERLOGFOLDER"].ColumnIndex;
-            //if (e.ColumnIndex == selectedAddressColumnIndex)
-            //{                
-            //    using (FolderBrowserDialog fbd = new FolderBrowserDialog() { Description = "Yolu Seçiniz" })
-            //    {
-            //        if (fbd.ShowDialog() == DialogResult.OK)
-            //        {
-            //            foreach (string item in Directory.GetFiles(fbd.SelectedPath))
-            //            {
-            //                FileInfo fi = new FileInfo(item);
-            //                dgvSftp[e.ColumnIndex, e.RowIndex].Value = fi.Directory;
-            //            }
-            //        }
-            //    }
-            //}
+            int selectedRowIndex = e.RowIndex;
+            var selectedAddressColumnIndex = dgvSftp.Rows[selectedRowIndex].Cells["PAYMENTORDERLOGFOLDER"].ColumnIndex;
+            if (e.ColumnIndex == selectedAddressColumnIndex)
+            {
+                using (FolderBrowserDialog fbd = new FolderBrowserDialog() { Description = "Yolu Seçiniz" })
+                {
+                    if (fbd.ShowDialog() == DialogResult.OK)
+                    {
+                        foreach (string item in Directory.GetFiles(fbd.SelectedPath))
+                        {
+                            FileInfo fi = new FileInfo(item);
+                            dgvSftp[e.ColumnIndex, e.RowIndex].Value = fi.Directory;
+                        }
+                    }
+                }
+            }
         }
         //Data Gridde Bu Eventi  Ekledim
         private void dgvSftp_CellClick(object sender, DataGridViewCellEventArgs e)
