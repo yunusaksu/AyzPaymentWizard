@@ -197,8 +197,9 @@ namespace AyzPaymentWizard.Forms
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                MessageBox.Show("Hata:\n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
