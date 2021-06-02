@@ -170,13 +170,13 @@ namespace AyzPaymentWizard
                     LeftList.Remove(select[0]);
 
                     //Adding Selected Left Total to Right and Removing from Left
-                  //  decimal sumtobeofPaid = 0.0m;
+                    //  decimal sumtobeofPaid = 0.0m;
                     foreach (var sel in select)
                     {
                         txtSumLeftDGV.Text = (Convert.ToDecimal(txtSumLeftDGV.Text) - sel.Total).ToString();
                         txtSumRightDGV.Text = (Convert.ToDecimal(txtSumRightDGV.Text) + sel.Total).ToString();
 
-                    //    sumtobeofPaid += sel.Total;
+                        //    sumtobeofPaid += sel.Total;
                         //Getting the Currency Code
                         labelCurR.Text = debit.CurCode.ToString();
                         //odencekR update
@@ -186,9 +186,9 @@ namespace AyzPaymentWizard
                     //txtPaidRightDGV.Text = (Convert.ToDecimal(txtPaidRightDGV.Text) + sumtobeofPaid).ToString();
                     //Updating the number of Rows
                     txtTotalLeftDGV.Text = (Convert.ToInt32(txtTotalLeftDGV.Text) - select.Count).ToString();
-                    txtTotalRightDGV.Text= (Convert.ToInt32(txtTotalRightDGV.Text)+select.Count).ToString();
-                    
-                        
+                    txtTotalRightDGV.Text = (Convert.ToInt32(txtTotalRightDGV.Text) + select.Count).ToString();
+
+
 
                 }
             }
@@ -464,7 +464,7 @@ namespace AyzPaymentWizard
             {
                 e.SuppressKeyPress = true;
             }
-        }        
+        }
 
         private void dataGridViewRight_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
@@ -472,7 +472,7 @@ namespace AyzPaymentWizard
             dataGridViewRight.Rows[e.RowIndex].ErrorText = String.Empty;
         }
 
-      
+
         private void dataGridViewRight_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
             decimal sumedup = 0m;
@@ -485,7 +485,7 @@ namespace AyzPaymentWizard
             txtPaidRightDGV.Text = sumedup.ToString();
         }
 
-       
+
 
         private void dataGridViewRight_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
@@ -1234,7 +1234,7 @@ namespace AyzPaymentWizard
         {
             decimal sumRequire = RightList.Sum(x => x.Total);                                                       // Ödenmesi Gereken
             decimal sumPaid = RightList.Sum(x => x.Paid);                                                           // Ödenecek Tutar        
-            int bankOutAccID = (int)cmbOutAccountInfo.SelectedValue;
+            int? bankOutAccID = (int?)cmbOutAccountInfo.SelectedValue;
             string bankAccountNo = "";
             string bankCode = "";
             string kurusAccount = "";
@@ -1246,7 +1246,7 @@ namespace AyzPaymentWizard
             {
                 try
                 {
-                    if (RightList.Count > 0)
+                    if (RightList.Count > 0 && bankOutAccID != null)
                     {
                         komut.CommandText = "INSERT INTO AYZ_PW_PACKET" +
                                     "(" +
@@ -1382,6 +1382,10 @@ namespace AyzPaymentWizard
                     else if (RightList.Count == 0)
                     {
                         MessageBox.Show("Pakete eklenmiş bir ödeme yoktur!", "UYARI!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (bankOutAccID == null)
+                    {
+                        MessageBox.Show("Banka Çıkış Hesabını Seçiniz!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
                 catch (Exception ex)

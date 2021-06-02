@@ -61,10 +61,16 @@ namespace AyzPaymentWizard.Forms
                 }
             }
             txtLogoUserName.Text = username;
-            if (txtLogoUserPassword.Text != "")
+            if (txtLogoUserPassword.Text != "" && String.IsNullOrEmpty(txtLogoUserPassword.Text))
+            {
                 txtLogoUserPassword.Text = EncryptionAlgorithm.Decrytion(userpassword);
+                txtLogoUserName.Text = username;
+            }
             else
-                txtLogoUserPassword.Text = EncryptionAlgorithm.Decrytion(userpassword);
+            {
+                txtLogoUserPassword.Text = userpassword;
+                txtLogoUserName.Text = username;
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
