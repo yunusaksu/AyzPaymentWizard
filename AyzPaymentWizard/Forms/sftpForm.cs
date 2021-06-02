@@ -44,7 +44,13 @@ namespace AyzPaymentWizard.Forms
             dgvSftp.DefaultCellStyle.Font = new Font("Time News Roman", 11);
             dgvSftp.ColumnHeadersDefaultCellStyle.Font = new Font("Time News Roman", 10);
 
+//<<<<<<< HEAD
+//            //BUNU da Ekeldim
+//            //----**------**--------**--**********----*-****---**
+//            this.dgvSftp.Columns["Hello"].DefaultCellStyle.Padding =  new Padding(20, 0, 0, 0);
+//=======
             this.dgvSftp.Columns["PAYMENTORDERLOGFOLDER"].DefaultCellStyle.Padding = new Padding(20, 0, 0, 0);
+
             this.dgvSftp.CellPainting += new DataGridViewCellPaintingEventHandler(dgvSftp_CellPainting);
             this.dgvSftp.CellClick += new DataGridViewCellEventHandler(dgvSftp_CellClick);
 
