@@ -318,6 +318,17 @@ namespace AyzPaymentWizard.Forms
             txtPaid.Text = sumedup.ToString();
         }
 
+        private void DGVRightEdit_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            decimal sumedup = 0m;
+
+            for (int i = 0; i < DGVRightEdit.Rows.Count; i++)
+            {
+                sumedup += decimal.Parse(DGVRightEdit.Rows[i].Cells["Paid"].Value.ToString());
+            }
+
+            txtPaid.Text = sumedup.ToString();
+        }
 
         private void DGVRightEdit_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {

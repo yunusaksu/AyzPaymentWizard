@@ -277,6 +277,7 @@
             this.dataGridViewRight.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewRight_CellValueChanged);
             this.dataGridViewRight.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridViewRight_CurrentCellDirtyStateChanged);
             this.dataGridViewRight.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridViewRight_EditingControlShowing);
+            this.dataGridViewRight.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataGridViewRight_RowsAdded);
             // 
             // panel4
             // 

@@ -170,44 +170,26 @@ namespace AyzPaymentWizard
                     LeftList.Remove(select[0]);
 
                     //Adding Selected Left Total to Right and Removing from Left
-                    decimal sumtobeofPaid = 0.0m;
+                  //  decimal sumtobeofPaid = 0.0m;
                     foreach (var sel in select)
                     {
                         txtSumLeftDGV.Text = (Convert.ToDecimal(txtSumLeftDGV.Text) - sel.Total).ToString();
                         txtSumRightDGV.Text = (Convert.ToDecimal(txtSumRightDGV.Text) + sel.Total).ToString();
 
-                        sumtobeofPaid += sel.Total;
+                    //    sumtobeofPaid += sel.Total;
                         //Getting the Currency Code
                         labelCurR.Text = debit.CurCode.ToString();
                         //odencekR update
-<<<<<<< HEAD
-                       
-                       // txtPaidRightDGV.Text = (Convert.ToDecimal(txtPaidRightDGV.Text) + Convert.ToDecimal(sel.Total)).ToString();
-=======
                         txtPaidRightDGV.Text = (Convert.ToDecimal(txtPaidRightDGV.Text) + Convert.ToDecimal(sel.Total)).ToString();
-
->>>>>>> 2661d2fddbc8073986549ecd01d749338785ac7f
-                        //Decimal sumL = (Convert.ToDecimal(textBoxodenecekR.Text) + sel.Total);
-                        //textBoxodenecekR.Text = sumL.ToString();
-
                     }
-<<<<<<< HEAD
-                    txtPaidRightDGV.Text = (Convert.ToDecimal(txtPaidRightDGV.Text) + sumtobeofPaid).ToString();
+
+                    //txtPaidRightDGV.Text = (Convert.ToDecimal(txtPaidRightDGV.Text) + sumtobeofPaid).ToString();
                     //Updating the number of Rows
                     txtTotalLeftDGV.Text = (Convert.ToInt32(txtTotalLeftDGV.Text) - select.Count).ToString();
                     txtTotalRightDGV.Text= (Convert.ToInt32(txtTotalRightDGV.Text)+select.Count).ToString();
-                    //foreach(var aa in dataGridViewRight.Columns)
-                    //{
-
-                    //}
-                    // dataGridViewRight.Columns["Paid"].Rows
+                    
                         
-=======
 
-                    //Updating the number of Rows
-                    txtTotalLeftDGV.Text = (Convert.ToInt32(txtTotalLeftDGV.Text) - select.Count).ToString();
-                    txtTotalRightDGV.Text = (Convert.ToInt32(txtTotalRightDGV.Text) + select.Count).ToString();
->>>>>>> 2661d2fddbc8073986549ecd01d749338785ac7f
                 }
             }
 
@@ -515,6 +497,18 @@ namespace AyzPaymentWizard
             txtPaidRightDGV.Text = sumedup.ToString();
         }
 
+        private void dataGridViewRight_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            decimal sumedup = 0m;
+
+            for (int i = 0; i < dataGridViewRight.Rows.Count; i++)
+            {
+                sumedup += decimal.Parse(dataGridViewRight.Rows[i].Cells["Paid"].Value.ToString());
+            }
+
+            txtPaidRightDGV.Text = sumedup.ToString();
+        }
+
         private void dataGridViewLeft_SortStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
         {
             try
@@ -566,7 +560,7 @@ namespace AyzPaymentWizard
             FillLeftList();
             source.DataSource = LeftList;
             dataGridViewLeft.DataSource = source;
-            txtPaidRightDGV.Text = "0";
+            //txtPaidRightDGV.Text = "0,00";
 
             // Ödeme çıkış hesap bilgilerini AYZ_PW_BANKACCOUNT tablosundan combobox'a getiren kod.
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
@@ -770,7 +764,7 @@ namespace AyzPaymentWizard
             }
             txtSumRightDGV.Text = sumR.ToString();
 
-<<<<<<< HEAD
+
             ////Getting the total columns for the Paid in PacketPreparation Right
             decimal sumPaidR = 0.00m;
             for (int i = 0; i < dataGridViewRight.Rows.Count; ++i)
@@ -779,8 +773,6 @@ namespace AyzPaymentWizard
             }
             txtPaidRightDGV.Text = sumPaidR.ToString();
 
-=======
->>>>>>> 2661d2fddbc8073986549ecd01d749338785ac7f
         }
 
 

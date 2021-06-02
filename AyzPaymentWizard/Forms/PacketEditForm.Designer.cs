@@ -279,6 +279,7 @@
             this.DGVRightEdit.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.DGVRightEdit_CellValidating);
             this.DGVRightEdit.CurrentCellDirtyStateChanged += new System.EventHandler(this.DGVRightEdit_CurrentCellDirtyStateChanged);
             this.DGVRightEdit.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.DGVRightEdit_EditingControlShowing);
+            this.DGVRightEdit.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.DGVRightEdit_RowsAdded);
             // 
             // panel5
             // 

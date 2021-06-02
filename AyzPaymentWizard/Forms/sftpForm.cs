@@ -44,13 +44,13 @@ namespace AyzPaymentWizard.Forms
             dgvSftp.DefaultCellStyle.Font = new Font("Time News Roman", 11);
             dgvSftp.ColumnHeadersDefaultCellStyle.Font = new Font("Time News Roman", 10);
 
-<<<<<<< HEAD
-            //BUNU da Ekeldim
-            //----**------**--------**--**********----*-****---**
-            this.dgvSftp.Columns["Hello"].DefaultCellStyle.Padding =  new Padding(20, 0, 0, 0);
-=======
+//<<<<<<< HEAD
+//            //BUNU da Ekeldim
+//            //----**------**--------**--**********----*-****---**
+//            this.dgvSftp.Columns["Hello"].DefaultCellStyle.Padding =  new Padding(20, 0, 0, 0);
+//=======
             this.dgvSftp.Columns["PAYMENTORDERLOGFOLDER"].DefaultCellStyle.Padding = new Padding(20, 0, 0, 0);
->>>>>>> 2661d2fddbc8073986549ecd01d749338785ac7f
+
             this.dgvSftp.CellPainting += new DataGridViewCellPaintingEventHandler(dgvSftp_CellPainting);
             this.dgvSftp.CellClick += new DataGridViewCellEventHandler(dgvSftp_CellClick);
 
@@ -166,29 +166,6 @@ namespace AyzPaymentWizard.Forms
             this.Hide();
         }
 
-<<<<<<< HEAD
-        private void dgvSftp_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            int selectedRowIndex = e.RowIndex;
-            var selectedAddressColumnIndex = dgvSftp.Rows[selectedRowIndex].Cells["PAYMENTORDERLOGFOLDER"].ColumnIndex;
-            if (e.ColumnIndex == selectedAddressColumnIndex)
-            {
-                using (FolderBrowserDialog fbd = new FolderBrowserDialog() { Description = "Yolu Seçiniz" })
-                {
-                    if (fbd.ShowDialog() == DialogResult.OK)
-                    {
-                        foreach (string item in Directory.GetFiles(fbd.SelectedPath))
-                        {
-                            FileInfo fi = new FileInfo(item);
-                            dgvSftp[e.ColumnIndex, e.RowIndex].Value = fi.Directory;
-                        }
-                    }
-                }
-            }
-        }
-        //Data Gridde Bu Eventi  Ekledim
-=======
->>>>>>> 2661d2fddbc8073986549ecd01d749338785ac7f
         private void dgvSftp_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
