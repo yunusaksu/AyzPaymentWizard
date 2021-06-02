@@ -461,6 +461,12 @@ namespace AyzPaymentWizard
             {
                 e.SuppressKeyPress = true;
             }
+        }        
+
+        private void dataGridViewRight_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            // Clear the row error in case the user presses ESC.
+            dataGridViewRight.Rows[e.RowIndex].ErrorText = String.Empty;
         }
 
         private void dataGridViewRight_CurrentCellDirtyStateChanged(object sender, EventArgs e)
@@ -485,12 +491,6 @@ namespace AyzPaymentWizard
             }
 
             txtPaidRightDGV.Text = sumedup.ToString();
-        }
-
-        private void dataGridViewRight_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            // Clear the row error in case the user presses ESC.
-            dataGridViewRight.Rows[e.RowIndex].ErrorText = String.Empty;
         }
 
         private void dataGridViewLeft_SortStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)

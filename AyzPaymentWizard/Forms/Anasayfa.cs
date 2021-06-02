@@ -547,7 +547,7 @@ namespace AyzPaymentWizard
                                     string HEDEFHESAPNUMARASI1 = (string)dr["BANKACCOUNTNO"].ToString();
                                     string PARAKODU1 = (string)dr["CURRCODE"].ToString();
                                     decimal TUTAR1 = (decimal)dr["AMOUNT"];
-                                    string ACIKLAMA1 = (string)dr["NOTE"].ToString();
+                                    string ACIKLAMA1 = "";//(string)dr["NOTE"].ToString();
                                     string FIRMAREFERANS1 = (string)dr["RETURNKEY"].ToString();
                                     //string UNVAN1 = (string)dr["UNVAN"];
                                     //string ADDRESS1 = (string)dr["ADDRESS"];
