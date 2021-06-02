@@ -170,23 +170,32 @@ namespace AyzPaymentWizard
                     LeftList.Remove(select[0]);
 
                     //Adding Selected Left Total to Right and Removing from Left
+                    decimal sumtobeofPaid = 0.0m;
                     foreach (var sel in select)
                     {
                         txtSumLeftDGV.Text = (Convert.ToDecimal(txtSumLeftDGV.Text) - sel.Total).ToString();
                         txtSumRightDGV.Text = (Convert.ToDecimal(txtSumRightDGV.Text) + sel.Total).ToString();
+
+                        sumtobeofPaid += sel.Total;
                         //Getting the Currency Code
                         labelCurR.Text = debit.CurCode.ToString();
                         //odencekR update
-                        txtPaidRightDGV.Text = (Convert.ToDecimal(txtPaidRightDGV.Text) + Convert.ToDecimal(sel.Total)).ToString();
-                        
+                       
+                       // txtPaidRightDGV.Text = (Convert.ToDecimal(txtPaidRightDGV.Text) + Convert.ToDecimal(sel.Total)).ToString();
                         //Decimal sumL = (Convert.ToDecimal(textBoxodenecekR.Text) + sel.Total);
                         //textBoxodenecekR.Text = sumL.ToString();
-                        
+
                     }
-                    
+                    txtPaidRightDGV.Text = (Convert.ToDecimal(txtPaidRightDGV.Text) + sumtobeofPaid).ToString();
                     //Updating the number of Rows
                     txtTotalLeftDGV.Text = (Convert.ToInt32(txtTotalLeftDGV.Text) - select.Count).ToString();
                     txtTotalRightDGV.Text= (Convert.ToInt32(txtTotalRightDGV.Text)+select.Count).ToString();
+                    //foreach(var aa in dataGridViewRight.Columns)
+                    //{
+
+                    //}
+                    // dataGridViewRight.Columns["Paid"].Rows
+                        
                 }
             }
 
@@ -463,18 +472,7 @@ namespace AyzPaymentWizard
             }
         }
 
-        private void dataGridViewRight_CurrentCellDirtyStateChanged(object sender, EventArgs e)
-        {
-            decimal sumedup = 0m;
-
-            for (int i = 0; i < dataGridViewRight.Rows.Count; i++)
-            {
-                sumedup += decimal.Parse(dataGridViewRight.Rows[i].Cells["Paid"].Value.ToString());
-            }
-
-            txtPaidRightDGV.Text = sumedup.ToString();
-        }
-
+      
         private void dataGridViewRight_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
             decimal sumedup = 0m;
@@ -491,6 +489,18 @@ namespace AyzPaymentWizard
         {
             // Clear the row error in case the user presses ESC.
             dataGridViewRight.Rows[e.RowIndex].ErrorText = String.Empty;
+        }
+
+        private void dataGridViewRight_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            decimal sumedup = 0m;
+
+            for (int i = 0; i < dataGridViewRight.Rows.Count; i++)
+            {
+                sumedup += decimal.Parse(dataGridViewRight.Rows[i].Cells["Paid"].Value.ToString());
+            }
+
+            txtPaidRightDGV.Text = sumedup.ToString();
         }
 
         private void dataGridViewLeft_SortStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
@@ -747,7 +757,15 @@ namespace AyzPaymentWizard
                 sumR += Convert.ToDecimal(dataGridViewRight.Rows[i].Cells["Total"].Value);
             }
             txtSumRightDGV.Text = sumR.ToString();
-            
+
+            ////Getting the total columns for the Paid in PacketPreparation Right
+            decimal sumPaidR = 0.00m;
+            for (int i = 0; i < dataGridViewRight.Rows.Count; ++i)
+            {
+                sumPaidR += Convert.ToDecimal(dataGridViewRight.Rows[i].Cells["Paid"].Value);
+            }
+            txtPaidRightDGV.Text = sumPaidR.ToString();
+
         }
 
 
