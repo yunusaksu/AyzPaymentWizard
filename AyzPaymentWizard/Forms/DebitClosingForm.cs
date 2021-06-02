@@ -158,7 +158,7 @@ namespace AyzPaymentWizard.Forms
         }
 
         private void btnDebitClosing_Click(object sender, EventArgs e)
-        {            
+        {
             string TigerBankAccNo = "";
             string BankName = "";
             #region Paket Id'den paranın çıkacağı hesap bulunur. (AYZ_PW_BANKACCOUNT tablosundan)
@@ -245,7 +245,7 @@ namespace AyzPaymentWizard.Forms
 
                     if (bankvo.Post() == true)
                     {
-                        MessageBox.Show("POST OK !");
+                        //MessageBox.Show("POST OK !");
                         int BANKFICHEREF = bankvo.DataFields.FieldByName("INTERNAL_REFERENCE").Value; // Gönderilen Havale-EFT'nin referansı
                         int BANKFICHELINEREF = 0;                                                     // Gönderilen Havale-EFT'nin satır referansı
                         int BANKFICHELINEPAYTRANSREF = 0;
@@ -301,7 +301,9 @@ namespace AyzPaymentWizard.Forms
                                 #endregion
                                 bool foo = UnityApp.DebtClose(BANKFICHELINEPAYTRANSREF, debitList[0].PayRef, Convert.ToDouble(NecessaryAmountPaid));
                                 if (foo == true)
-                                    MessageBox.Show("Borç Kapama Tamamlandı!");
+                                {
+                                    //MessageBox.Show("Borç Kapama Tamamlandı!");
+                                }
                                 else
                                     MessageBox.Show("Borç Kapama Emri Sırasında Hata Oluştu!");
                             }
@@ -320,12 +322,11 @@ namespace AyzPaymentWizard.Forms
                                     if (foo == true)
                                     {
                                         totalAmount = totalAmount - NecessaryAmountPaid;
-                                        MessageBox.Show("Borç Kapama Tamamlandı!");
+                                        //MessageBox.Show("Borç Kapama Tamamlandı!");
                                     }
                                     else
                                     {
-                                        MessageBox.Show("Borç Kapama Emri Sırasında Hata Oluştu!");
-                                        MessageBox.Show(UnityApp.GetLastError() + " " + UnityApp.GetLastErrorString());
+                                        MessageBox.Show("Borç Kapama Emri Sırasında Hata Oluştu!\n" + UnityApp.GetLastError() + " " + UnityApp.GetLastErrorString(), "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     }
                                 }
                             }
@@ -335,7 +336,7 @@ namespace AyzPaymentWizard.Forms
                     {
                         if (bankvo.ErrorCode != 0)
                         {
-                            MessageBox.Show("DBError(" + bankvo.ErrorCode.ToString() + ")-" + bankvo.ErrorDesc + bankvo.DBErrorDesc);
+                            MessageBox.Show("DBError(" + bankvo.ErrorCode.ToString() + ")-" + bankvo.ErrorDesc + bankvo.DBErrorDesc, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                         else if (bankvo.ValidateErrors.Count > 0)
                         {
@@ -351,7 +352,7 @@ namespace AyzPaymentWizard.Forms
             }
             else
             {
-                MessageBox.Show("Hatalı Logo Giriş Bilgileri Tespit Edildi!", "Logo Bilgileri Hatalı!");
+                MessageBox.Show("Hatalı Logo Giriş Bilgileri Tespit Edildi!", "Logo Bilgileri Hatalı!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
 
@@ -383,7 +384,7 @@ namespace AyzPaymentWizard.Forms
                 }
                 else
                 {
-                    MessageBox.Show("Bu Paketin Banka Tarafından Henüz Akibet Dosyası Yollanmamıştır!", "BANKADAN GELEN CEVAP");
+                    MessageBox.Show("Bu Paketin Banka Tarafından Henüz Akibet Dosyası Yollanmamıştır!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -431,7 +432,7 @@ namespace AyzPaymentWizard.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hata: \n" + ex.Message);
+                MessageBox.Show("Hata: \n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
             return accoutingCode;
@@ -570,7 +571,7 @@ namespace AyzPaymentWizard.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hata: \n" + ex.Message);
+                MessageBox.Show("Hata: \n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

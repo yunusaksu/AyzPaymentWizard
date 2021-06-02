@@ -92,11 +92,11 @@ namespace AyzPaymentWizard.Forms
                     conn.Open();
                     dr = komut.ExecuteReader();
                 }
-                MessageBox.Show("Kayıt Başarılı.");
+                MessageBox.Show("Kayıt Başarılı.", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hata:\n" + ex.Message);
+                MessageBox.Show("Hata:\n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -104,9 +104,9 @@ namespace AyzPaymentWizard.Forms
         {
             UnityObjects.UnityApplication UnityApp = new UnityObjects.UnityApplication();
             if (UnityApp.Login(txtLogoUserName.Text, txtLogoUserPassword.Text, Helper.FIRMNR))
-                MessageBox.Show("Logo Bağlantısı Kuruldu!","LOGO BAĞLANTISI TEST EKRANI");
+                MessageBox.Show("Logo Bağlantısı Kuruldu!", "LOGO BAĞLANTISI TEST EKRANI", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
-                MessageBox.Show("Hatalı Logo Giriş Bilgileri Tespit Edildi!", "Logo Bilgileri Hatalı!");
+                MessageBox.Show("Hatalı Logo Giriş Bilgileri Tespit Edildi!", "Logo Bilgileri Hatalı!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
         }
     }

@@ -37,18 +37,20 @@ namespace AyzPaymentWizard.Forms
             dgvSftp.Columns["USERNAME"].Width = 150;
             dgvSftp.Columns["PASSWORD"].HeaderText = "ŞİFRE";
             dgvSftp.Columns["PASSWORD"].Width = 125;
-            dgvSftp.Columns["FOLDERPATH"].HeaderText = "SFTP KLASÖR YOLU (/E/AYZ_FTP/Yunus/ şeklinde)";                                  
+            dgvSftp.Columns["FOLDERPATH"].HeaderText = "SFTP KLASÖR YOLU (/E/AYZ_FTP/YENİ/ şeklinde)";
             dgvSftp.Columns["FOLDERPATH"].Width = 370;
             dgvSftp.Columns["PAYMENTORDERLOGFOLDER"].HeaderText = "ÖDEME EMİRLERİ KAYIT KLASÖRÜ";
             dgvSftp.Columns["PAYMENTORDERLOGFOLDER"].Width = 300;
-            dgvSftp.Columns.Add("Hello", "Hello");//["PAYMENTORDERLOGFOLDER"].HeaderText = "ÖDEME EMİRLERİ KAYIT KLASÖRÜ";
-            dgvSftp.Columns["Hello"].Width = 350;
             dgvSftp.DefaultCellStyle.Font = new Font("Time News Roman", 11);
             dgvSftp.ColumnHeadersDefaultCellStyle.Font = new Font("Time News Roman", 10);
 
+<<<<<<< HEAD
             //BUNU da Ekeldim
             //----**------**--------**--**********----*-****---**
             this.dgvSftp.Columns["Hello"].DefaultCellStyle.Padding =  new Padding(20, 0, 0, 0);
+=======
+            this.dgvSftp.Columns["PAYMENTORDERLOGFOLDER"].DefaultCellStyle.Padding = new Padding(20, 0, 0, 0);
+>>>>>>> 2661d2fddbc8073986549ecd01d749338785ac7f
             this.dgvSftp.CellPainting += new DataGridViewCellPaintingEventHandler(dgvSftp_CellPainting);
             this.dgvSftp.CellClick += new DataGridViewCellEventHandler(dgvSftp_CellClick);
 
@@ -59,7 +61,7 @@ namespace AyzPaymentWizard.Forms
             #region AYZ_PW_SFTP_SETTING tablosunu boşaltma
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
-                CommandText = "DELETE FROM AYZ_PW_SFTP_SETTING WHERE FIRMNR = " + Helper.FIRMNR + "";
+                CommandText = "DELETE FROM AYZ_PW_SFTP_SETTING";
                 komut.CommandText = CommandText;
                 komut.Connection = conn;
                 conn.Open();
@@ -91,7 +93,7 @@ namespace AyzPaymentWizard.Forms
                         dr = komut.ExecuteReader();
                     }
                 }
-                MessageBox.Show("Kayıt Başarılı!");
+                MessageBox.Show("Kayıt Başarılı!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -118,8 +120,8 @@ namespace AyzPaymentWizard.Forms
                     sftp.USERNAME = dr["USERNAME"].ToString();
                     sftp.PASSWORD = dr["PASSWORD"].ToString();
                     sftp.PORT = Convert.ToInt32(dr["PORT"].ToString());
-                    sftp.FOLDERPATH = dr["FOLDERPATH"].ToString();                   
-                    sftp.PAYMENTORDERLOGFOLDER = dr["PAYMENTORDERLOGFOLDER"].ToString();                   
+                    sftp.FOLDERPATH = dr["FOLDERPATH"].ToString();
+                    sftp.PAYMENTORDERLOGFOLDER = dr["PAYMENTORDERLOGFOLDER"].ToString();
                     list.Add(sftp);
                 }
             }
@@ -164,6 +166,7 @@ namespace AyzPaymentWizard.Forms
             this.Hide();
         }
 
+<<<<<<< HEAD
         private void dgvSftp_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             int selectedRowIndex = e.RowIndex;
@@ -184,13 +187,14 @@ namespace AyzPaymentWizard.Forms
             }
         }
         //Data Gridde Bu Eventi  Ekledim
+=======
+>>>>>>> 2661d2fddbc8073986549ecd01d749338785ac7f
         private void dgvSftp_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
                 DataGridView grid = sender as DataGridView;
-                int pad =
-                grid.Columns[e.ColumnIndex].DefaultCellStyle.Padding.Left;
+                int pad = grid.Columns[e.ColumnIndex].DefaultCellStyle.Padding.Left;
                 if (pad > 5)
                 {
                     Rectangle rect = grid.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, true);
@@ -221,7 +225,6 @@ namespace AyzPaymentWizard.Forms
             }
         }
 
-        //Data Gridde Bu Eventi  Ekledim
         private void dgvSftp_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
 
@@ -238,9 +241,9 @@ namespace AyzPaymentWizard.Forms
                 rect.Contains(grid.PointToClient(Control.MousePosition))) ? ButtonState.Pushed : ButtonState.Normal;
                 ControlPaint.DrawButton(e.Graphics, rect, state);
 
-                StringFormat formater = new StringFormat();//added
-                formater.Alignment = StringAlignment.Center;//added
-                e.Graphics.DrawString("...", e.CellStyle.Font, new SolidBrush(e.CellStyle.ForeColor), rect, formater);//added
+                StringFormat formater = new StringFormat();  //added
+                formater.Alignment = StringAlignment.Center;  //added
+                e.Graphics.DrawString("...", e.CellStyle.Font, new SolidBrush(e.CellStyle.ForeColor), rect, formater); //added
                 e.Handled = true;
             }
         }
