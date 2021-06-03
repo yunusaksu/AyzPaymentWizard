@@ -72,8 +72,9 @@
             this.checkBoxMacera = new System.Windows.Forms.CheckBox();
             this.checkedListBoxMecra = new System.Windows.Forms.CheckedListBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.txtMecraTypeFilter = new System.Windows.Forms.TextBox();
             this.checkBoxMaceraType = new System.Windows.Forms.CheckBox();
-            this.checkedListBoxMecraType = new System.Windows.Forms.CheckedListBox();
+            this.checkedListBoxMecraType1 = new System.Windows.Forms.CheckedListBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox16 = new System.Windows.Forms.GroupBox();
             this.checkBoxInAlKat = new System.Windows.Forms.CheckBox();
@@ -568,14 +569,23 @@
             // groupBox10
             // 
             this.groupBox10.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox10.Controls.Add(this.txtMecraTypeFilter);
             this.groupBox10.Controls.Add(this.checkBoxMaceraType);
-            this.groupBox10.Controls.Add(this.checkedListBoxMecraType);
+            this.groupBox10.Controls.Add(this.checkedListBoxMecraType1);
             this.groupBox10.Location = new System.Drawing.Point(21, 21);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(580, 254);
             this.groupBox10.TabIndex = 0;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Mecra Türü";
+            // 
+            // txtMecraTypeFilter
+            // 
+            this.txtMecraTypeFilter.Location = new System.Drawing.Point(186, 15);
+            this.txtMecraTypeFilter.Name = "txtMecraTypeFilter";
+            this.txtMecraTypeFilter.Size = new System.Drawing.Size(388, 26);
+            this.txtMecraTypeFilter.TabIndex = 1;
+            this.txtMecraTypeFilter.TextChanged += new System.EventHandler(this.MecraTypeFilter_TextChanged);
             // 
             // checkBoxMaceraType
             // 
@@ -587,13 +597,13 @@
             this.checkBoxMaceraType.UseVisualStyleBackColor = true;
             this.checkBoxMaceraType.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
-            // checkedListBoxMecraType
+            // checkedListBoxMecraType1
             // 
-            this.checkedListBoxMecraType.FormattingEnabled = true;
-            this.checkedListBoxMecraType.Location = new System.Drawing.Point(7, 47);
-            this.checkedListBoxMecraType.Name = "checkedListBoxMecraType";
-            this.checkedListBoxMecraType.Size = new System.Drawing.Size(567, 193);
-            this.checkedListBoxMecraType.TabIndex = 0;
+            this.checkedListBoxMecraType1.FormattingEnabled = true;
+            this.checkedListBoxMecraType1.Location = new System.Drawing.Point(7, 47);
+            this.checkedListBoxMecraType1.Name = "checkedListBoxMecraType1";
+            this.checkedListBoxMecraType1.Size = new System.Drawing.Size(567, 193);
+            this.checkedListBoxMecraType1.TabIndex = 0;
             // 
             // tabPage3
             // 
@@ -747,6 +757,7 @@
             this.groupBox13.ResumeLayout(false);
             this.groupBox11.ResumeLayout(false);
             this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.groupBox16.ResumeLayout(false);
             this.groupBox15.ResumeLayout(false);
@@ -787,7 +798,7 @@
         private System.Windows.Forms.GroupBox groupBox13;
         private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.GroupBox groupBox10;
-        private System.Windows.Forms.CheckedListBox checkedListBoxMecraType;
+        private System.Windows.Forms.CheckedListBox checkedListBoxMecraType1;
         private System.Windows.Forms.CheckedListBox checkedListBoxMecra;
         private System.Windows.Forms.CheckedListBox checkedListBoxMarketingCompany;
         private System.Windows.Forms.CheckedListBox checkedListBoxCustomer;
@@ -814,5 +825,6 @@
         private System.Windows.Forms.CheckBox checkBoxInAlKat;
         private System.Windows.Forms.CheckBox checkBoxIntAnaKat;
         private System.Windows.Forms.CheckBox checkBoxPlanKod;
+        private System.Windows.Forms.TextBox txtMecraTypeFilter;
     }
 }
