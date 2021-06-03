@@ -15,7 +15,8 @@ namespace AyzPaymentWizard.Model
         public string USERNAME { get; set; }
         public string PASSWORD { get; set; }
         public int PORT { get; set; }
-        public string PAYMENTORDERLOGFOLDER { get; set; }
-        public string FOLDERPATH { get; set; }
+        public string PAYMENTORDERLOGFOLDER { get; set; }        
+        public string FOLDERPATH { get; set; }  // SFTP deki Ödeme Emirlerinin yollandığı klasörün yolu
+        public string AKIBETFOLDERPATH { get; set; } // SFTP deki Ödeme Akibetlerinin okunduğu klasörün yolu
     }
 }

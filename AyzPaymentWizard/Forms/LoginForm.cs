@@ -138,6 +138,11 @@ namespace AyzPaymentWizard
             tbl2.Load(cmd2.ExecuteReader());
             conn.Close();
 
+#if DEBUG
+            txtLoginName.Text = "Admin";
+            txtLoginPassword.Text = "admin";
+#endif
+
             cmbFirms.DataSource = tbl2;
             cmbFirms.DisplayMember = "NR";
             cmbFirms.ValueMember = "NR";
