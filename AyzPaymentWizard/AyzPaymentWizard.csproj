@@ -64,6 +64,9 @@
       <HintPath>bin\Debug\FileHelpers.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="SearchTextBox">
+      <HintPath>..\..\..\C-Sharp\DotnetFrameWorkPrograms\SearchTextBox\SearchTextBox\bin\Debug\SearchTextBox.dll</HintPath>
+    </Reference>
     <Reference Include="SftpConOperator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\SftpConOperator.dll</HintPath>
@@ -176,6 +179,11 @@
     <Compile Include="Forms\UserAddForm.Designer.cs">
       <DependentUpon>UserAddForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Forms\Anasayfa.resx">
       <DependentUpon>Anasayfa.cs</DependentUpon>
     </EmbeddedResource>
@@ -214,14 +222,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="Forms\UserAddForm.resx">
       <DependentUpon>UserAddForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -256,6 +259,7 @@
     <Content Include="Images\HomepageSubBarImages\reviewButton.png" />
     <Content Include="Images\HomepageSubBarImages\sendToApprove.png" />
     <Content Include="Images\logo.ico" />
+    <Content Include="Images\Search.png" />
     <Content Include="Images\show_icon.png" />
   </ItemGroup>
   <ItemGroup>
