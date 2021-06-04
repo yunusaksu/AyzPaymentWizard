@@ -627,20 +627,17 @@ namespace AyzPaymentWizard
                 komut.Connection = conn;
                 conn.Open();
                 dr = komut.ExecuteReader();
-                
+            
                 while (dr.Read())
                 {
                     checkListBoxMecraType.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
+                   
                 }
                 conn.Close();
 
                 checkedListBoxMecraType1.DataSource = new BindingSource(checkListBoxMecraType, null);
                 checkedListBoxMecraType1.DisplayMember = "Value";
                 checkedListBoxMecraType1.ValueMember = "Key";
-<<<<<<< HEAD
-
-=======
->>>>>>> 5c933144c541e7486d78497965c3f69ae5e43ee7
 
                 // Selected olanları atama satırları
                 komut.CommandText = CommandText;
