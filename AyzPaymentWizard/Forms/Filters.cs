@@ -28,10 +28,6 @@ namespace AyzPaymentWizard
 
         private void btnFiltreApply_Click(object sender, EventArgs e)
         {
-            SqlCommand komut = new SqlCommand();
-            SqlDataReader dr;
-            string CommandText = "";
-
             // Yeni Filtreleri kaydetmek için eski filtre verilerini temizleme işlemi yapılıyor.
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
@@ -641,7 +637,10 @@ namespace AyzPaymentWizard
                 checkedListBoxMecraType1.DataSource = new BindingSource(checkListBoxMecraType, null);
                 checkedListBoxMecraType1.DisplayMember = "Value";
                 checkedListBoxMecraType1.ValueMember = "Key";
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5c933144c541e7486d78497965c3f69ae5e43ee7
 
                 // Selected olanları atama satırları
                 komut.CommandText = CommandText;
