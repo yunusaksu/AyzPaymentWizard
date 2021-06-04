@@ -37,23 +37,19 @@ namespace AyzPaymentWizard.Forms
             dgvSftp.Columns["USERNAME"].Width = 150;
             dgvSftp.Columns["PASSWORD"].HeaderText = "ŞİFRE";
             dgvSftp.Columns["PASSWORD"].Width = 125;
-            dgvSftp.Columns["FOLDERPATH"].HeaderText = "SFTP KLASÖR YOLU (/E/AYZ_FTP/YENİ/ şeklinde)";
+            dgvSftp.Columns["FOLDERPATH"].HeaderText = "SFTP EMİR KLASÖR YOLU (/E/YENİ/BANKAYA GELEN şeklinde)";
             dgvSftp.Columns["FOLDERPATH"].Width = 370;
-            dgvSftp.Columns["PAYMENTORDERLOGFOLDER"].HeaderText = "ÖDEME EMİRLERİ KAYIT KLASÖRÜ";
+            dgvSftp.Columns["AKIBETFOLDERPATH"].HeaderText = "SFTP AKIBET KLASÖR YOLU (/E/YENİ/BANKADAN GİDEN şeklinde)";
+            dgvSftp.Columns["AKIBETFOLDERPATH"].Width = 370;
+            dgvSftp.Columns["PAYMENTORDERLOGFOLDER"].HeaderText = "DOSYALARIN LOCAL PC'DEKİ KAYIT KLASÖRÜ";
             dgvSftp.Columns["PAYMENTORDERLOGFOLDER"].Width = 300;
             dgvSftp.DefaultCellStyle.Font = new Font("Time News Roman", 11);
             dgvSftp.ColumnHeadersDefaultCellStyle.Font = new Font("Time News Roman", 10);
 
-//<<<<<<< HEAD
-//            //BUNU da Ekeldim
-//            //----**------**--------**--**********----*-****---**
-//            this.dgvSftp.Columns["Hello"].DefaultCellStyle.Padding =  new Padding(20, 0, 0, 0);
-//=======
             this.dgvSftp.Columns["PAYMENTORDERLOGFOLDER"].DefaultCellStyle.Padding = new Padding(20, 0, 0, 0);
 
             this.dgvSftp.CellPainting += new DataGridViewCellPaintingEventHandler(dgvSftp_CellPainting);
             this.dgvSftp.CellClick += new DataGridViewCellEventHandler(dgvSftp_CellClick);
-
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -75,7 +71,8 @@ namespace AyzPaymentWizard.Forms
                 {
                     using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                     {
-                        CommandText = "INSERT INTO AYZ_PW_SFTP_SETTING(BANKCODE,FIRMNR,HOSTNAME,USERNAME,PASSWORD,PORT,FOLDERPATH,PAYMENTORDERLOGFOLDER) " +
+                        CommandText = "INSERT INTO AYZ_PW_SFTP_SETTING" +
+                                      "(BANKCODE,FIRMNR,HOSTNAME,USERNAME,PASSWORD,PORT,FOLDERPATH,PAYMENTORDERLOGFOLDER,AKIBETFOLDERPATH) " +
                                           "\nVALUES(" +
                                           "\n'" + list[i].BANKCODE + "'," +
                                           "\n'" + list[i].FIRMNR + "'," +
@@ -84,7 +81,8 @@ namespace AyzPaymentWizard.Forms
                                           "\n'" + list[i].PASSWORD + "'," +
                                           "\n'" + list[i].PORT + "'," +
                                           "\n'" + list[i].FOLDERPATH + "'," +
-                                          "\n'" + list[i].PAYMENTORDERLOGFOLDER + "'" +
+                                          "\n'" + list[i].PAYMENTORDERLOGFOLDER + "'," +
+                                          "\n'" + list[i].AKIBETFOLDERPATH + "'" +
                                           "\n)";
 
                         komut.CommandText = CommandText;
@@ -122,6 +120,7 @@ namespace AyzPaymentWizard.Forms
                     sftp.PORT = Convert.ToInt32(dr["PORT"].ToString());
                     sftp.FOLDERPATH = dr["FOLDERPATH"].ToString();
                     sftp.PAYMENTORDERLOGFOLDER = dr["PAYMENTORDERLOGFOLDER"].ToString();
+                    sftp.AKIBETFOLDERPATH = dr["AKIBETFOLDERPATH"].ToString();
                     list.Add(sftp);
                 }
             }

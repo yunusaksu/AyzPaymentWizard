@@ -60,7 +60,7 @@ namespace AyzPaymentWizard.Forms
                     userpassword = dr["LOGO_USERPASSWORD"].ToString();
                 }
             }
-            txtLogoUserName.Text = username;
+            
             if (txtLogoUserPassword.Text != "" && String.IsNullOrEmpty(txtLogoUserPassword.Text))
             {
                 txtLogoUserPassword.Text = EncryptionAlgorithm.Decrytion(userpassword);
@@ -68,7 +68,7 @@ namespace AyzPaymentWizard.Forms
             }
             else
             {
-                txtLogoUserPassword.Text = userpassword;
+                txtLogoUserPassword.Text = EncryptionAlgorithm.Decrytion(userpassword);
                 txtLogoUserName.Text = username;
             }
         }

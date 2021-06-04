@@ -608,8 +608,8 @@ namespace AyzPaymentWizard
                                             port = Convert.ToInt32(dr["PORT"].ToString());
                                             sftpUserName = dr["USERNAME"].ToString();
                                             password = dr["PASSWORD"].ToString();
-                                            folderPath = dr["FOLDERPATH"].ToString() + "/";
-                                            filePath = dr["PAYMENTORDERLOGFOLDER"].ToString() + "\\";
+                                            folderPath = dr["FOLDERPATH"].ToString() + "/";                // SFTP deki Ödeme Emirlerinin yollandığı klasörün yolu
+                                            filePath = dr["PAYMENTORDERLOGFOLDER"].ToString() + "\\";      // Local Pc'de Gönderilecek Dosyanın Yolu
                                         }
                                         connNEW.Close();
                                     }
@@ -817,7 +817,7 @@ namespace AyzPaymentWizard
                                 port = Convert.ToInt32(dr["PORT"].ToString());
                                 sftpUserName = dr["USERNAME"].ToString();
                                 password = dr["PASSWORD"].ToString();
-                                folderPath = dr["FOLDERPATH"].ToString() + "/";
+                                folderPath = dr["AKIBETFOLDERPATH"].ToString() + "/";
                                 filePath = dr["PAYMENTORDERLOGFOLDER"].ToString() + "\\";
                             }
                             conn.Close();
