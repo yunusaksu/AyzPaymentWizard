@@ -12,6 +12,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Zuby.ADGV;
 
 namespace AyzPaymentWizard
 {
