@@ -627,10 +627,11 @@ namespace AyzPaymentWizard
                 komut.Connection = conn;
                 conn.Open();
                 dr = komut.ExecuteReader();
-                
+            
                 while (dr.Read())
                 {
                     checkListBoxMecraType.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
+                   
                 }
                 conn.Close();
 
