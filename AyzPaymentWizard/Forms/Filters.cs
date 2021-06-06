@@ -634,6 +634,7 @@ namespace AyzPaymentWizard
                    
                 }
                 conn.Close();
+                //dHello
 
                 checkedListBoxMecraType1.DataSource = new BindingSource(checkListBoxMecraType, null);
                 checkedListBoxMecraType1.DisplayMember = "Value";
