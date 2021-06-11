@@ -23,7 +23,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>27</ApplicationRevision>
+    <ApplicationRevision>36</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -49,8 +49,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -65,9 +64,6 @@
       <HintPath>bin\Debug\FileHelpers.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="SearchTextBox">
-      <HintPath>..\..\..\C-Sharp\DotnetFrameWorkPrograms\SearchTextBox\SearchTextBox\bin\Debug\SearchTextBox.dll</HintPath>
-    </Reference>
     <Reference Include="SftpConOperator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\SftpConOperator.dll</HintPath>
@@ -145,6 +141,12 @@
     <Compile Include="Forms\GroupAddForm.Designer.cs">
       <DependentUpon>GroupAddForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SFTPSTATE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SFTPSTATE.Designer.cs">
+      <DependentUpon>SFTPSTATE.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SqlServerInfosForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -163,6 +165,7 @@
     <Compile Include="Model\Bank.cs" />
     <Compile Include="Model\BankAcc.cs" />
     <Compile Include="Model\Debit.cs" />
+    <Compile Include="Model\LOG_FILE.cs" />
     <Compile Include="Model\Packet.cs" />
     <Compile Include="Forms\PacketPreparation.cs">
       <SubType>Form</SubType>
@@ -218,6 +221,9 @@
     <EmbeddedResource Include="Forms\sftpForm.resx">
       <DependentUpon>sftpForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SFTPSTATE.resx">
+      <DependentUpon>SFTPSTATE.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\SqlServerInfosForm.resx">
       <DependentUpon>SqlServerInfosForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -236,6 +242,9 @@
   <ItemGroup>
     <PackageReference Include="DocumentFormat.OpenXml">
       <Version>2.12.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Office.Interop.Excel">
+      <Version>15.0.4795.1000</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
@@ -262,6 +271,7 @@
     <Content Include="Images\logo.ico" />
     <Content Include="Images\Search.png" />
     <Content Include="Images\show_icon.png" />
+    <Content Include="logo.ico" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="UnityObjects">

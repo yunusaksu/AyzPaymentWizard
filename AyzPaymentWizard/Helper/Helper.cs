@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Renci.SshNet;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -62,6 +63,68 @@ namespace AyzPaymentWizard
         {
             Unarchived = 0,
             Archived = 1
+        }
+
+        public static void SFTPLOG(int? packetId)
+        {
+            packetId = packetId == null ? 0 : packetId;
+            string Hostname = "", Username = "", Password = "";
+            int Port = 22;
+            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                CommandText = "SELECT * FROM AYZ_PW_SFTP_SETTING WHERE FIRMNR = " + Helper.FIRMNR + "";
+                komut.CommandText = CommandText;
+                komut.Connection = conn;
+                conn.Open();
+                dr = komut.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        Hostname = dr["HOSTNAME"].ToString();
+                        Username = dr["USERNAME"].ToString();
+                        Password = dr["PASSWORD"].ToString();
+                        Port = Convert.ToInt32(dr["PORT"].ToString());
+                    }
+                }
+            }
+
+            try
+            {
+                var sftpClient = new SftpClient(Hostname, Port, Username, Password);
+                sftpClient.Connect();
+                string ConnResult = sftpClient.IsConnected == true ? "Başarılı" : "Başarısız";
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "INSERT INTO AYZ_PW_LOG_FILE(LOG_NAME, LOG_DATETIME, LOG_EXP, PACKETID, LOG_CREATE_USERID, LOG_CREATE_USERNAME,STATE)" +
+                                  "\nVALUES('SFTP BAĞLANTISI', CONVERT(DATETIME, GETDATE(), 104), " +
+                                  "\n'Host: " + Hostname + ", User: " + Username + ", Password: " + Password + ", Port: " + Port + ", Bağlantı: " + ConnResult + " '," +
+                                  "\n" + packetId + "," + Helper.USERID + ",'" + Helper.USERNAME + "','" + ConnResult + "')";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                }
+            }
+            catch (SqlException ex)
+            {
+            }
+            catch
+            {
+                string ConnResult = "Başarısız";
+
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "INSERT INTO AYZ_PW_LOG_FILE(LOG_NAME, LOG_DATETIME, LOG_EXP, PACKETID, LOG_CREATE_USERID, LOG_CREATE_USERNAME,STATE)" +
+                                  "\nVALUES('SFTP BAĞLANTISI', CONVERT(DATETIME, GETDATE(), 104), " +
+                                  "\n'Host: " + Hostname + ", User: " + Username + ", Password: " + Password + ", Port: " + Port + ", Bağlantı: " + ConnResult + " '," +
+                                  "\n" + packetId + "," + Helper.USERID + ",'" + Helper.USERNAME + "','" + ConnResult + "')";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                }
+            }
         }
 
         public static bool NotInPayTrans(int payRef)

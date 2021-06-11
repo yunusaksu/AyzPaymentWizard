@@ -57,6 +57,7 @@
             this.btnBankAndBankAccAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.logoUserSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnsqlBağlantiAyarlariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sFTPBaglantiLoglariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripAnasayfa = new System.Windows.Forms.ToolStrip();
             this.panel1.SuspendLayout();
@@ -348,7 +349,8 @@
             this.sFTPAyarlarıToolStripMenuItem,
             this.btnBankAndBankAccAdd,
             this.logoUserSettingsToolStripMenuItem,
-            this.btnsqlBağlantiAyarlariToolStripMenuItem});
+            this.btnsqlBağlantiAyarlariToolStripMenuItem,
+            this.sFTPBaglantiLoglariToolStripMenuItem});
             this.toolStripDropDownButton1.Font = new System.Drawing.Font("Segoe UI", 13F);
             this.toolStripDropDownButton1.ForeColor = System.Drawing.SystemColors.GrayText;
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -387,6 +389,14 @@
             this.btnsqlBağlantiAyarlariToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
             this.btnsqlBağlantiAyarlariToolStripMenuItem.Text = "Sql Bağlantı Ayarları";
             this.btnsqlBağlantiAyarlariToolStripMenuItem.Click += new System.EventHandler(this.btnsqlBağlantiAyarlariToolStripMenuItem_Click);
+            // 
+            // sFTPBaglantiLoglariToolStripMenuItem
+            // 
+            this.sFTPBaglantiLoglariToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.sFTPBaglantiLoglariToolStripMenuItem.Name = "sFTPBaglantiLoglariToolStripMenuItem";
+            this.sFTPBaglantiLoglariToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
+            this.sFTPBaglantiLoglariToolStripMenuItem.Text = "SFTP Bağlantı Logları";
+            this.sFTPBaglantiLoglariToolStripMenuItem.Click += new System.EventHandler(this.sFTPBaglantiLoglariToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
@@ -468,5 +478,6 @@
         private System.Windows.Forms.ToolStripMenuItem logoUserSettingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem btnsqlBağlantiAyarlariToolStripMenuItem;
         private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.ToolStripMenuItem sFTPBaglantiLoglariToolStripMenuItem;
     }
 }

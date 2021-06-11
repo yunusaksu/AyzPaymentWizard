@@ -63,40 +63,19 @@
             this.cmbPaymentType = new System.Windows.Forms.ComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.checkBoxMusteri = new System.Windows.Forms.CheckBox();
-            this.txtCustomerFilter = new System.Windows.Forms.TextBox();
             this.checkedListBoxCustomer = new System.Windows.Forms.CheckedListBox();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.txtMarketingFilter = new System.Windows.Forms.TextBox();
-            this.checkBoxPazar = new System.Windows.Forms.CheckBox();
             this.checkedListBoxMarketingCompany = new System.Windows.Forms.CheckedListBox();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.checkBoxMacera = new System.Windows.Forms.CheckBox();
-            this.txtMecraFilter = new System.Windows.Forms.TextBox();
             this.checkedListBoxMecra = new System.Windows.Forms.CheckedListBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.btnSearch = new System.Windows.Forms.Button();
-            this.txtMecraTypeFilter = new System.Windows.Forms.TextBox();
-            this.checkBoxMaceraType = new System.Windows.Forms.CheckBox();
-            this.checkedListBoxMecraType1 = new System.Windows.Forms.CheckedListBox();
+            this.checkedListBoxMecraType = new System.Windows.Forms.CheckedListBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox16 = new System.Windows.Forms.GroupBox();
-            this.button5 = new System.Windows.Forms.Button();
-            this.checkBoxInAlKat = new System.Windows.Forms.CheckBox();
-            this.txtSubCategoryFilter = new System.Windows.Forms.TextBox();
             this.checkedListBoxInternetSubCategory = new System.Windows.Forms.CheckedListBox();
             this.groupBox15 = new System.Windows.Forms.GroupBox();
-            this.button6 = new System.Windows.Forms.Button();
-            this.checkBoxIntAnaKat = new System.Windows.Forms.CheckBox();
-            this.txtMainCategoryFilter = new System.Windows.Forms.TextBox();
             this.checkedListBoxInternetMainCategory = new System.Windows.Forms.CheckedListBox();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.txtPlanCodeFilter = new System.Windows.Forms.TextBox();
-            this.checkBoxPlanKod = new System.Windows.Forms.CheckBox();
             this.checkedListBoxPlanCode = new System.Windows.Forms.CheckedListBox();
             this.btnFiltreApply = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
@@ -492,9 +471,6 @@
             // groupBox12
             // 
             this.groupBox12.BackColor = System.Drawing.SystemColors.Control;
-            this.groupBox12.Controls.Add(this.button3);
-            this.groupBox12.Controls.Add(this.checkBoxMusteri);
-            this.groupBox12.Controls.Add(this.txtCustomerFilter);
             this.groupBox12.Controls.Add(this.checkedListBoxCustomer);
             this.groupBox12.Location = new System.Drawing.Point(626, 293);
             this.groupBox12.Name = "groupBox12";
@@ -502,36 +478,6 @@
             this.groupBox12.TabIndex = 3;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Müşteri";
-            // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.Color.White;
-            this.button3.FlatAppearance.BorderSize = 0;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.ForeColor = System.Drawing.Color.Black;
-            this.button3.Image = global::AyzPaymentWizard.Properties.Resources.Search;
-            this.button3.Location = new System.Drawing.Point(567, 15);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(46, 24);
-            this.button3.TabIndex = 9;
-            this.button3.UseVisualStyleBackColor = false;
-            // 
-            // checkBoxMusteri
-            // 
-            this.checkBoxMusteri.Location = new System.Drawing.Point(13, 16);
-            this.checkBoxMusteri.Name = "checkBoxMusteri";
-            this.checkBoxMusteri.Size = new System.Drawing.Size(106, 24);
-            this.checkBoxMusteri.TabIndex = 4;
-            this.checkBoxMusteri.Text = "Hepsi Seç";
-            this.checkBoxMusteri.UseVisualStyleBackColor = true;
-            this.checkBoxMusteri.CheckedChanged += new System.EventHandler(this.checkBoxMusteri_CheckedChanged);
-            // 
-            // txtCustomerFilter
-            // 
-            this.txtCustomerFilter.Location = new System.Drawing.Point(250, 14);
-            this.txtCustomerFilter.Name = "txtCustomerFilter";
-            this.txtCustomerFilter.Size = new System.Drawing.Size(365, 26);
-            this.txtCustomerFilter.TabIndex = 8;
             // 
             // checkedListBoxCustomer
             // 
@@ -544,9 +490,6 @@
             // groupBox13
             // 
             this.groupBox13.BackColor = System.Drawing.SystemColors.Control;
-            this.groupBox13.Controls.Add(this.button1);
-            this.groupBox13.Controls.Add(this.txtMarketingFilter);
-            this.groupBox13.Controls.Add(this.checkBoxPazar);
             this.groupBox13.Controls.Add(this.checkedListBoxMarketingCompany);
             this.groupBox13.Location = new System.Drawing.Point(626, 21);
             this.groupBox13.Name = "groupBox13";
@@ -554,36 +497,6 @@
             this.groupBox13.TabIndex = 2;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Pazarlama Şirketi";
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.White;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Image = global::AyzPaymentWizard.Properties.Resources.Search;
-            this.button1.Location = new System.Drawing.Point(567, 17);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(46, 24);
-            this.button1.TabIndex = 5;
-            this.button1.UseVisualStyleBackColor = false;
-            // 
-            // txtMarketingFilter
-            // 
-            this.txtMarketingFilter.Location = new System.Drawing.Point(227, 16);
-            this.txtMarketingFilter.Name = "txtMarketingFilter";
-            this.txtMarketingFilter.Size = new System.Drawing.Size(388, 26);
-            this.txtMarketingFilter.TabIndex = 4;
-            // 
-            // checkBoxPazar
-            // 
-            this.checkBoxPazar.Location = new System.Drawing.Point(13, 17);
-            this.checkBoxPazar.Name = "checkBoxPazar";
-            this.checkBoxPazar.Size = new System.Drawing.Size(106, 24);
-            this.checkBoxPazar.TabIndex = 3;
-            this.checkBoxPazar.Text = "Hepsi Seç";
-            this.checkBoxPazar.UseVisualStyleBackColor = true;
-            this.checkBoxPazar.CheckedChanged += new System.EventHandler(this.checkBoxPazar_CheckedChanged);
             // 
             // checkedListBoxMarketingCompany
             // 
@@ -596,9 +509,6 @@
             // groupBox11
             // 
             this.groupBox11.BackColor = System.Drawing.SystemColors.Control;
-            this.groupBox11.Controls.Add(this.button2);
-            this.groupBox11.Controls.Add(this.checkBoxMacera);
-            this.groupBox11.Controls.Add(this.txtMecraFilter);
             this.groupBox11.Controls.Add(this.checkedListBoxMecra);
             this.groupBox11.Location = new System.Drawing.Point(21, 293);
             this.groupBox11.Name = "groupBox11";
@@ -606,36 +516,6 @@
             this.groupBox11.TabIndex = 1;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Mecra";
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.White;
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.ForeColor = System.Drawing.Color.Black;
-            this.button2.Image = global::AyzPaymentWizard.Properties.Resources.Search;
-            this.button2.Location = new System.Drawing.Point(526, 15);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(46, 24);
-            this.button2.TabIndex = 7;
-            this.button2.UseVisualStyleBackColor = false;
-            // 
-            // checkBoxMacera
-            // 
-            this.checkBoxMacera.Location = new System.Drawing.Point(7, 16);
-            this.checkBoxMacera.Name = "checkBoxMacera";
-            this.checkBoxMacera.Size = new System.Drawing.Size(106, 24);
-            this.checkBoxMacera.TabIndex = 2;
-            this.checkBoxMacera.Text = "Hepsi Seç";
-            this.checkBoxMacera.UseVisualStyleBackColor = true;
-            this.checkBoxMacera.CheckedChanged += new System.EventHandler(this.checkBoxMacera_CheckedChanged);
-            // 
-            // txtMecraFilter
-            // 
-            this.txtMecraFilter.Location = new System.Drawing.Point(186, 14);
-            this.txtMecraFilter.Name = "txtMecraFilter";
-            this.txtMecraFilter.Size = new System.Drawing.Size(388, 26);
-            this.txtMecraFilter.TabIndex = 6;
             // 
             // checkedListBoxMecra
             // 
@@ -648,10 +528,7 @@
             // groupBox10
             // 
             this.groupBox10.BackColor = System.Drawing.SystemColors.Control;
-            this.groupBox10.Controls.Add(this.btnSearch);
-            this.groupBox10.Controls.Add(this.txtMecraTypeFilter);
-            this.groupBox10.Controls.Add(this.checkBoxMaceraType);
-            this.groupBox10.Controls.Add(this.checkedListBoxMecraType1);
+            this.groupBox10.Controls.Add(this.checkedListBoxMecraType);
             this.groupBox10.Location = new System.Drawing.Point(21, 21);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(580, 254);
@@ -659,44 +536,13 @@
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Mecra Türü";
             // 
-            // btnSearch
+            // checkedListBoxMecraType
             // 
-            this.btnSearch.BackColor = System.Drawing.Color.White;
-            this.btnSearch.FlatAppearance.BorderSize = 0;
-            this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearch.ForeColor = System.Drawing.Color.Black;
-            this.btnSearch.Image = global::AyzPaymentWizard.Properties.Resources.Search;
-            this.btnSearch.Location = new System.Drawing.Point(526, 16);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(46, 24);
-            this.btnSearch.TabIndex = 2;
-            this.btnSearch.UseVisualStyleBackColor = false;
-            // 
-            // txtMecraTypeFilter
-            // 
-            this.txtMecraTypeFilter.Location = new System.Drawing.Point(186, 15);
-            this.txtMecraTypeFilter.Name = "txtMecraTypeFilter";
-            this.txtMecraTypeFilter.Size = new System.Drawing.Size(388, 26);
-            this.txtMecraTypeFilter.TabIndex = 1;
-            this.txtMecraTypeFilter.TextChanged += new System.EventHandler(this.MecraTypeFilter_TextChanged);
-            // 
-            // checkBoxMaceraType
-            // 
-            this.checkBoxMaceraType.Location = new System.Drawing.Point(7, 17);
-            this.checkBoxMaceraType.Name = "checkBoxMaceraType";
-            this.checkBoxMaceraType.Size = new System.Drawing.Size(106, 24);
-            this.checkBoxMaceraType.TabIndex = 0;
-            this.checkBoxMaceraType.Text = "Hepsi Seç";
-            this.checkBoxMaceraType.UseVisualStyleBackColor = true;
-            this.checkBoxMaceraType.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
-            // checkedListBoxMecraType1
-            // 
-            this.checkedListBoxMecraType1.FormattingEnabled = true;
-            this.checkedListBoxMecraType1.Location = new System.Drawing.Point(7, 47);
-            this.checkedListBoxMecraType1.Name = "checkedListBoxMecraType1";
-            this.checkedListBoxMecraType1.Size = new System.Drawing.Size(567, 193);
-            this.checkedListBoxMecraType1.TabIndex = 0;
+            this.checkedListBoxMecraType.FormattingEnabled = true;
+            this.checkedListBoxMecraType.Location = new System.Drawing.Point(7, 46);
+            this.checkedListBoxMecraType.Name = "checkedListBoxMecraType";
+            this.checkedListBoxMecraType.Size = new System.Drawing.Size(567, 193);
+            this.checkedListBoxMecraType.TabIndex = 0;
             // 
             // tabPage3
             // 
@@ -713,9 +559,6 @@
             // groupBox16
             // 
             this.groupBox16.BackColor = System.Drawing.SystemColors.Control;
-            this.groupBox16.Controls.Add(this.button5);
-            this.groupBox16.Controls.Add(this.checkBoxInAlKat);
-            this.groupBox16.Controls.Add(this.txtSubCategoryFilter);
             this.groupBox16.Controls.Add(this.checkedListBoxInternetSubCategory);
             this.groupBox16.Location = new System.Drawing.Point(661, 26);
             this.groupBox16.Name = "groupBox16";
@@ -723,36 +566,6 @@
             this.groupBox16.TabIndex = 2;
             this.groupBox16.TabStop = false;
             this.groupBox16.Text = "Internet Alt Kategori";
-            // 
-            // button5
-            // 
-            this.button5.BackColor = System.Drawing.Color.White;
-            this.button5.FlatAppearance.BorderSize = 0;
-            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.ForeColor = System.Drawing.Color.Black;
-            this.button5.Image = global::AyzPaymentWizard.Properties.Resources.Search;
-            this.button5.Location = new System.Drawing.Point(532, 17);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(46, 24);
-            this.button5.TabIndex = 9;
-            this.button5.UseVisualStyleBackColor = false;
-            // 
-            // checkBoxInAlKat
-            // 
-            this.checkBoxInAlKat.Location = new System.Drawing.Point(13, 18);
-            this.checkBoxInAlKat.Name = "checkBoxInAlKat";
-            this.checkBoxInAlKat.Size = new System.Drawing.Size(106, 24);
-            this.checkBoxInAlKat.TabIndex = 5;
-            this.checkBoxInAlKat.Text = "Hepsi Seç";
-            this.checkBoxInAlKat.UseVisualStyleBackColor = true;
-            this.checkBoxInAlKat.CheckedChanged += new System.EventHandler(this.checkBoxInAlKat_CheckedChanged);
-            // 
-            // txtSubCategoryFilter
-            // 
-            this.txtSubCategoryFilter.Location = new System.Drawing.Point(217, 16);
-            this.txtSubCategoryFilter.Name = "txtSubCategoryFilter";
-            this.txtSubCategoryFilter.Size = new System.Drawing.Size(363, 26);
-            this.txtSubCategoryFilter.TabIndex = 8;
             // 
             // checkedListBoxInternetSubCategory
             // 
@@ -765,9 +578,6 @@
             // groupBox15
             // 
             this.groupBox15.BackColor = System.Drawing.SystemColors.Control;
-            this.groupBox15.Controls.Add(this.button6);
-            this.groupBox15.Controls.Add(this.checkBoxIntAnaKat);
-            this.groupBox15.Controls.Add(this.txtMainCategoryFilter);
             this.groupBox15.Controls.Add(this.checkedListBoxInternetMainCategory);
             this.groupBox15.Location = new System.Drawing.Point(26, 301);
             this.groupBox15.Name = "groupBox15";
@@ -775,36 +585,6 @@
             this.groupBox15.TabIndex = 1;
             this.groupBox15.TabStop = false;
             this.groupBox15.Text = "İnternet Ana Katagori";
-            // 
-            // button6
-            // 
-            this.button6.BackColor = System.Drawing.Color.White;
-            this.button6.FlatAppearance.BorderSize = 0;
-            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button6.ForeColor = System.Drawing.Color.Black;
-            this.button6.Image = global::AyzPaymentWizard.Properties.Resources.Search;
-            this.button6.Location = new System.Drawing.Point(559, 14);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(46, 24);
-            this.button6.TabIndex = 4;
-            this.button6.UseVisualStyleBackColor = false;
-            // 
-            // checkBoxIntAnaKat
-            // 
-            this.checkBoxIntAnaKat.Location = new System.Drawing.Point(7, 15);
-            this.checkBoxIntAnaKat.Name = "checkBoxIntAnaKat";
-            this.checkBoxIntAnaKat.Size = new System.Drawing.Size(106, 24);
-            this.checkBoxIntAnaKat.TabIndex = 5;
-            this.checkBoxIntAnaKat.Text = "Hepsi Seç";
-            this.checkBoxIntAnaKat.UseVisualStyleBackColor = true;
-            this.checkBoxIntAnaKat.CheckedChanged += new System.EventHandler(this.checkBoxIntAnaKat_CheckedChanged);
-            // 
-            // txtMainCategoryFilter
-            // 
-            this.txtMainCategoryFilter.Location = new System.Drawing.Point(256, 13);
-            this.txtMainCategoryFilter.Name = "txtMainCategoryFilter";
-            this.txtMainCategoryFilter.Size = new System.Drawing.Size(351, 26);
-            this.txtMainCategoryFilter.TabIndex = 3;
             // 
             // checkedListBoxInternetMainCategory
             // 
@@ -817,9 +597,6 @@
             // groupBox14
             // 
             this.groupBox14.BackColor = System.Drawing.SystemColors.Control;
-            this.groupBox14.Controls.Add(this.button4);
-            this.groupBox14.Controls.Add(this.txtPlanCodeFilter);
-            this.groupBox14.Controls.Add(this.checkBoxPlanKod);
             this.groupBox14.Controls.Add(this.checkedListBoxPlanCode);
             this.groupBox14.Location = new System.Drawing.Point(26, 26);
             this.groupBox14.Name = "groupBox14";
@@ -827,37 +604,6 @@
             this.groupBox14.TabIndex = 0;
             this.groupBox14.TabStop = false;
             this.groupBox14.Text = "Plan Kodu";
-            // 
-            // button4
-            // 
-            this.button4.BackColor = System.Drawing.Color.White;
-            this.button4.FlatAppearance.BorderSize = 0;
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.ForeColor = System.Drawing.Color.Black;
-            this.button4.Image = global::AyzPaymentWizard.Properties.Resources.Search;
-            this.button4.Location = new System.Drawing.Point(559, 16);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(46, 24);
-            this.button4.TabIndex = 7;
-            this.button4.UseVisualStyleBackColor = false;
-            // 
-            // txtPlanCodeFilter
-            // 
-            this.txtPlanCodeFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtPlanCodeFilter.Location = new System.Drawing.Point(272, 15);
-            this.txtPlanCodeFilter.Name = "txtPlanCodeFilter";
-            this.txtPlanCodeFilter.Size = new System.Drawing.Size(334, 27);
-            this.txtPlanCodeFilter.TabIndex = 6;
-            // 
-            // checkBoxPlanKod
-            // 
-            this.checkBoxPlanKod.Location = new System.Drawing.Point(7, 18);
-            this.checkBoxPlanKod.Name = "checkBoxPlanKod";
-            this.checkBoxPlanKod.Size = new System.Drawing.Size(106, 24);
-            this.checkBoxPlanKod.TabIndex = 5;
-            this.checkBoxPlanKod.Text = "Hepsi Seç";
-            this.checkBoxPlanKod.UseVisualStyleBackColor = true;
-            this.checkBoxPlanKod.CheckedChanged += new System.EventHandler(this.checkBoxPlanKod_CheckedChanged);
             // 
             // checkedListBoxPlanCode
             // 
@@ -914,20 +660,13 @@
             this.groupBox1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.groupBox12.ResumeLayout(false);
-            this.groupBox12.PerformLayout();
             this.groupBox13.ResumeLayout(false);
-            this.groupBox13.PerformLayout();
             this.groupBox11.ResumeLayout(false);
-            this.groupBox11.PerformLayout();
             this.groupBox10.ResumeLayout(false);
-            this.groupBox10.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.groupBox16.ResumeLayout(false);
-            this.groupBox16.PerformLayout();
             this.groupBox15.ResumeLayout(false);
-            this.groupBox15.PerformLayout();
             this.groupBox14.ResumeLayout(false);
-            this.groupBox14.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -964,7 +703,7 @@
         private System.Windows.Forms.GroupBox groupBox13;
         private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.GroupBox groupBox10;
-        private System.Windows.Forms.CheckedListBox checkedListBoxMecraType1;
+        private System.Windows.Forms.CheckedListBox checkedListBoxMecraType;
         private System.Windows.Forms.CheckedListBox checkedListBoxMecra;
         private System.Windows.Forms.CheckedListBox checkedListBoxMarketingCompany;
         private System.Windows.Forms.CheckedListBox checkedListBoxCustomer;
@@ -984,26 +723,5 @@
         private System.Windows.Forms.ComboBox cmbClFiltreType;
         private System.Windows.Forms.Label lblClEnd;
         private System.Windows.Forms.Label lblClBegin;
-        private System.Windows.Forms.CheckBox checkBoxMaceraType;
-        private System.Windows.Forms.CheckBox checkBoxMusteri;
-        private System.Windows.Forms.CheckBox checkBoxPazar;
-        private System.Windows.Forms.CheckBox checkBoxMacera;
-        private System.Windows.Forms.CheckBox checkBoxInAlKat;
-        private System.Windows.Forms.CheckBox checkBoxIntAnaKat;
-        private System.Windows.Forms.CheckBox checkBoxPlanKod;
-        private System.Windows.Forms.TextBox txtMecraTypeFilter;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TextBox txtCustomerFilter;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox txtMarketingFilter;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox txtMecraFilter;
-        private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.TextBox txtSubCategoryFilter;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.TextBox txtMainCategoryFilter;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.TextBox txtPlanCodeFilter;
     }
 }

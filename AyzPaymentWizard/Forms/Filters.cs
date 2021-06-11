@@ -14,12 +14,13 @@ namespace AyzPaymentWizard
 {
     public partial class FiltersForm : Form
     {
-        Dictionary<int, string> checkListBoxMecraType = new Dictionary<int, string>();
-
+        Dictionary<int, string> MecraTypeList = new Dictionary<int, string>();
+        Dictionary<int, string> MarketingCompanyList = new Dictionary<int, string>();
+        Dictionary<int, string> MecraList = new Dictionary<int, string>();
+        Dictionary<int, string> CustomerList = new Dictionary<int, string>();
         public FiltersForm()
         {
             InitializeComponent();
-
         }
 
         SqlCommand komut = new SqlCommand();
@@ -173,10 +174,10 @@ namespace AyzPaymentWizard
             // 10. OLARAK MECRA TÜRLERİNİN DEĞERLERİNİ AYZ_PW_FILTER_VALUES TABLOSUNA YAZIYORUM
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
-                for (int i = 0; i < checkedListBoxMecraType1.CheckedItems.Count; i++)
+                for (int i = 0; i < checkedListBoxMecraType.CheckedItems.Count; i++)
                 {
-                    KeyValuePair<int, string> kvp = (KeyValuePair<int, string>)checkedListBoxMecraType1.CheckedItems[i];
-                    CommandText = "INSERT INTO AYZ_PW_FILTER_VALUES(TYPE_,VALUE,VALUE_TYPE,FIRMNR,USERNR) VALUES('" + Convert.ToInt32(Helper.FilterType.MecraType) + "','" + kvp.Key + "','1','" + Helper.FIRMNR + "','" + Helper.USERID + "')"; // FIRMNR ve USERNR'de daha sonra paremetrik olacak. USERNR login olan kullanıcının ID'si.
+                    KeyValuePair<int, string> kvp = (KeyValuePair<int, string>)checkedListBoxMecraType.CheckedItems[i];
+                    CommandText = "INSERT INTO AYZ_PW_FILTER_VALUES(TYPE_,VALUE,VALUE_TYPE,FIRMNR,USERNR) VALUES('" + Convert.ToInt32(Helper.FilterType.MecraType) + "','" + kvp.Key + "','1','" + Helper.FIRMNR + "','" + Helper.USERID + "')"; 
                     komut.CommandText = CommandText;
                     komut.Connection = conn;
                     conn.Open();
@@ -285,7 +286,7 @@ namespace AyzPaymentWizard
                 conn.Open();
                 komut.ExecuteNonQuery();
                 conn.Close();
-            }
+            }            
 
             PacketPreparation form = new PacketPreparation();
             form.ShowDialog();
@@ -627,17 +628,17 @@ namespace AyzPaymentWizard
                 komut.Connection = conn;
                 conn.Open();
                 dr = komut.ExecuteReader();
-            
+
                 while (dr.Read())
                 {
-                    checkListBoxMecraType.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
-                   
+                    MecraTypeList.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
+
                 }
                 conn.Close();
 
-                checkedListBoxMecraType1.DataSource = new BindingSource(checkListBoxMecraType, null);
-                checkedListBoxMecraType1.DisplayMember = "Value";
-                checkedListBoxMecraType1.ValueMember = "Key";
+                checkedListBoxMecraType.DataSource = new BindingSource(MecraTypeList, null);
+                checkedListBoxMecraType.DisplayMember = "Value";
+                checkedListBoxMecraType.ValueMember = "Key";
 
                 // Selected olanları atama satırları
                 komut.CommandText = CommandText;
@@ -649,7 +650,11 @@ namespace AyzPaymentWizard
                 {
                     if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
                     {
-                        checkedListBoxMecraType1.SetItemCheckState(i, CheckState.Checked);
+                        checkedListBoxMecraType.SetItemCheckState(i, CheckState.Checked);
+                    }
+                    else if (Convert.ToInt32(dr["SELECTED"].ToString()) == 0)
+                    {
+                        checkedListBoxMecraType.SetItemChecked(i, false);
                     }
                     i++;
                 }
@@ -670,13 +675,13 @@ namespace AyzPaymentWizard
                 komut.Connection = conn;
                 conn.Open();
                 dr = komut.ExecuteReader();
-                Dictionary<int, string> checkListBoxMecra = new Dictionary<int, string>();
+                
                 while (dr.Read())
                 {
-                    checkListBoxMecra.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
+                    MecraList.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
                 }
                 conn.Close();
-                checkedListBoxMecra.DataSource = new BindingSource(checkListBoxMecra, null);
+                checkedListBoxMecra.DataSource = new BindingSource(MecraList, null);
                 // checkedListBoxMecraType.Items.Insert(0,checked)
                 checkedListBoxMecra.DisplayMember = "Value";
                 checkedListBoxMecra.ValueMember = "Key";
@@ -712,13 +717,13 @@ namespace AyzPaymentWizard
                 komut.Connection = conn;
                 conn.Open();
                 dr = komut.ExecuteReader();
-                Dictionary<int, string> checkListBoxMarketingCompany = new Dictionary<int, string>();
+                
                 while (dr.Read())
                 {
-                    checkListBoxMarketingCompany.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
+                    MarketingCompanyList.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
                 }
                 conn.Close();
-                checkedListBoxMarketingCompany.DataSource = new BindingSource(checkListBoxMarketingCompany, null);
+                checkedListBoxMarketingCompany.DataSource = new BindingSource(MarketingCompanyList, null);
                 checkedListBoxMarketingCompany.DisplayMember = "Value";
                 checkedListBoxMarketingCompany.ValueMember = "Key";
 
@@ -753,13 +758,13 @@ namespace AyzPaymentWizard
                 komut.Connection = conn;
                 conn.Open();
                 dr = komut.ExecuteReader();
-                Dictionary<int, string> checkListBoxCustomer = new Dictionary<int, string>();
+                
                 while (dr.Read())
                 {
-                    checkListBoxCustomer.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
+                    CustomerList.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
                 }
                 conn.Close();
-                checkedListBoxCustomer.DataSource = new BindingSource(checkListBoxCustomer, null);
+                checkedListBoxCustomer.DataSource = new BindingSource(CustomerList, null);
                 checkedListBoxCustomer.DisplayMember = "Value";
                 checkedListBoxCustomer.ValueMember = "Key";
 
@@ -946,7 +951,7 @@ namespace AyzPaymentWizard
                     i++;
                 }
                 conn.Close();
-            }
+            }           
         }
 
         private void cmbClFiltreType_SelectionChangeCommitted(object sender, EventArgs e)
@@ -971,160 +976,6 @@ namespace AyzPaymentWizard
                 txtClientCodeEnd.Hide();
                 lblClBegin.Show();
                 lblClEnd.Hide();
-            }
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            for (int i = 0; i < checkedListBoxMecraType1.Items.Count; i++)
-            {
-                if (checkBoxMaceraType.Checked == true)
-                {
-                    checkedListBoxMecraType1.SetItemChecked(i, true);
-                }
-                else if (checkBoxMaceraType.Checked == false)
-                {
-                    checkedListBoxMecraType1.SetItemChecked(i, false);
-                }
-            }
-
-        }
-
-        private void checkBoxPazar_CheckedChanged(object sender, EventArgs e)
-        {
-            for (int j = 0; j < checkedListBoxMarketingCompany.Items.Count; j++)
-            {
-                if (checkBoxPazar.Checked)
-                {
-                    checkedListBoxMarketingCompany.SetItemChecked(j, true);
-                }
-                else if (checkBoxPazar.Checked == false)
-                {
-                    checkedListBoxMarketingCompany.SetItemChecked(j, false);
-                }
-            }
-        }
-
-        private void checkBoxMacera_CheckedChanged(object sender, EventArgs e)
-        {
-            for (int j = 0; j < checkedListBoxMecra.Items.Count; j++)
-            {
-                if (checkBoxMacera.Checked == true)
-                {
-                    checkedListBoxMecra.SetItemChecked(j, true);
-                }
-                else if (checkBoxMacera.Checked == false)
-                {
-                    checkedListBoxMecra.SetItemChecked(j, false);
-                }
-            }
-        }
-
-        private void checkBoxMusteri_CheckedChanged(object sender, EventArgs e)
-        {
-            for (int j = 0; j < checkedListBoxCustomer.Items.Count; j++)
-            {
-                if (checkBoxMusteri.Checked == true)
-                {
-                    checkedListBoxCustomer.SetItemChecked(j, true);
-                }
-                else if (checkBoxMusteri.Checked == false)
-                {
-                    checkedListBoxCustomer.SetItemChecked(j, false);
-                }
-            }
-        }
-
-        private void checkBoxPlanKod_CheckedChanged(object sender, EventArgs e)
-        {
-            for (int j = 0; j < checkedListBoxPlanCode.Items.Count; j++)
-            {
-                if (checkBoxPlanKod.Checked == true)
-                {
-                    checkedListBoxPlanCode.SetItemChecked(j, true);
-                }
-                else if (checkBoxPlanKod.Checked == false)
-                {
-                    checkedListBoxPlanCode.SetItemChecked(j, false);
-                }
-            }
-        }
-
-        private void checkBoxInAlKat_CheckedChanged(object sender, EventArgs e)
-        {
-            for (int j = 0; j < checkedListBoxInternetSubCategory.Items.Count; j++)
-            {
-                if (checkBoxInAlKat.Checked == true)
-                {
-                    checkedListBoxInternetSubCategory.SetItemChecked(j, true);
-                }
-                else if (checkBoxInAlKat.Checked == false)
-                {
-                    checkedListBoxInternetSubCategory.SetItemChecked(j, false);
-                }
-            }
-
-        }
-
-        private void checkBoxIntAnaKat_CheckedChanged(object sender, EventArgs e)
-        {
-            for (int j = 0; j < checkedListBoxInternetMainCategory.Items.Count; j++)
-            {
-                if (checkBoxIntAnaKat.Checked == true)
-                {
-                    checkedListBoxInternetMainCategory.SetItemChecked(j, true);
-                }
-                else if (checkBoxIntAnaKat.Checked == false)
-                {
-                    checkedListBoxInternetMainCategory.SetItemChecked(j, false);
-                }
-            }
-
-        }
-
-        private void MecraTypeFilter_TextChanged(object sender, EventArgs e)
-        {
-            checkListBoxMecraType.Clear();
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT LOGREF = LG.LOGREF," +
-                                     "\nNAME = LG.CODE + ' - ' + LG.DEFINITION_," +
-                                     "\nCASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED" +
-                                     "\nFROM LG_XT105 LG" +
-                                     "\nLEFT JOIN [dbo].[AYZ_PW_FILTER_VALUES] FV ON LG.LOGREF = CAST(FV.VALUE AS SMALLINT) AND (FV.TYPE_ = 9)" +
-                                     "\nAND (FV.USERNR = " + Helper.USERID + ") AND (FV.FIRMNR = " + Helper.FIRMNR + ")" +
-                                     "\nWHERE LG.TYPE_ = 1 AND FV.PACKETID IS NULL AND LG.CODE LIKE '" +  txtMecraTypeFilter.Text + "%'";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-
-                while (dr.Read())
-                {
-                    checkListBoxMecraType.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
-                }
-                conn.Close();
-
-                checkedListBoxMecraType1.DataSource = new BindingSource(checkListBoxMecraType, null);
-                checkedListBoxMecraType1.DisplayMember = "Value";
-                checkedListBoxMecraType1.ValueMember = "Key";
-
-
-                // Selected olanları atama satırları
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                int i = 0;
-                while (dr.Read())
-                {
-                    if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
-                    {
-                        checkedListBoxMecraType1.SetItemCheckState(i, CheckState.Checked);
-                    }
-                    i++;
-                }
-                conn.Close();
             }
         }
     }

@@ -32,6 +32,7 @@ namespace AyzPaymentWizard
         public Anasayfa()
         {
             InitializeComponent();
+            Helper.SFTPLOG(null);
         }
 
         private void btnUserAdd_Click(object sender, EventArgs e)
@@ -214,7 +215,7 @@ namespace AyzPaymentWizard
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Hata:\n" + ex.Message,"Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Hata:\n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
             }
@@ -392,7 +393,7 @@ namespace AyzPaymentWizard
             }
         }
 
-        public bool SftpConnectionCheck()
+        public bool SftpConnectionCheck(int packetId)
         {
             string Hostname = "", Username = "", Password = "";
             int Port = 22;
@@ -416,7 +417,41 @@ namespace AyzPaymentWizard
             }
 
             var sftpClient = new SftpClient(Hostname, Port, Username, Password);
-            sftpClient.Connect();
+            try
+            {
+                sftpClient.Connect();
+                string ConnResult = sftpClient.IsConnected == true ? "Başarılı" : "Başarısız";
+
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "INSERT INTO AYZ_PW_LOG_FILE(LOG_NAME, LOG_DATETIME, LOG_EXP, PACKETID, LOG_CREATE_USERID, LOG_CREATE_USERNAME,STATE)" +
+                                  "\nVALUES('SFTP BAĞLANTISI', CONVERT(DATETIME, GETDATE(), 104), " +
+                                  "\n'Host: " + Hostname + ", User: " + Username + ", Password: " + Password + ", Port: " + Port + ", Bağlantı: " + ConnResult + " '," +
+                                  "\n" + packetId + "," + Helper.USERID + ",'" + Helper.USERNAME + "','" + ConnResult + "')";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                }
+            }
+            catch (Exception ex)
+            {
+                string ConnResult = sftpClient.IsConnected == true ? "Başarılı" : "Başarısız";
+
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "INSERT INTO AYZ_PW_LOG_FILE(LOG_NAME, LOG_DATETIME, LOG_EXP, PACKETID, LOG_CREATE_USERID, LOG_CREATE_USERNAME,STATE)" +
+                                  "\nVALUES('SFTP BAĞLANTISI', CONVERT(DATETIME, GETDATE(), 104), " +
+                                  "\n'Host: " + Hostname + ", User: " + Username + ", Password: " + Password + ", Port: " + Port + ", Bağlantı: " + ConnResult + " '," +
+                                  "\n" + packetId + "," + Helper.USERID + ",'" + Helper.USERNAME + "','" + ConnResult + "')";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                }
+                MessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
 
             if (sftpClient.IsConnected)
                 return true;
@@ -442,7 +477,7 @@ namespace AyzPaymentWizard
                 bool check = false;
 
 
-                if (!SftpConnectionCheck())
+                if (!SftpConnectionCheck(packetId))
                 {
                     MessageBox.Show("SFTP Bağlantı Bilgilerinizi Kontrol Ediniz!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -520,7 +555,7 @@ namespace AyzPaymentWizard
                             decimal sum = 0;
                             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                             {
-                                CommandText = "SELECT DISTINCT BA.BANKACCOUNTNO,S.AMOUNT,PD.IBAN,S.RETURNKEY,S.CURRCODE,BANKCODE = B.BANKNR," +
+                                CommandText = "SELECT DISTINCT BA.BANKACCOUNTNO,S.AMOUNT,PD.IBAN,S.RETURNKEY,S.CURRCODE,BANKCODE = B.BANKNR,UNVAN = PD.CLIENTNAME," +
                                               "\nOUTBRANCHCODE = B.BRANCHNR, P.NOTE, PD.CL_TAXNR,PD.CL_EMAIL,PD.CL_TAXOFFICE,CUSTOMERNO = B.CUSTOMERNR,B.FIRMNAME  " +
                                               "\nFROM AYZ_PW_SUMMARY AS S " +
                                               "\nLEFT JOIN AYZ_PW_PACKET_DETAIL AS PD ON S.PACKETID = PD.PACKETID AND S.CLIENTREF = PD.CLIENTREF " +
@@ -542,14 +577,14 @@ namespace AyzPaymentWizard
                                 foreach (DataRow dr in dt.Rows)
                                 {
                                     //string sabitD = "D";
-                                    string HEDEFBANKA1 = (string)dr["BANKCODE"].ToString();
-                                    string HEDEFSUBE1 = (string)dr["OUTBRANCHCODE"].ToString();
+                                    string HEDEFBANKA1 = ""; // (string)dr["BANKCODE"].ToString();
+                                    string HEDEFSUBE1 = "";  // (string)dr["OUTBRANCHCODE"].ToString();
                                     string HEDEFHESAPNUMARASI1 = (string)dr["BANKACCOUNTNO"].ToString();
                                     string PARAKODU1 = (string)dr["CURRCODE"].ToString();
                                     decimal TUTAR1 = (decimal)dr["AMOUNT"];
                                     string ACIKLAMA1 = "";//(string)dr["NOTE"].ToString();
                                     string FIRMAREFERANS1 = (string)dr["RETURNKEY"].ToString();
-                                    //string UNVAN1 = (string)dr["UNVAN"];
+                                    string UNVAN1 = (string)dr["UNVAN"];
                                     //string ADDRESS1 = (string)dr["ADDRESS"];
                                     //string TELEFON1 = (string)dr["TELEFON"];
                                     string VERGIKIMLIKNO1 = (string)dr["CL_TAXNR"].ToString();
@@ -575,7 +610,7 @@ namespace AyzPaymentWizard
                                         TUTAR = TUTAR1,
                                         ACIKLAMA = ACIKLAMA1,
                                         FIRMAREFERANS = FIRMAREFERANS1,
-                                        //UNVAN = UNVAN1,
+                                        UNVAN = UNVAN1,
                                         //ADDRESS = ADDRESS1,
                                         //TELEFON = TELEFON1,
                                         VERGIKIMLIKNO = VERGIKIMLIKNO1,
@@ -640,11 +675,20 @@ namespace AyzPaymentWizard
                                 string fileName = "OD" + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.Hour.ToString().PadLeft(2, '0') + DateTime.Now.Minute.ToString().PadLeft(2, '0') + DateTime.Now.Second.ToString().PadLeft(2, '0') + "G" + HesapNo.ToString().PadLeft(8, '0') + SubeKodu.ToString().PadLeft(4, '0') + FirmaAdi + "$";
 
                                 //Dosyayı Yaz
+                                MessageBox.Show("File Path: " + filePath);
+                                MessageBox.Show("File Name: " + fileName);
+                                MessageBox.Show("Records: " + Records);
                                 Engine.WriteFile("" + filePath + "" + fileName + ".txt", Records);
 
                                 string sendToBankFileName = filePath + fileName + ".txt";
-
+                                MessageBox.Show("Bankaya yollanacak dosyanın adı: " + sendToBankFileName);
+                                MessageBox.Show("Hostname: " + hostName);
+                                MessageBox.Show("Port: " + port);
+                                MessageBox.Show("SFTP username: " + sftpUserName);
+                                MessageBox.Show("SFTP Password :" + password);
+                                MessageBox.Show("FOLDER PATH: " + folderPath);
                                 var result = SFTP.Upload(sendToBankFileName, hostName, port, sftpUserName, password, folderPath);
+                                MessageBox.Show("Result: \n" + result);
                                 JObject json = JObject.Parse(result);
                                 string message = json["Message_"].ToString();
                                 int resultCode = Convert.ToInt32(json["ResultCode"].ToString());
@@ -679,7 +723,7 @@ namespace AyzPaymentWizard
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Hata :\n" + ex.ToString(),"Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("Hata :\n" + ex.ToString(), "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                 }
@@ -723,7 +767,7 @@ namespace AyzPaymentWizard
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hata: \n" + ex.Message,"Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Hata: \n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -894,7 +938,7 @@ namespace AyzPaymentWizard
                                 }
                                 catch (Exception ex)
                                 {
-                                    MessageBox.Show("Hata: \n" + ex.Message,"Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    MessageBox.Show("Hata: \n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 }
                             }
                         }
@@ -995,6 +1039,12 @@ namespace AyzPaymentWizard
         {
             Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
             form.FillPacketList();
+        }
+
+        private void sFTPBaglantiLoglariToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SFTPSTATE form = new SFTPSTATE();
+            form.ShowDialog();
         }
     }
 }
