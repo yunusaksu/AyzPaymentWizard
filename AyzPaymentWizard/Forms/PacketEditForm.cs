@@ -1529,6 +1529,7 @@ namespace AyzPaymentWizard.Forms
                             conn.Close();
                         }
                         MessageBox.Show("Paket başarılı bir şekilde güncellendi...!", "Paket Güncelleme Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Helper.PacketHistorySave(PacketId, "Güncellenmiş Paket", "Paket Güncellendi.");
                         this.Hide();
                         Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
                         form.FillPacketList();

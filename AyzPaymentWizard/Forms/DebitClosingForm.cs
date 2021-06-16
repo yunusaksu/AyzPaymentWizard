@@ -377,6 +377,7 @@ namespace AyzPaymentWizard.Forms
                         komut.ExecuteNonQuery();
                         conn2.Close();
                     }
+                    Helper.PacketHistorySave(PacketID, "Akibet Alındı", "Akibet Alındı.");
                     saveDownloadedFiles(Item, DetailResult, FooterResult);
                     Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
                     form.FillPacketList();

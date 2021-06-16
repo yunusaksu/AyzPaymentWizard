@@ -1376,6 +1376,7 @@ namespace AyzPaymentWizard
                         }
                         MessageBox.Show("Paket başarılı bir şekilde kaydedildi!", "Paket Oluşturma Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         SavePacketFilters(PacketId);
+                        Helper.PacketHistorySave(PacketId, "Yeni Paket", "Paket Oluşturuldu.");
                         this.Hide();
                         Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
                         form.FillPacketList();

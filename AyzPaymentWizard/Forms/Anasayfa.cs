@@ -270,7 +270,7 @@ namespace AyzPaymentWizard
                             komut.ExecuteNonQuery();
                             conn.Close();
                         }
-
+                        Helper.PacketHistorySave(packetId, "Onaya Yollandı", "Onaya Yollandı.");
                         // Anasayfayı yenilemek için 2 yöntem vardır.
                         // 1. Yöntem
                         Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
@@ -326,6 +326,8 @@ namespace AyzPaymentWizard
                             conn.Close();
                         }
 
+                        Helper.PacketHistorySave(packetId, "Onaylandı", "Paket Onaylandı.");
+
                         // Anasayfayı yenilemek için 2 yöntem vardır.
                         // 1. Yöntem
                         Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
@@ -373,6 +375,7 @@ namespace AyzPaymentWizard
                             komut.ExecuteNonQuery();
                             conn.Close();
                         }
+                        Helper.PacketHistorySave(packetId,"Paket Reddedildi","Paket Reddedildi.");
 
                         // Anasayfayı yenilemek için 2 yöntem vardır.
                         // 1. Yöntem
@@ -550,7 +553,7 @@ namespace AyzPaymentWizard
                                     conn.Open();
                                     dr = komut.ExecuteReader();
                                 }
-                            }
+                            }                            
 
                             decimal sum = 0;
                             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
@@ -675,20 +678,10 @@ namespace AyzPaymentWizard
                                 string fileName = "OD" + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd") + DateTime.Now.Hour.ToString().PadLeft(2, '0') + DateTime.Now.Minute.ToString().PadLeft(2, '0') + DateTime.Now.Second.ToString().PadLeft(2, '0') + "G" + HesapNo.ToString().PadLeft(8, '0') + SubeKodu.ToString().PadLeft(4, '0') + FirmaAdi + "$";
 
                                 //Dosyayı Yaz
-                                MessageBox.Show("File Path: " + filePath);
-                                MessageBox.Show("File Name: " + fileName);
-                                MessageBox.Show("Records: " + Records);
                                 Engine.WriteFile("" + filePath + "" + fileName + ".txt", Records);
 
                                 string sendToBankFileName = filePath + fileName + ".txt";
-                                MessageBox.Show("Bankaya yollanacak dosyanın adı: " + sendToBankFileName);
-                                MessageBox.Show("Hostname: " + hostName);
-                                MessageBox.Show("Port: " + port);
-                                MessageBox.Show("SFTP username: " + sftpUserName);
-                                MessageBox.Show("SFTP Password :" + password);
-                                MessageBox.Show("FOLDER PATH: " + folderPath);
                                 var result = SFTP.Upload(sendToBankFileName, hostName, port, sftpUserName, password, folderPath);
-                                MessageBox.Show("Result: \n" + result);
                                 JObject json = JObject.Parse(result);
                                 string message = json["Message_"].ToString();
                                 int resultCode = Convert.ToInt32(json["ResultCode"].ToString());
@@ -710,6 +703,7 @@ namespace AyzPaymentWizard
                                         komut.ExecuteNonQuery();
                                         conn2.Close();
                                     }
+                                    Helper.PacketHistorySave(packetId, "Bankaya İletildi", "Paket Bankaya İletildi.");
                                 }
                                 else if (resultCode == 0)
                                 {
@@ -753,6 +747,7 @@ namespace AyzPaymentWizard
                         komut.ExecuteNonQuery();
                         conn.Close();
                     }
+                    Helper.PacketHistorySave(packetId, "Arşivlendi", "Paket Arşivlendi.");
 
                     // Anasayfayı yenilemek için 2 yöntem vardır.
                     // 1. Yöntem
@@ -1044,6 +1039,12 @@ namespace AyzPaymentWizard
         private void sFTPBaglantiLoglariToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SFTPSTATE form = new SFTPSTATE();
+            form.ShowDialog();
+        }
+
+        private void paketSeruveniToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PacketAdventure form = new PacketAdventure();
             form.ShowDialog();
         }
     }

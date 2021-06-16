@@ -127,6 +127,25 @@ namespace AyzPaymentWizard
             }
         }
 
+        public static void PacketHistorySave(int packetId, string status, string explain)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                CommandText = "INSERT INTO AYZ_PW_PACKET_HISTORY(PACKETID,FIRMNR,DATE_,STATUS,EXPLAIN, USERID,USERNAME) " +
+                          "VALUES(" +
+                          "\n" + packetId + ", " +
+                          "\n" + Helper.FIRMNR + ", " +
+                          "\nCONVERT(DATETIME, GETDATE(), 104), " +
+                          "\n'" + status + "', " +
+                          "\n'" + explain + "', " +
+                          "\n" + Helper.USERID + ", " +
+                          "\n'" + Helper.USERNAME + "')";
+                komut.CommandText = CommandText;
+                komut.Connection = conn;
+                conn.Open();
+                dr = komut.ExecuteReader();
+            }
+        }
         public static bool NotInPayTrans(int payRef)
         {
             List<int> paytransIdList = new List<int>();
