@@ -1044,7 +1044,8 @@ namespace AyzPaymentWizard
 
         private void paketSeruveniToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PacketAdventure form = new PacketAdventure();
+            int packetId = (int)dataGridViewPacket.SelectedRows[0].Cells["ID"].Value;
+            PacketAdventure form = new PacketAdventure(packetId);
             form.ShowDialog();
         }
     }
