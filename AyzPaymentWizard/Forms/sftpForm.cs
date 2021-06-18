@@ -92,6 +92,7 @@ namespace AyzPaymentWizard.Forms
                     }
                 }
                 MessageBox.Show("Kayıt Başarılı!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Hide();
             }
             catch (Exception ex)
             {

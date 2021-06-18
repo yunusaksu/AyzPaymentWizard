@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AyzPaymentWizard.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,9 @@ namespace AyzPaymentWizard
 {
     public partial class UserAddForm : Form
     {
+        SqlCommand komut = new SqlCommand();
+        SqlDataReader dr;
+        string CommandText = "";
         public UserAddForm()
         {
             InitializeComponent();
@@ -23,23 +27,32 @@ namespace AyzPaymentWizard
         private void btnUserSave_Click(object sender, EventArgs e)
         {
             SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString);
-
             SqlCommand cmd = new SqlCommand();
             // User Kaydederken UserType = 0 olmalıdır.
             var Username = txtUsername.Text;
             var Password = txtPassword.Text;
+            var email = txtEmail.Text;
             string encrytedPassword = EncryptionAlgorithm.Encrytion(Password);
-            var GroupId = cmbGroup.SelectedValue;
+            //var GroupId = cmbGroup.SelectedValue;
             var LogoFirmaNumber = cmbFirmNumber.SelectedValue;
+
             try
             {
-                cmd.CommandText = "INSERT INTO [AYZ_PW_USER](NAME,PASSWORD,USERTYPE,FIRMNR,DATE)VALUES('" + Username + "','" + encrytedPassword + "',0,'" + LogoFirmaNumber + "', GETDATE());SELECT SCOPE_IDENTITY()";
+                cmd.CommandText = "INSERT INTO [AYZ_PW_USER](NAME,PASSWORD,USERTYPE,FIRMNR,DATE,EMAIL)VALUES('" + Username + "','" + encrytedPassword + "',0,'" + LogoFirmaNumber + "', GETDATE(),'" + email + "');SELECT SCOPE_IDENTITY()";
                 cmd.Connection = conn;
                 conn.Open();
                 int userId = Convert.ToInt32(cmd.ExecuteScalar());
-                cmd.CommandText = "INSERT INTO [AYZ_PW_USERGROUPS](GROUPID,USERID) VALUES(" +
-                                        " '" + GroupId.ToString() + "', '" + userId.ToString() + "') ";
-                cmd.ExecuteNonQuery();
+                #region MyRegion
+                var list = checkedListBoxGroup.CheckedItems;
+                foreach (DataRowView dataRow in list)
+                {
+                    int groupId = (int)dataRow.Row.ItemArray[0];
+
+                    cmd.CommandText = "INSERT INTO [AYZ_PW_USERGROUPS](GROUPID,USERID) VALUES(" +
+                                            " '" + groupId.ToString() + "', '" + userId.ToString() + "') ";
+                    cmd.ExecuteNonQuery();
+                }
+                #endregion
                 conn.Close();
                 MessageBox.Show("Kullanıcı başarılı bir şekilde kaydedildi!", "Kullanıcı Kayıt Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
@@ -53,16 +66,16 @@ namespace AyzPaymentWizard
 
         private void UserAddForm_Load(object sender, EventArgs e)
         {
-            SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString);
-            SqlCommand cmd = new SqlCommand("SELECT ID, NAME FROM [AYZ_PW_USER] WHERE USERTYPE = '1' ORDER BY NAME ASC", conn);
-            conn.Open();
-            DataTable tbl = new DataTable();
-            tbl.Load(cmd.ExecuteReader());
-            conn.Close();
+            //SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString);
+            //SqlCommand cmd = new SqlCommand("SELECT ID, NAME FROM [AYZ_PW_USER] WHERE USERTYPE = '1' ORDER BY NAME ASC", conn);
+            //conn.Open();
+            //DataTable tbl = new DataTable();
+            //tbl.Load(cmd.ExecuteReader());
+            //conn.Close();
 
-            cmbGroup.DataSource = tbl;
-            cmbGroup.DisplayMember = "NAME";
-            cmbGroup.ValueMember = "ID";
+            //cmbGroup.DataSource = tbl;
+            //cmbGroup.DisplayMember = "NAME";
+            //cmbGroup.ValueMember = "ID";
 
             ///
             // Begin            
@@ -72,7 +85,7 @@ namespace AyzPaymentWizard
             conn2.Open();
             DataTable tbl2 = new DataTable();
             tbl2.Load(cmd2.ExecuteReader());
-            conn.Close();
+            conn2.Close();
 
             cmbFirmNumber.DataSource = tbl2;
             cmbFirmNumber.DisplayMember = "NR";
@@ -80,6 +93,24 @@ namespace AyzPaymentWizard
             ///
             // End
             ///
+
+            #region Group Checklistbox Doldurma
+            using (SqlConnection con = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                using (SqlCommand cmdGroup = new SqlCommand("SELECT ID, NAME FROM [AYZ_PW_USER] WHERE USERTYPE = '1' ORDER BY NAME ASC", con))
+                {
+                    cmdGroup.CommandType = CommandType.Text;
+                    using (SqlDataAdapter sda = new SqlDataAdapter(cmdGroup))
+                    {
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        ((ListBox)checkedListBoxGroup).DataSource = dt;
+                        ((ListBox)checkedListBoxGroup).DisplayMember = "NAME";
+                        ((ListBox)checkedListBoxGroup).ValueMember = "ID";
+                    }
+                }
+            }
+            #endregion
 
             ToolTip showBtnToolTip = new ToolTip();
             showBtnToolTip.SetToolTip(btnShow, "Şifre Göster");

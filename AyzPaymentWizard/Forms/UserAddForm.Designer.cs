@@ -34,12 +34,14 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtUsername = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
-            this.cmbGroup = new System.Windows.Forms.ComboBox();
             this.btnUserSave = new System.Windows.Forms.Button();
             this.cmbFirmNumber = new System.Windows.Forms.ComboBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnShow = new System.Windows.Forms.Button();
             this.btnHide = new System.Windows.Forms.Button();
+            this.checkedListBoxGroup = new System.Windows.Forms.CheckedListBox();
+            this.txtEmail = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -80,7 +82,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label4.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.label4.Location = new System.Drawing.Point(9, 158);
+            this.label4.Location = new System.Drawing.Point(9, 205);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(50, 22);
             this.label4.TabIndex = 3;
@@ -103,16 +105,6 @@
             this.txtPassword.Size = new System.Drawing.Size(310, 27);
             this.txtPassword.TabIndex = 5;
             // 
-            // cmbGroup
-            // 
-            this.cmbGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.cmbGroup.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.cmbGroup.FormattingEnabled = true;
-            this.cmbGroup.Location = new System.Drawing.Point(180, 152);
-            this.cmbGroup.Name = "cmbGroup";
-            this.cmbGroup.Size = new System.Drawing.Size(310, 28);
-            this.cmbGroup.TabIndex = 7;
-            // 
             // btnUserSave
             // 
             this.btnUserSave.BackColor = System.Drawing.Color.ForestGreen;
@@ -120,7 +112,7 @@
             this.btnUserSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUserSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnUserSave.ForeColor = System.Drawing.Color.White;
-            this.btnUserSave.Location = new System.Drawing.Point(180, 212);
+            this.btnUserSave.Location = new System.Drawing.Point(180, 325);
             this.btnUserSave.Name = "btnUserSave";
             this.btnUserSave.Size = new System.Drawing.Size(153, 39);
             this.btnUserSave.TabIndex = 8;
@@ -142,7 +134,7 @@
             // 
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnCancel.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.btnCancel.Location = new System.Drawing.Point(339, 212);
+            this.btnCancel.Location = new System.Drawing.Point(339, 325);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(151, 39);
             this.btnCancel.TabIndex = 10;
@@ -176,17 +168,46 @@
             this.btnHide.UseVisualStyleBackColor = false;
             this.btnHide.Click += new System.EventHandler(this.btnHide_Click);
             // 
+            // checkedListBoxGroup
+            // 
+            this.checkedListBoxGroup.FormattingEnabled = true;
+            this.checkedListBoxGroup.Location = new System.Drawing.Point(180, 202);
+            this.checkedListBoxGroup.Name = "checkedListBoxGroup";
+            this.checkedListBoxGroup.Size = new System.Drawing.Size(310, 109);
+            this.checkedListBoxGroup.TabIndex = 13;
+            // 
+            // txtEmail
+            // 
+            this.txtEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.txtEmail.Location = new System.Drawing.Point(180, 157);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(310, 27);
+            this.txtEmail.TabIndex = 14;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label5.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.label5.Location = new System.Drawing.Point(12, 162);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(60, 22);
+            this.label5.TabIndex = 15;
+            this.label5.Text = "E-Mail";
+            // 
             // UserAddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(505, 264);
+            this.ClientSize = new System.Drawing.Size(505, 374);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.txtEmail);
+            this.Controls.Add(this.checkedListBoxGroup);
             this.Controls.Add(this.btnShow);
             this.Controls.Add(this.btnHide);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.cmbFirmNumber);
             this.Controls.Add(this.btnUserSave);
-            this.Controls.Add(this.cmbGroup);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUsername);
             this.Controls.Add(this.label4);
@@ -212,11 +233,13 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtUsername;
         private System.Windows.Forms.TextBox txtPassword;
-        private System.Windows.Forms.ComboBox cmbGroup;
         private System.Windows.Forms.Button btnUserSave;
         private System.Windows.Forms.ComboBox cmbFirmNumber;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnShow;
         private System.Windows.Forms.Button btnHide;
+        private System.Windows.Forms.CheckedListBox checkedListBoxGroup;
+        private System.Windows.Forms.TextBox txtEmail;
+        private System.Windows.Forms.Label label5;
     }
 }

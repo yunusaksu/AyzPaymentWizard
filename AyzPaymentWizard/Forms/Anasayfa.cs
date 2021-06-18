@@ -185,39 +185,45 @@ namespace AyzPaymentWizard
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            int status = 0;
-            int packetId = 0;
-            for (int i = 0; i < dataGridViewPacket.SelectedRows.Count; i++)
+            if (Helper.AuthorityControl("EDIT_PACKAGE") || Helper.USERNAME == "Admin")
             {
-                packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
-                status = (int)dataGridViewPacket.SelectedRows[i].Cells["STATUS"].Value;
-            }
+                int status = 0, packetId = 0;
+                for (int i = 0; i < dataGridViewPacket.SelectedRows.Count; i++)
+                {
+                    packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
+                    status = (int)dataGridViewPacket.SelectedRows[i].Cells["STATUS"].Value;
+                }
 
-            if ((status == (int)Helper.PacketStatus.SendToApproval) || (status == (int)Helper.PacketStatus.SentToBank) || (status == (int)Helper.PacketStatus.AnswerReceivedBank) || (status == (int)Helper.PacketStatus.Approved))
-            {
-                if (status == (int)Helper.PacketStatus.SendToApproval)
-                    MessageBox.Show("Paket Onaya Yollandığı İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                else if (status == (int)Helper.PacketStatus.SentToBank)
-                    MessageBox.Show("Paket Bankaya Yollandığı İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                else if (status == (int)Helper.PacketStatus.AnswerReceivedBank)
-                    MessageBox.Show("Paketin Akibeti Alındığı İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                else if (status == (int)Helper.PacketStatus.Approved)
-                    MessageBox.Show("Paketin Onaylandığı İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if ((status == (int)Helper.PacketStatus.SendToApproval) || (status == (int)Helper.PacketStatus.SentToBank) || (status == (int)Helper.PacketStatus.AnswerReceivedBank) || (status == (int)Helper.PacketStatus.Approved))
+                {
+                    if (status == (int)Helper.PacketStatus.SendToApproval)
+                        MessageBox.Show("Paket Onaya Yollandığı İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else if (status == (int)Helper.PacketStatus.SentToBank)
+                        MessageBox.Show("Paket Bankaya Yollandığı İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else if (status == (int)Helper.PacketStatus.AnswerReceivedBank)
+                        MessageBox.Show("Paketin Akibeti Alındığı İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else if (status == (int)Helper.PacketStatus.Approved)
+                        MessageBox.Show("Paketin Onaylandığı İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    if (packetId != 0)
+                    {
+                        try
+                        {
+                            PacketEditForm form = new PacketEditForm(packetId, false);
+                            form.ShowDialog();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Hata:\n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                }
             }
             else
             {
-                if (packetId != 0)
-                {
-                    try
-                    {
-                        PacketEditForm form = new PacketEditForm(packetId, false);
-                        form.ShowDialog();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Hata:\n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
+                MessageBox.Show("Paket Düzenleme Yetkiniz Bulunmuyor!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -247,39 +253,55 @@ namespace AyzPaymentWizard
         {
             try
             {
-                int packetId = 0;
+                int packetId = 0, status = 0, archived = -1;
                 for (int i = 0; i < dataGridViewPacket.SelectedRows.Count; i++)
                 {
                     packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
+                    status = (int)dataGridViewPacket.SelectedRows[i].Cells["STATUS"].Value;
+                    archived = (int)dataGridViewPacket.SelectedRows[i].Cells["ARCHIVED"].Value;
                 }
-                if (packetId != 0)
+                if (status == (int)Helper.PacketStatus.SendToApproval || status == (int)Helper.PacketStatus.Approved || status == (int)Helper.PacketStatus.SentToBank || status == (int)Helper.PacketStatus.AnswerReceivedBank || status == (int)Helper.PacketStatus.Rejected || archived == (int)Helper.ArchiveStatus.Archived)
                 {
-                    string approvalExp = Interaction.InputBox("Onay Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250);
-                    if (approvalExp.Length > 0)
+                    if (status == (int)Helper.PacketStatus.SendToApproval)
+                        MessageBox.Show("Paket Daha Önce Onaya Yollandığı İçin Tekrar Yollanamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else if (status == (int)Helper.PacketStatus.Approved)
+                        MessageBox.Show("Paket Onaylandığı İçin Tekrar Onaya Yollanamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else if (status == (int)Helper.PacketStatus.SentToBank)
+                        MessageBox.Show("Paket Bankaya Yollandığı İçin Tekrar Onaya Yollanamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else if (status == (int)Helper.PacketStatus.AnswerReceivedBank)
+                        MessageBox.Show("Paketin Akibeti Alındığı İçin Tekrar Onaya Yollanamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else if (status == (int)Helper.PacketStatus.Rejected)
+                        MessageBox.Show("Paket Reddedildiği İçin Tekrar Onaya Yollanamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else if (archived == (int)Helper.ArchiveStatus.Archived)
+                        MessageBox.Show("Paket Arşivlendiği İçin Onaya Yollanamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    if (packetId != 0)
                     {
-                        // Paketin statüsü onaya gönderildi yapılacak ve Onay Notu Güncellenecek
-                        using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                        string approvalExp = Interaction.InputBox("Onay Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250);
+                        if (approvalExp.Length > 0)
                         {
-                            CommandText = "UPDATE AYZ_PW_PACKET " +
-                                          "\nSET STATUS = " + (int)Helper.PacketStatus.SendToApproval + "," +
-                                          "\nAPPROVALNOTE = '" + approvalExp + "'" +
-                                          "\nWHERE ID = " + packetId + "";
-                            komut.CommandText = CommandText;
-                            komut.Connection = conn;
-                            conn.Open();
-                            komut.ExecuteNonQuery();
-                            conn.Close();
+                            // Paketin statüsü onaya gönderildi yapılacak ve Onay Notu Güncellenecek
+                            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                            {
+                                CommandText = "UPDATE AYZ_PW_PACKET " +
+                                              "\nSET STATUS = " + (int)Helper.PacketStatus.SendToApproval + "," +
+                                              "\nAPPROVALNOTE = '" + approvalExp + "'" +
+                                              "\nWHERE ID = " + packetId + "";
+                                komut.CommandText = CommandText;
+                                komut.Connection = conn;
+                                conn.Open();
+                                komut.ExecuteNonQuery();
+                                conn.Close();
+                            }
+                            Helper.PacketHistorySave(packetId, "Onaya Yollandı", "Onaya Yollandı.");
+
+                            #region Anasayfayı yenilemek için
+                            Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
+                            form.FillPacketList();
+                            #endregion
                         }
-                        Helper.PacketHistorySave(packetId, "Onaya Yollandı", "Onaya Yollandı.");
-                        // Anasayfayı yenilemek için 2 yöntem vardır.
-                        // 1. Yöntem
-                        Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
-                        form.FillPacketList();
-                        // 2. Yöntem
-                        //FillPacketList();
-                        //var source = new BindingSource();
-                        //source.DataSource = packets;
-                        //dataGridViewPacket.DataSource = source;
                     }
                 }
             }
@@ -305,12 +327,7 @@ namespace AyzPaymentWizard
                     {
                         using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                         {
-                            // Güncellenecek Alanlar
-                            // STATUS
-                            // APPROVED_BY
-                            // APPROVED_DATE
-                            // APPROVED_TIME
-                            // APPROVALNOTE
+                            // Güncellenecek Alanlar: STATUS, APPROVED_BY, APPROVED_DATE, APPROVED_TIME, APPROVALNOTE
                             CommandText = "UPDATE AYZ_PW_PACKET" +
                                           "\nSET STATUS = " + (int)Helper.PacketStatus.Approved + ", " +
                                           "\nAPPROVED_BY = " + Helper.USERID + "," +
@@ -328,15 +345,10 @@ namespace AyzPaymentWizard
 
                         Helper.PacketHistorySave(packetId, "Onaylandı", "Paket Onaylandı.");
 
-                        // Anasayfayı yenilemek için 2 yöntem vardır.
-                        // 1. Yöntem
+                        #region Anasayfayı yenilemek için
                         Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
                         form.FillPacketList();
-                        // 2. Yöntem
-                        //FillPacketList();
-                        //var source = new BindingSource();
-                        //source.DataSource = packets;
-                        //dataGridViewPacket.DataSource = source;
+                        #endregion
                     }
                 }
             }
@@ -350,43 +362,53 @@ namespace AyzPaymentWizard
         {
             try
             {
-                int packetId = 0;
+                int packetId = 0, status = 0, archived = -1;
                 for (int i = 0; i < dataGridViewPacket.SelectedRows.Count; i++)
                 {
                     packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
+                    status = (int)dataGridViewPacket.SelectedRows[i].Cells["STATUS"].Value;
+                    archived = (int)dataGridViewPacket.SelectedRows[i].Cells["ARCHIVED"].Value;
                 }
-                if (packetId != 0)
+                if ((status == (int)Helper.PacketStatus.SentToBank) || (status == (int)Helper.PacketStatus.Approved) || (status == (int)Helper.PacketStatus.AnswerReceivedBank) || (status == (int)Helper.PacketStatus.Rejected) || (archived == (int)Helper.ArchiveStatus.Archived))
                 {
-                    string approvalExp = Interaction.InputBox("Red Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250);
-                    if (approvalExp.Length > 0)
+                    if (status == (int)Helper.PacketStatus.SentToBank)
+                        MessageBox.Show("Paket Bankaya Yollandığı İçin Reddedilemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else if (status == (int)Helper.PacketStatus.Approved)
+                        MessageBox.Show("Paket Onaylandığı İçin Reddedilemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else if (status == (int)Helper.PacketStatus.AnswerReceivedBank)
+                        MessageBox.Show("Paketin Akibeti Alındığı İçin Reddedilemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else if (status == (int)Helper.PacketStatus.Rejected)
+                        MessageBox.Show("Paket Daha Önce Reddedildiği İçin Tekrar Reddedilemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else if (archived == (int)Helper.ArchiveStatus.Archived)
+                        MessageBox.Show("Paketin Arşivlendiği İçin Reddedilemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    if (packetId != 0)
                     {
-                        using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                        string approvalExp = Interaction.InputBox("Red Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250);
+                        if (approvalExp.Length > 0)
                         {
-                            // Güncellenecek Alanlar
-                            // STATUS
-                            // APPROVALNOTE
-                            CommandText = "UPDATE AYZ_PW_PACKET" +
-                                          "\nSET STATUS = " + (int)Helper.PacketStatus.Rejected + ", " +
-                                          "\nAPPROVALNOTE = '" + approvalExp + "'" +
-                                          "\nWHERE ID = " + packetId + "";
-                            komut.CommandText = CommandText;
-                            komut.Connection = conn;
-                            conn.Open();
-                            komut.ExecuteNonQuery();
-                            conn.Close();
+                            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                            {
+                                // Güncellenecek Alanlar: STATUS, APPROVALNOTE
+                                CommandText = "UPDATE AYZ_PW_PACKET" +
+                                              "\nSET STATUS = " + (int)Helper.PacketStatus.Rejected + ", " +
+                                              "\nAPPROVALNOTE = '" + approvalExp + "'" +
+                                              "\nWHERE ID = " + packetId + "";
+                                komut.CommandText = CommandText;
+                                komut.Connection = conn;
+                                conn.Open();
+                                komut.ExecuteNonQuery();
+                                conn.Close();
+                            }
+                            Helper.PacketHistorySave(packetId, "Paket Reddedildi", "Paket Reddedildi.");
+
+                            #region Anasayfayı yenilemek için
+                            Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
+                            form.FillPacketList();
+                            #endregion
                         }
-                        Helper.PacketHistorySave(packetId,"Paket Reddedildi","Paket Reddedildi.");
-
-                        // Anasayfayı yenilemek için 2 yöntem vardır.
-                        // 1. Yöntem
-                        Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
-                        form.FillPacketList();
-                        // 2. Yöntem
-                        //FillPacketList();
-                        //var source = new BindingSource();
-                        //source.DataSource = packets;
-                        //dataGridViewPacket.DataSource = source;
-
                     }
                 }
             }
@@ -553,7 +575,7 @@ namespace AyzPaymentWizard
                                     conn.Open();
                                     dr = komut.ExecuteReader();
                                 }
-                            }                            
+                            }
 
                             decimal sum = 0;
                             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
