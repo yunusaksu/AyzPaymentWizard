@@ -181,6 +181,7 @@
     </Compile>
     <Compile Include="Model\PaymentOutcome.cs" />
     <Compile Include="Model\SecureFTP.cs" />
+    <Compile Include="Model\UserGroup.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Forms\UserAddForm.cs">
