@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode78 = new System.Windows.Forms.TreeNode("PAKET EKLE");
-            System.Windows.Forms.TreeNode treeNode79 = new System.Windows.Forms.TreeNode("PAKET DÜZENLE");
-            System.Windows.Forms.TreeNode treeNode80 = new System.Windows.Forms.TreeNode("PAKET ONAY");
-            System.Windows.Forms.TreeNode treeNode81 = new System.Windows.Forms.TreeNode("PAKET RET");
-            System.Windows.Forms.TreeNode treeNode82 = new System.Windows.Forms.TreeNode("ONAYA YOLLA");
-            System.Windows.Forms.TreeNode treeNode83 = new System.Windows.Forms.TreeNode("BANKAYA YOLLA");
-            System.Windows.Forms.TreeNode treeNode84 = new System.Windows.Forms.TreeNode("AKİBET AL");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("PAKET EKLE");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("PAKET DÜZENLE");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("PAKET ONAY");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("PAKET RET");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("ONAYA YOLLA");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("BANKAYA YOLLA");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("AKİBET AL");
             this.label1 = new System.Windows.Forms.Label();
             this.txtGroupName = new System.Windows.Forms.TextBox();
             this.AuthorityTreeView = new System.Windows.Forms.TreeView();
@@ -71,28 +71,28 @@
             this.AuthorityTreeView.ForeColor = System.Drawing.SystemColors.GrayText;
             this.AuthorityTreeView.Location = new System.Drawing.Point(127, 48);
             this.AuthorityTreeView.Name = "AuthorityTreeView";
-            treeNode78.Name = "PackageAdd";
-            treeNode78.Text = "PAKET EKLE";
-            treeNode79.Name = "PackageEdit";
-            treeNode79.Text = "PAKET DÜZENLE";
-            treeNode80.Name = "PackageApprove";
-            treeNode80.Text = "PAKET ONAY";
-            treeNode81.Name = "PackageReject";
-            treeNode81.Text = "PAKET RET";
-            treeNode82.Name = "PackageSendToApprove";
-            treeNode82.Text = "ONAYA YOLLA";
-            treeNode83.Name = "ForwardToBank";
-            treeNode83.Text = "BANKAYA YOLLA";
-            treeNode84.Name = "PackageAkibetAl";
-            treeNode84.Text = "AKİBET AL";
+            treeNode1.Name = "PackageAdd";
+            treeNode1.Text = "PAKET EKLE";
+            treeNode2.Name = "PackageEdit";
+            treeNode2.Text = "PAKET DÜZENLE";
+            treeNode3.Name = "PackageApprove";
+            treeNode3.Text = "PAKET ONAY";
+            treeNode4.Name = "PackageReject";
+            treeNode4.Text = "PAKET RET";
+            treeNode5.Name = "PackageSendToApprove";
+            treeNode5.Text = "ONAYA YOLLA";
+            treeNode6.Name = "ForwardToBank";
+            treeNode6.Text = "BANKAYA YOLLA";
+            treeNode7.Name = "PackageAkibetAl";
+            treeNode7.Text = "AKİBET AL";
             this.AuthorityTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode78,
-            treeNode79,
-            treeNode80,
-            treeNode81,
-            treeNode82,
-            treeNode83,
-            treeNode84});
+            treeNode1,
+            treeNode2,
+            treeNode3,
+            treeNode4,
+            treeNode5,
+            treeNode6,
+            treeNode7});
             this.AuthorityTreeView.Size = new System.Drawing.Size(560, 189);
             this.AuthorityTreeView.TabIndex = 2;
             // 
@@ -124,7 +124,7 @@
             this.btnEdit.TabIndex = 4;
             this.btnEdit.Text = "Düzelt";
             this.btnEdit.UseVisualStyleBackColor = false;
-            this.btnEdit.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // dataGridViewGroup
             // 

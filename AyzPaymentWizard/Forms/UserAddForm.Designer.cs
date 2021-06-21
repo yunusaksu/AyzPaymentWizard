@@ -37,11 +37,14 @@
             this.btnUserSave = new System.Windows.Forms.Button();
             this.cmbFirmNumber = new System.Windows.Forms.ComboBox();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.btnShow = new System.Windows.Forms.Button();
-            this.btnHide = new System.Windows.Forms.Button();
             this.checkedListBoxGroup = new System.Windows.Forms.CheckedListBox();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.dataGridViewUsers = new System.Windows.Forms.DataGridView();
+            this.btnInfo = new System.Windows.Forms.Button();
+            this.btnShow = new System.Windows.Forms.Button();
+            this.btnHide = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsers)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -142,32 +145,6 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // btnShow
-            // 
-            this.btnShow.BackColor = System.Drawing.Color.White;
-            this.btnShow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnShow.ForeColor = System.Drawing.Color.Black;
-            this.btnShow.Image = global::AyzPaymentWizard.Properties.Resources.show_icon;
-            this.btnShow.Location = new System.Drawing.Point(458, 66);
-            this.btnShow.Name = "btnShow";
-            this.btnShow.Size = new System.Drawing.Size(32, 27);
-            this.btnShow.TabIndex = 11;
-            this.btnShow.UseVisualStyleBackColor = false;
-            this.btnShow.Click += new System.EventHandler(this.btnShow_Click);
-            // 
-            // btnHide
-            // 
-            this.btnHide.BackColor = System.Drawing.Color.White;
-            this.btnHide.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHide.ForeColor = System.Drawing.Color.Black;
-            this.btnHide.Image = global::AyzPaymentWizard.Properties.Resources.hide_icon;
-            this.btnHide.Location = new System.Drawing.Point(458, 66);
-            this.btnHide.Name = "btnHide";
-            this.btnHide.Size = new System.Drawing.Size(32, 27);
-            this.btnHide.TabIndex = 12;
-            this.btnHide.UseVisualStyleBackColor = false;
-            this.btnHide.Click += new System.EventHandler(this.btnHide_Click);
-            // 
             // checkedListBoxGroup
             // 
             this.checkedListBoxGroup.FormattingEnabled = true;
@@ -195,11 +172,64 @@
             this.label5.TabIndex = 15;
             this.label5.Text = "E-Mail";
             // 
+            // dataGridViewUsers
+            // 
+            this.dataGridViewUsers.AllowUserToAddRows = false;
+            this.dataGridViewUsers.AllowUserToDeleteRows = false;
+            this.dataGridViewUsers.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridViewUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewUsers.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.dataGridViewUsers.Location = new System.Drawing.Point(0, 373);
+            this.dataGridViewUsers.Name = "dataGridViewUsers";
+            this.dataGridViewUsers.ReadOnly = true;
+            this.dataGridViewUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewUsers.Size = new System.Drawing.Size(505, 256);
+            this.dataGridViewUsers.TabIndex = 16;
+            // 
+            // btnInfo
+            // 
+            this.btnInfo.FlatAppearance.BorderSize = 0;
+            this.btnInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnInfo.Image = global::AyzPaymentWizard.Properties.Resources.info;
+            this.btnInfo.Location = new System.Drawing.Point(1, 340);
+            this.btnInfo.Name = "btnInfo";
+            this.btnInfo.Size = new System.Drawing.Size(32, 32);
+            this.btnInfo.TabIndex = 17;
+            this.btnInfo.UseVisualStyleBackColor = true;
+            // 
+            // btnShow
+            // 
+            this.btnShow.BackColor = System.Drawing.Color.White;
+            this.btnShow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnShow.ForeColor = System.Drawing.Color.Black;
+            this.btnShow.Image = global::AyzPaymentWizard.Properties.Resources.show_icon;
+            this.btnShow.Location = new System.Drawing.Point(458, 66);
+            this.btnShow.Name = "btnShow";
+            this.btnShow.Size = new System.Drawing.Size(32, 27);
+            this.btnShow.TabIndex = 11;
+            this.btnShow.UseVisualStyleBackColor = false;
+            this.btnShow.Click += new System.EventHandler(this.btnShow_Click);
+            // 
+            // btnHide
+            // 
+            this.btnHide.BackColor = System.Drawing.Color.White;
+            this.btnHide.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHide.ForeColor = System.Drawing.Color.Black;
+            this.btnHide.Image = global::AyzPaymentWizard.Properties.Resources.hide_icon;
+            this.btnHide.Location = new System.Drawing.Point(458, 66);
+            this.btnHide.Name = "btnHide";
+            this.btnHide.Size = new System.Drawing.Size(32, 27);
+            this.btnHide.TabIndex = 12;
+            this.btnHide.UseVisualStyleBackColor = false;
+            this.btnHide.Click += new System.EventHandler(this.btnHide_Click);
+            // 
             // UserAddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(505, 374);
+            this.ClientSize = new System.Drawing.Size(505, 629);
+            this.Controls.Add(this.btnInfo);
+            this.Controls.Add(this.dataGridViewUsers);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.checkedListBoxGroup);
@@ -220,6 +250,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "KULLANICI EKLEME EKRANI";
             this.Load += new System.EventHandler(this.UserAddForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsers)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -241,5 +272,7 @@
         private System.Windows.Forms.CheckedListBox checkedListBoxGroup;
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridView dataGridViewUsers;
+        private System.Windows.Forms.Button btnInfo;
     }
 }

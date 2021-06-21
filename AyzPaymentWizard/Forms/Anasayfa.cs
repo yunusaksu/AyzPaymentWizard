@@ -714,8 +714,7 @@ namespace AyzPaymentWizard
 
                                     using (SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString))
                                     {
-                                        // Güncellenecek Alanlar
-                                        // STATUS                            
+                                        // Güncellenecek Alanlar: STATUS                            
                                         CommandText = "UPDATE AYZ_PW_PACKET" +
                                                       "\nSET STATUS = " + (int)Helper.PacketStatus.SentToBank + " " +
                                                       "\nWHERE ID = " + packetId + "";
@@ -771,15 +770,10 @@ namespace AyzPaymentWizard
                     }
                     Helper.PacketHistorySave(packetId, "Arşivlendi", "Paket Arşivlendi.");
 
-                    // Anasayfayı yenilemek için 2 yöntem vardır.
-                    // 1. Yöntem
+                    #region Anasayfayı yenilemek için
                     Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
                     form.FillPacketList();
-                    // 2. Yöntem
-                    //FillPacketList();
-                    //var source = new BindingSource();
-                    //source.DataSource = packets;
-                    //dataGridViewPacket.DataSource = source;
+                    #endregion
                 }
             }
             catch (Exception ex)

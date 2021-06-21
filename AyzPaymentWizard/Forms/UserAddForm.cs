@@ -19,6 +19,8 @@ namespace AyzPaymentWizard
         SqlCommand komut = new SqlCommand();
         SqlDataReader dr;
         string CommandText = "";
+
+        List<User> users = new List<User>();
         public UserAddForm()
         {
             InitializeComponent();
@@ -66,6 +68,8 @@ namespace AyzPaymentWizard
 
         private void UserAddForm_Load(object sender, EventArgs e)
         {
+            ToolTip infoBtnToolTip = new ToolTip();
+            infoBtnToolTip.SetToolTip(btnInfo, "Silmek İçin: Satırı Seçtikten Sonra Delete Tuşuna Basınız!");
             //SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString);
             //SqlCommand cmd = new SqlCommand("SELECT ID, NAME FROM [AYZ_PW_USER] WHERE USERTYPE = '1' ORDER BY NAME ASC", conn);
             //conn.Open();
@@ -116,6 +120,35 @@ namespace AyzPaymentWizard
             showBtnToolTip.SetToolTip(btnShow, "Şifre Göster");
             ToolTip hideBtnToolTip = new ToolTip();
             hideBtnToolTip.SetToolTip(btnHide, "Şifre Gizle");
+
+            fillUsersDGV();
+        }
+
+        private void fillUsersDGV()
+        {
+            users.Clear();
+            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                CommandText = "SELECT * FROM AYZ_PW_USER WHERE USERTYPE = 0";
+                komut.CommandText = CommandText;
+                komut.Connection = conn;
+                conn.Open();
+                dr = komut.ExecuteReader();
+                while (dr.Read())
+                {
+                    User user = new User();
+                    user.ID = Convert.ToInt32(dr["ID"].ToString());
+                    user.Username = dr["NAME"].ToString();
+                    user.Password = dr["PASSWORD"].ToString();
+                    user.FirmNr = Convert.ToInt32(dr["FIRMNR"].ToString());
+                    user.Email = dr["EMAIL"].ToString();
+                    user.Date_ = Convert.ToDateTime(dr["DATE"].ToString());
+                    users.Add(user);
+                }
+            }
+            var source = new BindingSource();
+            source.DataSource = users;
+            dataGridViewUsers.DataSource = source;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

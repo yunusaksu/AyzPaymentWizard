@@ -278,6 +278,7 @@
     <Content Include="Images\HomepageSubBarImages\rejectButton.png" />
     <Content Include="Images\HomepageSubBarImages\reviewButton.png" />
     <Content Include="Images\HomepageSubBarImages\sendToApprove.png" />
+    <Content Include="Images\info.png" />
     <Content Include="Images\logo.ico" />
     <Content Include="Images\Search.png" />
     <Content Include="Images\show_icon.png" />

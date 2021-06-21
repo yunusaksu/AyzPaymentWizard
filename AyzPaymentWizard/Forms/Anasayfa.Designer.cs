@@ -285,19 +285,19 @@
             this.akibetiİnceleToolStripMenuItem,
             this.paketSeruveniToolStripMenuItem});
             this.contextMenuStripAnasayfa.Name = "contextMenuStripAnasayfa";
-            this.contextMenuStripAnasayfa.Size = new System.Drawing.Size(181, 70);
+            this.contextMenuStripAnasayfa.Size = new System.Drawing.Size(146, 48);
             // 
             // akibetiİnceleToolStripMenuItem
             // 
             this.akibetiİnceleToolStripMenuItem.Name = "akibetiİnceleToolStripMenuItem";
-            this.akibetiİnceleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.akibetiİnceleToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.akibetiİnceleToolStripMenuItem.Text = "Akibeti İncele";
             this.akibetiİnceleToolStripMenuItem.Click += new System.EventHandler(this.akibetiİnceleToolStripMenuItem_Click);
             // 
             // paketSeruveniToolStripMenuItem
             // 
             this.paketSeruveniToolStripMenuItem.Name = "paketSeruveniToolStripMenuItem";
-            this.paketSeruveniToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.paketSeruveniToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.paketSeruveniToolStripMenuItem.Text = "Kayıt Bilgisi";
             this.paketSeruveniToolStripMenuItem.Click += new System.EventHandler(this.paketSeruveniToolStripMenuItem_Click);
             // 
