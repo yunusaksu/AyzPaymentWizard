@@ -70,16 +70,6 @@ namespace AyzPaymentWizard
         {
             ToolTip infoBtnToolTip = new ToolTip();
             infoBtnToolTip.SetToolTip(btnInfo, "Silmek İçin: Satırı Seçtikten Sonra Delete Tuşuna Basınız!");
-            //SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString);
-            //SqlCommand cmd = new SqlCommand("SELECT ID, NAME FROM [AYZ_PW_USER] WHERE USERTYPE = '1' ORDER BY NAME ASC", conn);
-            //conn.Open();
-            //DataTable tbl = new DataTable();
-            //tbl.Load(cmd.ExecuteReader());
-            //conn.Close();
-
-            //cmbGroup.DataSource = tbl;
-            //cmbGroup.DisplayMember = "NAME";
-            //cmbGroup.ValueMember = "ID";
 
             ///
             // Begin            
@@ -171,6 +161,68 @@ namespace AyzPaymentWizard
             {
                 btnShow.BringToFront();
                 txtPassword.PasswordChar = '*';
+            }
+        }
+
+        private void dataGridViewUsers_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridViewUsers.SelectedRows.Count > 0)
+            {
+                int userId = (int)dataGridViewUsers.SelectedRows[0].Cells["ID"].Value;
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT * FROM AYZ_PW_USER WHERE ID = " + userId + "";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        txtUsername.Text = dr["NAME"].ToString();
+                        txtPassword.Text = EncryptionAlgorithm.Decrytion(dr["PASSWORD"].ToString());
+                        txtEmail.Text = dr["EMAIL"].ToString();
+
+                        SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString);
+                        SqlCommand cmd2 = new SqlCommand("SELECT NR FROM L_CAPIFIRM", conn2);
+                        conn2.Open();
+                        DataTable tbl2 = new DataTable();
+                        tbl2.Load(cmd2.ExecuteReader());
+                        conn2.Close();
+
+                        cmbFirmNumber.DataSource = tbl2;
+                        cmbFirmNumber.DisplayMember = "NR";
+                        cmbFirmNumber.ValueMember = "NR";
+                        cmbFirmNumber.SelectedValue = Convert.ToInt32(dr["FIRMNR"].ToString());
+                    }
+                }
+
+                for (int i = 0; i < checkedListBoxGroup.Items.Count; i++)
+                {
+                    checkedListBoxGroup.SetItemCheckState(i, CheckState.Unchecked);
+                }
+
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT * FROM AYZ_PW_USERGROUPS AS UG LEFT JOIN AYZ_PW_USER AS U ON UG.GROUPID = U.ID WHERE UG.USERID = " + userId + "";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        foreach (DataRowView item in checkedListBoxGroup.Items)
+                        {
+                            string x = (string)item.Row.ItemArray[1];
+                            string name_ = dr["NAME"].ToString();
+                            if (x == name_)
+                            {
+                                checkedListBoxGroup.SetItemCheckState(checkedListBoxGroup.Items.IndexOf(item), CheckState.Checked);
+                                break;
+                            }
+                        }
+                    }
+                }
+
             }
         }
     }

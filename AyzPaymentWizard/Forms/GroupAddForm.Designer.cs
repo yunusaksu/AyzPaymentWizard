@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("PAKET EKLE");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("PAKET DÜZENLE");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("PAKET ONAY");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("PAKET RET");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("ONAYA YOLLA");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("BANKAYA YOLLA");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("AKİBET AL");
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("PAKET EKLE");
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("PAKET DÜZENLE");
+            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("PAKET ONAY");
+            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("PAKET RET");
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("ONAYA YOLLA");
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("BANKAYA YOLLA");
+            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("AKİBET AL");
             this.label1 = new System.Windows.Forms.Label();
             this.txtGroupName = new System.Windows.Forms.TextBox();
             this.AuthorityTreeView = new System.Windows.Forms.TreeView();
@@ -42,6 +42,7 @@
             this.btnEdit = new System.Windows.Forms.Button();
             this.dataGridViewGroup = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnInfo = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGroup)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,28 +72,28 @@
             this.AuthorityTreeView.ForeColor = System.Drawing.SystemColors.GrayText;
             this.AuthorityTreeView.Location = new System.Drawing.Point(127, 48);
             this.AuthorityTreeView.Name = "AuthorityTreeView";
-            treeNode1.Name = "PackageAdd";
-            treeNode1.Text = "PAKET EKLE";
-            treeNode2.Name = "PackageEdit";
-            treeNode2.Text = "PAKET DÜZENLE";
-            treeNode3.Name = "PackageApprove";
-            treeNode3.Text = "PAKET ONAY";
-            treeNode4.Name = "PackageReject";
-            treeNode4.Text = "PAKET RET";
-            treeNode5.Name = "PackageSendToApprove";
-            treeNode5.Text = "ONAYA YOLLA";
-            treeNode6.Name = "ForwardToBank";
-            treeNode6.Text = "BANKAYA YOLLA";
-            treeNode7.Name = "PackageAkibetAl";
-            treeNode7.Text = "AKİBET AL";
+            treeNode15.Name = "PackageAdd";
+            treeNode15.Text = "PAKET EKLE";
+            treeNode16.Name = "PackageEdit";
+            treeNode16.Text = "PAKET DÜZENLE";
+            treeNode17.Name = "PackageApprove";
+            treeNode17.Text = "PAKET ONAY";
+            treeNode18.Name = "PackageReject";
+            treeNode18.Text = "PAKET RET";
+            treeNode19.Name = "PackageSendToApprove";
+            treeNode19.Text = "ONAYA YOLLA";
+            treeNode20.Name = "ForwardToBank";
+            treeNode20.Text = "BANKAYA YOLLA";
+            treeNode21.Name = "PackageAkibetAl";
+            treeNode21.Text = "AKİBET AL";
             this.AuthorityTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3,
-            treeNode4,
-            treeNode5,
-            treeNode6,
-            treeNode7});
+            treeNode15,
+            treeNode16,
+            treeNode17,
+            treeNode18,
+            treeNode19,
+            treeNode20,
+            treeNode21});
             this.AuthorityTreeView.Size = new System.Drawing.Size(560, 189);
             this.AuthorityTreeView.TabIndex = 2;
             // 
@@ -139,6 +140,7 @@
             this.dataGridViewGroup.Size = new System.Drawing.Size(560, 175);
             this.dataGridViewGroup.TabIndex = 5;
             this.dataGridViewGroup.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewGroup_RowEnter);
+            this.dataGridViewGroup.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridViewGroup_KeyDown);
             // 
             // label2
             // 
@@ -151,11 +153,23 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "GRUPLAR";
             // 
+            // btnInfo
+            // 
+            this.btnInfo.FlatAppearance.BorderSize = 0;
+            this.btnInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnInfo.Image = global::AyzPaymentWizard.Properties.Resources.info;
+            this.btnInfo.Location = new System.Drawing.Point(16, 276);
+            this.btnInfo.Name = "btnInfo";
+            this.btnInfo.Size = new System.Drawing.Size(33, 34);
+            this.btnInfo.TabIndex = 8;
+            this.btnInfo.UseVisualStyleBackColor = true;
+            // 
             // GroupAddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(898, 436);
+            this.Controls.Add(this.btnInfo);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dataGridViewGroup);
             this.Controls.Add(this.btnEdit);
@@ -184,5 +198,6 @@
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.DataGridView dataGridViewGroup;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnInfo;
     }
 }

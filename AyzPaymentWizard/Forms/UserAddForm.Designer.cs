@@ -185,6 +185,7 @@
             this.dataGridViewUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewUsers.Size = new System.Drawing.Size(505, 256);
             this.dataGridViewUsers.TabIndex = 16;
+            this.dataGridViewUsers.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewUsers_RowEnter);
             // 
             // btnInfo
             // 
