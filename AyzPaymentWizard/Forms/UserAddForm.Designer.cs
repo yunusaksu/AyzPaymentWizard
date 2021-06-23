@@ -36,7 +36,7 @@
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.btnUserSave = new System.Windows.Forms.Button();
             this.cmbFirmNumber = new System.Windows.Forms.ComboBox();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnEdit = new System.Windows.Forms.Button();
             this.checkedListBoxGroup = new System.Windows.Forms.CheckedListBox();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -115,7 +115,7 @@
             this.btnUserSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUserSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnUserSave.ForeColor = System.Drawing.Color.White;
-            this.btnUserSave.Location = new System.Drawing.Point(180, 325);
+            this.btnUserSave.Location = new System.Drawing.Point(337, 333);
             this.btnUserSave.Name = "btnUserSave";
             this.btnUserSave.Size = new System.Drawing.Size(153, 39);
             this.btnUserSave.TabIndex = 8;
@@ -133,24 +133,27 @@
             this.cmbFirmNumber.Size = new System.Drawing.Size(310, 28);
             this.cmbFirmNumber.TabIndex = 9;
             // 
-            // btnCancel
+            // btnEdit
             // 
-            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnCancel.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.btnCancel.Location = new System.Drawing.Point(339, 325);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(151, 39);
-            this.btnCancel.TabIndex = 10;
-            this.btnCancel.Text = "Vazgeç";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnEdit.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnEdit.FlatAppearance.BorderSize = 0;
+            this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnEdit.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.btnEdit.Location = new System.Drawing.Point(0, 590);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(505, 39);
+            this.btnEdit.TabIndex = 10;
+            this.btnEdit.Text = "Düzenle";
+            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // checkedListBoxGroup
             // 
             this.checkedListBoxGroup.FormattingEnabled = true;
             this.checkedListBoxGroup.Location = new System.Drawing.Point(180, 202);
             this.checkedListBoxGroup.Name = "checkedListBoxGroup";
-            this.checkedListBoxGroup.Size = new System.Drawing.Size(310, 109);
+            this.checkedListBoxGroup.Size = new System.Drawing.Size(310, 124);
             this.checkedListBoxGroup.TabIndex = 13;
             // 
             // txtEmail
@@ -179,13 +182,14 @@
             this.dataGridViewUsers.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewUsers.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dataGridViewUsers.Location = new System.Drawing.Point(0, 373);
+            this.dataGridViewUsers.Location = new System.Drawing.Point(0, 378);
             this.dataGridViewUsers.Name = "dataGridViewUsers";
             this.dataGridViewUsers.ReadOnly = true;
             this.dataGridViewUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewUsers.Size = new System.Drawing.Size(505, 256);
+            this.dataGridViewUsers.Size = new System.Drawing.Size(505, 212);
             this.dataGridViewUsers.TabIndex = 16;
             this.dataGridViewUsers.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewUsers_RowEnter);
+            this.dataGridViewUsers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridViewUsers_KeyDown);
             // 
             // btnInfo
             // 
@@ -236,7 +240,7 @@
             this.Controls.Add(this.checkedListBoxGroup);
             this.Controls.Add(this.btnShow);
             this.Controls.Add(this.btnHide);
-            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.cmbFirmNumber);
             this.Controls.Add(this.btnUserSave);
             this.Controls.Add(this.txtPassword);
@@ -267,7 +271,7 @@
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Button btnUserSave;
         private System.Windows.Forms.ComboBox cmbFirmNumber;
-        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnShow;
         private System.Windows.Forms.Button btnHide;
         private System.Windows.Forms.CheckedListBox checkedListBoxGroup;

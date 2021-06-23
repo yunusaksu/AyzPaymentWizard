@@ -25,52 +25,59 @@ namespace AyzPaymentWizard
         }
 
         private void btnGroupSave_Click(object sender, EventArgs e)
-        {
-            string groupName = txtGroupName.Text;
-            bool PackageAdd = false, PackageEdit = false, PackageApprove = false, PackageReject = false, PackageSendToApprove = false, PackageForwardToBank = false, PackageAkibet = false;
-
-            for (int i = 0; i < AuthorityTreeView.Nodes.Count; i++)
+        {            
+            if (String.IsNullOrEmpty(txtGroupName.Text))
             {
-                PackageAdd = AuthorityTreeView.Nodes["PackageAdd"].Checked;
-                PackageEdit = AuthorityTreeView.Nodes["PackageEdit"].Checked;
-                PackageApprove = AuthorityTreeView.Nodes["PackageApprove"].Checked;
-                PackageReject = AuthorityTreeView.Nodes["PackageReject"].Checked;
-                PackageSendToApprove = AuthorityTreeView.Nodes["PackageSendToApprove"].Checked;
-                PackageForwardToBank = AuthorityTreeView.Nodes["ForwardToBank"].Checked;
-                PackageAkibet = AuthorityTreeView.Nodes["PackageAkibetAl"].Checked;
+                MessageBox.Show("Lütfen yıldız işaretli alanları doldurunuz!");
             }
+            else
+            {
+                string groupName = txtGroupName.Text;
+                bool PackageAdd = false, PackageEdit = false, PackageApprove = false, PackageReject = false, PackageSendToApprove = false, PackageForwardToBank = false, PackageAkibet = false;
 
-            SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString);
-            SqlCommand komut = new SqlCommand();
-            SqlDataReader dr;
-            try
-            {
-                komut.CommandText = "INSERT INTO [AYZ_PW_USER](NAME,USERTYPE,DATE) VALUES(" +
-                                "'" + groupName + "',1 ,GETDATE());" +
-                                "SELECT SCOPE_IDENTITY()";
-                komut.Connection = conn;
-                conn.Open();
-                int groupId = Convert.ToInt32(komut.ExecuteScalar());
-                komut.CommandText = "INSERT INTO [AYZ_PW_USERRIGHTS]" +
-                                    "(GROUPID,ADD_PACKAGE,EDIT_PACKAGE,APPROVE_PACKAGE,REJECT_PACKAGE,SENDTO_APPROVE,FORWARDTO_BANK,AKIBET_AL) " +
-                                    "VALUES(" +
-                                    " '" + groupId + "', " +
-                                    "'" + PackageAdd + "'," +
-                                    "'" + PackageEdit + "', " +
-                                    "'" + PackageApprove + "', " +
-                                    "'" + PackageReject + "'," +
-                                    "'" + PackageSendToApprove + "'," +
-                                    "'" + PackageForwardToBank + "'," +
-                                    "'" + PackageAkibet + "') ";
-                komut.ExecuteNonQuery();
-                conn.Close();
-                MessageBox.Show("Grup başarılı bir şekilde kaydedildi!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                GroupAddForm form = (GroupAddForm)Application.OpenForms["GroupAddForm"];
-                form.fillGroupsDGV();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message.ToString(), "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                for (int i = 0; i < AuthorityTreeView.Nodes.Count; i++)
+                {
+                    PackageAdd = AuthorityTreeView.Nodes["PackageAdd"].Checked;
+                    PackageEdit = AuthorityTreeView.Nodes["PackageEdit"].Checked;
+                    PackageApprove = AuthorityTreeView.Nodes["PackageApprove"].Checked;
+                    PackageReject = AuthorityTreeView.Nodes["PackageReject"].Checked;
+                    PackageSendToApprove = AuthorityTreeView.Nodes["PackageSendToApprove"].Checked;
+                    PackageForwardToBank = AuthorityTreeView.Nodes["ForwardToBank"].Checked;
+                    PackageAkibet = AuthorityTreeView.Nodes["PackageAkibetAl"].Checked;
+                }
+
+                SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString);
+                SqlCommand komut = new SqlCommand();
+                SqlDataReader dr;
+                try
+                {
+                    komut.CommandText = "INSERT INTO [AYZ_PW_USER](NAME,USERTYPE,DATE) VALUES(" +
+                                    "'" + groupName + "',1 ,GETDATE());" +
+                                    "SELECT SCOPE_IDENTITY()";
+                    komut.Connection = conn;
+                    conn.Open();
+                    int groupId = Convert.ToInt32(komut.ExecuteScalar());
+                    komut.CommandText = "INSERT INTO [AYZ_PW_USERRIGHTS]" +
+                                        "(GROUPID,ADD_PACKAGE,EDIT_PACKAGE,APPROVE_PACKAGE,REJECT_PACKAGE,SENDTO_APPROVE,FORWARDTO_BANK,AKIBET_AL) " +
+                                        "VALUES(" +
+                                        " '" + groupId + "', " +
+                                        "'" + PackageAdd + "'," +
+                                        "'" + PackageEdit + "', " +
+                                        "'" + PackageApprove + "', " +
+                                        "'" + PackageReject + "'," +
+                                        "'" + PackageSendToApprove + "'," +
+                                        "'" + PackageForwardToBank + "'," +
+                                        "'" + PackageAkibet + "') ";
+                    komut.ExecuteNonQuery();
+                    conn.Close();
+                    MessageBox.Show("Grup başarılı bir şekilde kaydedildi!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    GroupAddForm form = (GroupAddForm)Application.OpenForms["GroupAddForm"];
+                    form.fillGroupsDGV();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString(), "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 

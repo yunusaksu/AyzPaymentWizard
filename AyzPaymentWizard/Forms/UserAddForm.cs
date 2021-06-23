@@ -44,7 +44,7 @@ namespace AyzPaymentWizard
                 cmd.Connection = conn;
                 conn.Open();
                 int userId = Convert.ToInt32(cmd.ExecuteScalar());
-                #region MyRegion
+                #region Kullanıcıları USERGROUPS tablosuna ekleme
                 var list = checkedListBoxGroup.CheckedItems;
                 foreach (DataRowView dataRow in list)
                 {
@@ -111,7 +111,9 @@ namespace AyzPaymentWizard
             ToolTip hideBtnToolTip = new ToolTip();
             hideBtnToolTip.SetToolTip(btnHide, "Şifre Gizle");
 
+            dataGridViewUsers.ClearSelection();
             fillUsersDGV();
+
         }
 
         private void fillUsersDGV()
@@ -139,11 +141,6 @@ namespace AyzPaymentWizard
             var source = new BindingSource();
             source.DataSource = users;
             dataGridViewUsers.DataSource = source;
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            this.Hide();
         }
 
         private void btnShow_Click(object sender, EventArgs e)
@@ -225,5 +222,113 @@ namespace AyzPaymentWizard
 
             }
         }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewUsers.SelectedRows.Count > 0)
+            {
+                int userId = (int)dataGridViewUsers.SelectedRows[0].Cells["ID"].Value;
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+
+                    string userName = txtUsername.Text;
+                    string userPassword = txtPassword.Text;
+                    string encrytedPassword = EncryptionAlgorithm.Encrytion(userPassword);
+                    string userEmail = txtEmail.Text;
+                    var firmNr = cmbFirmNumber.SelectedValue;
+                    CommandText = "UPDATE AYZ_PW_USER " +
+                                  "\nSET " +
+                                  "\nNAME = '" + userName + "'," +
+                                  "\nPASSWORD = '" + encrytedPassword + "'," +
+                                  "\nEMAIL = '" + userEmail + "'," +
+                                  "\nFIRMNR = '" + firmNr + "'" +
+                                  "\nWHERE ID = '" + userId + "'";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    conn.Close();
+                }
+                var list = checkedListBoxGroup.CheckedItems;
+
+                #region Güncellenecek User'ın USERGROUPS verilerini sıfırlama                
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "DELETE FROM AYZ_PW_USERGROUPS WHERE USERID = " + userId + "";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    conn.Close();
+                }
+                #endregion
+
+                #region Kullanıcıları USERGROUPS tablosuna ekleme  
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    foreach (DataRowView dataRow in list)
+                    {
+                        int groupId = (int)dataRow.Row.ItemArray[0];
+                        CommandText = "INSERT INTO [AYZ_PW_USERGROUPS](GROUPID,USERID) VALUES(" +
+                                                "'" + groupId.ToString() + "', '" + userId.ToString() + "') ";
+                        komut.CommandText = CommandText;
+                        komut.Connection = conn;
+                        conn.Open();
+                        dr = komut.ExecuteReader();
+                        conn.Close();
+                    }
+                }
+                #endregion
+                UserAddForm form = (UserAddForm)Application.OpenForms["UserAddForm"];
+                form.fillUsersDGV();
+                MessageBox.Show("Güncellendi!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void dataGridViewUsers_KeyDown(object sender, KeyEventArgs e)
+        {
+            int id = 0;
+            int selectedRowCount = dataGridViewUsers.Rows.GetRowCount(DataGridViewElementStates.Selected);
+            if (selectedRowCount > 0)
+            {
+
+                for (int i = 0; i < selectedRowCount; i++)
+                {
+                    id = (int)dataGridViewUsers.SelectedRows[i].Cells["ID"].Value;
+                }
+
+                if (e.KeyCode == Keys.Delete)
+                {
+                    if (MessageBox.Show("Bu kayıdı silmek istediğinize emin misiniz?", "Mesaj", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                            {
+                                string sql = "DELETE FROM AYZ_PW_USER WHERE ID=" + id + "";
+                                komut = new SqlCommand(sql, conn);
+                                conn.Open();
+                                komut.ExecuteNonQuery();
+                                conn.Close();
+                                string sql2 = "DELETE FROM AYZ_PW_USERGROUPS WHERE USERID=" + id + "";
+                                komut = new SqlCommand(sql2, conn);
+                                conn.Open();
+                                komut.ExecuteNonQuery();
+                                conn.Close();
+                                MessageBox.Show("Silindi!");
+
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+
+                    }
+                    fillUsersDGV();
+                }
+            }
+        }
     }
 }
+
