@@ -25,7 +25,7 @@ namespace AyzPaymentWizard
         }
 
         private void btnGroupSave_Click(object sender, EventArgs e)
-        {            
+        {
             if (String.IsNullOrEmpty(txtGroupName.Text))
             {
                 MessageBox.Show("Lütfen yıldız işaretli alanları doldurunuz!");
@@ -33,7 +33,7 @@ namespace AyzPaymentWizard
             else
             {
                 string groupName = txtGroupName.Text;
-                bool PackageAdd = false, PackageEdit = false, PackageApprove = false, PackageReject = false, PackageSendToApprove = false, PackageForwardToBank = false, PackageAkibet = false;
+                bool PackageAdd = false, PackageEdit = false, PackageApprove = false, PackageReject = false, PackageSendToApprove = false, PackageForwardToBank = false, PackageAkibet = false, AddUser = false, AddGroup = false;
 
                 for (int i = 0; i < AuthorityTreeView.Nodes.Count; i++)
                 {
@@ -44,6 +44,8 @@ namespace AyzPaymentWizard
                     PackageSendToApprove = AuthorityTreeView.Nodes["PackageSendToApprove"].Checked;
                     PackageForwardToBank = AuthorityTreeView.Nodes["ForwardToBank"].Checked;
                     PackageAkibet = AuthorityTreeView.Nodes["PackageAkibetAl"].Checked;
+                    AddUser = AuthorityTreeView.Nodes["AddUser"].Checked;
+                    AddGroup = AuthorityTreeView.Nodes["AddGroup"].Checked;
                 }
 
                 SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString);
@@ -58,7 +60,7 @@ namespace AyzPaymentWizard
                     conn.Open();
                     int groupId = Convert.ToInt32(komut.ExecuteScalar());
                     komut.CommandText = "INSERT INTO [AYZ_PW_USERRIGHTS]" +
-                                        "(GROUPID,ADD_PACKAGE,EDIT_PACKAGE,APPROVE_PACKAGE,REJECT_PACKAGE,SENDTO_APPROVE,FORWARDTO_BANK,AKIBET_AL) " +
+                                        "(GROUPID,ADD_PACKAGE,EDIT_PACKAGE,APPROVE_PACKAGE,REJECT_PACKAGE,SENDTO_APPROVE,FORWARDTO_BANK,AKIBET_AL,ADD_USER,ADD_GROUP) " +
                                         "VALUES(" +
                                         " '" + groupId + "', " +
                                         "'" + PackageAdd + "'," +
@@ -67,7 +69,10 @@ namespace AyzPaymentWizard
                                         "'" + PackageReject + "'," +
                                         "'" + PackageSendToApprove + "'," +
                                         "'" + PackageForwardToBank + "'," +
-                                        "'" + PackageAkibet + "') ";
+                                        "'" + PackageAkibet + "'," +
+                                        "'" + AddUser + "'," +
+                                        "'" + AddGroup + "'" +
+                                        ") ";
                     komut.ExecuteNonQuery();
                     conn.Close();
                     MessageBox.Show("Grup başarılı bir şekilde kaydedildi!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -138,6 +143,8 @@ namespace AyzPaymentWizard
                         AuthorityTreeView.Nodes["PackageSendToApprove"].Checked = Convert.ToBoolean(dr["SENDTO_APPROVE"].ToString());
                         AuthorityTreeView.Nodes["ForwardToBank"].Checked = Convert.ToBoolean(dr["FORWARDTO_BANK"].ToString());
                         AuthorityTreeView.Nodes["PackageAkibetAl"].Checked = Convert.ToBoolean(dr["AKIBET_AL"].ToString());
+                        AuthorityTreeView.Nodes["AddUser"].Checked = Convert.ToBoolean(dr["ADD_USER"].ToString());
+                        AuthorityTreeView.Nodes["AddGroup"].Checked = Convert.ToBoolean(dr["ADD_GROUP"].ToString());
                         txtGroupName.Text = dr["NAME"].ToString();
                     }
                 }
@@ -171,7 +178,9 @@ namespace AyzPaymentWizard
                                       "\nREJECT_PACKAGE = '" + AuthorityTreeView.Nodes["PackageReject"].Checked + "', " +
                                       "\nSENDTO_APPROVE = '" + AuthorityTreeView.Nodes["PackageSendToApprove"].Checked + "', " +
                                       "\nFORWARDTO_BANK = '" + AuthorityTreeView.Nodes["ForwardToBank"].Checked + "', " +
-                                      "\nAKIBET_AL = '" + AuthorityTreeView.Nodes["PackageAkibetAl"].Checked + "' " +
+                                      "\nAKIBET_AL = '" + AuthorityTreeView.Nodes["PackageAkibetAl"].Checked + "', " +
+                                      "\nADD_USER = '" + AuthorityTreeView.Nodes["AddUser"].Checked + "', " +
+                                      "\nADD_GROUP = '" + AuthorityTreeView.Nodes["AddGroup"].Checked + "' " +
                                       "\nWHERE GROUPID = " + groupId + "";
                         komut.CommandText = CommandText;
                         komut.Connection = conn;

@@ -35,6 +35,8 @@
             System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("ONAYA YOLLA");
             System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("BANKAYA YOLLA");
             System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("AKİBET AL");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("KULLANICI EKLEME");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("GRUP EKLEME");
             this.label1 = new System.Windows.Forms.Label();
             this.txtGroupName = new System.Windows.Forms.TextBox();
             this.AuthorityTreeView = new System.Windows.Forms.TreeView();
@@ -45,6 +47,7 @@
             this.btnInfo = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGroup)).BeginInit();
             this.SuspendLayout();
             // 
@@ -88,6 +91,10 @@
             treeNode6.Text = "BANKAYA YOLLA";
             treeNode7.Name = "PackageAkibetAl";
             treeNode7.Text = "AKİBET AL";
+            treeNode8.Name = "AddUser";
+            treeNode8.Text = "KULLANICI EKLEME";
+            treeNode9.Name = "AddGroup";
+            treeNode9.Text = "GRUP EKLEME";
             this.AuthorityTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2,
@@ -95,7 +102,9 @@
             treeNode4,
             treeNode5,
             treeNode6,
-            treeNode7});
+            treeNode7,
+            treeNode8,
+            treeNode9});
             this.AuthorityTreeView.Size = new System.Drawing.Size(560, 189);
             this.AuthorityTreeView.TabIndex = 2;
             // 
@@ -188,11 +197,23 @@
             this.label4.TabIndex = 10;
             this.label4.Text = "*";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label5.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.label5.Location = new System.Drawing.Point(12, 112);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(87, 20);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "YETKİLER";
+            // 
             // GroupAddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(898, 436);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnInfo);
@@ -227,5 +248,6 @@
         private System.Windows.Forms.Button btnInfo;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }

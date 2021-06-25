@@ -57,7 +57,7 @@ namespace AyzPaymentWizard
                 #endregion
                 conn.Close();
                 MessageBox.Show("Kullanıcı başarılı bir şekilde kaydedildi!", "Kullanıcı Kayıt Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Hide();
+                fillUsersDGV();
                 conn.Close();
             }
             catch (Exception ex)
