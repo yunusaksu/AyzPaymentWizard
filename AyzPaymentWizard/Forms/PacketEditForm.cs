@@ -557,6 +557,8 @@ namespace AyzPaymentWizard.Forms
                 btnEditPacket.Enabled = false;
                 txtPacketEditExp.Enabled = false;
                 cmbOutAccountInfoEdit.Enabled = false;
+                btnToLeft.Enabled = false;
+                btnToRight.Enabled = false;
             }
 
             #region Packet Edit Left Gridinin Kolon Görünüm,Header Text ve Display Index Ayarları
@@ -1405,13 +1407,7 @@ namespace AyzPaymentWizard.Forms
                 }
             }
             // 2. aşama olarak AYZ_PW_PACKET tablosundaki mevcut paket id'li kayıt'ın değerleri güncellenecek.
-            // Hangi değerler güncellenecek:
-            //      1. TOTAL_REQUIRED
-            //      2. TOTAL_PAID
-            //      3. ModifiedBy
-            //      4. ModifiedDate
-            //      5. ModifiedTime
-            //      6. Note
+            // Hangi değerler güncellenecek: 1.TOTAL_REQUIRED, 2.TOTAL_PAID, 3.ModifiedBy, 4.ModifiedDate, 5.ModifiedTime, 6.Note
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
                 try

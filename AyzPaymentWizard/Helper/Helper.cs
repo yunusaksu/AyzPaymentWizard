@@ -180,24 +180,31 @@ namespace AyzPaymentWizard
         public static bool AuthorityControl(string ColumnName)
         {
             bool result = false;
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            if (Helper.USERNAME == "Admin")
             {
-                CommandText = "SELECT " + ColumnName + " FROM AYZ_PW_USER AS U " +
-                              "LEFT JOIN AYZ_PW_USERGROUPS AS UG ON U.ID = UG.USERID " +
-                              "LEFT JOIN AYZ_PW_USERRIGHTS AS UR ON UG.GROUPID = UR.GROUPID " +
-                              "WHERE U.ID = " + USERID + "";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                while (dr.Read())
-                {
-                    result = Convert.ToBoolean(dr["" + ColumnName + ""].ToString());
-                    if (result == true)
-                        break;
-                }
+                return true;
             }
-            return result;
+            else
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT " + ColumnName + " FROM AYZ_PW_USER AS U " +
+                                  "LEFT JOIN AYZ_PW_USERGROUPS AS UG ON U.ID = UG.USERID " +
+                                  "LEFT JOIN AYZ_PW_USERRIGHTS AS UR ON UG.GROUPID = UR.GROUPID " +
+                                  "WHERE U.ID = " + USERID + "";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        result = Convert.ToBoolean(dr["" + ColumnName + ""].ToString());
+                        if (result == true)
+                            break;
+                    }
+                }
+                return result;
+            }
         }
     }
 }
