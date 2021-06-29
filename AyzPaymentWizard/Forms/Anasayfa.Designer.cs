@@ -61,6 +61,7 @@
             this.sFTPBaglantiLoglariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripAnasayfa = new System.Windows.Forms.ToolStrip();
+            this.sMTPSunucuAyarlariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPacket)).BeginInit();
@@ -359,7 +360,8 @@
             this.btnBankAndBankAccAdd,
             this.logoUserSettingsToolStripMenuItem,
             this.btnsqlBağlantiAyarlariToolStripMenuItem,
-            this.sFTPBaglantiLoglariToolStripMenuItem});
+            this.sFTPBaglantiLoglariToolStripMenuItem,
+            this.sMTPSunucuAyarlariToolStripMenuItem});
             this.toolStripDropDownButton1.Font = new System.Drawing.Font("Segoe UI", 13F);
             this.toolStripDropDownButton1.ForeColor = System.Drawing.SystemColors.GrayText;
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -431,6 +433,14 @@
             this.toolStripAnasayfa.TabIndex = 0;
             this.toolStripAnasayfa.Text = "AnasayfaToolStrip";
             // 
+            // sMTPSunucuAyarlariToolStripMenuItem
+            // 
+            this.sMTPSunucuAyarlariToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.sMTPSunucuAyarlariToolStripMenuItem.Name = "sMTPSunucuAyarlariToolStripMenuItem";
+            this.sMTPSunucuAyarlariToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
+            this.sMTPSunucuAyarlariToolStripMenuItem.Text = "SMTP Sunucu Ayarları";
+            this.sMTPSunucuAyarlariToolStripMenuItem.Click += new System.EventHandler(this.sMTPSunucuAyarlariToolStripMenuItem_Click);
+            // 
             // Anasayfa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -489,5 +499,6 @@
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.ToolStripMenuItem sFTPBaglantiLoglariToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem paketSeruveniToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sMTPSunucuAyarlariToolStripMenuItem;
     }
 }

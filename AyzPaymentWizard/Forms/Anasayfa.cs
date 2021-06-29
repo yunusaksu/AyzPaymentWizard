@@ -18,6 +18,8 @@ using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Renci.SshNet;
+using System.Net.Mail;
+using System.Text.RegularExpressions;
 
 namespace AyzPaymentWizard
 {
@@ -320,7 +322,8 @@ namespace AyzPaymentWizard
                                 komut.ExecuteNonQuery();
                                 conn.Close();
                             }
-                            Helper.PacketHistorySave(packetId, "Onaya Yollandı", "Onaya Yollandı.");
+                            Helper.PacketHistorySave(packetId, "Onaya Yollandı", "Onaya Yollandı.");                           
+
 
                             #region Anasayfayı yenilemek için
                             Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
@@ -1095,6 +1098,12 @@ namespace AyzPaymentWizard
         {
             int packetId = (int)dataGridViewPacket.SelectedRows[0].Cells["ID"].Value;
             PacketAdventure form = new PacketAdventure(packetId);
+            form.ShowDialog();
+        }
+
+        private void sMTPSunucuAyarlariToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SMTP form = new SMTP();
             form.ShowDialog();
         }
     }

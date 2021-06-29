@@ -153,6 +153,12 @@
     <Compile Include="Forms\SFTPSTATE.Designer.cs">
       <DependentUpon>SFTPSTATE.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SMTP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SMTP.Designer.cs">
+      <DependentUpon>SMTP.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SqlServerInfosForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -160,6 +166,7 @@
       <DependentUpon>SqlServerInfosForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper\ConnectionHelper.cs" />
+    <Compile Include="Helper\EmailSending.cs" />
     <Compile Include="Helper\EncryptionAlgorithm.cs" />
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="Forms\LoginForm.cs">
@@ -233,6 +240,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SFTPSTATE.resx">
       <DependentUpon>SFTPSTATE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SMTP.resx">
+      <DependentUpon>SMTP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SqlServerInfosForm.resx">
       <DependentUpon>SqlServerInfosForm.cs</DependentUpon>
