@@ -322,8 +322,19 @@ namespace AyzPaymentWizard
                                 komut.ExecuteNonQuery();
                                 conn.Close();
                             }
-                            Helper.PacketHistorySave(packetId, "Onaya Yollandı", "Onaya Yollandı.");                           
-
+                            Helper.PacketHistorySave(packetId, "Onaya Yollandı", "Onaya Yollandı.");
+                            if (Helper.MailSendForPacketApprove(packetId) == true)
+                            {
+                                MessageBox.Show("Paket, Onay Yetkisine Sahip Kişilere İletildi!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                #region Anasayfayı yenilemek için
+                                Anasayfa form2 = (Anasayfa)Application.OpenForms["Anasayfa"];
+                                form2.FillPacketList();
+                                #endregion
+                                MessageBox.Show("Paket, Onay Yetkisine Sahip Kişilere İletilemedi!\n Ama Statüsü Onaya Gönderildiye alındı!\n Uygulama üzerinden onaylama yaptırabilirsiniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
 
                             #region Anasayfayı yenilemek için
                             Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];

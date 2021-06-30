@@ -59,9 +59,9 @@
             this.logoUserSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnsqlBağlantiAyarlariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sFTPBaglantiLoglariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sMTPSunucuAyarlariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripAnasayfa = new System.Windows.Forms.ToolStrip();
-            this.sMTPSunucuAyarlariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPacket)).BeginInit();
@@ -409,6 +409,14 @@
             this.sFTPBaglantiLoglariToolStripMenuItem.Text = "SFTP Bağlantı Logları";
             this.sFTPBaglantiLoglariToolStripMenuItem.Click += new System.EventHandler(this.sFTPBaglantiLoglariToolStripMenuItem_Click);
             // 
+            // sMTPSunucuAyarlariToolStripMenuItem
+            // 
+            this.sMTPSunucuAyarlariToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.sMTPSunucuAyarlariToolStripMenuItem.Name = "sMTPSunucuAyarlariToolStripMenuItem";
+            this.sMTPSunucuAyarlariToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
+            this.sMTPSunucuAyarlariToolStripMenuItem.Text = "SMTP Sunucu Ayarları";
+            this.sMTPSunucuAyarlariToolStripMenuItem.Click += new System.EventHandler(this.sMTPSunucuAyarlariToolStripMenuItem_Click);
+            // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
@@ -432,14 +440,6 @@
             this.toolStripAnasayfa.Size = new System.Drawing.Size(1174, 32);
             this.toolStripAnasayfa.TabIndex = 0;
             this.toolStripAnasayfa.Text = "AnasayfaToolStrip";
-            // 
-            // sMTPSunucuAyarlariToolStripMenuItem
-            // 
-            this.sMTPSunucuAyarlariToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.sMTPSunucuAyarlariToolStripMenuItem.Name = "sMTPSunucuAyarlariToolStripMenuItem";
-            this.sMTPSunucuAyarlariToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
-            this.sMTPSunucuAyarlariToolStripMenuItem.Text = "SMTP Sunucu Ayarları";
-            this.sMTPSunucuAyarlariToolStripMenuItem.Click += new System.EventHandler(this.sMTPSunucuAyarlariToolStripMenuItem_Click);
             // 
             // Anasayfa
             // 
