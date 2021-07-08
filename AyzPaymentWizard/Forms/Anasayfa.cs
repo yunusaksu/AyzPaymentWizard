@@ -226,7 +226,7 @@ namespace AyzPaymentWizard
                 status = (int)dataGridViewPacket.SelectedRows[i].Cells["STATUS"].Value;
             }
 
-            if ((status == (int)Helper.PacketStatus.SendToApproval) || (status == (int)Helper.PacketStatus.SentToBank) || (status == (int)Helper.PacketStatus.AnswerReceivedBank) || (status == (int)Helper.PacketStatus.Approved))
+            if ((status == (int)Helper.PacketStatus.SendToApproval) || (status == (int)Helper.PacketStatus.SentToBank) || (status == (int)Helper.PacketStatus.AnswerReceivedBank) || (status == (int)Helper.PacketStatus.Approved) || (status == (int)Helper.PacketStatus.Rejected))
             {
                 if (status == (int)Helper.PacketStatus.SendToApproval)
                     MessageBox.Show("Paket Onaya Yollandığı İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -236,6 +236,8 @@ namespace AyzPaymentWizard
                     MessageBox.Show("Paketin Akibeti Alındığı İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 else if (status == (int)Helper.PacketStatus.Approved)
                     MessageBox.Show("Paketin Onaylandığı İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else if(status == (int)Helper.PacketStatus.Rejected)
+                    MessageBox.Show("Paket Reddedildiği İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {

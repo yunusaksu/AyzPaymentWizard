@@ -134,6 +134,7 @@ namespace AyzPaymentWizard
             var result = false;
             string url = "", serverAddress = "", smtpServerName = "", smtpPassword = "", senderMailAddress = "", maillingAddresses = "";
             int port = -1;
+            bool enableSSL = false;
 
             #region Onay Alma Maili Yollanacak Kişilerin Maillerini Alma
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
@@ -183,6 +184,7 @@ namespace AyzPaymentWizard
                         smtpServerName = dr["SMTP_USERNAME"].ToString();
                         smtpPassword = EncryptionAlgorithm.Decrytion(dr["SMTP_USERPASSWORD"].ToString());
                         senderMailAddress = dr["SENDER_MAILADDRESS"].ToString();
+                        enableSSL = Convert.ToBoolean(dr["SMTP_SSL_CONN"].ToString());
                     }
                 }
             }
@@ -194,7 +196,7 @@ namespace AyzPaymentWizard
 
                 smtpSend.Credentials = new System.Net.NetworkCredential(senderMailAddress, smtpPassword);
 
-                smtpSend.EnableSsl = true;
+                smtpSend.EnableSsl = enableSSL;
 
                 MailMessage emailMessage = new System.Net.Mail.MailMessage();
                 var mailArray = maillingAddresses.Split(',');
@@ -206,9 +208,10 @@ namespace AyzPaymentWizard
                 emailMessage.Subject = "ÖDEME PAKETİ ONAYI";
                 emailMessage.IsBodyHtml = true;
                 string htmlBody;
-                htmlBody = "Sayın Fatih Koç <br /><br />";
-                htmlBody += "Thank you for registering an account. Please activate your account by visiting the URL below:<br /><br />";
-                htmlBody += "http://" + url + ":80/Approve/PacketApprove?packetId=" + packetId + "<br /><br />";
+                htmlBody = "Sayın Yetkili <br /><br />";
+                htmlBody += "Onaylanmayı bekleyen bir paketiniz vardır:<br /><br />";
+                string encryptionPacketId = EncryptionAlgorithm.Encrytion(packetId.ToString());
+                htmlBody += "" + url + "Approve/PacketApprove?packetId=" + encryptionPacketId + "<br /><br />";
                 htmlBody += "Teşekkür ederiz.";
                 emailMessage.Body = htmlBody;
 

@@ -38,31 +38,65 @@ namespace AyzPaymentWizard
             //var GroupId = cmbGroup.SelectedValue;
             var LogoFirmaNumber = cmbFirmNumber.SelectedValue;
 
-            try
+            if (mailCheck(email, LogoFirmaNumber))
             {
-                cmd.CommandText = "INSERT INTO [AYZ_PW_USER](NAME,PASSWORD,USERTYPE,FIRMNR,DATE,EMAIL)VALUES('" + Username + "','" + encrytedPassword + "',0,'" + LogoFirmaNumber + "', GETDATE(),'" + email + "');SELECT SCOPE_IDENTITY()";
-                cmd.Connection = conn;
-                conn.Open();
-                int userId = Convert.ToInt32(cmd.ExecuteScalar());
-                #region Kullanıcıları USERGROUPS tablosuna ekleme
-                var list = checkedListBoxGroup.CheckedItems;
-                foreach (DataRowView dataRow in list)
-                {
-                    int groupId = (int)dataRow.Row.ItemArray[0];
-
-                    cmd.CommandText = "INSERT INTO [AYZ_PW_USERGROUPS](GROUPID,USERID) VALUES(" +
-                                            " '" + groupId.ToString() + "', '" + userId.ToString() + "') ";
-                    cmd.ExecuteNonQuery();
-                }
-                #endregion
-                conn.Close();
-                MessageBox.Show("Kullanıcı başarılı bir şekilde kaydedildi!", "Kullanıcı Kayıt Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                fillUsersDGV();
-                conn.Close();
+                MessageBox.Show("Bu mail ile kayıt olmuş kullanıcı zaten mevcut!\nLütfen farklı bir mail ile kayıt olunuz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Hata: " + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (String.IsNullOrEmpty(email))
+                {
+                    MessageBox.Show("Yıldız(*) ile işaretli olanların doldurulması zorunludur!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    try
+                    {
+                        cmd.CommandText = "INSERT INTO [AYZ_PW_USER](NAME,PASSWORD,USERTYPE,FIRMNR,DATE,EMAIL)VALUES('" + Username + "','" + encrytedPassword + "',0,'" + LogoFirmaNumber + "', GETDATE(),'" + email + "');SELECT SCOPE_IDENTITY()";
+                        cmd.Connection = conn;
+                        conn.Open();
+                        int userId = Convert.ToInt32(cmd.ExecuteScalar());
+                        #region Kullanıcıları USERGROUPS tablosuna ekleme
+                        var list = checkedListBoxGroup.CheckedItems;
+                        foreach (DataRowView dataRow in list)
+                        {
+                            int groupId = (int)dataRow.Row.ItemArray[0];
+
+                            cmd.CommandText = "INSERT INTO [AYZ_PW_USERGROUPS](GROUPID,USERID) VALUES(" +
+                                                    " '" + groupId.ToString() + "', '" + userId.ToString() + "') ";
+                            cmd.ExecuteNonQuery();
+                        }
+                        #endregion
+                        conn.Close();
+                        MessageBox.Show("Kullanıcı başarılı bir şekilde kaydedildi!", "Kullanıcı Kayıt Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        fillUsersDGV();
+                        conn.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Hata: " + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+            }
+        }
+
+        private bool mailCheck(string email, object LogoFirmNr)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                CommandText = "SELECT * FROM AYZ_PW_USER WHERE EMAIL = '" + email + "' AND FIRMNR = '" + LogoFirmNr + "' ";
+                komut.CommandText = CommandText;
+                komut.Connection = conn;
+                conn.Open();
+                dr = komut.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 

@@ -49,16 +49,16 @@ namespace AyzPaymentWizard.Forms
                 var testMails = txtTestMailSendingAddresses.Text.ToString().Split(';');
                 foreach (var item in testMails)
                 {
-                    emailMessage.To.Add(item);                    
+                    emailMessage.To.Add(item);
                 }
-                
+
                 emailMessage.From = new MailAddress(txtSenderMailAdress.Text, smtpUserName);
                 emailMessage.Subject = "ÖDEME PAKETİ ONAYI";
                 emailMessage.IsBodyHtml = true;
                 string htmlBody;
-                htmlBody = "Sayın Fatih Koç <br /><br />";
-                htmlBody += "Thank you for registering an account. Please activate your account by visiting the URL below:<br /><br />";
-                htmlBody += "http://" + txtURL.Text + ":80/signin.aspx?activate=123<br /><br />";
+                htmlBody = "Sayın Yetkili <br /><br />";
+                htmlBody += "Onaylanmayı bekleyen bir paketiniz vardır:<br /><br />";
+                htmlBody += "" + txtURL.Text + ":80/signin.aspx?activate=123<br /><br />";
                 htmlBody += "Teşekkür ederiz.";
                 emailMessage.Body = htmlBody;
 
