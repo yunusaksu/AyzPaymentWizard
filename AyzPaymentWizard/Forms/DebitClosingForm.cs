@@ -441,6 +441,19 @@ namespace AyzPaymentWizard.Forms
 
         private decimal GetCurRate(string curCode)
         {
+            string CurrRatesName = "";
+            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                CommandText = "SELECT VAL_ = SETTING_VALUE,* FROM AYZ_PW_GENERAL_SETTING WHERE FIRMNR = " + Helper.FIRMNR + " AND SETTING_NAME = 'CURRTYPE'";
+                komut.CommandText = CommandText;
+                komut.Connection = conn;
+                conn.Open();
+                dr = komut.ExecuteReader();
+                while (dr.Read())
+                {
+                    CurrRatesName = dr["VAL_"].ToString();
+                }
+            }
             int val = GetCurType(curCode);
 
             decimal result = 0;
@@ -455,7 +468,7 @@ namespace AyzPaymentWizard.Forms
                     dr = komut.ExecuteReader();
                     while (dr.Read())
                     {
-                        result = Convert.ToDecimal(dr["RATES1"].ToString());
+                        result = Convert.ToDecimal(dr["" + CurrRatesName + ""].ToString());
                     }
                 }
             }
@@ -497,11 +510,25 @@ namespace AyzPaymentWizard.Forms
 
         private decimal GetReportCurRate()
         {
+            string CurrRatesName = "";
+            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                CommandText = "SELECT VAL_ = SETTING_VALUE,* FROM AYZ_PW_GENERAL_SETTING WHERE FIRMNR = " + Helper.FIRMNR + " AND SETTING_NAME = 'CURRTYPE'";
+                komut.CommandText = CommandText;
+                komut.Connection = conn;
+                conn.Open();
+                dr = komut.ExecuteReader();
+                while (dr.Read())
+                {
+                    CurrRatesName = dr["VAL_"].ToString();
+                }
+            }
+
             int ReportCurType = 0;
             decimal ReportCurRate = 0;
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
-                CommandText = "SELECT REPORTCUR.PERREPCURR,DAILY.EDATE,DAILY.RATES1 FROM L_CAPIPERIOD AS REPORTCUR " +
+                CommandText = "SELECT REPORTCUR.PERREPCURR,DAILY.EDATE,DAILY.RATES1,DAILY.RATES2,DAILY.RATES3,DAILY.RATES4 FROM L_CAPIPERIOD AS REPORTCUR " +
                               "\nLEFT JOIN L_DAILYEXCHANGES AS DAILY ON DAILY.CRTYPE = REPORTCUR.PERREPCURR " +
                               "\nWHERE ACTIVE = 1 AND FIRMNR = '" + Helper.FIRMNR + "' AND " +
                               "\nEDATE = '" + DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "'";
@@ -511,7 +538,7 @@ namespace AyzPaymentWizard.Forms
                 dr = komut.ExecuteReader();
                 while (dr.Read())
                 {
-                    ReportCurRate = Convert.ToDecimal(dr["RATES1"].ToString());
+                    ReportCurRate = Convert.ToDecimal(dr["" + CurrRatesName + ""].ToString());
                     ReportCurType = Convert.ToInt32(dr["PERREPCURR"].ToString());
                 }
             }

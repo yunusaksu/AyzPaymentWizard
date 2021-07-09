@@ -1119,5 +1119,11 @@ namespace AyzPaymentWizard
             SMTP form = new SMTP();
             form.ShowDialog();
         }
+
+        private void genelAyarlarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GeneralSetting general = new GeneralSetting();
+            general.Show();
+        }
     }
 }

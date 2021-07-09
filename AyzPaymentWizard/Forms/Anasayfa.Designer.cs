@@ -62,6 +62,7 @@
             this.sMTPSunucuAyarlariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripAnasayfa = new System.Windows.Forms.ToolStrip();
+            this.genelAyarlarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPacket)).BeginInit();
@@ -361,7 +362,8 @@
             this.logoUserSettingsToolStripMenuItem,
             this.btnsqlBağlantiAyarlariToolStripMenuItem,
             this.sFTPBaglantiLoglariToolStripMenuItem,
-            this.sMTPSunucuAyarlariToolStripMenuItem});
+            this.sMTPSunucuAyarlariToolStripMenuItem,
+            this.genelAyarlarToolStripMenuItem});
             this.toolStripDropDownButton1.Font = new System.Drawing.Font("Segoe UI", 13F);
             this.toolStripDropDownButton1.ForeColor = System.Drawing.SystemColors.GrayText;
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -441,6 +443,14 @@
             this.toolStripAnasayfa.TabIndex = 0;
             this.toolStripAnasayfa.Text = "AnasayfaToolStrip";
             // 
+            // genelAyarlarToolStripMenuItem
+            // 
+            this.genelAyarlarToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.genelAyarlarToolStripMenuItem.Name = "genelAyarlarToolStripMenuItem";
+            this.genelAyarlarToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
+            this.genelAyarlarToolStripMenuItem.Text = "Genel Ayarlar";
+            this.genelAyarlarToolStripMenuItem.Click += new System.EventHandler(this.genelAyarlarToolStripMenuItem_Click);
+            // 
             // Anasayfa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -500,5 +510,6 @@
         private System.Windows.Forms.ToolStripMenuItem sFTPBaglantiLoglariToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem paketSeruveniToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sMTPSunucuAyarlariToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem genelAyarlarToolStripMenuItem;
     }
 }

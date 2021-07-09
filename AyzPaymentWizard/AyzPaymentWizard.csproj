@@ -23,7 +23,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>40</ApplicationRevision>
+    <ApplicationRevision>43</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -110,6 +110,12 @@
     </Compile>
     <Compile Include="Forms\DebitClosingForm.Designer.cs">
       <DependentUpon>DebitClosingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\GeneralSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GeneralSetting.Designer.cs">
+      <DependentUpon>GeneralSetting.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\LogoUserInfo.cs">
       <SubType>Form</SubType>
@@ -215,6 +221,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Filters.resx">
       <DependentUpon>Filters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GeneralSetting.resx">
+      <DependentUpon>GeneralSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\GroupAddForm.resx">
       <DependentUpon>GroupAddForm.cs</DependentUpon>
