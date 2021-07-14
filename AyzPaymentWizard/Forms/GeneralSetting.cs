@@ -4,8 +4,10 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -80,6 +82,45 @@ namespace AyzPaymentWizard.Forms
             {
                 MessageBox.Show(ex.Message, "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            string path = Application.StartupPath + @"\UpdateDatabaseTables";
+            DirectoryInfo directoryInfo = new DirectoryInfo(path);
+            foreach (FileInfo item in directoryInfo.GetFiles())
+            {
+                string script = File.ReadAllText(path + @"\" + item + "");
+                // split script on GO command
+                IEnumerable<string> commandStrings = Regex.Split(script, @"^\s*GO\s*$", RegexOptions.Multiline | RegexOptions.IgnoreCase);
+                using (SqlConnection connection = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    connection.Open();
+                    foreach (string commandString in commandStrings)
+                    {
+                        if (commandString.Trim() != "")
+                        {
+                            using (var command = new SqlCommand(commandString, connection))
+                            {
+                                try
+                                {
+                                    command.ExecuteNonQuery();
+                                }
+                                catch (SqlException ex)
+                                {
+                                    string spError = commandString.Length > 100 ? commandString.Substring(0, 100) + " ...\n..." : commandString;
+                                    MessageBox.Show(string.Format("Please check the SqlServer script.\nFile: {0} \nLine: {1} \nError: {2} \nSQL Command: \n{3}", Application.StartupPath + "CreateDatabaseScript.sql", ex.LineNumber, ex.Message, spError), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
+                            }
+                        }
+                    }
+                }
+                #region Güncellenen Table Daha Sonra UpdateDatabaseTables klasöründen kaldırılır.
+                File.Delete(path + @"\" + item + "");
+                #endregion
+
+            }
+            MessageBox.Show("Veri Tabanı Başarı İle Güncelledi!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

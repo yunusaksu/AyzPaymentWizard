@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Management.Smo;
+using Microsoft.SqlServer.Management.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,6 +12,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -131,6 +134,7 @@ namespace AyzPaymentWizard
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
+            IsExistDatabase();
             SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString);
             SqlCommand cmd2 = new SqlCommand("SELECT NR FROM L_CAPIFIRM", conn2);
             conn2.Open();
@@ -153,6 +157,51 @@ namespace AyzPaymentWizard
             showBtnToolTip.SetToolTip(btnShow, "Şifre Göster");
             ToolTip hideBtnToolTip = new ToolTip();
             hideBtnToolTip.SetToolTip(btnHide, "Şifre Gizle");
+        }
+
+        private void IsExistDatabase()
+        {
+            int tableCount = -1;
+            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                command.CommandText = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME LIKE '%AYZ_PW%'";
+                command.Connection = conn;
+                conn.Open();
+                dr = command.ExecuteReader();
+                if (dr.HasRows == false)
+                {
+                    string path = Application.StartupPath + @"\CreateDatabaseTables";
+                    DirectoryInfo directoryInfo = new DirectoryInfo(path);
+                    foreach (FileInfo item in directoryInfo.GetFiles())
+                    {
+                        string script = File.ReadAllText(path + @"\" + item + "");
+                        // split script on GO command
+                        IEnumerable<string> commandStrings = Regex.Split(script, @"^\s*GO\s*$", RegexOptions.Multiline | RegexOptions.IgnoreCase);
+                        using (SqlConnection connection = new SqlConnection(ConnectionHelper.ConnectionString))
+                        {
+                            connection.Open();
+                            foreach (string commandString in commandStrings)
+                            {
+                                if (commandString.Trim() != "")
+                                {
+                                    using (var command = new SqlCommand(commandString, connection))
+                                    {
+                                        try
+                                        {
+                                            command.ExecuteNonQuery();
+                                        }
+                                        catch (SqlException ex)
+                                        {
+                                            string spError = commandString.Length > 100 ? commandString.Substring(0, 100) + " ...\n..." : commandString;
+                                            MessageBox.Show(string.Format("Please check the SqlServer script.\nFile: {0} \nLine: {1} \nError: {2} \nSQL Command: \n{3}", Application.StartupPath + "" + item + "", ex.LineNumber, ex.Message, spError), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void txtLoginName_DoubleClick(object sender, EventArgs e)
