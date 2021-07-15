@@ -64,6 +64,7 @@ namespace AyzPaymentWizard
 
         private void Anasayfa_Load(object sender, EventArgs e)
         {
+            labelUserName.Text = Helper.USERNAME;
             dataGridViewPacket.MultiSelect = false;
             ToolTip editBtnToolTip = new ToolTip();
             editBtnToolTip.SetToolTip(btnEdit, "Paketi Düzenle");
@@ -1125,5 +1126,6 @@ namespace AyzPaymentWizard
             GeneralSetting general = new GeneralSetting();
             general.Show();
         }
+
     }
 }

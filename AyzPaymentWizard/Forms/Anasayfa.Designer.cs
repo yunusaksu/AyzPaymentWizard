@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Anasayfa));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.labelUserName = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnRefresh = new System.Windows.Forms.Button();
@@ -60,9 +61,10 @@
             this.btnsqlBağlantiAyarlariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sFTPBaglantiLoglariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sMTPSunucuAyarlariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.genelAyarlarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripAnasayfa = new System.Windows.Forms.ToolStrip();
-            this.genelAyarlarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label3 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPacket)).BeginInit();
@@ -82,6 +84,19 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1316, 677);
             this.panel1.TabIndex = 1;
+            // 
+            // labelUserName
+            // 
+            this.labelUserName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelUserName.AutoSize = true;
+            this.labelUserName.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.labelUserName.Font = new System.Drawing.Font("Microsoft PhagsPa", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.labelUserName.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.labelUserName.Location = new System.Drawing.Point(1014, 6);
+            this.labelUserName.Name = "labelUserName";
+            this.labelUserName.Size = new System.Drawing.Size(96, 23);
+            this.labelUserName.TabIndex = 3;
+            this.labelUserName.Text = "User Name";
             // 
             // label1
             // 
@@ -419,6 +434,14 @@
             this.sMTPSunucuAyarlariToolStripMenuItem.Text = "SMTP Sunucu Ayarları";
             this.sMTPSunucuAyarlariToolStripMenuItem.Click += new System.EventHandler(this.sMTPSunucuAyarlariToolStripMenuItem_Click);
             // 
+            // genelAyarlarToolStripMenuItem
+            // 
+            this.genelAyarlarToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.genelAyarlarToolStripMenuItem.Name = "genelAyarlarToolStripMenuItem";
+            this.genelAyarlarToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
+            this.genelAyarlarToolStripMenuItem.Text = "Genel Ayarlar";
+            this.genelAyarlarToolStripMenuItem.Click += new System.EventHandler(this.genelAyarlarToolStripMenuItem_Click);
+            // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
@@ -443,19 +466,25 @@
             this.toolStripAnasayfa.TabIndex = 0;
             this.toolStripAnasayfa.Text = "AnasayfaToolStrip";
             // 
-            // genelAyarlarToolStripMenuItem
+            // label3
             // 
-            this.genelAyarlarToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.genelAyarlarToolStripMenuItem.Name = "genelAyarlarToolStripMenuItem";
-            this.genelAyarlarToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
-            this.genelAyarlarToolStripMenuItem.Text = "Genel Ayarlar";
-            this.genelAyarlarToolStripMenuItem.Click += new System.EventHandler(this.genelAyarlarToolStripMenuItem_Click);
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label3.Font = new System.Drawing.Font("Microsoft PhagsPa", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(931, 6);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(83, 23);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Kullanıcı:";
             // 
             // Anasayfa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1174, 649);
+            this.Controls.Add(this.labelUserName);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStripAnasayfa);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -511,5 +540,7 @@
         private System.Windows.Forms.ToolStripMenuItem paketSeruveniToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sMTPSunucuAyarlariToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem genelAyarlarToolStripMenuItem;
+        private System.Windows.Forms.Label labelUserName;
+        private System.Windows.Forms.Label label3;
     }
 }
