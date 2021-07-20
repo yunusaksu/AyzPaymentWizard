@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Anasayfa));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.labelUserName = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnRefresh = new System.Windows.Forms.Button();
@@ -45,6 +44,7 @@
             this.btnRewiew = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.dataGridViewPacket = new System.Windows.Forms.DataGridView();
+            this.labelUserName = new System.Windows.Forms.Label();
             this.contextMenuStripAnasayfa = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.akibetiİnceleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.paketSeruveniToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,19 +84,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1316, 677);
             this.panel1.TabIndex = 1;
-            // 
-            // labelUserName
-            // 
-            this.labelUserName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelUserName.AutoSize = true;
-            this.labelUserName.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelUserName.Font = new System.Drawing.Font("Microsoft PhagsPa", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
-            this.labelUserName.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.labelUserName.Location = new System.Drawing.Point(1014, 6);
-            this.labelUserName.Name = "labelUserName";
-            this.labelUserName.Size = new System.Drawing.Size(96, 23);
-            this.labelUserName.TabIndex = 3;
-            this.labelUserName.Text = "User Name";
             // 
             // label1
             // 
@@ -296,6 +283,19 @@
             this.dataGridViewPacket.TabIndex = 1;
             this.dataGridViewPacket.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewPacket_CellMouseDown);
             // 
+            // labelUserName
+            // 
+            this.labelUserName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelUserName.AutoSize = true;
+            this.labelUserName.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.labelUserName.Font = new System.Drawing.Font("Microsoft PhagsPa", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.labelUserName.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.labelUserName.Location = new System.Drawing.Point(1014, 6);
+            this.labelUserName.Name = "labelUserName";
+            this.labelUserName.Size = new System.Drawing.Size(96, 23);
+            this.labelUserName.TabIndex = 3;
+            this.labelUserName.Text = "User Name";
+            // 
             // contextMenuStripAnasayfa
             // 
             this.contextMenuStripAnasayfa.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -472,11 +472,11 @@
             this.label3.AutoSize = true;
             this.label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label3.Font = new System.Drawing.Font("Microsoft PhagsPa", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(931, 6);
+            this.label3.Location = new System.Drawing.Point(876, 6);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(83, 23);
+            this.label3.Size = new System.Drawing.Size(138, 23);
             this.label3.TabIndex = 5;
-            this.label3.Text = "Kullanıcı:";
+            this.label3.Text = "Online Kullanıcı:";
             // 
             // Anasayfa
             // 

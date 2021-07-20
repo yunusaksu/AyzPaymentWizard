@@ -1,20 +1,14 @@
 ﻿using AyzPaymentWizard.Model;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Linq.Dynamic;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Collections;
-using Zuby.ADGV;
+using System.Windows.Forms;
 
 namespace AyzPaymentWizard.Forms
 {

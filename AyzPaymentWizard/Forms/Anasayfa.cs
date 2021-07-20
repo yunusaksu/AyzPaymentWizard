@@ -1,25 +1,18 @@
 ﻿using AyzPaymentWizard.Forms;
 using AyzPaymentWizard.Model;
+using FileHelpers;
+using Microsoft.VisualBasic;
+using Newtonsoft.Json.Linq;
+using Renci.SshNet;
+using SftpConOperator;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Microsoft.VisualBasic;
-using SftpConOperator;
-using FileHelpers;
-using FileHelpers.Events;
 using System.Globalization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Renci.SshNet;
-using System.Net.Mail;
-using System.Text.RegularExpressions;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace AyzPaymentWizard
 {
