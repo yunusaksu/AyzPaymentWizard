@@ -47,11 +47,11 @@
             // btnToExcel
             // 
             this.btnToExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnToExcel.BackColor = System.Drawing.Color.ForestGreen;
+            this.btnToExcel.BackColor = System.Drawing.Color.White;
             this.btnToExcel.FlatAppearance.BorderSize = 0;
             this.btnToExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnToExcel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnToExcel.ForeColor = System.Drawing.Color.White;
+            this.btnToExcel.ForeColor = System.Drawing.Color.ForestGreen;
             this.btnToExcel.Location = new System.Drawing.Point(0, 464);
             this.btnToExcel.Name = "btnToExcel";
             this.btnToExcel.Size = new System.Drawing.Size(170, 38);
@@ -59,7 +59,6 @@
             this.btnToExcel.Text = "Excel\'e Aktar";
             this.btnToExcel.UseVisualStyleBackColor = false;
             this.btnToExcel.Click += new System.EventHandler(this.btnToExcel_Click);
-            
             // 
             // SFTPSTATE
             // 
