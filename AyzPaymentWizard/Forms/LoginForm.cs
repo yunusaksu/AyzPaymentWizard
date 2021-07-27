@@ -155,6 +155,24 @@ namespace AyzPaymentWizard
         private void IsExistDatabase()
         {
             int tableCount = -1;
+            string path = Application.StartupPath + @"\CreateDatabaseTables";
+
+            #region AppStartPath'de veritabanı create dosyalarının koyulacağı dosya yoksa create edilir.
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            #endregion
+
+            #region AppStartPath'de veritabanı güncelleme dosyalarının koyulacağı dosya yoksa create edilir.
+            string path2 = Application.StartupPath + @"\UpdateDatabaseTables";
+            if (!Directory.Exists(path2))
+            {
+                Directory.CreateDirectory(path2);
+            }
+            #endregion
+
+
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
                 command.CommandText = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME LIKE '%AYZ_PW%'";
@@ -163,7 +181,7 @@ namespace AyzPaymentWizard
                 dr = command.ExecuteReader();
                 if (dr.HasRows == false)
                 {
-                    string path = Application.StartupPath + @"\CreateDatabaseTables";
+                    
                     DirectoryInfo directoryInfo = new DirectoryInfo(path);
                     foreach (FileInfo item in directoryInfo.GetFiles())
                     {
