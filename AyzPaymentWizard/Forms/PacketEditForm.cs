@@ -37,8 +37,6 @@ namespace AyzPaymentWizard.Forms
             InitializeComponent();
             DGVRightEdit.ClipboardCopyMode = DataGridViewClipboardCopyMode.Disable;
             DGVRightEdit.EditingControlShowing += DGVRightEdit_EditingControlShowing;
-
-
         }
 
         #region Her Pakete Özel, Ön Filtre Değerlerini Tutan Değişkenler       

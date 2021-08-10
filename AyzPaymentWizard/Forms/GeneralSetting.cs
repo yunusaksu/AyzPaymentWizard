@@ -81,6 +81,7 @@ namespace AyzPaymentWizard.Forms
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             string path = Application.StartupPath + @"\UpdateDatabaseTables";
+
             DirectoryInfo directoryInfo = new DirectoryInfo(path);
             foreach (FileInfo item in directoryInfo.GetFiles())
             {
