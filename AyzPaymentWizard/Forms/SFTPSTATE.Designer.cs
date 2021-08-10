@@ -59,7 +59,6 @@
             this.btnToExcel.Text = "Excel\'e Aktar";
             this.btnToExcel.UseVisualStyleBackColor = false;
             this.btnToExcel.Click += new System.EventHandler(this.btnToExcel_Click);
-            
             // 
             // SFTPSTATE
             // 

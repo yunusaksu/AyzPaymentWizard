@@ -21,7 +21,6 @@ namespace AyzPaymentWizard.Forms
             InitializeComponent();            
             dataGridViewPaging.RequestQueryData += DataGridViewPaging_RequestQueryData;
             dataGridViewPaging.Initialize(count());
-
             dataGridViewPaging.DataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(datagridViewPaging_CellFormatting);
         }
 
@@ -158,5 +157,7 @@ namespace AyzPaymentWizard.Forms
 
             }
         }
+
+      
     }
 }
