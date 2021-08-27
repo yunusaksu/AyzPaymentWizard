@@ -44,7 +44,7 @@ namespace AyzPaymentWizard
                 komut.ExecuteNonQuery();
                 conn.Close();
             }
-
+            
             // 2. OLARAK ÖNCE İŞLEM DÖVİZİNDE SEÇİLİ OLAN KUR VARSA ONLARI AYZ_PW_FILTER_VALUES TABLOSUNA YAZICAM. İŞLEM DÖVİZİNİN TYPE_'ı 1.
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
