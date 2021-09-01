@@ -22,6 +22,7 @@ namespace AyzPaymentWizard
 
         private void btnFiltreApply_Click(object sender, EventArgs e)
         {
+            komut.CommandTimeout = 50;
             // Yeni Filtreleri kaydetmek için eski filtre verilerini temizleme işlemi yapılıyor.
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
@@ -298,6 +299,7 @@ namespace AyzPaymentWizard
                               "\nLEFT JOIN AYZ_PW_FILTER_VALUES FV ON DS.KEY_ = CAST(FV.VALUE AS SMALLINT) AND (FV.TYPE_ = 0) AND (DS.FIRMNR = FV.FIRMNR) AND FV.USERNR = " + Helper.USERID + " AND FV.PACKETID IS NULL" +
                               "\nWHERE DS.FIRMNR = " + Helper.FIRMNR + "";
                 komut.CommandText = CommandText;
+                komut.CommandTimeout = 50;
                 komut.Connection = conn;
                 conn.Open();
                 dr = komut.ExecuteReader();
