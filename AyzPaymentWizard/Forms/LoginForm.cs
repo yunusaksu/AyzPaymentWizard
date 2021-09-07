@@ -13,7 +13,8 @@ namespace AyzPaymentWizard
 {
     public partial class LoginForm : Form
     {
-        SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString);
+
+        SqlConnection conn;
         SqlCommand command = new SqlCommand();
         SqlDataReader dr;
         public LoginForm()
@@ -127,6 +128,15 @@ namespace AyzPaymentWizard
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
+            try
+            {
+                conn = new SqlConnection(ConnectionHelper.ConnectionString);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.InnerException.Message,"DOSYA BULUNAMADI!");
+            }
+           
             IsExistDatabase();
             SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString);
             SqlCommand cmd2 = new SqlCommand("SELECT NR FROM L_CAPIFIRM", conn2);

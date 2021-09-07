@@ -58,23 +58,26 @@
   <ItemGroup>
     <Reference Include="AdvancedDataGridView, Version=1.1.22318.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\AdvancedDataGridView.dll</HintPath>
+      <HintPath>binaryyy\Debug\AdvancedDataGridView.dll</HintPath>
+    </Reference>
+    <Reference Include="CollapsibleSplitContainer">
+      <HintPath>..\..\..\Users\Shiraz\source\repos\CollapsibleDataGridView\CollapsibleDataGridView\bin\Debug\CollapsibleSplitContainer.dll</HintPath>
     </Reference>
     <Reference Include="FileHelpers, Version=3.4.2.0, Culture=neutral, PublicKeyToken=3e0c08d59cc3d657, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\FileHelpers.dll</HintPath>
+      <HintPath>binaryyy\Debug\FileHelpers.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="SftpConOperator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\SftpConOperator.dll</HintPath>
+      <HintPath>binaryyy\Debug\SftpConOperator.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\System.Linq.Dynamic.dll</HintPath>
+      <HintPath>binaryyy\Debug\System.Linq.Dynamic.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
@@ -286,6 +289,9 @@
     </PackageReference>
     <PackageReference Include="SSH.NET">
       <Version>2020.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Linq.Dynamic">
+      <Version>1.0.8</Version>
     </PackageReference>
     <PackageReference Include="System.Runtime">
       <Version>4.3.1</Version>

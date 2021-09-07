@@ -1,23 +1,41 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
-
+using System.IO;
 namespace AyzPaymentWizard
 {
-    public class ConnectionHelper
+
+    public  class ConnectionHelper
     {
 
         public static string SystemIniPath = Application.StartupPath + @"\System.ini";
-
+        static bool existIni = File.Exists(SystemIniPath);
+        
+        private static string DecryptionServername = EncryptionAlgorithm.Decrytion(GetServerName());
+        private static string DecryptionDatabasename = EncryptionAlgorithm.Decrytion(GetDatabaseName());
+        private static string DecryptionServerUsername = EncryptionAlgorithm.Decrytion(GetServerUserName());
+        private static string DecryptionServerUserPass = EncryptionAlgorithm.Decrytion(GetUserPass());
+        static string server;
         [DllImport("kernel32.dll")]
         static extern uint GetPrivateProfileString(string lpAppName, string lpKeyName, string lpDefault, StringBuilder lpReturnedString, int nSize, string lpFileName);
         private static string GetServerName()
         {
-            StringBuilder sb = new StringBuilder(5000);
-            GetPrivateProfileString("ServerNameBaslik", "Server", "", sb, sb.Capacity, SystemIniPath);
-            string server = sb.ToString();
-            return server;
+                if (existIni == true)
+                {
+                StringBuilder sb = new StringBuilder(5000);
+                GetPrivateProfileString("ServerNameBaslik", "Server", "", sb, sb.Capacity, SystemIniPath);
+                server = sb.ToString();
+                return server;
+
+                }
+               else
+               {
+                 throw new Exception("System.INI Dosyasi Bulunamadi");
+               }
+
         }
+
         private static string GetDatabaseName()
         {
             StringBuilder sb = new StringBuilder(5000);
@@ -33,10 +51,7 @@ namespace AyzPaymentWizard
             return name;
         }
 
-        private static string DecryptionServername = EncryptionAlgorithm.Decrytion(GetServerName());
-        private static string DecryptionDatabasename = EncryptionAlgorithm.Decrytion(GetDatabaseName());
-        private static string DecryptionServerUsername = EncryptionAlgorithm.Decrytion(GetServerUserName());
-        private static string DecryptionServerUserPass = EncryptionAlgorithm.Decrytion(GetUserPass());
+
         private static string GetUserPass()
         {
             StringBuilder sb = new StringBuilder(5000);
