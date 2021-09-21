@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Windows.Forms;
 
+
 namespace AyzPaymentWizard.Forms
 {
     public partial class PacketEditForm : Form
@@ -19,7 +20,7 @@ namespace AyzPaymentWizard.Forms
         string CommandText = "";
         int PacketId;
         bool Review = false;
-
+        
         List<Debit> PacketEditsLeftList = new List<Debit>();
         List<Debit> PacketEditsRightList = new List<Debit>();
         List<Debit> PacketDetailList = new List<Debit>();

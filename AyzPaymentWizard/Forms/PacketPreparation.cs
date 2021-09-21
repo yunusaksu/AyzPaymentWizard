@@ -9,6 +9,7 @@ using System.Linq.Dynamic;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Windows.Forms;
+using SoftGee;
 
 namespace AyzPaymentWizard
 {

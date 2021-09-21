@@ -1,5 +1,5 @@
 ﻿using FileHelpers;
-
+using System.IO;
 namespace AyzPaymentWizard.Model
 {
     [FixedLengthRecord(FixedMode.ExactLength)]
@@ -101,7 +101,7 @@ namespace AyzPaymentWizard.Model
         [FieldFixedLength(60)]
         [FieldAlign(AlignMode.Left, ' ')]
         public string DESCRIPTION;
-
+        
         [FieldFixedLength(20)]
         [FieldAlign(AlignMode.Left, ' ')]
         public string COMPANYREF;
