@@ -6,7 +6,6 @@ namespace AyzPaymentWizard
 {
     public class ConnectionHelper
     {
-
         public static string SystemIniPath = Application.StartupPath + @"\System.ini";
 
         [DllImport("kernel32.dll")]
@@ -14,7 +13,7 @@ namespace AyzPaymentWizard
         private static string GetServerName()
         {
             StringBuilder sb = new StringBuilder(5000);
-            GetPrivateProfileString("ServerNameBaslik", "Server", "", sb, sb.Capacity, SystemIniPath);
+            var a = GetPrivateProfileString("ServerNameBaslik", "Server", "", sb, sb.Capacity, SystemIniPath);
             string server = sb.ToString();
             return server;
         }
