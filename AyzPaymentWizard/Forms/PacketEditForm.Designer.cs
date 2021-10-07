@@ -49,7 +49,7 @@
             this.label14 = new System.Windows.Forms.Label();
             this.txtTotalRightDGV = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.btnToLeft = new System.Windows.Forms.Button();
+            this.btnToLeftt = new System.Windows.Forms.Button();
             this.btnAllToLeft = new System.Windows.Forms.Button();
             this.btnToRight = new System.Windows.Forms.Button();
             this.btnAllToRight = new System.Windows.Forms.Button();
@@ -101,7 +101,7 @@
             this.btnEditPacket.ForeColor = System.Drawing.Color.White;
             this.btnEditPacket.Location = new System.Drawing.Point(5, 91);
             this.btnEditPacket.Name = "btnEditPacket";
-            this.btnEditPacket.Size = new System.Drawing.Size(567, 36);
+            this.btnEditPacket.Size = new System.Drawing.Size(599, 36);
             this.btnEditPacket.TabIndex = 13;
             this.btnEditPacket.Text = "PAKETİ DÜZENLE";
             this.btnEditPacket.UseVisualStyleBackColor = false;
@@ -113,7 +113,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label4.Location = new System.Drawing.Point(3, 34);
+            this.label4.Location = new System.Drawing.Point(6, 31);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(90, 20);
             this.label4.TabIndex = 14;
@@ -125,7 +125,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label5.Location = new System.Drawing.Point(3, 68);
+            this.label5.Location = new System.Drawing.Point(6, 65);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(116, 20);
             this.label5.TabIndex = 16;
@@ -139,7 +139,7 @@
             this.cmbOutAccountInfoEdit.FormattingEnabled = true;
             this.cmbOutAccountInfoEdit.Location = new System.Drawing.Point(160, 57);
             this.cmbOutAccountInfoEdit.Name = "cmbOutAccountInfoEdit";
-            this.cmbOutAccountInfoEdit.Size = new System.Drawing.Size(412, 28);
+            this.cmbOutAccountInfoEdit.Size = new System.Drawing.Size(444, 28);
             this.cmbOutAccountInfoEdit.TabIndex = 17;
             // 
             // txtPacketEditExp
@@ -149,7 +149,7 @@
             this.txtPacketEditExp.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.txtPacketEditExp.Location = new System.Drawing.Point(160, 25);
             this.txtPacketEditExp.Name = "txtPacketEditExp";
-            this.txtPacketEditExp.Size = new System.Drawing.Size(412, 26);
+            this.txtPacketEditExp.Size = new System.Drawing.Size(444, 26);
             this.txtPacketEditExp.TabIndex = 19;
             // 
             // DGVLeftEdit
@@ -320,15 +320,16 @@
             this.label13.TabIndex = 18;
             this.label13.Text = "Total rows:";
             // 
-            // btnToLeft
+            // btnToLeftt
             // 
-            this.btnToLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnToLeft.Location = new System.Drawing.Point(-1, 65);
-            this.btnToLeft.Name = "btnToLeft";
-            this.btnToLeft.Size = new System.Drawing.Size(36, 24);
-            this.btnToLeft.TabIndex = 23;
-            this.btnToLeft.Text = "<";
-            this.btnToLeft.UseVisualStyleBackColor = true;
+            this.btnToLeftt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnToLeftt.Location = new System.Drawing.Point(-1, 65);
+            this.btnToLeftt.Name = "btnToLeftt";
+            this.btnToLeftt.Size = new System.Drawing.Size(36, 24);
+            this.btnToLeftt.TabIndex = 23;
+            this.btnToLeftt.Text = "<";
+            this.btnToLeftt.UseVisualStyleBackColor = true;
+            this.btnToLeftt.Click += new System.EventHandler(this.btnToLeft_Click);
             // 
             // btnAllToLeft
             // 
@@ -339,6 +340,7 @@
             this.btnAllToLeft.TabIndex = 12;
             this.btnAllToLeft.Text = "<<";
             this.btnAllToLeft.UseVisualStyleBackColor = true;
+            this.btnAllToLeft.Click += new System.EventHandler(this.btnAllToLeft_Click);
             // 
             // btnToRight
             // 
@@ -349,6 +351,7 @@
             this.btnToRight.TabIndex = 22;
             this.btnToRight.Text = ">";
             this.btnToRight.UseVisualStyleBackColor = true;
+            this.btnToRight.Click += new System.EventHandler(this.btnToRight_Click);
             // 
             // btnAllToRight
             // 
@@ -359,6 +362,7 @@
             this.btnAllToRight.TabIndex = 11;
             this.btnAllToRight.Text = ">>";
             this.btnAllToRight.UseVisualStyleBackColor = true;
+            this.btnAllToRight.Click += new System.EventHandler(this.btnAllToRight_Click);
             // 
             // label9
             // 
@@ -535,7 +539,7 @@
             // 
             this.panel6.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel6.Controls.Add(this.btnToLeft);
+            this.panel6.Controls.Add(this.btnToLeftt);
             this.panel6.Controls.Add(this.btnAllToLeft);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel6.Location = new System.Drawing.Point(0, 0);
@@ -601,7 +605,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox txtTotalRightDGV;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Button btnToLeft;
+        private System.Windows.Forms.Button btnToLeftt;
         private System.Windows.Forms.Button btnAllToLeft;
         private System.Windows.Forms.Button btnToRight;
         private System.Windows.Forms.Button btnAllToRight;

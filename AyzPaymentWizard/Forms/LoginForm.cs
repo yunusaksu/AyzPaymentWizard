@@ -1,4 +1,6 @@
-﻿using System;
+﻿using IniParser;
+using IniParser.Model;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -60,7 +62,7 @@ namespace AyzPaymentWizard
             }
             else
             {
-                if (txtLoginName.Text == UserRead() && txtLoginPassword.Text == PasswordRead())
+                if (txtLoginPassword.Text == PasswordRead() && txtLoginName.Text == UserRead())
                 {
                     Helper.USERID = 0; // Admin için USERID SIFIRDIR(0).
                     Helper.USERNAME = userName;
@@ -112,16 +114,19 @@ namespace AyzPaymentWizard
 
         private string UserRead()
         {
-            StringBuilder sb = new StringBuilder(5000);
-            GetPrivateProfileString("KullaniciBaslik", "KullaniciAdi", "", sb, sb.Capacity, ConnectionHelper.SystemIniPath);
-            string user = EncryptionAlgorithm.Decrytion(sb.ToString());
+            FileIniDataParser parser = new FileIniDataParser();
+            IniData generateData = parser.ReadFile(ConnectionHelper.SystemIniPath);
+
+            //Reading the Content of the File
+            string AdminuserName = generateData["AdminNameBaslik"]["AdminUser"].ToString();
+            string user = EncryptionAlgorithm.Decrytion(AdminuserName);
             return user;
         }
 
         private string PasswordRead()
         {
             StringBuilder sb2 = new StringBuilder(5000);
-            GetPrivateProfileString("PasswordBaslik", "Password", "", sb2, sb2.Capacity, ConnectionHelper.SystemIniPath);
+            GetPrivateProfileString("AdminPassWordBaslik", "AdminPassword", "", sb2, sb2.Capacity, ConnectionHelper.SystemIniPath);
             string password = EncryptionAlgorithm.Decrytion(sb2.ToString());
             return password;
         }
@@ -131,40 +136,39 @@ namespace AyzPaymentWizard
             try
             {
                 conn = new SqlConnection(ConnectionHelper.ConnectionString);
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.InnerException.Message,"DOSYA BULUNAMADI!");
-            }
-           
-            IsExistDatabase();
-            SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString);
-            SqlCommand cmd2 = new SqlCommand("SELECT NR FROM L_CAPIFIRM", conn2);
-            conn2.Open();
-            DataTable tbl2 = new DataTable();
-            tbl2.Load(cmd2.ExecuteReader());
-            conn.Close();
+                IsExistDatabase();
+                SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString);
+                SqlCommand cmd2 = new SqlCommand("SELECT NR FROM L_CAPIFIRM", conn2);
+                conn2.Open();
+                DataTable tbl2 = new DataTable();
+                tbl2.Load(cmd2.ExecuteReader());
+                conn.Close();
 
 #if DEBUG
-            txtLoginName.Text = "Admin";
-            txtLoginPassword.Text = "admin";
+                txtLoginName.Text = UserRead();
+                txtLoginPassword.Text = PasswordRead();
 #endif
 
-            cmbFirms.DataSource = tbl2;
-            cmbFirms.DisplayMember = "NR";
-            cmbFirms.ValueMember = "NR";
-            cmbFirms.Hide();
-            labelFirma.Hide();
+                cmbFirms.DataSource = tbl2;
+                cmbFirms.DisplayMember = "NR";
+                cmbFirms.ValueMember = "NR";
+                cmbFirms.Hide();
+                labelFirma.Hide();
 
-            ToolTip showBtnToolTip = new ToolTip();
-            showBtnToolTip.SetToolTip(btnShow, "Şifre Göster");
-            ToolTip hideBtnToolTip = new ToolTip();
-            hideBtnToolTip.SetToolTip(btnHide, "Şifre Gizle");
+                ToolTip showBtnToolTip = new ToolTip();
+                showBtnToolTip.SetToolTip(btnShow, "Şifre Göster");
+                ToolTip hideBtnToolTip = new ToolTip();
+                hideBtnToolTip.SetToolTip(btnHide, "Şifre Gizle");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.InnerException.Message, "DOSYA BULUNAMADI!");
+                Application.Exit();
+            }
         }
 
         private void IsExistDatabase()
         {
-            int tableCount = -1;
             string path = Application.StartupPath + @"\CreateDatabaseTables";
 
             #region AppStartPath'de veritabanı create dosyalarının koyulacağı dosya yoksa create edilir.
@@ -191,7 +195,7 @@ namespace AyzPaymentWizard
                 dr = command.ExecuteReader();
                 if (dr.HasRows == false)
                 {
-                    
+
                     DirectoryInfo directoryInfo = new DirectoryInfo(path);
                     foreach (FileInfo item in directoryInfo.GetFiles())
                     {
@@ -241,7 +245,8 @@ namespace AyzPaymentWizard
 
         private void txtLoginName_KeyUp(object sender, KeyEventArgs e)
         {
-            if (txtLoginName.Text.ToUpper() == "ADMİN")
+            //if (txtLoginName.Text.ToUpper() == "ADMİN")
+            if (txtLoginName.Text == UserRead())
             {
                 labelFirma.Show();
                 cmbFirms.Show();

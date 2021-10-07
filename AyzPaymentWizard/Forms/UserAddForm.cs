@@ -37,7 +37,7 @@ namespace AyzPaymentWizard
             }
             else
             {
-                if (String.IsNullOrEmpty(email))
+                if (String.IsNullOrEmpty(email) || checkedListBoxGroup.CheckedItems.Count == 0)
                 {
                     MessageBox.Show("Yıldız(*) ile işaretli olanların doldurulması zorunludur!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -75,22 +75,31 @@ namespace AyzPaymentWizard
 
         private bool mailCheck(string email, object LogoFirmNr)
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            try
             {
-                CommandText = "SELECT * FROM AYZ_PW_USER WHERE EMAIL = '" + email + "' AND FIRMNR = '" + LogoFirmNr + "' ";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                if (dr.HasRows)
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
-                    return true;
-                }
-                else
-                {
-                    return false;
+                    CommandText = "SELECT * FROM AYZ_PW_USER WHERE EMAIL = '" + email + "' AND FIRMNR = '" + LogoFirmNr + "' ";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
+            catch (Exception)
+            {
+
+                throw new Exception("Mail Check İşleminde Hata Meydana Geldi!.");
+            }
+
         }
 
         private void UserAddForm_Load(object sender, EventArgs e)
@@ -252,63 +261,76 @@ namespace AyzPaymentWizard
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            if (dataGridViewUsers.SelectedRows.Count > 0)
+            try
             {
-                int userId = (int)dataGridViewUsers.SelectedRows[0].Cells["ID"].Value;
-                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                string userName = txtUsername.Text;
+                string userPassword = txtPassword.Text;
+                string encrytedPassword = EncryptionAlgorithm.Encrytion(userPassword);
+                string userEmail = txtEmail.Text;
+                var firmNr = cmbFirmNumber.SelectedValue;
+                if (dataGridViewUsers.SelectedRows.Count > 0)
                 {
-
-                    string userName = txtUsername.Text;
-                    string userPassword = txtPassword.Text;
-                    string encrytedPassword = EncryptionAlgorithm.Encrytion(userPassword);
-                    string userEmail = txtEmail.Text;
-                    var firmNr = cmbFirmNumber.SelectedValue;
-                    CommandText = "UPDATE AYZ_PW_USER " +
-                                  "\nSET " +
-                                  "\nNAME = '" + userName + "'," +
-                                  "\nPASSWORD = '" + encrytedPassword + "'," +
-                                  "\nEMAIL = '" + userEmail + "'," +
-                                  "\nFIRMNR = '" + firmNr + "'" +
-                                  "\nWHERE ID = '" + userId + "'";
-                    komut.CommandText = CommandText;
-                    komut.Connection = conn;
-                    conn.Open();
-                    dr = komut.ExecuteReader();
-                    conn.Close();
-                }
-                var list = checkedListBoxGroup.CheckedItems;
-
-                #region Güncellenecek User'ın USERGROUPS verilerini sıfırlama                
-                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-                {
-                    CommandText = "DELETE FROM AYZ_PW_USERGROUPS WHERE USERID = " + userId + "";
-                    komut.CommandText = CommandText;
-                    komut.Connection = conn;
-                    conn.Open();
-                    dr = komut.ExecuteReader();
-                    conn.Close();
-                }
-                #endregion
-
-                #region Kullanıcıları USERGROUPS tablosuna ekleme  
-                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-                {
-                    foreach (DataRowView dataRow in list)
+                    if (String.IsNullOrEmpty(userEmail) || checkedListBoxGroup.CheckedItems.Count == 0)
                     {
-                        int groupId = (int)dataRow.Row.ItemArray[0];
-                        CommandText = "INSERT INTO [AYZ_PW_USERGROUPS](GROUPID,USERID) VALUES(" +
-                                                "'" + groupId.ToString() + "', '" + userId.ToString() + "') ";
-                        komut.CommandText = CommandText;
-                        komut.Connection = conn;
-                        conn.Open();
-                        dr = komut.ExecuteReader();
-                        conn.Close();
+                        MessageBox.Show("Yıldız(*) ile işaretli olanların doldurulması zorunludur!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        int userId = (int)dataGridViewUsers.SelectedRows[0].Cells["ID"].Value;
+                        using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                        {
+                            CommandText = "UPDATE AYZ_PW_USER " +
+                                          "\nSET " +
+                                          "\nNAME = '" + userName + "'," +
+                                          "\nPASSWORD = '" + encrytedPassword + "'," +
+                                          "\nEMAIL = '" + userEmail + "'," +
+                                          "\nFIRMNR = '" + firmNr + "'" +
+                                          "\nWHERE ID = '" + userId + "'";
+                            komut.CommandText = CommandText;
+                            komut.Connection = conn;
+                            conn.Open();
+                            dr = komut.ExecuteReader();
+                            conn.Close();
+                        }
+                        var list = checkedListBoxGroup.CheckedItems;
+
+                        #region Güncellenecek User'ın USERGROUPS verilerini sıfırlama                
+                        using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                        {
+                            CommandText = "DELETE FROM AYZ_PW_USERGROUPS WHERE USERID = " + userId + "";
+                            komut.CommandText = CommandText;
+                            komut.Connection = conn;
+                            conn.Open();
+                            dr = komut.ExecuteReader();
+                            conn.Close();
+                        }
+                        #endregion
+
+                        #region Kullanıcıları USERGROUPS tablosuna ekleme  
+                        using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                        {
+                            foreach (DataRowView dataRow in list)
+                            {
+                                int groupId = (int)dataRow.Row.ItemArray[0];
+                                CommandText = "INSERT INTO [AYZ_PW_USERGROUPS](GROUPID,USERID) VALUES(" +
+                                                        "'" + groupId.ToString() + "', '" + userId.ToString() + "') ";
+                                komut.CommandText = CommandText;
+                                komut.Connection = conn;
+                                conn.Open();
+                                dr = komut.ExecuteReader();
+                                conn.Close();
+                            }
+                        }
+                        #endregion
+                        UserAddForm form = (UserAddForm)Application.OpenForms["UserAddForm"];
+                        form.fillUsersDGV();
+                        MessageBox.Show("Güncellendi!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-                #endregion
-                UserAddForm form = (UserAddForm)Application.OpenForms["UserAddForm"];
-                form.fillUsersDGV();
-                MessageBox.Show("Güncellendi!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Kullanıcı Güncelleme Ekranında Bir Sorun İle Karşılaşıldı!\n" + ex.Message);
             }
         }
 
@@ -343,12 +365,23 @@ namespace AyzPaymentWizard
                                 komut.ExecuteNonQuery();
                                 conn.Close();
                                 MessageBox.Show("Silindi!");
-
+                                foreach (Control item in Controls)
+                                {
+                                    if (item is TextBox)
+                                    {
+                                        TextBox textKontrol = (TextBox)item;
+                                        textKontrol.Clear();
+                                    }
+                                }
+                                foreach (int i in checkedListBoxGroup.CheckedIndices)
+                                {
+                                    checkedListBoxGroup.SetItemCheckState(i, CheckState.Unchecked);
+                                }
                             }
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message, "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Silme işlemi sırasında bir hata ile oluştu.\n" + ex.Message, "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
 
                     }

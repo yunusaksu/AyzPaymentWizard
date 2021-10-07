@@ -508,7 +508,7 @@ namespace AyzPaymentWizard
             }
 
             txtPaidRightDGV.Text = sumedup.ToString();
-        }
+        } 
 
         private void dataGridViewLeft_SortStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
         {
@@ -547,7 +547,6 @@ namespace AyzPaymentWizard
                 MessageBox.Show("Hata: \n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-
 
         private void button_unloadfilters_Click(object sender, EventArgs e)
         {
@@ -779,266 +778,274 @@ namespace AyzPaymentWizard
 
         void FillLeftList()
         {
-            // Login olan kullanıcının filterelerini AYZ_PW_FILTER_VALUES tablosundan alarak, paketleri getiren işlemler            
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            try
             {
-                CommandText = "SELECT * FROM AYZ_PW_FILTER_VALUES WHERE FIRMNR = " + Helper.FIRMNR + " AND USERNR = " + Helper.USERID + " AND PACKETID IS NULL";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                while (dr.Read())
+                // Login olan kullanıcının filterelerini AYZ_PW_FILTER_VALUES tablosundan alarak, paketleri getiren işlemler            
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
-                    if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.DetailSendig)
-                        detailSendingValue = Convert.ToInt32(dr["VALUE"].ToString());
-                    if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.Currency)
-                        currencyValue = Convert.ToInt32(dr["VALUE"].ToString());
-                    if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.ExpiryDate)
-                        expiryDateList.Add(Convert.ToDateTime(dr["VALUE"].ToString()));
-                    if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.InvoiceDate)
-                        invoiceDateList.Add(Convert.ToDateTime(dr["VALUE"].ToString()));
-                    if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.ClientCodeType)
-                        clientCodeFiltreType = Convert.ToInt32(dr["VALUE"].ToString());
-                    if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.ClientCodeBeg)
-                        clientCodeBeg = dr["VALUE"].ToString();
-                    if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.ClientCodeEnd)
-                        clientCodeEnd = dr["VALUE"].ToString();
-                    if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.ClientSpecialCode)
-                        clientSpecialCode = dr["VALUE"].ToString();
-                    if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.ClientSpecialCode2)
-                        clientSpecialCode2 = dr["VALUE"].ToString();
-                    if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.ReplaceDueDateAndTodayDate)
-                        replaceDueDateAndTodayDate = Convert.ToBoolean(dr["VALUE"].ToString());
-                    if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.VoucherType)
-                        voucherType = Convert.ToInt32(dr["VALUE"].ToString());
-                    if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.MecraType)
-                        mecraTypeList.Add(Convert.ToInt32(dr["VALUE"].ToString()));
-                    if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.Mecra)
-                        mecraList.Add(Convert.ToInt32(dr["VALUE"].ToString()));
-                    if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.MarketingCompany)
-                        marketingCompantList.Add(Convert.ToInt32(dr["VALUE"].ToString()));
-                    if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.Customer)
-                        customerList.Add(Convert.ToInt32(dr["VALUE"].ToString()));
-                    if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.PlanCode)
-                        planCodeList.Add(Convert.ToInt32(dr["VALUE"].ToString()));
-                    if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.InternerMainCategory)
-                        internetMainCategory.Add(Convert.ToInt32(dr["VALUE"].ToString()));
-                    if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.InternetSubCategory)
-                        internetSubCategory.Add(Convert.ToInt32(dr["VALUE"].ToString()));
-                    if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.Branch)
-                        branchValue = Convert.ToInt32(dr["VALUE"].ToString());
-                }
-                conn.Close();
-
-                #region Vade Tarihi ve Fatura Tarihi Başlangıç, Bitiş atamasını yapma
-                if (Convert.ToDateTime(expiryDateList[0]) > Convert.ToDateTime(expiryDateList[1]))
-                {
-                    payBegDate = expiryDateList[1];
-                    payEndDate = expiryDateList[0];
-                }
-                else if (Convert.ToDateTime(expiryDateList[1]) > Convert.ToDateTime(expiryDateList[0]))
-                {
-                    payBegDate = expiryDateList[0];
-                    payEndDate = expiryDateList[1];
-                }
-                else
-                {
-                    payBegDate = expiryDateList[0];
-                    payEndDate = expiryDateList[1];
-                }
-
-                if (Convert.ToDateTime(invoiceDateList[0]) > Convert.ToDateTime(invoiceDateList[1]))
-                {
-                    invBegDate = invoiceDateList[1];
-                    invEndDate = invoiceDateList[0];
-                }
-                else if (Convert.ToDateTime(invoiceDateList[1]) > Convert.ToDateTime(invoiceDateList[0]))
-                {
-                    invBegDate = invoiceDateList[0];
-                    invEndDate = invoiceDateList[1];
-                }
-                else
-                {
-                    invBegDate = invoiceDateList[0];
-                    invEndDate = invoiceDateList[1];
-                }
-                #endregion
-
-            }
-
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                if (detailSendingValue == 2)
-                {
-                    using (SqlCommand cmd = new SqlCommand("AYZ_SP_PW_PAYTRANS", conn))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.CommandTimeout = 240;
-                        #region StoredProcedure Paremetreleri
-                        cmd.Parameters.Add("@FIRMNR", SqlDbType.Int).Value = Helper.FIRMNR;
-                        cmd.Parameters.Add("@PERNR", SqlDbType.Int).Value = 1;
-                        cmd.Parameters.Add("@BRANCH", SqlDbType.Int).Value = branchValue;
-                        cmd.Parameters.Add("@payBegDate", SqlDbType.DateTime).Value = payBegDate;
-                        cmd.Parameters.Add("@payEndDate", SqlDbType.DateTime).Value = payEndDate;
-                        cmd.Parameters.Add("@invBegDate", SqlDbType.DateTime).Value = invBegDate;
-                        cmd.Parameters.Add("@invEndDate", SqlDbType.DateTime).Value = invEndDate;
-                        cmd.Parameters.Add("@DateFormat", SqlDbType.Int).Value = 104;
-                        cmd.Parameters.Add("@CLFLTR", SqlDbType.Int).Value = clientCodeFiltreType;
-                        cmd.Parameters.Add("@CLCODEBEG", SqlDbType.NVarChar).Value = clientCodeBeg;
-                        cmd.Parameters.Add("@CLCODEEND", SqlDbType.NVarChar).Value = clientCodeEnd;
-                        cmd.Parameters.Add("@CURTYPE", SqlDbType.SmallInt).Value = currencyValue;
-                        cmd.Parameters.Add("@FICHETYPE", SqlDbType.SmallInt).Value = voucherType;
-                        cmd.Parameters.Add("@HASIBAN", SqlDbType.SmallInt).Value = 1;
-                        #endregion
-                        conn.Open();
-                        dr = cmd.ExecuteReader();
-
-                        if (dr.HasRows)
-                        {
-                            while (dr.Read())
-                            {
-                                Debit debit = new Debit();
-                                debit.PayRef = Convert.ToInt32(dr["PAYREF"].ToString());
-                                debit.ClCardRef = Convert.ToInt32(dr["CLCARDREF"].ToString());
-                                debit.FicheRef = Convert.ToInt32(dr["FICHEREF"].ToString());
-                                debit.ModuleNr = Convert.ToInt32(dr["MODULENR"].ToString());
-                                debit.DueDate = Convert.ToDateTime(dr["DUEDATE"].ToString());
-                                debit.TrCode = Convert.ToInt32(dr["TRCODE"].ToString());
-                                debit.Total = Convert.ToDecimal(dr["TOTAL"].ToString());
-                                debit.CurCode = dr["CURCODE"].ToString();
-                                debit.TrCurr = Convert.ToInt32(dr["TRCURR"].ToString());
-                                debit.ClCode = dr["CLCODE"].ToString();
-                                debit.ClDef = dr["CLDEF"].ToString();
-                                if (debit.IsPerson == 0)
-                                    debit.IsPerson = 0;
-                                else
-                                    debit.IsPerson = Convert.ToInt32(dr["ISPERSON"].ToString());
-                                debit.TaxNr = dr["TAXNR"].ToString();
-                                debit.TaxOffice = dr["TAXOFFICE"].ToString();
-                                debit.IBAN = dr["IBAN"].ToString();
-                                debit.EmailAdres = dr["EMAILADDR"].ToString();
-                                debit.FicheDate = Convert.ToDateTime(dr["FICHEDATE"].ToString());
-                                debit.FicheNo = dr["FICHENO"].ToString();
-                                debit.DoCode = dr["DOCODE"].ToString();
-                                debit.TrType = dr["TRTYPE"].ToString();
-                                debit.GenExp1 = dr["GENEXP1"].ToString();
-                                debit.Branch = Convert.ToInt32(dr["BRANCH"].ToString());
-                                LeftList.Add(debit);
-                            }
-                        }
-                        conn.Close();
-                    }
-                }
-
-                else if (detailSendingValue == 3)
-                {
-                    using (SqlCommand cmd = new SqlCommand("AYZ_SP_PW_PAYTRANS_DIM", conn))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        #region StoredProcedure Paremetreleri
-                        cmd.Parameters.Add("@FIRMNR", SqlDbType.Int).Value = Helper.FIRMNR;
-                        cmd.Parameters.Add("@PERNR", SqlDbType.Int).Value = 1;
-                        cmd.Parameters.Add("@BRANCH", SqlDbType.Int).Value = branchValue;
-                        cmd.Parameters.Add("@payBegDate", SqlDbType.DateTime).Value = payBegDate;
-                        cmd.Parameters.Add("@payEndDate", SqlDbType.DateTime).Value = payEndDate;
-                        cmd.Parameters.Add("@invBegDate", SqlDbType.DateTime).Value = invBegDate;
-                        cmd.Parameters.Add("@invEndDate", SqlDbType.DateTime).Value = invEndDate;
-                        cmd.Parameters.Add("@DateFormat", SqlDbType.Int).Value = 104;
-                        cmd.Parameters.Add("@CLFLTR", SqlDbType.Int).Value = clientCodeFiltreType;
-                        cmd.Parameters.Add("@CLCODEBEG", SqlDbType.NVarChar).Value = clientCodeBeg;
-                        cmd.Parameters.Add("@CLCODEEND", SqlDbType.NVarChar).Value = clientCodeEnd;
-                        cmd.Parameters.Add("@CURTYPE", SqlDbType.SmallInt).Value = currencyValue;
-                        cmd.Parameters.Add("@FICHETYPE", SqlDbType.SmallInt).Value = voucherType;
-                        cmd.Parameters.Add("@HASIBAN", SqlDbType.SmallInt).Value = 1;
-                        cmd.Parameters.Add("@DD1REF", SqlDbType.NVarChar).Value = string.Join(",", mecraTypeList.Select(n => n.ToString()).ToArray()) == "" ? "-1" : string.Join(",", mecraTypeList.Select(n => n.ToString()).ToArray());
-                        cmd.Parameters.Add("@DD2REF", SqlDbType.NVarChar).Value = string.Join(",", mecraList.Select(n => n.ToString()).ToArray()) == "" ? "-1" : string.Join(",", mecraList.Select(n => n.ToString()).ToArray());
-                        cmd.Parameters.Add("@DD3REF", SqlDbType.NVarChar).Value = string.Join(",", marketingCompantList.Select(n => n.ToString()).ToArray()) == "" ? "-1" : string.Join(",", marketingCompantList.Select(n => n.ToString()).ToArray());
-                        cmd.Parameters.Add("@DD4REF", SqlDbType.NVarChar).Value = string.Join(",", customerList.Select(n => n.ToString()).ToArray()) == "" ? "-1" : string.Join(",", customerList.Select(n => n.ToString()).ToArray());
-                        cmd.Parameters.Add("@DD5REF", SqlDbType.NVarChar).Value = string.Join(",", planCodeList.Select(n => n.ToString()).ToArray()) == "" ? "-1" : string.Join(",", planCodeList.Select(n => n.ToString()).ToArray());
-                        cmd.Parameters.Add("@DD6REF", SqlDbType.NVarChar).Value = string.Join(",", internetMainCategory.Select(n => n.ToString()).ToArray()) == "" ? "-1" : string.Join(",", internetMainCategory.Select(n => n.ToString()).ToArray());
-                        cmd.Parameters.Add("@DD7REF", SqlDbType.NVarChar).Value = string.Join(",", internetSubCategory.Select(n => n.ToString()).ToArray()) == "" ? "-1" : string.Join(",", internetSubCategory.Select(n => n.ToString()).ToArray());
-                        #endregion
-                        conn.Open();
-                        dr = cmd.ExecuteReader();
-                        if (dr.HasRows)
-                        {
-                            while (dr.Read())
-                            {
-                                Debit debit = new Debit();
-                                debit.PayRef = Convert.ToInt32(dr["PAYREF"].ToString());
-                                debit.ClCardRef = Convert.ToInt32(dr["CLCARDREF"].ToString());
-                                debit.FicheRef = Convert.ToInt32(dr["FICHEREF"].ToString());
-                                debit.ModuleNr = Convert.ToInt32(dr["MODULENR"].ToString());
-                                debit.DueDate = Convert.ToDateTime(dr["DUEDATE"].ToString());
-                                debit.TrCode = Convert.ToInt32(dr["TRCODE"].ToString());
-                                debit.Total = Convert.ToDecimal(dr["TOTAL"].ToString());
-                                debit.CurCode = dr["CURCODE"].ToString();
-                                debit.TrCurr = Convert.ToInt32(dr["TRCURR"].ToString());
-                                debit.ClCode = dr["CLCODE"].ToString();
-                                debit.ClDef = dr["CLDEF"].ToString();
-                                if (debit.IsPerson == 0)
-                                    debit.IsPerson = 0;
-                                else
-                                    debit.IsPerson = Convert.ToInt32(dr["ISPERSON"].ToString());
-                                debit.TaxNr = dr["TAXNR"].ToString();
-                                debit.TaxOffice = dr["TAXOFFICE"].ToString();
-                                debit.IBAN = dr["IBAN"].ToString();
-                                debit.EmailAdres = dr["EMAILADDR"].ToString();
-                                debit.FicheDate = Convert.ToDateTime(dr["FICHEDATE"].ToString());
-                                debit.FicheNo = dr["FICHENO"].ToString();
-                                debit.DoCode = dr["DOCODE"].ToString();
-                                debit.TrType = dr["TRTYPE"].ToString();
-                                debit.GenExp1 = dr["GENEXP1"].ToString();
-                                debit.Branch = Convert.ToInt32(dr["BRANCH"].ToString());
-                                debit.MecraType = dr["Mecra_Turu"].ToString();
-                                debit.Mecra = dr["Mecra"].ToString();
-                                debit.MarketingCompany = dr["Pazarlama_Sirketi"].ToString();
-                                debit.Customer = dr["Musteri"].ToString();
-                                debit.PlanCode = dr["Plan_Kodu"].ToString();
-                                debit.InternetMainCategory = dr["Internet_Ana_Kategori"].ToString();
-                                debit.InternetSubCategory = dr["Internet_Alt_Kategori"].ToString();
-                                debit.DD1REF = Convert.ToInt32(dr["MediaTypeRef"].ToString());
-                                debit.DD2REF = Convert.ToInt32(dr["MediaRef"].ToString());
-                                debit.DD3REF = Convert.ToInt32(dr["MarkettingRef"].ToString());
-                                debit.DD4REF = Convert.ToInt32(dr["CustomerRef"].ToString());
-                                debit.DD5REF = Convert.ToInt32(dr["PlanRef"].ToString());
-                                debit.DD6REF = Convert.ToInt32(dr["InternetMainRef"].ToString());
-                                debit.DD7REF = Convert.ToInt32(dr["InternetSubRef"].ToString());
-                                LeftList.Add(debit);
-                            }
-                        }
-                        conn.Close();
-                    }
-                }
-            }
-
-            #region Daha önce oluşturulan paket satırlarının sol gride gelmesini engelleyen kod bloku           
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT * FROM AYZ_PW_PACKET_DETAIL";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                if (dr.HasRows)
-                {
+                    CommandText = "SELECT * FROM AYZ_PW_FILTER_VALUES WHERE FIRMNR = " + Helper.FIRMNR + " AND USERNR = " + Helper.USERID + " AND PACKETID IS NULL";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
                     while (dr.Read())
                     {
-                        Debit debit = new Debit();
-                        debit.PayRef = Convert.ToInt32(dr["PAYTRANSREF"].ToString());
-                        PacketDetailList.Add(debit);
+                        if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.DetailSendig)
+                            detailSendingValue = Convert.ToInt32(dr["VALUE"].ToString());
+                        if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.Currency)
+                            currencyValue = Convert.ToInt32(dr["VALUE"].ToString());
+                        if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.ExpiryDate)
+                            expiryDateList.Add(Convert.ToDateTime(dr["VALUE"].ToString()));
+                        if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.InvoiceDate)
+                            invoiceDateList.Add(Convert.ToDateTime(dr["VALUE"].ToString()));
+                        if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.ClientCodeType)
+                            clientCodeFiltreType = Convert.ToInt32(dr["VALUE"].ToString());
+                        if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.ClientCodeBeg)
+                            clientCodeBeg = dr["VALUE"].ToString();
+                        if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.ClientCodeEnd)
+                            clientCodeEnd = dr["VALUE"].ToString();
+                        if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.ClientSpecialCode)
+                            clientSpecialCode = dr["VALUE"].ToString();
+                        if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.ClientSpecialCode2)
+                            clientSpecialCode2 = dr["VALUE"].ToString();
+                        if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.ReplaceDueDateAndTodayDate)
+                            replaceDueDateAndTodayDate = Convert.ToBoolean(dr["VALUE"].ToString());
+                        if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.VoucherType)
+                            voucherType = Convert.ToInt32(dr["VALUE"].ToString());
+                        if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.MecraType)
+                            mecraTypeList.Add(Convert.ToInt32(dr["VALUE"].ToString()));
+                        if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.Mecra)
+                            mecraList.Add(Convert.ToInt32(dr["VALUE"].ToString()));
+                        if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.MarketingCompany)
+                            marketingCompantList.Add(Convert.ToInt32(dr["VALUE"].ToString()));
+                        if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.Customer)
+                            customerList.Add(Convert.ToInt32(dr["VALUE"].ToString()));
+                        if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.PlanCode)
+                            planCodeList.Add(Convert.ToInt32(dr["VALUE"].ToString()));
+                        if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.InternerMainCategory)
+                            internetMainCategory.Add(Convert.ToInt32(dr["VALUE"].ToString()));
+                        if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.InternetSubCategory)
+                            internetSubCategory.Add(Convert.ToInt32(dr["VALUE"].ToString()));
+                        if (Convert.ToInt32(dr["TYPE_"].ToString()) == (int)Helper.FilterType.Branch)
+                            branchValue = Convert.ToInt32(dr["VALUE"].ToString());
+                    }
+                    conn.Close();
+
+                    #region Vade Tarihi ve Fatura Tarihi Başlangıç, Bitiş atamasını yapma
+                    if (Convert.ToDateTime(expiryDateList[0]) > Convert.ToDateTime(expiryDateList[1]))
+                    {
+                        payBegDate = expiryDateList[1];
+                        payEndDate = expiryDateList[0];
+                    }
+                    else if (Convert.ToDateTime(expiryDateList[1]) > Convert.ToDateTime(expiryDateList[0]))
+                    {
+                        payBegDate = expiryDateList[0];
+                        payEndDate = expiryDateList[1];
+                    }
+                    else
+                    {
+                        payBegDate = expiryDateList[0];
+                        payEndDate = expiryDateList[1];
+                    }
+
+                    if (Convert.ToDateTime(invoiceDateList[0]) > Convert.ToDateTime(invoiceDateList[1]))
+                    {
+                        invBegDate = invoiceDateList[1];
+                        invEndDate = invoiceDateList[0];
+                    }
+                    else if (Convert.ToDateTime(invoiceDateList[1]) > Convert.ToDateTime(invoiceDateList[0]))
+                    {
+                        invBegDate = invoiceDateList[0];
+                        invEndDate = invoiceDateList[1];
+                    }
+                    else
+                    {
+                        invBegDate = invoiceDateList[0];
+                        invEndDate = invoiceDateList[1];
+                    }
+                    #endregion
+
+                }
+
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    if (detailSendingValue == 2)
+                    {
+                        using (SqlCommand cmd = new SqlCommand("AYZ_SP_PW_PAYTRANS", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.CommandTimeout = 240;
+                            #region StoredProcedure Paremetreleri
+                            cmd.Parameters.Add("@FIRMNR", SqlDbType.Int).Value = Helper.FIRMNR;
+                            cmd.Parameters.Add("@PERNR", SqlDbType.Int).Value = 1;
+                            cmd.Parameters.Add("@BRANCH", SqlDbType.Int).Value = branchValue;
+                            cmd.Parameters.Add("@payBegDate", SqlDbType.DateTime).Value = payBegDate;
+                            cmd.Parameters.Add("@payEndDate", SqlDbType.DateTime).Value = payEndDate;
+                            cmd.Parameters.Add("@invBegDate", SqlDbType.DateTime).Value = invBegDate;
+                            cmd.Parameters.Add("@invEndDate", SqlDbType.DateTime).Value = invEndDate;
+                            cmd.Parameters.Add("@DateFormat", SqlDbType.Int).Value = 104;
+                            cmd.Parameters.Add("@CLFLTR", SqlDbType.Int).Value = clientCodeFiltreType;
+                            cmd.Parameters.Add("@CLCODEBEG", SqlDbType.NVarChar).Value = clientCodeBeg;
+                            cmd.Parameters.Add("@CLCODEEND", SqlDbType.NVarChar).Value = clientCodeEnd;
+                            cmd.Parameters.Add("@CURTYPE", SqlDbType.SmallInt).Value = currencyValue;
+                            cmd.Parameters.Add("@FICHETYPE", SqlDbType.SmallInt).Value = voucherType;
+                            cmd.Parameters.Add("@HASIBAN", SqlDbType.SmallInt).Value = 1;
+                            #endregion
+                            conn.Open();
+                            dr = cmd.ExecuteReader();
+
+                            if (dr.HasRows)
+                            {
+                                while (dr.Read())
+                                {
+                                    Debit debit = new Debit();
+                                    debit.PayRef = Convert.ToInt32(dr["PAYREF"].ToString());
+                                    debit.ClCardRef = Convert.ToInt32(dr["CLCARDREF"].ToString());
+                                    debit.FicheRef = Convert.ToInt32(dr["FICHEREF"].ToString());
+                                    debit.ModuleNr = Convert.ToInt32(dr["MODULENR"].ToString());
+                                    debit.DueDate = Convert.ToDateTime(dr["DUEDATE"].ToString());
+                                    debit.TrCode = Convert.ToInt32(dr["TRCODE"].ToString());
+                                    debit.Total = Convert.ToDecimal(dr["TOTAL"].ToString());
+                                    debit.CurCode = dr["CURCODE"].ToString();
+                                    debit.TrCurr = Convert.ToInt32(dr["TRCURR"].ToString());
+                                    debit.ClCode = dr["CLCODE"].ToString();
+                                    debit.ClDef = dr["CLDEF"].ToString();
+                                    if (debit.IsPerson == 0)
+                                        debit.IsPerson = 0;
+                                    else
+                                        debit.IsPerson = Convert.ToInt32(dr["ISPERSON"].ToString());
+                                    debit.TaxNr = dr["TAXNR"].ToString();
+                                    debit.TaxOffice = dr["TAXOFFICE"].ToString();
+                                    debit.IBAN = dr["IBAN"].ToString();
+                                    debit.EmailAdres = dr["EMAILADDR"].ToString();
+                                    debit.FicheDate = Convert.ToDateTime(dr["FICHEDATE"].ToString());
+                                    debit.FicheNo = dr["FICHENO"].ToString();
+                                    debit.DoCode = dr["DOCODE"].ToString();
+                                    debit.TrType = dr["TRTYPE"].ToString();
+                                    debit.GenExp1 = dr["GENEXP1"].ToString();
+                                    debit.Branch = Convert.ToInt32(dr["BRANCH"].ToString());
+                                    LeftList.Add(debit);
+                                }
+                            }
+                            conn.Close();
+                        }
+                    }
+
+                    else if (detailSendingValue == 3)
+                    {
+                        using (SqlCommand cmd = new SqlCommand("AYZ_SP_PW_PAYTRANS_DIM", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            #region StoredProcedure Paremetreleri
+                            cmd.Parameters.Add("@FIRMNR", SqlDbType.Int).Value = Helper.FIRMNR;
+                            cmd.Parameters.Add("@PERNR", SqlDbType.Int).Value = 1;
+                            cmd.Parameters.Add("@BRANCH", SqlDbType.Int).Value = branchValue;
+                            cmd.Parameters.Add("@payBegDate", SqlDbType.DateTime).Value = payBegDate;
+                            cmd.Parameters.Add("@payEndDate", SqlDbType.DateTime).Value = payEndDate;
+                            cmd.Parameters.Add("@invBegDate", SqlDbType.DateTime).Value = invBegDate;
+                            cmd.Parameters.Add("@invEndDate", SqlDbType.DateTime).Value = invEndDate;
+                            cmd.Parameters.Add("@DateFormat", SqlDbType.Int).Value = 104;
+                            cmd.Parameters.Add("@CLFLTR", SqlDbType.Int).Value = clientCodeFiltreType;
+                            cmd.Parameters.Add("@CLCODEBEG", SqlDbType.NVarChar).Value = clientCodeBeg;
+                            cmd.Parameters.Add("@CLCODEEND", SqlDbType.NVarChar).Value = clientCodeEnd;
+                            cmd.Parameters.Add("@CURTYPE", SqlDbType.SmallInt).Value = currencyValue;
+                            cmd.Parameters.Add("@FICHETYPE", SqlDbType.SmallInt).Value = voucherType;
+                            cmd.Parameters.Add("@HASIBAN", SqlDbType.SmallInt).Value = 1;
+                            cmd.Parameters.Add("@DD1REF", SqlDbType.NVarChar).Value = string.Join(",", mecraTypeList.Select(n => n.ToString()).ToArray()) == "" ? "-1" : string.Join(",", mecraTypeList.Select(n => n.ToString()).ToArray());
+                            cmd.Parameters.Add("@DD2REF", SqlDbType.NVarChar).Value = string.Join(",", mecraList.Select(n => n.ToString()).ToArray()) == "" ? "-1" : string.Join(",", mecraList.Select(n => n.ToString()).ToArray());
+                            cmd.Parameters.Add("@DD3REF", SqlDbType.NVarChar).Value = string.Join(",", marketingCompantList.Select(n => n.ToString()).ToArray()) == "" ? "-1" : string.Join(",", marketingCompantList.Select(n => n.ToString()).ToArray());
+                            cmd.Parameters.Add("@DD4REF", SqlDbType.NVarChar).Value = string.Join(",", customerList.Select(n => n.ToString()).ToArray()) == "" ? "-1" : string.Join(",", customerList.Select(n => n.ToString()).ToArray());
+                            cmd.Parameters.Add("@DD5REF", SqlDbType.NVarChar).Value = string.Join(",", planCodeList.Select(n => n.ToString()).ToArray()) == "" ? "-1" : string.Join(",", planCodeList.Select(n => n.ToString()).ToArray());
+                            cmd.Parameters.Add("@DD6REF", SqlDbType.NVarChar).Value = string.Join(",", internetMainCategory.Select(n => n.ToString()).ToArray()) == "" ? "-1" : string.Join(",", internetMainCategory.Select(n => n.ToString()).ToArray());
+                            cmd.Parameters.Add("@DD7REF", SqlDbType.NVarChar).Value = string.Join(",", internetSubCategory.Select(n => n.ToString()).ToArray()) == "" ? "-1" : string.Join(",", internetSubCategory.Select(n => n.ToString()).ToArray());
+                            #endregion
+                            conn.Open();
+                            dr = cmd.ExecuteReader();
+                            if (dr.HasRows)
+                            {
+                                while (dr.Read())
+                                {
+                                    Debit debit = new Debit();
+                                    debit.PayRef = Convert.ToInt32(dr["PAYREF"].ToString());
+                                    debit.ClCardRef = Convert.ToInt32(dr["CLCARDREF"].ToString());
+                                    debit.FicheRef = Convert.ToInt32(dr["FICHEREF"].ToString());
+                                    debit.ModuleNr = Convert.ToInt32(dr["MODULENR"].ToString());
+                                    debit.DueDate = Convert.ToDateTime(dr["DUEDATE"].ToString());
+                                    debit.TrCode = Convert.ToInt32(dr["TRCODE"].ToString());
+                                    debit.Total = Convert.ToDecimal(dr["TOTAL"].ToString());
+                                    debit.CurCode = dr["CURCODE"].ToString();
+                                    debit.TrCurr = Convert.ToInt32(dr["TRCURR"].ToString());
+                                    debit.ClCode = dr["CLCODE"].ToString();
+                                    debit.ClDef = dr["CLDEF"].ToString();
+                                    if (debit.IsPerson == 0)
+                                        debit.IsPerson = 0;
+                                    else
+                                        debit.IsPerson = Convert.ToInt32(dr["ISPERSON"].ToString());
+                                    debit.TaxNr = dr["TAXNR"].ToString();
+                                    debit.TaxOffice = dr["TAXOFFICE"].ToString();
+                                    debit.IBAN = dr["IBAN"].ToString();
+                                    debit.EmailAdres = dr["EMAILADDR"].ToString();
+                                    debit.FicheDate = Convert.ToDateTime(dr["FICHEDATE"].ToString());
+                                    debit.FicheNo = dr["FICHENO"].ToString();
+                                    debit.DoCode = dr["DOCODE"].ToString();
+                                    debit.TrType = dr["TRTYPE"].ToString();
+                                    debit.GenExp1 = dr["GENEXP1"].ToString();
+                                    debit.Branch = Convert.ToInt32(dr["BRANCH"].ToString());
+                                    debit.MecraType = dr["Mecra_Turu"].ToString();
+                                    debit.Mecra = dr["Mecra"].ToString();
+                                    debit.MarketingCompany = dr["Pazarlama_Sirketi"].ToString();
+                                    debit.Customer = dr["Musteri"].ToString();
+                                    debit.PlanCode = dr["Plan_Kodu"].ToString();
+                                    debit.InternetMainCategory = dr["Internet_Ana_Kategori"].ToString();
+                                    debit.InternetSubCategory = dr["Internet_Alt_Kategori"].ToString();
+                                    debit.DD1REF = Convert.ToInt32(dr["MediaTypeRef"].ToString());
+                                    debit.DD2REF = Convert.ToInt32(dr["MediaRef"].ToString());
+                                    debit.DD3REF = Convert.ToInt32(dr["MarkettingRef"].ToString());
+                                    debit.DD4REF = Convert.ToInt32(dr["CustomerRef"].ToString());
+                                    debit.DD5REF = Convert.ToInt32(dr["PlanRef"].ToString());
+                                    debit.DD6REF = Convert.ToInt32(dr["InternetMainRef"].ToString());
+                                    debit.DD7REF = Convert.ToInt32(dr["InternetSubRef"].ToString());
+                                    LeftList.Add(debit);
+                                }
+                            }
+                            conn.Close();
+                        }
                     }
                 }
-                conn.Close();
+
+                #region Daha önce oluşturulan paket satırlarının sol gride gelmesini engelleyen kod bloku           
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT * FROM AYZ_PW_PACKET_DETAIL";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            Debit debit = new Debit();
+                            debit.PayRef = Convert.ToInt32(dr["PAYTRANSREF"].ToString());
+                            PacketDetailList.Add(debit);
+                        }
+                    }
+                    conn.Close();
+                }
+                foreach (var item in PacketDetailList)
+                {
+                    var select = LeftList.Where(x => x.PayRef == item.PayRef).ToList();
+                    if (select.Count > 0)
+                        LeftList.Remove(select[0]);
+                }
+
+                #endregion
             }
-            foreach (var item in PacketDetailList)
+            catch (Exception ex)
             {
-                var select = LeftList.Where(x => x.PayRef == item.PayRef).ToList();
-                if (select.Count > 0)
-                    LeftList.Remove(select[0]);
+                MessageBox.Show("Hata:\n", ex.Message);
             }
 
-            #endregion
         }
 
         private void btnRight_Click(object sender, EventArgs e)

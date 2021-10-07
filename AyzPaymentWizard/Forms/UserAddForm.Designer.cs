@@ -99,7 +99,7 @@
             this.txtUsername.Location = new System.Drawing.Point(180, 24);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(310, 27);
-            this.txtUsername.TabIndex = 4;
+            this.txtUsername.TabIndex = 0;
             // 
             // txtPassword
             // 
@@ -108,7 +108,7 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(310, 27);
-            this.txtPassword.TabIndex = 5;
+            this.txtPassword.TabIndex = 1;
             // 
             // btnUserSave
             // 
@@ -120,7 +120,7 @@
             this.btnUserSave.Location = new System.Drawing.Point(337, 333);
             this.btnUserSave.Name = "btnUserSave";
             this.btnUserSave.Size = new System.Drawing.Size(153, 39);
-            this.btnUserSave.TabIndex = 8;
+            this.btnUserSave.TabIndex = 5;
             this.btnUserSave.Text = "Kaydet";
             this.btnUserSave.UseVisualStyleBackColor = false;
             this.btnUserSave.Click += new System.EventHandler(this.btnUserSave_Click);
@@ -133,7 +133,7 @@
             this.cmbFirmNumber.Location = new System.Drawing.Point(180, 110);
             this.cmbFirmNumber.Name = "cmbFirmNumber";
             this.cmbFirmNumber.Size = new System.Drawing.Size(310, 28);
-            this.cmbFirmNumber.TabIndex = 9;
+            this.cmbFirmNumber.TabIndex = 2;
             // 
             // btnEdit
             // 
@@ -145,7 +145,7 @@
             this.btnEdit.Location = new System.Drawing.Point(0, 590);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(505, 39);
-            this.btnEdit.TabIndex = 10;
+            this.btnEdit.TabIndex = 66;
             this.btnEdit.Text = "Düzenle";
             this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
@@ -156,7 +156,7 @@
             this.checkedListBoxGroup.Location = new System.Drawing.Point(180, 202);
             this.checkedListBoxGroup.Name = "checkedListBoxGroup";
             this.checkedListBoxGroup.Size = new System.Drawing.Size(310, 124);
-            this.checkedListBoxGroup.TabIndex = 13;
+            this.checkedListBoxGroup.TabIndex = 4;
             // 
             // txtEmail
             // 
@@ -164,7 +164,7 @@
             this.txtEmail.Location = new System.Drawing.Point(180, 157);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(310, 27);
-            this.txtEmail.TabIndex = 14;
+            this.txtEmail.TabIndex = 3;
             // 
             // label5
             // 
@@ -189,7 +189,7 @@
             this.dataGridViewUsers.ReadOnly = true;
             this.dataGridViewUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewUsers.Size = new System.Drawing.Size(505, 212);
-            this.dataGridViewUsers.TabIndex = 16;
+            this.dataGridViewUsers.TabIndex = 15;
             this.dataGridViewUsers.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewUsers_RowEnter);
             this.dataGridViewUsers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridViewUsers_KeyDown);
             // 
@@ -213,7 +213,7 @@
             this.btnShow.Location = new System.Drawing.Point(458, 66);
             this.btnShow.Name = "btnShow";
             this.btnShow.Size = new System.Drawing.Size(32, 27);
-            this.btnShow.TabIndex = 11;
+            this.btnShow.TabIndex = 99;
             this.btnShow.UseVisualStyleBackColor = false;
             this.btnShow.Click += new System.EventHandler(this.btnShow_Click);
             // 

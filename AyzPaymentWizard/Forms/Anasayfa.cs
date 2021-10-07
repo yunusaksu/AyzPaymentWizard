@@ -27,7 +27,10 @@ namespace AyzPaymentWizard
         public Anasayfa()
         {
             InitializeComponent();
-            Helper.SFTPLOG(null);
+            if (Helper.SFTPLOG(null) == false)
+            {
+                MessageBox.Show("SFTP Bağlantınız kurulamıyor!\nAyarlar Sekmesinden SFTP Ayarlarınızı Kontrol Ediniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void btnUserAdd_Click(object sender, EventArgs e)
@@ -44,15 +47,23 @@ namespace AyzPaymentWizard
 
         private void btnPackageAdd_Click(object sender, EventArgs e)
         {
-            if (Helper.AuthorityControl("ADD_PACKAGE") || Helper.USERNAME == "Admin")
+            try
             {
-                FiltersForm filtersForm = new FiltersForm();
-                filtersForm.ShowDialog();
+                if (Helper.AuthorityControl("ADD_PACKAGE") || Helper.USERNAME == "Admin")
+                {
+                    FiltersForm filtersForm = new FiltersForm();
+                    filtersForm.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Paket Ekleme Yetkiniz Bulunmuyor!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Paket Ekleme Yetkiniz Bulunmuyor!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Hata oluştu:\n", ex.Message);
             }
+
         }
 
         private void Anasayfa_Load(object sender, EventArgs e)
@@ -120,8 +131,8 @@ namespace AyzPaymentWizard
             dataGridViewPacket.ColumnHeadersDefaultCellStyle.Font = new Font("Time News Roman", 10);
             #endregion
 
-            if (Helper.USERNAME != "Admin")
-                toolStripDropDownButton1.Enabled = false;
+            if (!Helper.IsAdmin())
+                toolStripDropDownSettingButton.Enabled = false;
             if (!Helper.AuthorityControl("AKIBET_AL"))
                 btnAkibetSorgulama.Enabled = false;
             if (!Helper.AuthorityControl("ADD_PACKAGE"))
@@ -212,7 +223,6 @@ namespace AyzPaymentWizard
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-
             int status = 0, packetId = 0;
             for (int i = 0; i < dataGridViewPacket.SelectedRows.Count; i++)
             {
@@ -230,7 +240,7 @@ namespace AyzPaymentWizard
                     MessageBox.Show("Paketin Akibeti Alındığı İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 else if (status == (int)Helper.PacketStatus.Approved)
                     MessageBox.Show("Paketin Onaylandığı İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                else if(status == (int)Helper.PacketStatus.Rejected)
+                else if (status == (int)Helper.PacketStatus.Rejected)
                     MessageBox.Show("Paket Reddedildiği İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
@@ -302,34 +312,27 @@ namespace AyzPaymentWizard
                 {
                     if (packetId != 0)
                     {
-                        string approvalExp = Interaction.InputBox("Onay Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250);
+                        string approvalExp = Interaction.InputBox("Onay Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250).Replace("'", "''");
                         if (approvalExp.Length > 0)
                         {
-                            // Paketin statüsü onaya gönderildi yapılacak ve Onay Notu Güncellenecek
-                            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-                            {
-                                CommandText = "UPDATE AYZ_PW_PACKET " +
-                                              "\nSET STATUS = " + (int)Helper.PacketStatus.SendToApproval + "," +
-                                              "\nAPPROVALNOTE = '" + approvalExp + "'" +
-                                              "\nWHERE ID = " + packetId + "";
-                                komut.CommandText = CommandText;
-                                komut.Connection = conn;
-                                conn.Open();
-                                komut.ExecuteNonQuery();
-                                conn.Close();
-                            }
-                            Helper.PacketHistorySave(packetId, "Onaya Yollandı", "Onaya Yollandı.");
+
                             if (Helper.MailSendForPacketApprove(packetId) == true)
                             {
                                 MessageBox.Show("Paket, Onay Yetkisine Sahip Kişilere İletildi!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                            else
-                            {
-                                #region Anasayfayı yenilemek için
-                                Anasayfa form2 = (Anasayfa)Application.OpenForms["Anasayfa"];
-                                form2.FillPacketList();
-                                #endregion
-                                MessageBox.Show("Paket, Onay Yetkisine Sahip Kişilere İletilemedi!\n Ama Statüsü Onaya Gönderildiye alındı!\n Uygulama üzerinden onaylama yaptırabilirsiniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                // Paketin statüsü onaya gönderildi yapılacak ve Onay Notu Güncellenecek
+                                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                                {
+                                    CommandText = "UPDATE AYZ_PW_PACKET " +
+                                                  "\nSET STATUS = " + (int)Helper.PacketStatus.SendToApproval + "," +
+                                                  "\nAPPROVALNOTE = '" + approvalExp + "'" +
+                                                  "\nWHERE ID = " + packetId + "";
+                                    komut.CommandText = CommandText;
+                                    komut.Connection = conn;
+                                    conn.Open();
+                                    komut.ExecuteNonQuery();
+                                    conn.Close();
+                                }
+                                Helper.PacketHistorySave(packetId, "Onaya Yollandı", "Onaya Yollandı.");
                             }
 
                             #region Anasayfayı yenilemek için
@@ -337,6 +340,8 @@ namespace AyzPaymentWizard
                             form.FillPacketList();
                             #endregion
                         }
+                        else
+                            MessageBox.Show("Açıklama girmek zorunludur!\nAçıklamasız paketler onaya yollanmaz!", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
             }
@@ -348,7 +353,7 @@ namespace AyzPaymentWizard
 
         private void btnApproved_Click(object sender, EventArgs e)
         {
-            if (Helper.AuthorityControl("APPROVE_PACKAGE") || Helper.USERNAME == "Admin")
+            if (Helper.AuthorityControl("APPROVE_PACKAGE") || Helper.IsAdmin())
             {
                 try
                 {
@@ -387,6 +392,8 @@ namespace AyzPaymentWizard
                             form.FillPacketList();
                             #endregion
                         }
+                        else
+                            MessageBox.Show("Açıklama girmek zorunludur!\nAçıklamasız paketler onaylanmaz!", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
                 catch (Exception ex)
@@ -464,28 +471,28 @@ namespace AyzPaymentWizard
         {
             string Hostname = "", Username = "", Password = "";
             int Port = 22;
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT * FROM AYZ_PW_SFTP_SETTING WHERE FIRMNR = " + Helper.FIRMNR + "";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                if (dr.HasRows)
-                {
-                    while (dr.Read())
-                    {
-                        Hostname = dr["HOSTNAME"].ToString();
-                        Username = dr["USERNAME"].ToString();
-                        Password = dr["PASSWORD"].ToString();
-                        Port = Convert.ToInt32(dr["PORT"].ToString());
-                    }
-                }
-            }
-
             var sftpClient = new SftpClient(Hostname, Port, Username, Password);
             try
             {
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT * FROM AYZ_PW_SFTP_SETTING WHERE FIRMNR = " + Helper.FIRMNR + "";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            Hostname = dr["HOSTNAME"].ToString();
+                            Username = dr["USERNAME"].ToString();
+                            Password = dr["PASSWORD"].ToString();
+                            Port = Convert.ToInt32(dr["PORT"].ToString());
+                        }
+                    }
+                }
+
                 sftpClient.Connect();
                 string ConnResult = sftpClient.IsConnected == true ? "Başarılı" : "Başarısız";
 
@@ -528,7 +535,6 @@ namespace AyzPaymentWizard
 
         private void btnSendToBank_Click(object sender, EventArgs e)
         {
-
             int packetId = 0;
             int BankaKodu = 0, SubeKodu = 0, MusteriNo = 0, HesapNo = 0;
             string FirmaAdi = "";
@@ -1083,12 +1089,6 @@ namespace AyzPaymentWizard
             info.ShowDialog();
         }
 
-        private void btnsqlBağlantiAyarlariToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SqlServerInfosForm form = new SqlServerInfosForm();
-            form.Show();
-        }
-
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
@@ -1119,6 +1119,5 @@ namespace AyzPaymentWizard
             GeneralSetting general = new GeneralSetting();
             general.Show();
         }
-
     }
 }

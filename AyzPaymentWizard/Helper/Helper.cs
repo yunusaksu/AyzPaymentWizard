@@ -1,4 +1,6 @@
-﻿using Renci.SshNet;
+﻿using IniParser;
+using IniParser.Model;
+using Renci.SshNet;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -65,33 +67,34 @@ namespace AyzPaymentWizard
             Archived = 1
         }
 
-        public static void SFTPLOG(int? packetId)
+        public static bool SFTPLOG(int? packetId)
         {
-            packetId = packetId == null ? 0 : packetId;
             string Hostname = "", Username = "", Password = "";
             int Port = 22;
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT * FROM AYZ_PW_SFTP_SETTING WHERE FIRMNR = " + Helper.FIRMNR + "";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                if (dr.HasRows)
-                {
-                    while (dr.Read())
-                    {
-                        Hostname = dr["HOSTNAME"].ToString();
-                        Username = dr["USERNAME"].ToString();
-                        Password = dr["PASSWORD"].ToString();
-                        Port = Convert.ToInt32(dr["PORT"].ToString());
-                    }
-                }
-            }
-
             try
             {
-                var sftpClient = new SftpClient(Hostname, Port, Username, Password);
+                packetId = packetId == null ? 0 : packetId;
+
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT * FROM AYZ_PW_SFTP_SETTING WHERE FIRMNR = " + Helper.FIRMNR + "";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            Hostname = dr["HOSTNAME"].ToString();
+                            Username = dr["USERNAME"].ToString();
+                            Password = dr["PASSWORD"].ToString();
+                            Port = Convert.ToInt32(dr["PORT"].ToString());
+                        }
+                    }
+                }
+
+                var sftpClient = new SftpClient(Hostname, Port, Username, Password);    // Problem Buradan kaynaklanıyor!
                 sftpClient.Connect();
                 string ConnResult = sftpClient.IsConnected == true ? "Başarılı" : "Başarısız";
                 using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
@@ -105,9 +108,11 @@ namespace AyzPaymentWizard
                     conn.Open();
                     dr = komut.ExecuteReader();
                 }
+                return true;
             }
             catch (SqlException ex)
             {
+                return false;
             }
             catch
             {
@@ -124,168 +129,180 @@ namespace AyzPaymentWizard
                     conn.Open();
                     dr = komut.ExecuteReader();
                 }
+                return false;
             }
         }
 
         public static bool MailSendForPacketApprove(int packetId)
         {
-            var result = false;
-            string url = "", serverAddress = "", smtpServerName = "", smtpPassword = "", senderMailAddress = "", maillingAddresses = "";
-            int port = -1;
-            bool enableSSL = false;
-
-            #region Onay Alma Maili Yollanacak Kişilerin Maillerini Alma
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            try
             {
-                var groups = "";
-                CommandText = "SELECT GROUPID FROM AYZ_PW_USERRIGHTS WHERE APPROVE_PACKAGE = 1";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                while (dr.Read())
-                {
-                    groups = groups + dr["GROUPID"].ToString() + ",";
-                }
-                groups = groups.ToString().Substring(0, groups.Length - 1);
-                conn.Close();
-                CommandText = "SELECT DISTINCT USERID, U.NAME,EPOSTA = U.EMAIL FROM AYZ_PW_USERGROUPS AS UG " +
-                              "\nLEFT JOIN AYZ_PW_USER AS U ON U.ID = UG.USERID WHERE UG.GROUPID IN(" + groups + ") AND U.FIRMNR = " + Helper.FIRMNR + "";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                while (dr.Read())
-                {
-                    maillingAddresses = maillingAddresses + dr["EPOSTA"].ToString() + ",";
-                }
-                maillingAddresses = maillingAddresses.ToString().Substring(0, maillingAddresses.Length - 1);
-            }
-            #endregion
+                var result = false;
+                string url = "", serverAddress = "", smtpServerName = "", smtpPassword = "", senderMailAddress = "", maillingAddresses = "";
+                int port = -1;
+                bool enableSSL = false;
 
-
-
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT * FROM AYZ_PW_SMTP_SETTING";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                if (dr.HasRows)
+                #region Onay Alma Maili Yollanacak Kişilerin Maillerini Alma
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
+                    var groups = "";
+                    CommandText = "SELECT GROUPID FROM AYZ_PW_USERRIGHTS WHERE APPROVE_PACKAGE = 1";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
                     while (dr.Read())
                     {
-                        url = dr["APPROVE_URL"].ToString();
-                        port = Convert.ToInt32(dr["SMTP_PORT_NO"].ToString());
-                        serverAddress = dr["SMTP_SERVERNAME"].ToString();
-                        smtpServerName = dr["SMTP_USERNAME"].ToString();
-                        smtpPassword = EncryptionAlgorithm.Decrytion(dr["SMTP_USERPASSWORD"].ToString());
-                        senderMailAddress = dr["SENDER_MAILADDRESS"].ToString();
-                        enableSSL = Convert.ToBoolean(dr["SMTP_SSL_CONN"].ToString());
+                        groups = groups + dr["GROUPID"].ToString() + ",";
+                    }
+                    groups = groups.ToString().Substring(0, groups.Length - 1);
+                    conn.Close();
+                    CommandText = "SELECT DISTINCT USERID, U.NAME,EPOSTA = U.EMAIL FROM AYZ_PW_USERGROUPS AS UG " +
+                                  "\nLEFT JOIN AYZ_PW_USER AS U ON U.ID = UG.USERID WHERE UG.GROUPID IN(" + groups + ") AND U.FIRMNR = " + Helper.FIRMNR + "";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        maillingAddresses = maillingAddresses + dr["EPOSTA"].ToString() + ",";
+                    }
+                    maillingAddresses = maillingAddresses.ToString().Substring(0, maillingAddresses.Length - 1);
+                }
+                #endregion
+
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT * FROM AYZ_PW_SMTP_SETTING";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            url = dr["APPROVE_URL"].ToString();
+                            port = Convert.ToInt32(dr["SMTP_PORT_NO"].ToString());
+                            serverAddress = dr["SMTP_SERVERNAME"].ToString();
+                            smtpServerName = dr["SMTP_USERNAME"].ToString();
+                            smtpPassword = EncryptionAlgorithm.Decrytion(dr["SMTP_USERPASSWORD"].ToString());
+                            senderMailAddress = dr["SENDER_MAILADDRESS"].ToString();
+                            enableSSL = Convert.ToBoolean(dr["SMTP_SSL_CONN"].ToString());
+                        }
                     }
                 }
-            }
 
-            using (SmtpClient smtpSend = new SmtpClient())
-            {
-                smtpSend.Host = serverAddress;
-                smtpSend.Port = port;
-
-                smtpSend.Credentials = new System.Net.NetworkCredential(senderMailAddress, smtpPassword);
-
-                smtpSend.EnableSsl = enableSSL;
-
-                MailMessage emailMessage = new System.Net.Mail.MailMessage();
-                var mailArray = maillingAddresses.Split(',');
-                foreach (var item in mailArray)
+                using (SmtpClient smtpSend = new SmtpClient())
                 {
-                    emailMessage.To.Add(item);
-                }
-                emailMessage.From = new MailAddress(senderMailAddress, smtpServerName);
-                emailMessage.Subject = "ÖDEME PAKETİ ONAYI";
-                emailMessage.IsBodyHtml = true;
-                string htmlBody;
-                htmlBody = "Sayın Yetkili <br /><br />";
-                htmlBody += "Onaylanmayı bekleyen bir paketiniz vardır:<br /><br />";
-                string encryptionPacketId = EncryptionAlgorithm.Encrytion(packetId.ToString());
-                htmlBody += "" + url + "Approve/PacketApprove?packetId=" + encryptionPacketId + "<br /><br />";
-                htmlBody += "Teşekkür ederiz.";
-                emailMessage.Body = htmlBody;
+                    smtpSend.Host = serverAddress;
+                    smtpSend.Port = port;
 
-                if (!Regex.IsMatch(emailMessage.Body, @"^([0-9a-z!@#\$\%\^&\*\(\)\-=_\+])", RegexOptions.IgnoreCase) ||
-                        !Regex.IsMatch(emailMessage.Subject, @"^([0-9a-z!@#\$\%\^&\*\(\)\-=_\+])", RegexOptions.IgnoreCase))
-                {
-                    emailMessage.BodyEncoding = Encoding.Unicode;
-                }
+                    smtpSend.Credentials = new System.Net.NetworkCredential(senderMailAddress, smtpPassword);
 
-                try
-                {
+                    smtpSend.EnableSsl = enableSSL;
+
+                    MailMessage emailMessage = new System.Net.Mail.MailMessage();
+                    var mailArray = maillingAddresses.Split(',');
+                    foreach (var item in mailArray)
+                    {
+                        emailMessage.To.Add(item);
+                    }
+                    emailMessage.From = new MailAddress(senderMailAddress, smtpServerName);
+                    emailMessage.Subject = "ÖDEME PAKETİ ONAYI";
+                    emailMessage.IsBodyHtml = true;
+                    string htmlBody;
+                    htmlBody = "Sayın Yetkili <br /><br />";
+                    htmlBody += "Onaylanmayı bekleyen bir paketiniz vardır:<br /><br />";
+                    string encryptionPacketId = EncryptionAlgorithm.Encrytion(packetId.ToString());
+                    htmlBody += "" + url + "Approve/PacketApprove?packetId=" + encryptionPacketId + "<br /><br />";
+                    htmlBody += "Teşekkür ederiz.";
+                    emailMessage.Body = htmlBody;
+
+                    if (!Regex.IsMatch(emailMessage.Body, @"^([0-9a-z!@#\$\%\^&\*\(\)\-=_\+])", RegexOptions.IgnoreCase) ||
+                            !Regex.IsMatch(emailMessage.Subject, @"^([0-9a-z!@#\$\%\^&\*\(\)\-=_\+])", RegexOptions.IgnoreCase))
+                    {
+                        emailMessage.BodyEncoding = Encoding.Unicode;
+                    }
+
                     smtpSend.Send(emailMessage);
                     result = true;
+
+                    //catch (SmtpException ex)
+                    //{
+                    //    string msg = "\nSMTP sunucusuna bağlantı başarısız oldu.Bunun sebebi aşağıdaki sebepler olabilir:" +
+                    //                 "\n1- Kimlik doğrulama başarısız oldu." +
+                    //                 "\n2- İşlem zaman aşımına uğradı." +
+                    //                 "\n3- System.Net.Mail.SmtpClient.EnableSsl true olarak ayarlanmış ancak System.Net.Mail.SmtpClient.DeliveryMethod " +
+                    //                 "özelliği System.Net.Mail.SmtpDeliveryMethod.SpecifiedPickupDirectory olarak ayarlandı " +
+                    //                 "\n4- System.Net.Mail.SmtpDeliveryMethod.PickupDirectoryFromIis.Veya System.Net.Mail.SmtpClient.EnableSsl true olarak ayarlandı, ancak SMTP posta sunucusu EHLO komutuna yanıt olarak STARTTLS'yi tanıtmadı. \n";
+                    //    throw new Exception(msg + ex);
+                    //}
                 }
-                catch (SmtpException ex)
-                {
-                    string msg = "\nSMTP sunucusuna bağlantı başarısız oldu.Bunun sebebi aşağıdaki sebepler olabilir:" +
-                                 "\n1- Kimlik doğrulama başarısız oldu." +
-                                 "\n2- İşlem zaman aşımına uğradı." +
-                                 "\n3- System.Net.Mail.SmtpClient.EnableSsl true olarak ayarlanmış ancak System.Net.Mail.SmtpClient.DeliveryMethod " +
-                                 "özelliği System.Net.Mail.SmtpDeliveryMethod.SpecifiedPickupDirectory olarak ayarlandı " +
-                                 "\n4- System.Net.Mail.SmtpDeliveryMethod.PickupDirectoryFromIis.Veya System.Net.Mail.SmtpClient.EnableSsl true olarak ayarlandı, ancak SMTP posta sunucusu EHLO komutuna yanıt olarak STARTTLS'yi tanıtmadı. \n";
-                    throw new Exception(msg + ex);
-                }
-                catch (ArgumentNullException ex)
-                {
-                    throw ex;
-                }
-                catch (InvalidOperationException ex)
-                {
-                    throw ex;
-                }
+                return result;
             }
-            return result;
+            catch (Exception)
+            {
+                throw new Exception("SMTP Sunucu Ayarlarını Kontrol Edin!\nSMTP Sunucusuna bağlanılamadı!");
+            }
         }
         public static void PacketHistorySave(int packetId, string status, string explain)
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            try
             {
-                CommandText = "INSERT INTO AYZ_PW_PACKET_HISTORY(PACKETID,FIRMNR,DATE_,STATUS,EXPLAIN, USERID,USERNAME) " +
-                          "VALUES(" +
-                          "\n" + packetId + ", " +
-                          "\n" + Helper.FIRMNR + ", " +
-                          "\nCONVERT(DATETIME, GETDATE(), 104), " +
-                          "\n'" + status + "', " +
-                          "\n'" + explain + "', " +
-                          "\n" + Helper.USERID + ", " +
-                          "\n'" + Helper.USERNAME + "')";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "INSERT INTO AYZ_PW_PACKET_HISTORY(PACKETID,FIRMNR,DATE_,STATUS,EXPLAIN, USERID,USERNAME) " +
+                              "VALUES(" +
+                              "\n" + packetId + ", " +
+                              "\n" + Helper.FIRMNR + ", " +
+                              "\nCONVERT(DATETIME, GETDATE(), 104), " +
+                              "\n'" + status + "', " +
+                              "\n'" + explain + "', " +
+                              "\n" + Helper.USERID + ", " +
+                              "\n'" + Helper.USERNAME + "')";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                }
             }
+            catch (Exception ex)
+            {
+                throw ex.InnerException;
+            }
+
         }
         public static bool NotInPayTrans(int payRef)
         {
-            List<int> paytransIdList = new List<int>();
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            try
             {
-                CommandText = "SELECT LOGICALREF FROM LG_" + FIRMANO + "_01_PAYTRANS";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                if (dr.HasRows)
+                List<int> paytransIdList = new List<int>();
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
-                    while (dr.Read())
+                    CommandText = "SELECT LOGICALREF FROM LG_" + FIRMANO + "_01_PAYTRANS";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    if (dr.HasRows)
                     {
-                        int id = Convert.ToInt32(dr["LOGICALREF"].ToString());
-                        paytransIdList.Add(id);
+                        while (dr.Read())
+                        {
+                            int id = Convert.ToInt32(dr["LOGICALREF"].ToString());
+                            paytransIdList.Add(id);
+                        }
                     }
-                }
 
-                bool foo = paytransIdList.Contains(payRef);
-                return foo;
+                    bool foo = paytransIdList.Contains(payRef);
+                    return foo;
+                }
             }
+            catch (Exception ex)
+            {
+                throw ex.InnerException;
+            }
+
         }
         public static string LStr(object val, int len)
         {
@@ -297,31 +314,60 @@ namespace AyzPaymentWizard
 
         public static bool AuthorityControl(string ColumnName)
         {
-            bool result = false;
-            if (Helper.USERNAME == "Admin")
+            try
             {
-                return true;
-            }
-            else
-            {
-                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                bool result = false;
+                if (Helper.USERNAME == "Admin")
                 {
-                    CommandText = "SELECT " + ColumnName + " FROM AYZ_PW_USER AS U " +
-                                  "LEFT JOIN AYZ_PW_USERGROUPS AS UG ON U.ID = UG.USERID " +
-                                  "LEFT JOIN AYZ_PW_USERRIGHTS AS UR ON UG.GROUPID = UR.GROUPID " +
-                                  "WHERE U.ID = " + USERID + "";
-                    komut.CommandText = CommandText;
-                    komut.Connection = conn;
-                    conn.Open();
-                    dr = komut.ExecuteReader();
-                    while (dr.Read())
-                    {
-                        result = Convert.ToBoolean(dr["" + ColumnName + ""].ToString());
-                        if (result == true)
-                            break;
-                    }
+                    return true;
                 }
-                return result;
+                else
+                {
+                    using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                    {
+                        CommandText = "SELECT " + ColumnName + " FROM AYZ_PW_USER AS U " +
+                                      "LEFT JOIN AYZ_PW_USERGROUPS AS UG ON U.ID = UG.USERID " +
+                                      "LEFT JOIN AYZ_PW_USERRIGHTS AS UR ON UG.GROUPID = UR.GROUPID " +
+                                      "WHERE U.ID = " + USERID + "";
+                        komut.CommandText = CommandText;
+                        komut.Connection = conn;
+                        conn.Open();
+                        dr = komut.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            result = Convert.ToBoolean(dr["" + ColumnName + ""].ToString());
+                            if (result == true)
+                                break;
+                        }
+                    }
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException;
+            }
+
+        }
+
+        public static bool IsAdmin()
+        {
+            try
+            {
+                FileIniDataParser parser = new FileIniDataParser();
+                IniData generateData = parser.ReadFile(ConnectionHelper.SystemIniPath);
+
+                //Reading the Content of the File
+                string AdminuserName = generateData["AdminNameBaslik"]["AdminUser"].ToString();
+                string user = EncryptionAlgorithm.Decrytion(AdminuserName);
+                if (user == Helper.USERNAME)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException;
             }
         }
     }

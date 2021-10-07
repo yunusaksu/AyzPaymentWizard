@@ -23,7 +23,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>44</ApplicationRevision>
+    <ApplicationRevision>45</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -60,8 +60,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>binaryyy\Debug\AdvancedDataGridView.dll</HintPath>
     </Reference>
-    <Reference Include="CollapsibleSplitContainer">
-      <HintPath>..\..\..\Users\Shiraz\source\repos\CollapsibleDataGridView\CollapsibleDataGridView\bin\Debug\CollapsibleSplitContainer.dll</HintPath>
+    <Reference Include="CollapsibleSplitContainer, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\CollapsibleSplitContainer.dll</HintPath>
     </Reference>
     <Reference Include="FileHelpers, Version=3.4.2.0, Culture=neutral, PublicKeyToken=3e0c08d59cc3d657, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -75,10 +76,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
-    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>binaryyy\Debug\System.Linq.Dynamic.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -169,12 +166,6 @@
     <Compile Include="Forms\SMTP.Designer.cs">
       <DependentUpon>SMTP.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SqlServerInfosForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\SqlServerInfosForm.Designer.cs">
-      <DependentUpon>SqlServerInfosForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Helper\ConnectionHelper.cs" />
     <Compile Include="Helper\EncryptionAlgorithm.cs" />
     <Compile Include="Helper\Helper.cs" />
@@ -256,9 +247,6 @@
     <EmbeddedResource Include="Forms\SMTP.resx">
       <DependentUpon>SMTP.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SqlServerInfosForm.resx">
-      <DependentUpon>SqlServerInfosForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -274,6 +262,9 @@
   <ItemGroup>
     <PackageReference Include="DocumentFormat.OpenXml">
       <Version>2.12.1</Version>
+    </PackageReference>
+    <PackageReference Include="ini-parser">
+      <Version>2.5.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Office.Interop.Excel">
       <Version>15.0.4795.1000</Version>

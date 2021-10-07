@@ -61,6 +61,7 @@
             this.panel15 = new System.Windows.Forms.Panel();
             this.panel16 = new System.Windows.Forms.Panel();
             this.panel17 = new System.Windows.Forms.Panel();
+            this.labelCurR = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.txtPaidRightDGV = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -68,7 +69,6 @@
             this.txtTotalRightDGV = new System.Windows.Forms.TextBox();
             this.txtSumRightDGV = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.labelCurR = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRight)).BeginInit();
             this.panel11.SuspendLayout();
@@ -470,6 +470,14 @@
             this.panel17.Size = new System.Drawing.Size(605, 39);
             this.panel17.TabIndex = 28;
             // 
+            // labelCurR
+            // 
+            this.labelCurR.AutoSize = true;
+            this.labelCurR.Location = new System.Drawing.Point(578, 14);
+            this.labelCurR.Name = "labelCurR";
+            this.labelCurR.Size = new System.Drawing.Size(0, 13);
+            this.labelCurR.TabIndex = 28;
+            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -529,16 +537,9 @@
             this.label13.TabIndex = 18;
             this.label13.Text = "Total rows:";
             // 
-            // labelCurR
-            // 
-            this.labelCurR.AutoSize = true;
-            this.labelCurR.Location = new System.Drawing.Point(578, 14);
-            this.labelCurR.Name = "labelCurR";
-            this.labelCurR.Size = new System.Drawing.Size(0, 13);
-            this.labelCurR.TabIndex = 28;
-            // 
             // PacketPreparation
             // 
+            this.AcceptButton = this.btnCreatePackage;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1278, 544);

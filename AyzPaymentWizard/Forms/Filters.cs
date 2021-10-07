@@ -45,7 +45,7 @@ namespace AyzPaymentWizard
                 komut.ExecuteNonQuery();
                 conn.Close();
             }
-            
+
             // 2. OLARAK ÖNCE İŞLEM DÖVİZİNDE SEÇİLİ OLAN KUR VARSA ONLARI AYZ_PW_FILTER_VALUES TABLOSUNA YAZICAM. İŞLEM DÖVİZİNİN TYPE_'ı 1.
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
@@ -171,7 +171,7 @@ namespace AyzPaymentWizard
                 for (int i = 0; i < checkedListBoxMecraType.CheckedItems.Count; i++)
                 {
                     KeyValuePair<int, string> kvp = (KeyValuePair<int, string>)checkedListBoxMecraType.CheckedItems[i];
-                    CommandText = "INSERT INTO AYZ_PW_FILTER_VALUES(TYPE_,VALUE,VALUE_TYPE,FIRMNR,USERNR) VALUES('" + Convert.ToInt32(Helper.FilterType.MecraType) + "','" + kvp.Key + "','1','" + Helper.FIRMNR + "','" + Helper.USERID + "')"; 
+                    CommandText = "INSERT INTO AYZ_PW_FILTER_VALUES(TYPE_,VALUE,VALUE_TYPE,FIRMNR,USERNR) VALUES('" + Convert.ToInt32(Helper.FilterType.MecraType) + "','" + kvp.Key + "','1','" + Helper.FIRMNR + "','" + Helper.USERID + "')";
                     komut.CommandText = CommandText;
                     komut.Connection = conn;
                     conn.Open();
@@ -280,7 +280,7 @@ namespace AyzPaymentWizard
                 conn.Open();
                 komut.ExecuteNonQuery();
                 conn.Close();
-            }            
+            }
 
             PacketPreparation form = new PacketPreparation();
             form.ShowDialog();
@@ -289,665 +289,672 @@ namespace AyzPaymentWizard
 
         private void FiltersForm_Load(object sender, EventArgs e)
         {
-            // DETAYLI GÖNDERİM Alanındaki Değerleri Getirme
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            try
             {
-                CommandText = "SELECT DS.KEY_," +
-                              "\nDS.VALUE," +
-                              "\nCASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED " +
-                              "\nFROM AYZ_PW_DETAIL_SENDIG DS " +
-                              "\nLEFT JOIN AYZ_PW_FILTER_VALUES FV ON DS.KEY_ = CAST(FV.VALUE AS SMALLINT) AND (FV.TYPE_ = 0) AND (DS.FIRMNR = FV.FIRMNR) AND FV.USERNR = " + Helper.USERID + " AND FV.PACKETID IS NULL" +
-                              "\nWHERE DS.FIRMNR = " + Helper.FIRMNR + "";
-                komut.CommandText = CommandText;
-                komut.CommandTimeout = 50;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-
-                Dictionary<int, string> comboSource = new Dictionary<int, string>();
-                while (dr.Read())
+                // DETAYLI GÖNDERİM Alanındaki Değerleri Getirme
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
-                    comboSource.Add(Convert.ToInt32(dr["KEY_"].ToString()), dr["VALUE"].ToString());
-                }
-                conn.Close();
-                cmbPaymentType.DataSource = new BindingSource(comboSource, null);
-                cmbPaymentType.DisplayMember = "Value";
-                cmbPaymentType.ValueMember = "Key";
+                    CommandText = "SELECT DS.KEY_," +
+                                  "\nDS.VALUE," +
+                                  "\nCASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED " +
+                                  "\nFROM AYZ_PW_DETAIL_SENDIG DS " +
+                                  "\nLEFT JOIN AYZ_PW_FILTER_VALUES FV ON DS.KEY_ = CAST(FV.VALUE AS SMALLINT) AND (FV.TYPE_ = 0) AND (DS.FIRMNR = FV.FIRMNR) AND FV.USERNR = " + Helper.USERID + " AND FV.PACKETID IS NULL" +
+                                  "\nWHERE DS.FIRMNR = " + Helper.FIRMNR + "";
+                    komut.CommandText = CommandText;
+                    komut.CommandTimeout = 50;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
 
-                // Selected olanı atama satırları
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                int i = 0;
-                while (dr.Read())
-                {
-                    if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
+                    Dictionary<int, string> comboSource = new Dictionary<int, string>();
+                    while (dr.Read())
                     {
-                        cmbPaymentType.SelectedIndex = i;
+                        comboSource.Add(Convert.ToInt32(dr["KEY_"].ToString()), dr["VALUE"].ToString());
                     }
-                    i++;
-                }
-                conn.Close();
-            }
+                    conn.Close();
+                    cmbPaymentType.DataSource = new BindingSource(comboSource, null);
+                    cmbPaymentType.DisplayMember = "Value";
+                    cmbPaymentType.ValueMember = "Key";
 
-            // DÖVİZ Alanının Değerlerini Getirme
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT 0 CURTYPE, 'TL' CURCODE, 0 SELECTED " +
-                              "\nUNION " +
-                              "\nSELECT CURTYPE,CURCODE, CASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED " +
-                              "\nFROM L_CURRENCYLIST CL " +
-                              "\nLEFT JOIN [dbo].[AYZ_PW_FILTER_VALUES] FV ON CL.CURTYPE = CAST(FV.VALUE AS SMALLINT) AND(FV.TYPE_ = 1)  " +
-                              "\nAND (FV.USERNR = " + Helper.USERID + ") " +
-                              "\nAND (CL.FIRMNR = FV.FIRMNR) AND FV.PACKETID IS NULL" +
-                              "\nWHERE CL.FIRMNR = " + Helper.FIRMNR + " AND (CL.CURTYPE IN(1, 3, 11, 13, 14, 17, 20)) " +
-                              "\nORDER BY CURTYPE";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                Dictionary<int, string> comboSource = new Dictionary<int, string>();
-                while (dr.Read())
-                {
-                    comboSource.Add(Convert.ToInt32(dr["CURTYPE"].ToString()), dr["CURCODE"].ToString());
-                }
-                conn.Close();
-                cmbCurrency.DataSource = new BindingSource(comboSource, null);
-                cmbCurrency.DisplayMember = "Value";
-                cmbCurrency.ValueMember = "Key";
-
-                // Selected olanları atama satırları
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                int i = 0;
-                while (dr.Read())
-                {
-                    if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
+                    // Selected olanı atama satırları
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    int i = 0;
+                    while (dr.Read())
                     {
-                        cmbCurrency.SelectedIndex = i;
+                        if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
+                        {
+                            cmbPaymentType.SelectedIndex = i;
+                        }
+                        i++;
                     }
-                    i++;
+                    conn.Close();
                 }
-                conn.Close();
-            }
 
-            // VADE TARİHİ Alanının Değerlerini Getirme
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT VALUE FROM AYZ_PW_FILTER_VALUES WHERE TYPE_ = 2 AND FIRMNR = " + Helper.FIRMNR + " AND USERNR = " + Helper.USERID + " AND PACKETID IS NULL";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                List<string> dateList = new List<string>();
-                while (dr.Read())
+                // DÖVİZ Alanının Değerlerini Getirme
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
-                    dateList.Add(dr["VALUE"].ToString());
-                }
-                if (dateList.Count > 0)
-                {
-                    var date1 = Convert.ToDateTime(dateList[0].ToString());
-                    var date2 = Convert.ToDateTime(dateList[1].ToString());
-                    if (date1 > date2)
+                    CommandText = "SELECT 0 CURTYPE, 'TL' CURCODE, 0 SELECTED " +
+                                  "\nUNION " +
+                                  "\nSELECT CURTYPE,CURCODE, CASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED " +
+                                  "\nFROM L_CURRENCYLIST CL " +
+                                  "\nLEFT JOIN [dbo].[AYZ_PW_FILTER_VALUES] FV ON CL.CURTYPE = CAST(FV.VALUE AS SMALLINT) AND(FV.TYPE_ = 1)  " +
+                                  "\nAND (FV.USERNR = " + Helper.USERID + ") " +
+                                  "\nAND (CL.FIRMNR = FV.FIRMNR) AND FV.PACKETID IS NULL" +
+                                  "\nWHERE CL.FIRMNR = " + Helper.FIRMNR + " AND (CL.CURTYPE IN(1, 3, 11, 13, 14, 17, 20)) " +
+                                  "\nORDER BY CURTYPE";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    Dictionary<int, string> comboSource = new Dictionary<int, string>();
+                    while (dr.Read())
                     {
-                        expiryDateBegin.Value = date2;
-                        expiryDateEnd.Value = date1;
+                        comboSource.Add(Convert.ToInt32(dr["CURTYPE"].ToString()), dr["CURCODE"].ToString());
+                    }
+                    conn.Close();
+                    cmbCurrency.DataSource = new BindingSource(comboSource, null);
+                    cmbCurrency.DisplayMember = "Value";
+                    cmbCurrency.ValueMember = "Key";
+
+                    // Selected olanları atama satırları
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    int i = 0;
+                    while (dr.Read())
+                    {
+                        if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
+                        {
+                            cmbCurrency.SelectedIndex = i;
+                        }
+                        i++;
+                    }
+                    conn.Close();
+                }
+
+                // VADE TARİHİ Alanının Değerlerini Getirme
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT VALUE FROM AYZ_PW_FILTER_VALUES WHERE TYPE_ = 2 AND FIRMNR = " + Helper.FIRMNR + " AND USERNR = " + Helper.USERID + " AND PACKETID IS NULL";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    List<string> dateList = new List<string>();
+                    while (dr.Read())
+                    {
+                        dateList.Add(dr["VALUE"].ToString());
+                    }
+                    if (dateList.Count > 0)
+                    {
+                        var date1 = Convert.ToDateTime(dateList[0].ToString());
+                        var date2 = Convert.ToDateTime(dateList[1].ToString());
+                        if (date1 > date2)
+                        {
+                            expiryDateBegin.Value = date2;
+                            expiryDateEnd.Value = date1;
+                        }
+                        else
+                        {
+                            expiryDateBegin.Value = date1;
+                            expiryDateEnd.Value = date2;
+                        }
+                    }
+                }
+
+                // FATURA TARİHİ alanının değerlerini getirme
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT VALUE FROM AYZ_PW_FILTER_VALUES WHERE TYPE_ = 3 AND FIRMNR = " + Helper.FIRMNR + " AND USERNR = " + Helper.USERID + " AND PACKETID IS NULL";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    List<string> dateList = new List<string>();
+                    while (dr.Read())
+                    {
+                        dateList.Add(dr["VALUE"].ToString());
+                    }
+                    if (dateList.Count > 0)
+                    {
+                        var date1 = Convert.ToDateTime(dateList[0].ToString());
+                        var date2 = Convert.ToDateTime(dateList[1].ToString());
+                        if (date1 > date2)
+                        {
+                            invoiceDateBegin.Value = date2;
+                            invoiceDateEnd.Value = date1;
+                        }
+                        else
+                        {
+                            invoiceDateBegin.Value = date1;
+                            invoiceDateEnd.Value = date2;
+                        }
+                    }
+                }
+
+                // CARİ HESAP KODU alanının değerini getirme
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT CA.KEY_, CA.VALUE, CASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED " +
+                                  "\nFROM AYZ_PW_CLIENT_ACCOUNT CA LEFT JOIN AYZ_PW_FILTER_VALUES FV ON CA.KEY_ = CAST(FV.VALUE AS SMALLINT) " +
+                                  "\nAND (FV.TYPE_ = 4) AND(CA.FIRMNR = FV.FIRMNR) AND FV.USERNR = " + Helper.USERID + " AND FV.PACKETID IS NULL" +
+                                  "\nWHERE CA.FIRMNR = " + Helper.FIRMNR + " ";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+
+                    Dictionary<int, string> comboSource = new Dictionary<int, string>();
+                    while (dr.Read())
+                    {
+                        comboSource.Add(Convert.ToInt32(dr["KEY_"].ToString()), dr["VALUE"].ToString());
+                    }
+                    conn.Close();
+                    cmbClFiltreType.DataSource = new BindingSource(comboSource, null);
+                    cmbClFiltreType.DisplayMember = "Value";
+                    cmbClFiltreType.ValueMember = "Key";
+
+
+                    // Selected olanı atama satırları
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    int i = 0;
+                    while (dr.Read())
+                    {
+                        if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
+                        {
+                            cmbClFiltreType.SelectedIndex = i;
+                        }
+                        i++;
+                    }
+                    conn.Close();
+
+                    CommandText = "SELECT VALUE FROM AYZ_PW_FILTER_VALUES WHERE TYPE_ = 17 AND FIRMNR = " + Helper.FIRMNR + " AND USERNR = " + Helper.USERID + " AND PACKETID IS NULL";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    var deger = "";
+                    while (dr.Read())
+                    {
+                        deger = dr["VALUE"].ToString();
+                    }
+                    txtClientCodeBeg.Text = deger;
+                    conn.Close();
+
+                    CommandText = "SELECT VALUE FROM AYZ_PW_FILTER_VALUES WHERE TYPE_ = 18 AND FIRMNR = " + Helper.FIRMNR + " AND USERNR = " + Helper.USERID + " AND PACKETID IS NULL";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    var deger2 = "";
+                    while (dr.Read())
+                    {
+                        deger2 = dr["VALUE"].ToString();
+                    }
+                    txtClientCodeEnd.Text = deger2;
+                    conn.Close();
+
+                    #region Filtre Tipini Seçme Wizard
+                    if ((int)cmbClFiltreType.SelectedValue == 0)
+                    {
+                        txtClientCodeBeg.Show();
+                        txtClientCodeEnd.Hide();
+                        lblClEnd.Hide();
+                    }
+                    else if ((int)cmbClFiltreType.SelectedValue == 1)
+                    {
+                        txtClientCodeBeg.Show();
+                        txtClientCodeEnd.Hide();
+                        lblClEnd.Hide();
                     }
                     else
                     {
-                        expiryDateBegin.Value = date1;
-                        expiryDateEnd.Value = date2;
+                        txtClientCodeBeg.Show();
+                        txtClientCodeEnd.Show();
+                        lblClEnd.Show();
                     }
+                    #endregion
                 }
-            }
 
-            // FATURA TARİHİ alanının değerlerini getirme
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT VALUE FROM AYZ_PW_FILTER_VALUES WHERE TYPE_ = 3 AND FIRMNR = " + Helper.FIRMNR + " AND USERNR = " + Helper.USERID + " AND PACKETID IS NULL";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                List<string> dateList = new List<string>();
-                while (dr.Read())
+                // CARİ ÖZEL KODU alanının değerlerini getirme
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
-                    dateList.Add(dr["VALUE"].ToString());
-                }
-                if (dateList.Count > 0)
-                {
-                    var date1 = Convert.ToDateTime(dateList[0].ToString());
-                    var date2 = Convert.ToDateTime(dateList[1].ToString());
-                    if (date1 > date2)
+                    CommandText = "SELECT VALUE FROM AYZ_PW_FILTER_VALUES WHERE TYPE_ = 5 AND FIRMNR = " + Helper.FIRMNR + " AND USERNR = " + Helper.USERID + " AND PACKETID IS NULL";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    var deger = "";
+                    while (dr.Read())
                     {
-                        invoiceDateBegin.Value = date2;
-                        invoiceDateEnd.Value = date1;
+                        deger = dr["VALUE"].ToString();
                     }
-                    else
+                    txtClientSpecialCode.Text = deger;
+                }
+
+                // CARİ ÖZEL KODU 2 alanının değerlerini getirme
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT VALUE FROM AYZ_PW_FILTER_VALUES WHERE TYPE_ = 6 AND FIRMNR = " + Helper.FIRMNR + " AND USERNR = " + Helper.USERID + " AND PACKETID IS NULL";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    var deger = "";
+                    while (dr.Read())
                     {
-                        invoiceDateBegin.Value = date1;
-                        invoiceDateEnd.Value = date2;
+                        deger = dr["VALUE"].ToString();
                     }
+                    txtClientSpecialCode2.Text = deger;
                 }
-            }
 
-            // CARİ HESAP KODU alanının değerini getirme
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT CA.KEY_, CA.VALUE, CASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED " +
-                              "\nFROM AYZ_PW_CLIENT_ACCOUNT CA LEFT JOIN AYZ_PW_FILTER_VALUES FV ON CA.KEY_ = CAST(FV.VALUE AS SMALLINT) " +
-                              "\nAND (FV.TYPE_ = 4) AND(CA.FIRMNR = FV.FIRMNR) AND FV.USERNR = " + Helper.USERID + " AND FV.PACKETID IS NULL" +
-                              "\nWHERE CA.FIRMNR = " + Helper.FIRMNR + " ";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-
-                Dictionary<int, string> comboSource = new Dictionary<int, string>();
-                while (dr.Read())
+                // VADE TARİHİ GEÇMİŞ OlANLARI GÜNÜN TARİHİ İLE DEĞİŞTİR alanının değerlerini getirme
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
-                    comboSource.Add(Convert.ToInt32(dr["KEY_"].ToString()), dr["VALUE"].ToString());
-                }
-                conn.Close();
-                cmbClFiltreType.DataSource = new BindingSource(comboSource, null);
-                cmbClFiltreType.DisplayMember = "Value";
-                cmbClFiltreType.ValueMember = "Key";
-
-
-                // Selected olanı atama satırları
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                int i = 0;
-                while (dr.Read())
-                {
-                    if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
+                    CommandText = "SELECT VALUE FROM AYZ_PW_FILTER_VALUES WHERE TYPE_ = 7 AND FIRMNR = " + Helper.FIRMNR + " AND USERNR = " + Helper.USERID + " AND PACKETID IS NULL";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    bool deger = false;
+                    while (dr.Read())
                     {
-                        cmbClFiltreType.SelectedIndex = i;
+                        deger = Convert.ToBoolean(dr["VALUE"].ToString());
                     }
-                    i++;
+                    chkboxReplaceDate.Checked = Convert.ToBoolean(deger);
                 }
-                conn.Close();
 
-                CommandText = "SELECT VALUE FROM AYZ_PW_FILTER_VALUES WHERE TYPE_ = 17 AND FIRMNR = " + Helper.FIRMNR + " AND USERNR = " + Helper.USERID + " AND PACKETID IS NULL";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                var deger = "";
-                while (dr.Read())
+                // FİŞ TÜRLERİ alanının değerlerini getirme
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
-                    deger = dr["VALUE"].ToString();
-                }
-                txtClientCodeBeg.Text = deger;
-                conn.Close();
-
-                CommandText = "SELECT VALUE FROM AYZ_PW_FILTER_VALUES WHERE TYPE_ = 18 AND FIRMNR = " + Helper.FIRMNR + " AND USERNR = " + Helper.USERID + " AND PACKETID IS NULL";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                var deger2 = "";
-                while (dr.Read())
-                {
-                    deger2 = dr["VALUE"].ToString();
-                }
-                txtClientCodeEnd.Text = deger2;
-                conn.Close();
-
-                #region Filtre Tipini Seçme Wizard
-                if ((int)cmbClFiltreType.SelectedValue == 0)
-                {
-                    txtClientCodeBeg.Show();
-                    txtClientCodeEnd.Hide();
-                    lblClEnd.Hide();
-                }
-                else if ((int)cmbClFiltreType.SelectedValue == 1)
-                {
-                    txtClientCodeBeg.Show();
-                    txtClientCodeEnd.Hide();
-                    lblClEnd.Hide();
-                }
-                else
-                {
-                    txtClientCodeBeg.Show();
-                    txtClientCodeEnd.Show();
-                    lblClEnd.Show();
-                }
-                #endregion
-            }
-
-            // CARİ ÖZEL KODU alanının değerlerini getirme
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT VALUE FROM AYZ_PW_FILTER_VALUES WHERE TYPE_ = 5 AND FIRMNR = " + Helper.FIRMNR + " AND USERNR = " + Helper.USERID + " AND PACKETID IS NULL";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                var deger = "";
-                while (dr.Read())
-                {
-                    deger = dr["VALUE"].ToString();
-                }
-                txtClientSpecialCode.Text = deger;
-            }
-
-            // CARİ ÖZEL KODU 2 alanının değerlerini getirme
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT VALUE FROM AYZ_PW_FILTER_VALUES WHERE TYPE_ = 6 AND FIRMNR = " + Helper.FIRMNR + " AND USERNR = " + Helper.USERID + " AND PACKETID IS NULL";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                var deger = "";
-                while (dr.Read())
-                {
-                    deger = dr["VALUE"].ToString();
-                }
-                txtClientSpecialCode2.Text = deger;
-            }
-
-            // VADE TARİHİ GEÇMİŞ OlANLARI GÜNÜN TARİHİ İLE DEĞİŞTİR alanının değerlerini getirme
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT VALUE FROM AYZ_PW_FILTER_VALUES WHERE TYPE_ = 7 AND FIRMNR = " + Helper.FIRMNR + " AND USERNR = " + Helper.USERID + " AND PACKETID IS NULL";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                bool deger = false;
-                while (dr.Read())
-                {
-                    deger = Convert.ToBoolean(dr["VALUE"].ToString());
-                }
-                chkboxReplaceDate.Checked = Convert.ToBoolean(deger);
-            }
-
-            // FİŞ TÜRLERİ alanının değerlerini getirme
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT CODE = VT.CODE," +
-                              "\n DESCRIPTION = VT.DESCRIPTION," +
-                              "\nCASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED" +
-                              "\nFROM AYZ_PW_VOUCHER_TYPE VT LEFT JOIN[dbo].[AYZ_PW_FILTER_VALUES] FV ON VT.CODE = CAST(FV.VALUE AS SMALLINT) AND (FV.TYPE_ = 8) AND (FV.USERNR = " + Helper.USERID + ")" +
-                              "\nAND (VT.FIRMNR = FV.FIRMNR) AND FV.PACKETID IS NULL" +
-                              "\nWHERE VT.FIRMNR = " + Helper.FIRMNR + "";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                Dictionary<int, string> comboSource = new Dictionary<int, string>();
-                while (dr.Read())
-                {
-                    comboSource.Add(Convert.ToInt32(dr["CODE"].ToString()), dr["DESCRIPTION"].ToString());
-                }
-                conn.Close();
-                cmbVoucherType.DataSource = new BindingSource(comboSource, null);
-                cmbVoucherType.DisplayMember = "Value";
-                cmbVoucherType.ValueMember = "Key";
-
-                // Selected olanları atama satırları
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                int i = 0;
-                while (dr.Read())
-                {
-                    if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
+                    CommandText = "SELECT CODE = VT.CODE," +
+                                  "\n DESCRIPTION = VT.DESCRIPTION," +
+                                  "\nCASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED" +
+                                  "\nFROM AYZ_PW_VOUCHER_TYPE VT LEFT JOIN[dbo].[AYZ_PW_FILTER_VALUES] FV ON VT.CODE = CAST(FV.VALUE AS SMALLINT) AND (FV.TYPE_ = 8) AND (FV.USERNR = " + Helper.USERID + ")" +
+                                  "\nAND (VT.FIRMNR = FV.FIRMNR) AND FV.PACKETID IS NULL" +
+                                  "\nWHERE VT.FIRMNR = " + Helper.FIRMNR + "";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    Dictionary<int, string> comboSource = new Dictionary<int, string>();
+                    while (dr.Read())
                     {
-                        cmbVoucherType.SelectedIndex = i;
+                        comboSource.Add(Convert.ToInt32(dr["CODE"].ToString()), dr["DESCRIPTION"].ToString());
                     }
-                    i++;
+                    conn.Close();
+                    cmbVoucherType.DataSource = new BindingSource(comboSource, null);
+                    cmbVoucherType.DisplayMember = "Value";
+                    cmbVoucherType.ValueMember = "Key";
+
+                    // Selected olanları atama satırları
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    int i = 0;
+                    while (dr.Read())
+                    {
+                        if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
+                        {
+                            cmbVoucherType.SelectedIndex = i;
+                        }
+                        i++;
+                    }
+                    conn.Close();
                 }
-                conn.Close();
+
+                // MECRA TÜRÜ Alanının Değerlerini Getirme
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT LOGREF = LG.LOGREF," +
+                                         "\nNAME = LG.CODE + ' - ' + LG.DEFINITION_," +
+                                         "\nCASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED" +
+                                         "\nFROM LG_XT105 LG" +
+                                         "\nLEFT JOIN [dbo].[AYZ_PW_FILTER_VALUES] FV ON LG.LOGREF = CAST(FV.VALUE AS SMALLINT) AND (FV.TYPE_ = 9)" +
+                                         "\nAND (FV.USERNR = " + Helper.USERID + ") AND (FV.FIRMNR = " + Helper.FIRMNR + ")" +
+                                         "\nWHERE LG.TYPE_ = 1 AND FV.PACKETID IS NULL";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        MecraTypeList.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
+
+                    }
+                    conn.Close();
+                    //dHello
+
+                    checkedListBoxMecraType.DataSource = new BindingSource(MecraTypeList, null);
+                    checkedListBoxMecraType.DisplayMember = "Value";
+                    checkedListBoxMecraType.ValueMember = "Key";
+
+                    // Selected olanları atama satırları
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    int i = 0;
+                    while (dr.Read())
+                    {
+                        if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
+                        {
+                            checkedListBoxMecraType.SetItemCheckState(i, CheckState.Checked);
+                        }
+                        else if (Convert.ToInt32(dr["SELECTED"].ToString()) == 0)
+                        {
+                            checkedListBoxMecraType.SetItemChecked(i, false);
+                        }
+                        i++;
+                    }
+                    conn.Close();
+                }
+
+                // MECRA Alanının Değerlerini Getirme
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT LOGREF = LG.LOGREF," +
+                                         "\nNAME = LG.CODE + ' - ' + LG.DEFINITION_," +
+                                         "\nCASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED" +
+                                         "\nFROM LG_XT105 LG" +
+                                         "\nLEFT JOIN [dbo].[AYZ_PW_FILTER_VALUES] FV ON LG.LOGREF = CAST(FV.VALUE AS SMALLINT) AND (FV.TYPE_ = 10)" +
+                                         "\nAND (FV.USERNR = " + Helper.USERID + ") AND (FV.FIRMNR = " + Helper.FIRMNR + ")" +
+                                         "\nWHERE LG.TYPE_ = 2 AND FV.PACKETID IS NULL";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        MecraList.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
+                    }
+                    conn.Close();
+                    checkedListBoxMecra.DataSource = new BindingSource(MecraList, null);
+                    // checkedListBoxMecraType.Items.Insert(0,checked)
+                    checkedListBoxMecra.DisplayMember = "Value";
+                    checkedListBoxMecra.ValueMember = "Key";
+
+                    // Selected olanları atama satırları
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    int i = 0;
+                    while (dr.Read())
+                    {
+                        if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
+                        {
+                            checkedListBoxMecra.SetItemCheckState(i, CheckState.Checked);
+                        }
+                        i++;
+                    }
+                    conn.Close();
+                }
+
+                // PAZARLAMA ŞİRKETİ Alanının Değerlerini Getirme
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT LOGREF = LG.LOGICALREF, " +
+                        "\nNAME = LG.CODE + ' - ' + LG.DEFINITION_, " +
+                        "\nCASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED " +
+                        "\nFROM LG_" + Helper.FIRMANO + "_CLCARD LG " +
+                        "\nLEFT JOIN [dbo].[AYZ_PW_FILTER_VALUES] FV ON LG.LOGICALREF = CAST(FV.VALUE AS SMALLINT) AND (FV.TYPE_ = 11)" +
+                        "\nAND (FV.USERNR = " + Helper.USERID + ") AND (FV.FIRMNR = " + Helper.FIRMNR + ") " +
+                        "\nWHERE LG.CODE LIKE 'S%' AND FV.PACKETID IS NULL";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        MarketingCompanyList.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
+                    }
+                    conn.Close();
+                    checkedListBoxMarketingCompany.DataSource = new BindingSource(MarketingCompanyList, null);
+                    checkedListBoxMarketingCompany.DisplayMember = "Value";
+                    checkedListBoxMarketingCompany.ValueMember = "Key";
+
+                    // Selected olanları atama satırları
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    int i = 0;
+                    while (dr.Read())
+                    {
+                        if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
+                        {
+                            checkedListBoxMarketingCompany.SetItemCheckState(i, CheckState.Checked);
+                        }
+                        i++;
+                    }
+                    conn.Close();
+                }
+
+                // MÜŞTERİ Alanının Değerlerini Getirme
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT LOGREF = LG.LOGICALREF," +
+                                    "\nNAME = LG.CODE + ' - ' + LG.DEFINITION_," +
+                                    "\nCASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED" +
+                                    "\nFROM LG_" + Helper.FIRMANO + "_CLCARD LG" +
+                                    "\nLEFT JOIN [dbo].[AYZ_PW_FILTER_VALUES] FV ON LG.LOGICALREF = CAST(FV.VALUE AS SMALLINT) AND (FV.TYPE_ = 12)" +
+                                    "\nAND (FV.USERNR = " + Helper.USERID + ") AND (FV.FIRMNR = " + Helper.FIRMNR + ")" +
+                                    "\nWHERE LG.CODE LIKE 'M%' AND FV.PACKETID IS NULL";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        CustomerList.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
+                    }
+                    conn.Close();
+                    checkedListBoxCustomer.DataSource = new BindingSource(CustomerList, null);
+                    checkedListBoxCustomer.DisplayMember = "Value";
+                    checkedListBoxCustomer.ValueMember = "Key";
+
+                    // Selected olanları atama satırları
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    int i = 0;
+                    while (dr.Read())
+                    {
+                        if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
+                        {
+                            checkedListBoxCustomer.SetItemCheckState(i, CheckState.Checked);
+                        }
+                        i++;
+                    }
+                    conn.Close();
+                }
+
+                // PLAN KODU Alanının Değerlerini Getirme
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT LOGREF = LG.LOGREF, " +
+                                    "\nNAME = LG.CODE + ' - ' + LG.DEFINITION_, " +
+                                    "\nCASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED " +
+                                    "\nFROM LG_XT105 LG " +
+                                    "\nLEFT JOIN[dbo].[AYZ_PW_FILTER_VALUES] FV ON LG.LOGREF = CAST(FV.VALUE AS SMALLINT) AND (FV.TYPE_ = 13) " +
+                                    "\nAND (FV.USERNR = " + Helper.USERID + ") AND (FV.FIRMNR = " + Helper.FIRMNR + ") " +
+                                    "\nWHERE LG.TYPE_ = 5 AND FV.PACKETID IS NULL";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    Dictionary<int, string> checkListBoxPlanCode = new Dictionary<int, string>();
+                    while (dr.Read())
+                    {
+                        checkListBoxPlanCode.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
+                    }
+                    conn.Close();
+                    checkedListBoxPlanCode.DataSource = new BindingSource(checkListBoxPlanCode, null);
+                    checkedListBoxPlanCode.DisplayMember = "Value";
+                    checkedListBoxPlanCode.ValueMember = "Key";
+
+                    // Selected olanları atama satırları
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    int i = 0;
+                    while (dr.Read())
+                    {
+                        if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
+                        {
+                            checkedListBoxPlanCode.SetItemCheckState(i, CheckState.Checked);
+                        }
+                        i++;
+                    }
+                    conn.Close();
+                }
+
+                // INTERNET ANA KATEGORİ Alanının Değerlerini Getirme
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT LOGREF = LG.LOGREF, " +
+                                    "\nNAME = LG.CODE + ' - ' + LG.DEFINITION_, " +
+                                    "\nCASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED " +
+                                    "\nFROM LG_XT105 LG " +
+                                    "\nLEFT JOIN[dbo].[AYZ_PW_FILTER_VALUES] FV ON LG.LOGREF = CAST(FV.VALUE AS SMALLINT) AND (FV.TYPE_ = 14) " +
+                                    "\nAND (FV.USERNR = " + Helper.USERID + ") AND (FV.FIRMNR = " + Helper.FIRMNR + ") " +
+                                    "\nWHERE LG.TYPE_ = 6 AND FV.PACKETID IS NULL";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    Dictionary<int, string> checkListBoxNetMainCategory = new Dictionary<int, string>();
+                    while (dr.Read())
+                    {
+                        checkListBoxNetMainCategory.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
+                    }
+                    conn.Close();
+                    checkedListBoxInternetMainCategory.DataSource = new BindingSource(checkListBoxNetMainCategory, null);
+                    checkedListBoxInternetMainCategory.DisplayMember = "Value";
+                    checkedListBoxInternetMainCategory.ValueMember = "Key";
+
+                    // Selected olanları atama satırları
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    int i = 0;
+                    while (dr.Read())
+                    {
+                        if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
+                        {
+                            checkedListBoxInternetMainCategory.SetItemCheckState(i, CheckState.Checked);
+                        }
+                        i++;
+                    }
+                    conn.Close();
+                }
+
+                // INTERNET ALT KATEGORİ Alanının Değerlerini Getirme
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT LOGREF = LG.LOGREF, " +
+                                    "\nNAME = LG.CODE + ' - ' + LG.DEFINITION_, " +
+                                    "\nCASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED " +
+                                    "\nFROM LG_XT105 LG " +
+                                    "\nLEFT JOIN[dbo].[AYZ_PW_FILTER_VALUES] FV ON LG.LOGREF = CAST(FV.VALUE AS SMALLINT) AND (FV.TYPE_ = 15) " +
+                                    "\nAND (FV.USERNR = " + Helper.USERID + ") AND (FV.FIRMNR = " + Helper.FIRMNR + ") " +
+                                    "\nWHERE LG.TYPE_ = 7 AND FV.PACKETID IS NULL";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    Dictionary<int, string> checkListBoxNetSubCategory = new Dictionary<int, string>();
+                    while (dr.Read())
+                    {
+                        checkListBoxNetSubCategory.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
+                    }
+                    conn.Close();
+                    checkedListBoxInternetSubCategory.DataSource = new BindingSource(checkListBoxNetSubCategory, null);
+                    checkedListBoxInternetSubCategory.DisplayMember = "Value";
+                    checkedListBoxInternetSubCategory.ValueMember = "Key";
+
+                    // Selected olanları atama satırları
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    int i = 0;
+                    while (dr.Read())
+                    {
+                        if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
+                        {
+                            checkedListBoxInternetSubCategory.SetItemCheckState(i, CheckState.Checked);
+                        }
+                        i++;
+                    }
+                    conn.Close();
+                }
+
+                // BRANCH(iş yeri) Alanındaki Değerleri Getirme
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT " +
+                                  "\n -1 NR, 'Hepsi' [NAME], 0 SELECTED " +
+                                  "\nUNION " +
+                                  "\nSELECT NR, RIGHT('000' + CAST(NR AS VARCHAR(3)), 3) + ', ' + [NAME], CASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED " +
+                                  "\nFROM L_CAPIDIV CP" +
+                                  "\nLEFT JOIN[dbo].[AYZ_PW_FILTER_VALUES] FV " +
+                                  "\nON CP.NR = CAST(FV.VALUE AS SMALLINT) AND(FV.TYPE_ = 16)  AND(FV.FIRMNR = " + Helper.FIRMNR + ") " +
+                                  "\nAND(FV.USERNR = " + Helper.USERID + ") " +
+                                  "\nWHERE CP.FIRMNR = " + Helper.FIRMNR + " AND FV.PACKETID IS NULL " +
+                                  "\nORDER BY NR";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+
+                    Dictionary<int, string> comboSource = new Dictionary<int, string>();
+                    while (dr.Read())
+                    {
+                        comboSource.Add(Convert.ToInt32(dr["NR"].ToString()), dr["NAME"].ToString());
+                    }
+                    conn.Close();
+                    cmbBranch.DataSource = new BindingSource(comboSource, null);
+                    cmbBranch.DisplayMember = "Value";
+                    cmbBranch.ValueMember = "Key";
+
+                    // Selected olanı atama satırları
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    int i = 0;
+                    while (dr.Read())
+                    {
+                        if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
+                        {
+                            cmbBranch.SelectedIndex = i;
+                        }
+                        i++;
+                    }
+                    conn.Close();
+                }
             }
-
-            // MECRA TÜRÜ Alanının Değerlerini Getirme
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            catch (Exception ex)
             {
-                CommandText = "SELECT LOGREF = LG.LOGREF," +
-                                     "\nNAME = LG.CODE + ' - ' + LG.DEFINITION_," +
-                                     "\nCASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED" +
-                                     "\nFROM LG_XT105 LG" +
-                                     "\nLEFT JOIN [dbo].[AYZ_PW_FILTER_VALUES] FV ON LG.LOGREF = CAST(FV.VALUE AS SMALLINT) AND (FV.TYPE_ = 9)" +
-                                     "\nAND (FV.USERNR = " + Helper.USERID + ") AND (FV.FIRMNR = " + Helper.FIRMNR + ")" +
-                                     "\nWHERE LG.TYPE_ = 1 AND FV.PACKETID IS NULL";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-
-                while (dr.Read())
-                {
-                    MecraTypeList.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
-
-                }
-                conn.Close();
-                //dHello
-
-                checkedListBoxMecraType.DataSource = new BindingSource(MecraTypeList, null);
-                checkedListBoxMecraType.DisplayMember = "Value";
-                checkedListBoxMecraType.ValueMember = "Key";
-
-                // Selected olanları atama satırları
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                int i = 0;
-                while (dr.Read())
-                {
-                    if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
-                    {
-                        checkedListBoxMecraType.SetItemCheckState(i, CheckState.Checked);
-                    }
-                    else if (Convert.ToInt32(dr["SELECTED"].ToString()) == 0)
-                    {
-                        checkedListBoxMecraType.SetItemChecked(i, false);
-                    }
-                    i++;
-                }
-                conn.Close();
-            }
-
-            // MECRA Alanının Değerlerini Getirme
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT LOGREF = LG.LOGREF," +
-                                     "\nNAME = LG.CODE + ' - ' + LG.DEFINITION_," +
-                                     "\nCASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED" +
-                                     "\nFROM LG_XT105 LG" +
-                                     "\nLEFT JOIN [dbo].[AYZ_PW_FILTER_VALUES] FV ON LG.LOGREF = CAST(FV.VALUE AS SMALLINT) AND (FV.TYPE_ = 10)" +
-                                     "\nAND (FV.USERNR = " + Helper.USERID + ") AND (FV.FIRMNR = " + Helper.FIRMNR + ")" +
-                                     "\nWHERE LG.TYPE_ = 2 AND FV.PACKETID IS NULL";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                
-                while (dr.Read())
-                {
-                    MecraList.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
-                }
-                conn.Close();
-                checkedListBoxMecra.DataSource = new BindingSource(MecraList, null);
-                // checkedListBoxMecraType.Items.Insert(0,checked)
-                checkedListBoxMecra.DisplayMember = "Value";
-                checkedListBoxMecra.ValueMember = "Key";
-
-                // Selected olanları atama satırları
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                int i = 0;
-                while (dr.Read())
-                {
-                    if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
-                    {
-                        checkedListBoxMecra.SetItemCheckState(i, CheckState.Checked);
-                    }
-                    i++;
-                }
-                conn.Close();
-            }
-
-            // PAZARLAMA ŞİRKETİ Alanının Değerlerini Getirme
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT LOGREF = LG.LOGICALREF, " +
-                    "\nNAME = LG.CODE + ' - ' + LG.DEFINITION_, " +
-                    "\nCASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED " +
-                    "\nFROM LG_" + Helper.FIRMANO + "_CLCARD LG " +
-                    "\nLEFT JOIN [dbo].[AYZ_PW_FILTER_VALUES] FV ON LG.LOGICALREF = CAST(FV.VALUE AS SMALLINT) AND (FV.TYPE_ = 11)" +
-                    "\nAND (FV.USERNR = " + Helper.USERID + ") AND (FV.FIRMNR = " + Helper.FIRMNR + ") " +
-                    "\nWHERE LG.CODE LIKE 'S%' AND FV.PACKETID IS NULL";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                
-                while (dr.Read())
-                {
-                    MarketingCompanyList.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
-                }
-                conn.Close();
-                checkedListBoxMarketingCompany.DataSource = new BindingSource(MarketingCompanyList, null);
-                checkedListBoxMarketingCompany.DisplayMember = "Value";
-                checkedListBoxMarketingCompany.ValueMember = "Key";
-
-                // Selected olanları atama satırları
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                int i = 0;
-                while (dr.Read())
-                {
-                    if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
-                    {
-                        checkedListBoxMarketingCompany.SetItemCheckState(i, CheckState.Checked);
-                    }
-                    i++;
-                }
-                conn.Close();
-            }
-
-            // MÜŞTERİ Alanının Değerlerini Getirme
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT LOGREF = LG.LOGICALREF," +
-                                "\nNAME = LG.CODE + ' - ' + LG.DEFINITION_," +
-                                "\nCASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED" +
-                                "\nFROM LG_" + Helper.FIRMANO + "_CLCARD LG" +
-                                "\nLEFT JOIN [dbo].[AYZ_PW_FILTER_VALUES] FV ON LG.LOGICALREF = CAST(FV.VALUE AS SMALLINT) AND (FV.TYPE_ = 12)" +
-                                "\nAND (FV.USERNR = " + Helper.USERID + ") AND (FV.FIRMNR = " + Helper.FIRMNR + ")" +
-                                "\nWHERE LG.CODE LIKE 'M%' AND FV.PACKETID IS NULL";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                
-                while (dr.Read())
-                {
-                    CustomerList.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
-                }
-                conn.Close();
-                checkedListBoxCustomer.DataSource = new BindingSource(CustomerList, null);
-                checkedListBoxCustomer.DisplayMember = "Value";
-                checkedListBoxCustomer.ValueMember = "Key";
-
-                // Selected olanları atama satırları
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                int i = 0;
-                while (dr.Read())
-                {
-                    if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
-                    {
-                        checkedListBoxCustomer.SetItemCheckState(i, CheckState.Checked);
-                    }
-                    i++;
-                }
-                conn.Close();
-            }
-
-            // PLAN KODU Alanının Değerlerini Getirme
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT LOGREF = LG.LOGREF, " +
-                                "\nNAME = LG.CODE + ' - ' + LG.DEFINITION_, " +
-                                "\nCASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED " +
-                                "\nFROM LG_XT105 LG " +
-                                "\nLEFT JOIN[dbo].[AYZ_PW_FILTER_VALUES] FV ON LG.LOGREF = CAST(FV.VALUE AS SMALLINT) AND (FV.TYPE_ = 13) " +
-                                "\nAND (FV.USERNR = " + Helper.USERID + ") AND (FV.FIRMNR = " + Helper.FIRMNR + ") " +
-                                "\nWHERE LG.TYPE_ = 5 AND FV.PACKETID IS NULL";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                Dictionary<int, string> checkListBoxPlanCode = new Dictionary<int, string>();
-                while (dr.Read())
-                {
-                    checkListBoxPlanCode.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
-                }
-                conn.Close();
-                checkedListBoxPlanCode.DataSource = new BindingSource(checkListBoxPlanCode, null);
-                checkedListBoxPlanCode.DisplayMember = "Value";
-                checkedListBoxPlanCode.ValueMember = "Key";
-
-                // Selected olanları atama satırları
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                int i = 0;
-                while (dr.Read())
-                {
-                    if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
-                    {
-                        checkedListBoxPlanCode.SetItemCheckState(i, CheckState.Checked);
-                    }
-                    i++;
-                }
-                conn.Close();
-            }
-
-            // INTERNET ANA KATEGORİ Alanının Değerlerini Getirme
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT LOGREF = LG.LOGREF, " +
-                                "\nNAME = LG.CODE + ' - ' + LG.DEFINITION_, " +
-                                "\nCASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED " +
-                                "\nFROM LG_XT105 LG " +
-                                "\nLEFT JOIN[dbo].[AYZ_PW_FILTER_VALUES] FV ON LG.LOGREF = CAST(FV.VALUE AS SMALLINT) AND (FV.TYPE_ = 14) " +
-                                "\nAND (FV.USERNR = " + Helper.USERID + ") AND (FV.FIRMNR = " + Helper.FIRMNR + ") " +
-                                "\nWHERE LG.TYPE_ = 6 AND FV.PACKETID IS NULL";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                Dictionary<int, string> checkListBoxNetMainCategory = new Dictionary<int, string>();
-                while (dr.Read())
-                {
-                    checkListBoxNetMainCategory.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
-                }
-                conn.Close();
-                checkedListBoxInternetMainCategory.DataSource = new BindingSource(checkListBoxNetMainCategory, null);
-                checkedListBoxInternetMainCategory.DisplayMember = "Value";
-                checkedListBoxInternetMainCategory.ValueMember = "Key";
-
-                // Selected olanları atama satırları
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                int i = 0;
-                while (dr.Read())
-                {
-                    if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
-                    {
-                        checkedListBoxInternetMainCategory.SetItemCheckState(i, CheckState.Checked);
-                    }
-                    i++;
-                }
-                conn.Close();
-            }
-
-            // INTERNET ALT KATEGORİ Alanının Değerlerini Getirme
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT LOGREF = LG.LOGREF, " +
-                                "\nNAME = LG.CODE + ' - ' + LG.DEFINITION_, " +
-                                "\nCASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED " +
-                                "\nFROM LG_XT105 LG " +
-                                "\nLEFT JOIN[dbo].[AYZ_PW_FILTER_VALUES] FV ON LG.LOGREF = CAST(FV.VALUE AS SMALLINT) AND (FV.TYPE_ = 15) " +
-                                "\nAND (FV.USERNR = " + Helper.USERID + ") AND (FV.FIRMNR = " + Helper.FIRMNR + ") " +
-                                "\nWHERE LG.TYPE_ = 7 AND FV.PACKETID IS NULL";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                Dictionary<int, string> checkListBoxNetSubCategory = new Dictionary<int, string>();
-                while (dr.Read())
-                {
-                    checkListBoxNetSubCategory.Add(Convert.ToInt32(dr["LOGREF"].ToString()), dr["NAME"].ToString());
-                }
-                conn.Close();
-                checkedListBoxInternetSubCategory.DataSource = new BindingSource(checkListBoxNetSubCategory, null);
-                checkedListBoxInternetSubCategory.DisplayMember = "Value";
-                checkedListBoxInternetSubCategory.ValueMember = "Key";
-
-                // Selected olanları atama satırları
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                int i = 0;
-                while (dr.Read())
-                {
-                    if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
-                    {
-                        checkedListBoxInternetSubCategory.SetItemCheckState(i, CheckState.Checked);
-                    }
-                    i++;
-                }
-                conn.Close();
-            }
-
-            // BRANCH(iş yeri) Alanındaki Değerleri Getirme
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT " +
-                              "\n -1 NR, 'Hepsi' [NAME], 0 SELECTED " +
-                              "\nUNION " +
-                              "\nSELECT NR, RIGHT('000' + CAST(NR AS VARCHAR(3)), 3) + ', ' + [NAME], CASE WHEN FV.VALUE IS NULL THEN 0 ELSE 1 END SELECTED " +
-                              "\nFROM L_CAPIDIV CP" +
-                              "\nLEFT JOIN[dbo].[AYZ_PW_FILTER_VALUES] FV " +
-                              "\nON CP.NR = CAST(FV.VALUE AS SMALLINT) AND(FV.TYPE_ = 16)  AND(FV.FIRMNR = " + Helper.FIRMNR + ") " +
-                              "\nAND(FV.USERNR = " + Helper.USERID + ") " +
-                              "\nWHERE CP.FIRMNR = " + Helper.FIRMNR + " AND FV.PACKETID IS NULL " +
-                              "\nORDER BY NR";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-
-                Dictionary<int, string> comboSource = new Dictionary<int, string>();
-                while (dr.Read())
-                {
-                    comboSource.Add(Convert.ToInt32(dr["NR"].ToString()), dr["NAME"].ToString());
-                }
-                conn.Close();
-                cmbBranch.DataSource = new BindingSource(comboSource, null);
-                cmbBranch.DisplayMember = "Value";
-                cmbBranch.ValueMember = "Key";
-
-                // Selected olanı atama satırları
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                int i = 0;
-                while (dr.Read())
-                {
-                    if (Convert.ToInt32(dr["SELECTED"].ToString()) == 1)
-                    {
-                        cmbBranch.SelectedIndex = i;
-                    }
-                    i++;
-                }
-                conn.Close();
-            }           
+                MessageBox.Show("Hata:\n", ex.Message);
+            }            
         }
 
         private void cmbClFiltreType_SelectionChangeCommitted(object sender, EventArgs e)

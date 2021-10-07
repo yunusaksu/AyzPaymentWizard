@@ -20,7 +20,7 @@ namespace AyzPaymentWizard
 
         private void btnGroupSave_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(txtGroupName.Text))
+            if (String.IsNullOrEmpty(txtGroupName.Text) || (AuthorityTreeView.Nodes["PackageAdd"].Checked == false && AuthorityTreeView.Nodes["PackageEdit"].Checked == false && AuthorityTreeView.Nodes["PackageApprove"].Checked == false && AuthorityTreeView.Nodes["PackageReject"].Checked == false && AuthorityTreeView.Nodes["PackageSendToApprove"].Checked == false && AuthorityTreeView.Nodes["ForwardToBank"].Checked == false && AuthorityTreeView.Nodes["PackageAkibetAl"].Checked == false && AuthorityTreeView.Nodes["AddUser"].Checked == false && AuthorityTreeView.Nodes["AddGroup"].Checked == false))
             {
                 MessageBox.Show("Lütfen yıldız işaretli alanları doldurunuz!");
             }
@@ -144,50 +144,58 @@ namespace AyzPaymentWizard
                 }
             }
         }
-
+        
         private void btnEdit_Click(object sender, EventArgs e)
         {
             if (dataGridViewGroup.SelectedRows.Count > 0)
             {
-                int groupId = (int)dataGridViewGroup.SelectedRows[0].Cells["ID"].Value;
-                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                if (String.IsNullOrEmpty(txtGroupName.Text) || (AuthorityTreeView.Nodes["PackageAdd"].Checked == false && AuthorityTreeView.Nodes["PackageEdit"].Checked == false && AuthorityTreeView.Nodes["PackageApprove"].Checked == false && AuthorityTreeView.Nodes["PackageReject"].Checked == false && AuthorityTreeView.Nodes["PackageSendToApprove"].Checked == false && AuthorityTreeView.Nodes["ForwardToBank"].Checked == false && AuthorityTreeView.Nodes["PackageAkibetAl"].Checked == false && AuthorityTreeView.Nodes["AddUser"].Checked == false && AuthorityTreeView.Nodes["AddGroup"].Checked == false))
                 {
-                    try
+                    MessageBox.Show("Lütfen yıldız işaretli alanları doldurunuz!");
+                }
+                else
+                {
+
+                    int groupId = (int)dataGridViewGroup.SelectedRows[0].Cells["ID"].Value;
+                    using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                     {
-                        string groupName = txtGroupName.Text;
-                        CommandText = "UPDATE AYZ_PW_USER " +
-                                      "\nSET " +
-                                      "\nNAME = '" + groupName + "'" +
-                                      "\nWHERE ID = '" + groupId + "'";
-                        komut.CommandText = CommandText;
-                        komut.Connection = conn;
-                        conn.Open();
-                        dr = komut.ExecuteReader();
-                        conn.Close();
-                        CommandText = "UPDATE AYZ_PW_USERRIGHTS " +
-                                      "\nSET " +
-                                      "\nADD_PACKAGE = '" + AuthorityTreeView.Nodes["PackageAdd"].Checked + "'," +
-                                      "\nEDIT_PACKAGE = '" + AuthorityTreeView.Nodes["PackageEdit"].Checked + "', " +
-                                      "\nAPPROVE_PACKAGE = '" + AuthorityTreeView.Nodes["PackageApprove"].Checked + "' , " +
-                                      "\nREJECT_PACKAGE = '" + AuthorityTreeView.Nodes["PackageReject"].Checked + "', " +
-                                      "\nSENDTO_APPROVE = '" + AuthorityTreeView.Nodes["PackageSendToApprove"].Checked + "', " +
-                                      "\nFORWARDTO_BANK = '" + AuthorityTreeView.Nodes["ForwardToBank"].Checked + "', " +
-                                      "\nAKIBET_AL = '" + AuthorityTreeView.Nodes["PackageAkibetAl"].Checked + "', " +
-                                      "\nADD_USER = '" + AuthorityTreeView.Nodes["AddUser"].Checked + "', " +
-                                      "\nADD_GROUP = '" + AuthorityTreeView.Nodes["AddGroup"].Checked + "' " +
-                                      "\nWHERE GROUPID = " + groupId + "";
-                        komut.CommandText = CommandText;
-                        komut.Connection = conn;
-                        conn.Open();
-                        dr = komut.ExecuteReader();
-                        conn.Close();
-                        GroupAddForm form = (GroupAddForm)Application.OpenForms["GroupAddForm"];
-                        form.fillGroupsDGV();
-                        MessageBox.Show("Güncellendi!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Hata: \n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        try
+                        {
+                            string groupName = txtGroupName.Text;
+                            CommandText = "UPDATE AYZ_PW_USER " +
+                                          "\nSET " +
+                                          "\nNAME = '" + groupName + "'" +
+                                          "\nWHERE ID = '" + groupId + "'";
+                            komut.CommandText = CommandText;
+                            komut.Connection = conn;
+                            conn.Open();
+                            dr = komut.ExecuteReader();
+                            conn.Close();
+                            CommandText = "UPDATE AYZ_PW_USERRIGHTS " +
+                                          "\nSET " +
+                                          "\nADD_PACKAGE = '" + AuthorityTreeView.Nodes["PackageAdd"].Checked + "'," +
+                                          "\nEDIT_PACKAGE = '" + AuthorityTreeView.Nodes["PackageEdit"].Checked + "', " +
+                                          "\nAPPROVE_PACKAGE = '" + AuthorityTreeView.Nodes["PackageApprove"].Checked + "' , " +
+                                          "\nREJECT_PACKAGE = '" + AuthorityTreeView.Nodes["PackageReject"].Checked + "', " +
+                                          "\nSENDTO_APPROVE = '" + AuthorityTreeView.Nodes["PackageSendToApprove"].Checked + "', " +
+                                          "\nFORWARDTO_BANK = '" + AuthorityTreeView.Nodes["ForwardToBank"].Checked + "', " +
+                                          "\nAKIBET_AL = '" + AuthorityTreeView.Nodes["PackageAkibetAl"].Checked + "', " +
+                                          "\nADD_USER = '" + AuthorityTreeView.Nodes["AddUser"].Checked + "', " +
+                                          "\nADD_GROUP = '" + AuthorityTreeView.Nodes["AddGroup"].Checked + "' " +
+                                          "\nWHERE GROUPID = " + groupId + "";
+                            komut.CommandText = CommandText;
+                            komut.Connection = conn;
+                            conn.Open();
+                            dr = komut.ExecuteReader();
+                            conn.Close();
+                            GroupAddForm form = (GroupAddForm)Application.OpenForms["GroupAddForm"];
+                            form.fillGroupsDGV();
+                            MessageBox.Show("Güncellendi!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Hata: \n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
                     }
                 }
             }

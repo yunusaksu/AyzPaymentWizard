@@ -6,11 +6,15 @@ using System.IO;
 namespace AyzPaymentWizard
 {
 
-    public  class ConnectionHelper
+    public class ConnectionHelper
     {
-        public static string SystemIniPath = Application.StartupPath + @"\System.ini";
+        static string root = Directory.GetDirectoryRoot(@"\AYZ PAYMENT WIZARD");
+        public static string SystemIniPath = root + "AYZ PAYMENT WIZARD" + @"\System.ini";
+
+
+        //public static string SystemIniPath = Application.StartupPath + @"\System.ini";
         static bool existIni = File.Exists(SystemIniPath);
-        
+
         private static string DecryptionServername = EncryptionAlgorithm.Decrytion(GetServerName());
         private static string DecryptionDatabasename = EncryptionAlgorithm.Decrytion(GetDatabaseName());
         private static string DecryptionServerUsername = EncryptionAlgorithm.Decrytion(GetServerUserName());
@@ -20,26 +24,18 @@ namespace AyzPaymentWizard
         static extern uint GetPrivateProfileString(string lpAppName, string lpKeyName, string lpDefault, StringBuilder lpReturnedString, int nSize, string lpFileName);
         private static string GetServerName()
         {
-<<<<<<< HEAD
-            StringBuilder sb = new StringBuilder(5000);
-            var a = GetPrivateProfileString("ServerNameBaslik", "Server", "", sb, sb.Capacity, SystemIniPath);
-            string server = sb.ToString();
-            return server;
-=======
-                if (existIni == true)
-                {
+            if (existIni == true)
+            {
                 StringBuilder sb = new StringBuilder(5000);
                 GetPrivateProfileString("ServerNameBaslik", "Server", "", sb, sb.Capacity, SystemIniPath);
                 server = sb.ToString();
                 return server;
 
-                }
-               else
-               {
-                 throw new Exception("System.INI Dosyasi Bulunamadi");
-               }
-
->>>>>>> 5bb4b2bea0e19314183a3c8d12e670dd96a627dc
+            }
+            else
+            {
+                throw new Exception("System.ini Dosyasi Bulunamadi");                
+            }
         }
 
         private static string GetDatabaseName()

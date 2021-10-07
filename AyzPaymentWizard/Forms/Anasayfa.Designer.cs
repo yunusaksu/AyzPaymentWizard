@@ -54,11 +54,10 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnUserAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripDropDownSettingButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.sFTPAyarlarıToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnBankAndBankAccAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.logoUserSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnsqlBağlantiAyarlariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sFTPBaglantiLoglariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sMTPSunucuAyarlariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.genelAyarlarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -369,22 +368,21 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 32);
             // 
-            // toolStripDropDownButton1
+            // toolStripDropDownSettingButton
             // 
-            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripDropDownSettingButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sFTPAyarlarıToolStripMenuItem,
             this.btnBankAndBankAccAdd,
             this.logoUserSettingsToolStripMenuItem,
-            this.btnsqlBağlantiAyarlariToolStripMenuItem,
             this.sFTPBaglantiLoglariToolStripMenuItem,
             this.sMTPSunucuAyarlariToolStripMenuItem,
             this.genelAyarlarToolStripMenuItem});
-            this.toolStripDropDownButton1.Font = new System.Drawing.Font("Segoe UI", 13F);
-            this.toolStripDropDownButton1.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(80, 29);
-            this.toolStripDropDownButton1.Text = "Ayarlar";
+            this.toolStripDropDownSettingButton.Font = new System.Drawing.Font("Segoe UI", 13F);
+            this.toolStripDropDownSettingButton.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.toolStripDropDownSettingButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownSettingButton.Name = "toolStripDropDownSettingButton";
+            this.toolStripDropDownSettingButton.Size = new System.Drawing.Size(80, 29);
+            this.toolStripDropDownSettingButton.Text = "Ayarlar";
             // 
             // sFTPAyarlarıToolStripMenuItem
             // 
@@ -409,14 +407,6 @@
             this.logoUserSettingsToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
             this.logoUserSettingsToolStripMenuItem.Text = "Logo Kullanıcı Ayarları";
             this.logoUserSettingsToolStripMenuItem.Click += new System.EventHandler(this.logoUserSettingsToolStripMenuItem_Click);
-            // 
-            // btnsqlBağlantiAyarlariToolStripMenuItem
-            // 
-            this.btnsqlBağlantiAyarlariToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.btnsqlBağlantiAyarlariToolStripMenuItem.Name = "btnsqlBağlantiAyarlariToolStripMenuItem";
-            this.btnsqlBağlantiAyarlariToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
-            this.btnsqlBağlantiAyarlariToolStripMenuItem.Text = "Sql Bağlantı Ayarları";
-            this.btnsqlBağlantiAyarlariToolStripMenuItem.Click += new System.EventHandler(this.btnsqlBağlantiAyarlariToolStripMenuItem_Click);
             // 
             // sFTPBaglantiLoglariToolStripMenuItem
             // 
@@ -458,7 +448,7 @@
             this.toolStripSeparator2,
             this.btnUserAdd,
             this.toolStripSeparator3,
-            this.toolStripDropDownButton1,
+            this.toolStripDropDownSettingButton,
             this.toolStripSeparator5});
             this.toolStripAnasayfa.Location = new System.Drawing.Point(0, 0);
             this.toolStripAnasayfa.Name = "toolStripAnasayfa";
@@ -525,7 +515,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton btnUserAdd;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownSettingButton;
         private System.Windows.Forms.ToolStripMenuItem sFTPAyarlarıToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem btnBankAndBankAccAdd;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
@@ -534,7 +524,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStripAnasayfa;
         private System.Windows.Forms.ToolStripMenuItem akibetiİnceleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem logoUserSettingsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem btnsqlBağlantiAyarlariToolStripMenuItem;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.ToolStripMenuItem sFTPBaglantiLoglariToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem paketSeruveniToolStripMenuItem;
