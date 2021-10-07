@@ -317,7 +317,7 @@ namespace AyzPaymentWizard
             try
             {
                 bool result = false;
-                if (Helper.USERNAME == "Admin")
+                if (Helper.IsAdmin())
                 {
                     return true;
                 }

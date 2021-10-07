@@ -49,7 +49,7 @@ namespace AyzPaymentWizard
         {
             try
             {
-                if (Helper.AuthorityControl("ADD_PACKAGE") || Helper.USERNAME == "Admin")
+                if (Helper.AuthorityControl("ADD_PACKAGE") || Helper.IsAdmin())
                 {
                     FiltersForm filtersForm = new FiltersForm();
                     filtersForm.ShowDialog();
