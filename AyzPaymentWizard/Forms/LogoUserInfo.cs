@@ -94,7 +94,8 @@ namespace AyzPaymentWizard.Forms
                     conn.Open();
                     dr = komut.ExecuteReader();
                 }
-                MessageBox.Show("Kayıt Başarılı.", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Kayıt Başarılı. \nYeni bilgilerin belleğe alınması için uygulama yeniden başlatılacaktır!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);               
+                Application.Restart();
             }
             catch (Exception ex)
             {

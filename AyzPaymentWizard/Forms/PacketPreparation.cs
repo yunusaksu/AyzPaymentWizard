@@ -1237,8 +1237,8 @@ namespace AyzPaymentWizard
 
         private void btnCreatePackage_Click(object sender, EventArgs e)
         {
-            decimal sumRequire = RightList.Sum(x => x.Total);                                                       // Ödenmesi Gereken
-            decimal sumPaid = RightList.Sum(x => x.Paid);                                                           // Ödenecek Tutar        
+            decimal sumRequire = RightList.Sum(x => x.Total);                                      // Ödenmesi Gereken
+            decimal sumPaid = RightList.Sum(x => x.Paid);                                          // Ödenecek Tutar        
             int? bankOutAccID = (int?)cmbOutAccountInfo.SelectedValue;
             string bankAccountNo = "";
             string bankCode = "";
@@ -1275,7 +1275,7 @@ namespace AyzPaymentWizard
                                     "\n) " +
                                     "\nVALUES" +
                                     "(" +
-                                    "\n '" + txtPacketExp.Text + "'," +
+                                    "\n '" + txtPacketExp.Text.Replace("'","''") + "'," +
                                     "\n'" + Helper.USERID + "'," +
                                     "\n'" + Helper.USERID + "'," +
                                     "\nCONVERT(DATE, GETDATE(), 104)," +

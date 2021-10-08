@@ -1587,7 +1587,7 @@ namespace AyzPaymentWizard.Forms
                               "\nMODIFIED_TIME = " + Helper.GetTime() + ", " +
                               "\nTOTAL_REQUIRED = " + sumRequire.ToString().Replace(',', '.') + ", " +
                               "\nTOTAL_PAID = " + sumPaid.ToString().Replace(',', '.') + ", " +
-                              "\nNOTE = '" + txtPacketEditExp.Text + "', " +
+                              "\nNOTE = '" + txtPacketEditExp.Text.Replace("'","''") + "', " +
                               "\nACCOUNTOUTID = '" + cmbOutAccountInfoEdit.SelectedValue + "' " +
                               "\nWHERE ID = " + PacketId + " ";
                     komut.CommandText = CommandText;

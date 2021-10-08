@@ -54,12 +54,18 @@ namespace AyzPaymentWizard
 
         public enum PacketStatus
         {
+            //NewPacket = 0,
+            //Approved = 1,
+            //Rejected = 2,
+            //SentToBank = 3,
+            //AnswerReceivedBank = 4,
+            //SendToApproval = 5
             NewPacket = 0,
-            Approved = 1,
-            Rejected = 2,
-            SentToBank = 3,
-            AnswerReceivedBank = 4,
-            SendToApproval = 5
+            SendToApproval = 1,
+            Approved = 2,
+            Rejected = 3,
+            SentToBank = 4,
+            AnswerReceivedBank = 5            
         }
         public enum ArchiveStatus
         {
@@ -67,7 +73,14 @@ namespace AyzPaymentWizard
             Archived = 1
         }
 
-        public static bool SFTPLOG(int? packetId)
+        static public string ApprovalQueeMessage =  "Lütfen Paket Akışını Takip Edin! " +
+                             "\n1 - Yeni Paket " +
+                             "\n2 - Onaya Yollandı " +
+                             "\n3 - Onaylandı " +
+                             "\n4 - Bankaya Yollandı " +
+                             "\n5 - Akibet Alındı";
+
+        public static bool SFTPCHECKANDLOG(int? packetId)
         {
             string Hostname = "", Username = "", Password = "";
             int Port = 22;
@@ -151,95 +164,91 @@ namespace AyzPaymentWizard
                     komut.Connection = conn;
                     conn.Open();
                     dr = komut.ExecuteReader();
-                    while (dr.Read())
-                    {
-                        groups = groups + dr["GROUPID"].ToString() + ",";
-                    }
-                    groups = groups.ToString().Substring(0, groups.Length - 1);
-                    conn.Close();
-                    CommandText = "SELECT DISTINCT USERID, U.NAME,EPOSTA = U.EMAIL FROM AYZ_PW_USERGROUPS AS UG " +
-                                  "\nLEFT JOIN AYZ_PW_USER AS U ON U.ID = UG.USERID WHERE UG.GROUPID IN(" + groups + ") AND U.FIRMNR = " + Helper.FIRMNR + "";
-                    komut.CommandText = CommandText;
-                    komut.Connection = conn;
-                    conn.Open();
-                    dr = komut.ExecuteReader();
-                    while (dr.Read())
-                    {
-                        maillingAddresses = maillingAddresses + dr["EPOSTA"].ToString() + ",";
-                    }
-                    maillingAddresses = maillingAddresses.ToString().Substring(0, maillingAddresses.Length - 1);
-                }
-                #endregion
-
-                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-                {
-                    CommandText = "SELECT * FROM AYZ_PW_SMTP_SETTING";
-                    komut.CommandText = CommandText;
-                    komut.Connection = conn;
-                    conn.Open();
-                    dr = komut.ExecuteReader();
                     if (dr.HasRows)
                     {
                         while (dr.Read())
                         {
-                            url = dr["APPROVE_URL"].ToString();
-                            port = Convert.ToInt32(dr["SMTP_PORT_NO"].ToString());
-                            serverAddress = dr["SMTP_SERVERNAME"].ToString();
-                            smtpServerName = dr["SMTP_USERNAME"].ToString();
-                            smtpPassword = EncryptionAlgorithm.Decrytion(dr["SMTP_USERPASSWORD"].ToString());
-                            senderMailAddress = dr["SENDER_MAILADDRESS"].ToString();
-                            enableSSL = Convert.ToBoolean(dr["SMTP_SSL_CONN"].ToString());
+                            groups = groups + dr["GROUPID"].ToString() + ",";
+                        }
+                        groups = groups.ToString().Substring(0, groups.Length - 1);
+                        conn.Close();
+                        CommandText = "SELECT DISTINCT USERID, U.NAME,EPOSTA = U.EMAIL FROM AYZ_PW_USERGROUPS AS UG " +
+                                      "\nLEFT JOIN AYZ_PW_USER AS U ON U.ID = UG.USERID WHERE UG.GROUPID IN(" + groups + ") AND U.FIRMNR = " + Helper.FIRMNR + "";
+                        komut.CommandText = CommandText;
+                        komut.Connection = conn;
+                        conn.Open();
+                        dr = komut.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            maillingAddresses = maillingAddresses + dr["EPOSTA"].ToString() + ",";
+                        }
+                        maillingAddresses = maillingAddresses.ToString().Substring(0, maillingAddresses.Length - 1);
+
+                        using (SqlConnection conn_ = new SqlConnection(ConnectionHelper.ConnectionString))
+                        {
+                            CommandText = "SELECT * FROM AYZ_PW_SMTP_SETTING";
+                            komut.CommandText = CommandText;
+                            komut.Connection = conn_;
+                            conn_.Open();
+                            dr = komut.ExecuteReader();
+                            if (dr.HasRows)
+                            {
+                                while (dr.Read())
+                                {
+                                    url = dr["APPROVE_URL"].ToString();
+                                    port = Convert.ToInt32(dr["SMTP_PORT_NO"].ToString());
+                                    serverAddress = dr["SMTP_SERVERNAME"].ToString();
+                                    smtpServerName = dr["SMTP_USERNAME"].ToString();
+                                    smtpPassword = EncryptionAlgorithm.Decrytion(dr["SMTP_USERPASSWORD"].ToString());
+                                    senderMailAddress = dr["SENDER_MAILADDRESS"].ToString();
+                                    enableSSL = Convert.ToBoolean(dr["SMTP_SSL_CONN"].ToString());
+                                }
+                            }
+                        }
+
+                        using (SmtpClient smtpSend = new SmtpClient())
+                        {
+                            smtpSend.Host = serverAddress;
+                            smtpSend.Port = port;
+
+                            smtpSend.Credentials = new System.Net.NetworkCredential(senderMailAddress, smtpPassword);
+
+                            smtpSend.EnableSsl = enableSSL;
+
+                            MailMessage emailMessage = new System.Net.Mail.MailMessage();
+                            var mailArray = maillingAddresses.Split(',');
+                            foreach (var item in mailArray)
+                            {
+                                emailMessage.To.Add(item);
+                            }
+                            emailMessage.From = new MailAddress(senderMailAddress, smtpServerName);
+                            emailMessage.Subject = "ÖDEME PAKETİ ONAYI";
+                            emailMessage.IsBodyHtml = true;
+                            string htmlBody;
+                            htmlBody = "Sayın Yetkili <br /><br />";
+                            htmlBody += "Onaylanmayı bekleyen bir paketiniz vardır:<br /><br />";
+                            string encryptionPacketId = EncryptionAlgorithm.Encrytion(packetId.ToString());
+                            htmlBody += "" + url + "Approve/PacketApprove?packetId=" + encryptionPacketId + "<br /><br />";
+                            htmlBody += "Teşekkür ederiz.";
+                            emailMessage.Body = htmlBody;
+
+                            if (!Regex.IsMatch(emailMessage.Body, @"^([0-9a-z!@#\$\%\^&\*\(\)\-=_\+])", RegexOptions.IgnoreCase) ||
+                                    !Regex.IsMatch(emailMessage.Subject, @"^([0-9a-z!@#\$\%\^&\*\(\)\-=_\+])", RegexOptions.IgnoreCase))
+                            {
+                                emailMessage.BodyEncoding = Encoding.Unicode;
+                            }
+
+                            smtpSend.Send(emailMessage);
+                            result = true;
                         }
                     }
-                }
-
-                using (SmtpClient smtpSend = new SmtpClient())
-                {
-                    smtpSend.Host = serverAddress;
-                    smtpSend.Port = port;
-
-                    smtpSend.Credentials = new System.Net.NetworkCredential(senderMailAddress, smtpPassword);
-
-                    smtpSend.EnableSsl = enableSSL;
-
-                    MailMessage emailMessage = new System.Net.Mail.MailMessage();
-                    var mailArray = maillingAddresses.Split(',');
-                    foreach (var item in mailArray)
+                    #endregion                
+                    else
                     {
-                        emailMessage.To.Add(item);
+                        result = true;
                     }
-                    emailMessage.From = new MailAddress(senderMailAddress, smtpServerName);
-                    emailMessage.Subject = "ÖDEME PAKETİ ONAYI";
-                    emailMessage.IsBodyHtml = true;
-                    string htmlBody;
-                    htmlBody = "Sayın Yetkili <br /><br />";
-                    htmlBody += "Onaylanmayı bekleyen bir paketiniz vardır:<br /><br />";
-                    string encryptionPacketId = EncryptionAlgorithm.Encrytion(packetId.ToString());
-                    htmlBody += "" + url + "Approve/PacketApprove?packetId=" + encryptionPacketId + "<br /><br />";
-                    htmlBody += "Teşekkür ederiz.";
-                    emailMessage.Body = htmlBody;
-
-                    if (!Regex.IsMatch(emailMessage.Body, @"^([0-9a-z!@#\$\%\^&\*\(\)\-=_\+])", RegexOptions.IgnoreCase) ||
-                            !Regex.IsMatch(emailMessage.Subject, @"^([0-9a-z!@#\$\%\^&\*\(\)\-=_\+])", RegexOptions.IgnoreCase))
-                    {
-                        emailMessage.BodyEncoding = Encoding.Unicode;
-                    }
-
-                    smtpSend.Send(emailMessage);
-                    result = true;
-
-                    //catch (SmtpException ex)
-                    //{
-                    //    string msg = "\nSMTP sunucusuna bağlantı başarısız oldu.Bunun sebebi aşağıdaki sebepler olabilir:" +
-                    //                 "\n1- Kimlik doğrulama başarısız oldu." +
-                    //                 "\n2- İşlem zaman aşımına uğradı." +
-                    //                 "\n3- System.Net.Mail.SmtpClient.EnableSsl true olarak ayarlanmış ancak System.Net.Mail.SmtpClient.DeliveryMethod " +
-                    //                 "özelliği System.Net.Mail.SmtpDeliveryMethod.SpecifiedPickupDirectory olarak ayarlandı " +
-                    //                 "\n4- System.Net.Mail.SmtpDeliveryMethod.PickupDirectoryFromIis.Veya System.Net.Mail.SmtpClient.EnableSsl true olarak ayarlandı, ancak SMTP posta sunucusu EHLO komutuna yanıt olarak STARTTLS'yi tanıtmadı. \n";
-                    //    throw new Exception(msg + ex);
-                    //}
+                    return result;
                 }
-                return result;
             }
             catch (Exception)
             {

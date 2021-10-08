@@ -342,45 +342,44 @@ namespace AyzPaymentWizard.Forms
                         }
                     }
                 }
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT PAYMENT_STATUS FROM AYZ_PW_SUMMARY WHERE PAYMENT_STATUS IS NOT NULL AND PACKETID = '" + PacketID + "'";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        using (SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString))
+                        {
+                            // Güncellenecek Alanlar: STATUS                        
+                            CommandText = "UPDATE AYZ_PW_PACKET" +
+                                          "\nSET STATUS = " + (int)Helper.PacketStatus.AnswerReceivedBank + "" +
+                                          "\nWHERE ID = " + PacketID + "";
+                            komut.CommandText = CommandText;
+                            komut.Connection = conn2;
+                            conn2.Open();
+                            komut.ExecuteNonQuery();
+                            conn2.Close();
+                        }
+                        Helper.PacketHistorySave(PacketID, "Akibet Alındı", "Akibet Alındı.");
+                        saveDownloadedFiles(Item, DetailResult, FooterResult);
+                        Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
+                        form.FillPacketList();
+                        this.Hide();
+                        MessageBox.Show("Akibet alındı!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Bu Paketin Banka Tarafından Henüz Akibet Dosyası Yollanmamıştır!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
             }
             else
             {
                 MessageBox.Show("Hatalı Logo Giriş Bilgileri Tespit Edildi!", "Logo Bilgileri Hatalı!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-
-
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT PAYMENT_STATUS FROM AYZ_PW_SUMMARY WHERE PAYMENT_STATUS IS NOT NULL AND PACKETID = '" + PacketID + "'";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                if (dr.HasRows)
-                {
-                    using (SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString))
-                    {
-                        // Güncellenecek Alanlar: STATUS                        
-                        CommandText = "UPDATE AYZ_PW_PACKET" +
-                                      "\nSET STATUS = " + (int)Helper.PacketStatus.AnswerReceivedBank + "" +
-                                      "\nWHERE ID = " + PacketID + "";
-                        komut.CommandText = CommandText;
-                        komut.Connection = conn2;
-                        conn2.Open();
-                        komut.ExecuteNonQuery();
-                        conn2.Close();
-                    }
-                    Helper.PacketHistorySave(PacketID, "Akibet Alındı", "Akibet Alındı.");
-                    saveDownloadedFiles(Item, DetailResult, FooterResult);
-                    Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
-                    form.FillPacketList();
-                    this.Hide();
-                }
-                else
-                {
-                    MessageBox.Show("Bu Paketin Banka Tarafından Henüz Akibet Dosyası Yollanmamıştır!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
+            }            
         }
 
         private int GetBankFicheLinePayTransRef(int bankfichelineref)
