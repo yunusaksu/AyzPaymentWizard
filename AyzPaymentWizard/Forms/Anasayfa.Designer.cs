@@ -48,8 +48,6 @@
             this.contextMenuStripAnasayfa = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.akibetiİnceleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.paketSeruveniToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnPackageAdd = new System.Windows.Forms.ToolStripButton();
             this.btnGroupAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnUserAdd = new System.Windows.Forms.ToolStripButton();
@@ -64,6 +62,7 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripAnasayfa = new System.Windows.Forms.ToolStrip();
             this.label3 = new System.Windows.Forms.Label();
+            this.btnNewPacket = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPacket)).BeginInit();
@@ -102,6 +101,7 @@
             this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel3.Controls.Add(this.btnNewPacket);
             this.panel3.Controls.Add(this.btnRefresh);
             this.panel3.Controls.Add(this.btnAkibetSorgulama);
             this.panel3.Controls.Add(this.btnArchive);
@@ -136,9 +136,9 @@
             this.btnAkibetSorgulama.BackColor = System.Drawing.Color.Transparent;
             this.btnAkibetSorgulama.FlatAppearance.BorderSize = 0;
             this.btnAkibetSorgulama.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAkibetSorgulama.ImageIndex = 7;
+            this.btnAkibetSorgulama.ImageIndex = 6;
             this.btnAkibetSorgulama.ImageList = this.imageListPacketIcon;
-            this.btnAkibetSorgulama.Location = new System.Drawing.Point(458, 4);
+            this.btnAkibetSorgulama.Location = new System.Drawing.Point(523, 13);
             this.btnAkibetSorgulama.Name = "btnAkibetSorgulama";
             this.btnAkibetSorgulama.Size = new System.Drawing.Size(68, 65);
             this.btnAkibetSorgulama.TabIndex = 7;
@@ -154,19 +154,20 @@
             this.imageListPacketIcon.Images.SetKeyName(1, "reviewButton.png");
             this.imageListPacketIcon.Images.SetKeyName(2, "approveButton.png");
             this.imageListPacketIcon.Images.SetKeyName(3, "sendToApprove.png");
-            this.imageListPacketIcon.Images.SetKeyName(4, "rejectButton.png");
-            this.imageListPacketIcon.Images.SetKeyName(5, "bank.png");
-            this.imageListPacketIcon.Images.SetKeyName(6, "archive.png");
-            this.imageListPacketIcon.Images.SetKeyName(7, "performed_process.png");
+            this.imageListPacketIcon.Images.SetKeyName(4, "bank.png");
+            this.imageListPacketIcon.Images.SetKeyName(5, "archive.png");
+            this.imageListPacketIcon.Images.SetKeyName(6, "performed_process.png");
+            this.imageListPacketIcon.Images.SetKeyName(7, "newPacketButton.png");
+            this.imageListPacketIcon.Images.SetKeyName(8, "rejectButton.png");
             // 
             // btnArchive
             // 
             this.btnArchive.BackColor = System.Drawing.Color.Transparent;
             this.btnArchive.FlatAppearance.BorderSize = 0;
             this.btnArchive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnArchive.ImageIndex = 6;
+            this.btnArchive.ImageIndex = 5;
             this.btnArchive.ImageList = this.imageListPacketIcon;
-            this.btnArchive.Location = new System.Drawing.Point(398, 4);
+            this.btnArchive.Location = new System.Drawing.Point(463, 13);
             this.btnArchive.Name = "btnArchive";
             this.btnArchive.Size = new System.Drawing.Size(68, 65);
             this.btnArchive.TabIndex = 6;
@@ -179,9 +180,9 @@
             this.btnSendToBank.BackColor = System.Drawing.Color.Transparent;
             this.btnSendToBank.FlatAppearance.BorderSize = 0;
             this.btnSendToBank.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSendToBank.ImageIndex = 5;
+            this.btnSendToBank.ImageIndex = 4;
             this.btnSendToBank.ImageList = this.imageListPacketIcon;
-            this.btnSendToBank.Location = new System.Drawing.Point(330, 4);
+            this.btnSendToBank.Location = new System.Drawing.Point(395, 13);
             this.btnSendToBank.Name = "btnSendToBank";
             this.btnSendToBank.Size = new System.Drawing.Size(68, 65);
             this.btnSendToBank.TabIndex = 5;
@@ -194,9 +195,9 @@
             this.btnReject.BackColor = System.Drawing.Color.White;
             this.btnReject.FlatAppearance.BorderSize = 0;
             this.btnReject.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReject.ImageIndex = 4;
+            this.btnReject.ImageIndex = 8;
             this.btnReject.ImageList = this.imageListPacketIcon;
-            this.btnReject.Location = new System.Drawing.Point(265, 4);
+            this.btnReject.Location = new System.Drawing.Point(330, 13);
             this.btnReject.Name = "btnReject";
             this.btnReject.Size = new System.Drawing.Size(68, 65);
             this.btnReject.TabIndex = 4;
@@ -211,7 +212,7 @@
             this.btnApproved.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnApproved.ImageIndex = 2;
             this.btnApproved.ImageList = this.imageListPacketIcon;
-            this.btnApproved.Location = new System.Drawing.Point(201, 4);
+            this.btnApproved.Location = new System.Drawing.Point(266, 13);
             this.btnApproved.Name = "btnApproved";
             this.btnApproved.Size = new System.Drawing.Size(68, 65);
             this.btnApproved.TabIndex = 3;
@@ -226,7 +227,7 @@
             this.btnSendToApprove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSendToApprove.ImageIndex = 3;
             this.btnSendToApprove.ImageList = this.imageListPacketIcon;
-            this.btnSendToApprove.Location = new System.Drawing.Point(134, 4);
+            this.btnSendToApprove.Location = new System.Drawing.Point(199, 13);
             this.btnSendToApprove.Name = "btnSendToApprove";
             this.btnSendToApprove.Size = new System.Drawing.Size(68, 65);
             this.btnSendToApprove.TabIndex = 2;
@@ -241,7 +242,7 @@
             this.btnRewiew.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRewiew.ImageIndex = 1;
             this.btnRewiew.ImageList = this.imageListPacketIcon;
-            this.btnRewiew.Location = new System.Drawing.Point(72, 3);
+            this.btnRewiew.Location = new System.Drawing.Point(137, 12);
             this.btnRewiew.Name = "btnRewiew";
             this.btnRewiew.Size = new System.Drawing.Size(68, 65);
             this.btnRewiew.TabIndex = 1;
@@ -256,7 +257,7 @@
             this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEdit.ImageIndex = 0;
             this.btnEdit.ImageList = this.imageListPacketIcon;
-            this.btnEdit.Location = new System.Drawing.Point(7, 3);
+            this.btnEdit.Location = new System.Drawing.Point(72, 12);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(68, 65);
             this.btnEdit.TabIndex = 0;
@@ -317,23 +318,6 @@
             this.paketSeruveniToolStripMenuItem.Text = "Kayıt Bilgisi";
             this.paketSeruveniToolStripMenuItem.Click += new System.EventHandler(this.paketSeruveniToolStripMenuItem_Click);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 32);
-            // 
-            // btnPackageAdd
-            // 
-            this.btnPackageAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnPackageAdd.Font = new System.Drawing.Font("Segoe UI", 13F);
-            this.btnPackageAdd.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.btnPackageAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnPackageAdd.Image")));
-            this.btnPackageAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPackageAdd.Name = "btnPackageAdd";
-            this.btnPackageAdd.Size = new System.Drawing.Size(94, 29);
-            this.btnPackageAdd.Text = "Paket Ekle";
-            this.btnPackageAdd.Click += new System.EventHandler(this.btnPackageAdd_Click);
-            // 
             // btnGroupAdd
             // 
             this.btnGroupAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -342,8 +326,8 @@
             this.btnGroupAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnGroupAdd.Image")));
             this.btnGroupAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnGroupAdd.Name = "btnGroupAdd";
-            this.btnGroupAdd.Size = new System.Drawing.Size(91, 29);
-            this.btnGroupAdd.Text = "Grup Ekle";
+            this.btnGroupAdd.Size = new System.Drawing.Size(74, 29);
+            this.btnGroupAdd.Text = "Gruplar";
             this.btnGroupAdd.Click += new System.EventHandler(this.btnGroupAdd_Click);
             // 
             // toolStripSeparator2
@@ -359,8 +343,8 @@
             this.btnUserAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnUserAdd.Image")));
             this.btnUserAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnUserAdd.Name = "btnUserAdd";
-            this.btnUserAdd.Size = new System.Drawing.Size(115, 29);
-            this.btnUserAdd.Text = "Kullanıcı Ekle";
+            this.btnUserAdd.Size = new System.Drawing.Size(98, 29);
+            this.btnUserAdd.Text = "Kullanıcılar";
             this.btnUserAdd.Click += new System.EventHandler(this.btnUserAdd_Click);
             // 
             // toolStripSeparator3
@@ -442,8 +426,6 @@
             this.toolStripAnasayfa.BackColor = System.Drawing.SystemColors.Control;
             this.toolStripAnasayfa.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripAnasayfa.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnPackageAdd,
-            this.toolStripSeparator1,
             this.btnGroupAdd,
             this.toolStripSeparator2,
             this.btnUserAdd,
@@ -467,6 +449,21 @@
             this.label3.Size = new System.Drawing.Size(138, 23);
             this.label3.TabIndex = 5;
             this.label3.Text = "Online Kullanıcı:";
+            // 
+            // btnNewPacket
+            // 
+            this.btnNewPacket.BackColor = System.Drawing.Color.Transparent;
+            this.btnNewPacket.FlatAppearance.BorderSize = 0;
+            this.btnNewPacket.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNewPacket.ImageIndex = 7;
+            this.btnNewPacket.ImageList = this.imageListPacketIcon;
+            this.btnNewPacket.Location = new System.Drawing.Point(8, 12);
+            this.btnNewPacket.Name = "btnNewPacket";
+            this.btnNewPacket.Size = new System.Drawing.Size(68, 65);
+            this.btnNewPacket.TabIndex = 9;
+            this.btnNewPacket.Tag = "";
+            this.btnNewPacket.UseVisualStyleBackColor = false;
+            this.btnNewPacket.Click += new System.EventHandler(this.btnNewPacket_Click);
             // 
             // Anasayfa
             // 
@@ -511,8 +508,6 @@
         private System.Windows.Forms.Button btnReject;
         private System.Windows.Forms.Button btnSendToBank;
         private System.Windows.Forms.Button btnArchive;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton btnPackageAdd;
         private System.Windows.Forms.ToolStripButton btnGroupAdd;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton btnUserAdd;
@@ -533,5 +528,6 @@
         private System.Windows.Forms.ToolStripMenuItem genelAyarlarToolStripMenuItem;
         private System.Windows.Forms.Label labelUserName;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnNewPacket;
     }
 }

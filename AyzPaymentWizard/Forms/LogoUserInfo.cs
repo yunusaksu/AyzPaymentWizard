@@ -112,5 +112,6 @@ namespace AyzPaymentWizard.Forms
                 MessageBox.Show("Hatalı Logo Giriş Bilgileri Tespit Edildi!", "Logo Bilgileri Hatalı!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
         }
+        
     }
 }

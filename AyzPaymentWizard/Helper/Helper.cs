@@ -73,12 +73,12 @@ namespace AyzPaymentWizard
             Archived = 1
         }
 
-        static public string ApprovalQueeMessage =  "Lütfen Paket Akışını Takip Edin! " +
-                             "\n1 - Yeni Paket " +
-                             "\n2 - Onaya Yollandı " +
-                             "\n3 - Onaylandı " +
-                             "\n4 - Bankaya Yollandı " +
-                             "\n5 - Akibet Alındı";
+        static public string ApprovalQueeMessage =  "Lütfen Paket İş Akışını Takip Edin!" +
+                             "\n    1 - Yeni Paket " +
+                             "\n    2 - Onaya Yollandı " +
+                             "\n    3 - Onaylandı " +
+                             "\n    4 - Bankaya Yollandı " +
+                             "\n    5 - Akibet Alındı";
 
         public static bool SFTPCHECKANDLOG(int? packetId)
         {

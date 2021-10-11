@@ -45,7 +45,7 @@
             this.btnDebitClosing.Name = "btnDebitClosing";
             this.btnDebitClosing.Size = new System.Drawing.Size(263, 39);
             this.btnDebitClosing.TabIndex = 0;
-            this.btnDebitClosing.Text = "Borç Kapatmayı Başlat";
+            this.btnDebitClosing.Text = "BAŞLAT";
             this.btnDebitClosing.UseVisualStyleBackColor = false;
             this.btnDebitClosing.Click += new System.EventHandler(this.btnDebitClosing_Click);
             // 
@@ -72,7 +72,7 @@
             this.Controls.Add(this.btnDebitClosing);
             this.Name = "DebitClosingForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "BORÇ KAPAMA EKRANI";
+            this.Text = "BORÇ KAPAMA";
             this.Load += new System.EventHandler(this.DebitClosingForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGVDebitClosing)).EndInit();
             this.ResumeLayout(false);

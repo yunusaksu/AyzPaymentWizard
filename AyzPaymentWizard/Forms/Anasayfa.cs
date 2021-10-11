@@ -44,32 +44,14 @@ namespace AyzPaymentWizard
             GroupAddForm form = new GroupAddForm();
             form.ShowDialog();
         }
-
-        private void btnPackageAdd_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (Helper.AuthorityControl("ADD_PACKAGE") || Helper.IsAdmin())
-                {
-                    FiltersForm filtersForm = new FiltersForm();
-                    filtersForm.ShowDialog();
-                }
-                else
-                {
-                    MessageBox.Show("Paket Ekleme Yetkiniz Bulunmuyor!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Hata oluştu:\n", ex.Message);
-            }
-
-        }
+        
 
         private void Anasayfa_Load(object sender, EventArgs e)
         {
             labelUserName.Text = Helper.USERNAME;
             dataGridViewPacket.MultiSelect = false;
+            ToolTip newPacketBtnToolTip = new ToolTip();
+            newPacketBtnToolTip.SetToolTip(btnNewPacket, "Yeni Paket");
             ToolTip editBtnToolTip = new ToolTip();
             editBtnToolTip.SetToolTip(btnEdit, "Paketi Düzenle");
             ToolTip reviewBtnToolTip = new ToolTip();
@@ -136,7 +118,7 @@ namespace AyzPaymentWizard
             if (!Helper.AuthorityControl("AKIBET_AL"))
                 btnAkibetSorgulama.Enabled = false;
             if (!Helper.AuthorityControl("ADD_PACKAGE"))
-                btnPackageAdd.Enabled = false;
+                btnNewPacket.Enabled = false;
             if (!Helper.AuthorityControl("EDIT_PACKAGE"))
                 btnEdit.Enabled = false;
             if (!Helper.AuthorityControl("APPROVE_PACKAGE"))
@@ -292,22 +274,7 @@ namespace AyzPaymentWizard
                     packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
                     status = (int)dataGridViewPacket.SelectedRows[i].Cells["STATUS"].Value;
                     archived = (int)dataGridViewPacket.SelectedRows[i].Cells["ARCHIVED"].Value;
-                }
-                //if (status == (int)Helper.PacketStatus.SendToApproval || status == (int)Helper.PacketStatus.Approved || status == (int)Helper.PacketStatus.SentToBank || status == (int)Helper.PacketStatus.AnswerReceivedBank || status == (int)Helper.PacketStatus.Rejected || archived == (int)Helper.ArchiveStatus.Archived)
-                //{
-                //    if (status == (int)Helper.PacketStatus.SendToApproval)
-                //        MessageBox.Show("Paket Daha Önce Onaya Yollandığı İçin Tekrar Yollanamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //    else if (status == (int)Helper.PacketStatus.Approved)
-                //        MessageBox.Show("Paket Onaylandığı İçin Tekrar Onaya Yollanamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //    else if (status == (int)Helper.PacketStatus.SentToBank)
-                //        MessageBox.Show("Paket Bankaya Yollandığı İçin Tekrar Onaya Yollanamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //    else if (status == (int)Helper.PacketStatus.AnswerReceivedBank)
-                //        MessageBox.Show("Paketin Akibeti Alındığı İçin Tekrar Onaya Yollanamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //    else if (status == (int)Helper.PacketStatus.Rejected)
-                //        MessageBox.Show("Paket Reddedildiği İçin Tekrar Onaya Yollanamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //    else if (archived == (int)Helper.ArchiveStatus.Archived)
-                //        MessageBox.Show("Paket Arşivlendiği İçin Onaya Yollanamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //}                                
+                }                                                
                 if (packetId != 0 && status == (int)Helper.PacketStatus.NewPacket)
                 {
                     string approvalExp = Interaction.InputBox("Onay Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250).Replace("'", "''");
@@ -342,7 +309,7 @@ namespace AyzPaymentWizard
                         MessageBox.Show("Açıklama girmek zorunludur!\nAçıklamasız paketler onaya yollanmaz!", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else
-                    MessageBox.Show(Helper.ApprovalQueeMessage, "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MyMessageBox.ShowBox(Helper.ApprovalQueeMessage, "UYARI");
             }
             catch (Exception ex)
             {
@@ -362,24 +329,7 @@ namespace AyzPaymentWizard
                         packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
                         status = (int)dataGridViewPacket.SelectedRows[i].Cells["STATUS"].Value;
                         archived = (int)dataGridViewPacket.SelectedRows[i].Cells["ARCHIVED"].Value;
-                    }
-                    //if (status == (int)Helper.PacketStatus.SendToApproval || status == (int)Helper.PacketStatus.Approved || status == (int)Helper.PacketStatus.SentToBank || status == (int)Helper.PacketStatus.AnswerReceivedBank || status == (int)Helper.PacketStatus.Rejected || archived == (int)Helper.ArchiveStatus.Archived || status == (int)Helper.PacketStatus.NewPacket)
-                    //{
-                    //    if (status == (int)Helper.PacketStatus.SendToApproval)
-                    //        MessageBox.Show("Paket Daha Önce Onaya Yollandığı İçin Tekrar Yollanamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //    else if (status == (int)Helper.PacketStatus.Approved)
-                    //        MessageBox.Show("Paket Onaylandığı İçin Tekrar Onaya Yollanamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //    else if (status == (int)Helper.PacketStatus.SentToBank)
-                    //        MessageBox.Show("Paket Bankaya Yollandığı İçin Tekrar Onaya Yollanamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //    else if (status == (int)Helper.PacketStatus.AnswerReceivedBank)
-                    //        MessageBox.Show("Paketin Akibeti Alındığı İçin Tekrar Onaya Yollanamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //    else if (status == (int)Helper.PacketStatus.Rejected)
-                    //        MessageBox.Show("Paket Reddedildiği İçin Tekrar Onaya Yollanamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //    else if (archived == (int)Helper.ArchiveStatus.Archived)
-                    //        MessageBox.Show("Paket Arşivlendiği İçin Onaya Yollanamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //    else if (status == (int)Helper.PacketStatus.NewPacket)
-                    //        MessageBox.Show("Paket Onaya Yollanmadığı İçin Onaylanamaz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //}
+                    }                   
                     if (packetId != 0 && status == (int)Helper.PacketStatus.SendToApproval)
                     {
                         string approvalExp = Interaction.InputBox("Onay Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250).Replace("'", "''");
@@ -414,7 +364,7 @@ namespace AyzPaymentWizard
                             MessageBox.Show("Açıklama girmek zorunludur!\nAçıklamasız paketler onaylanmaz!", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     else
-                        MessageBox.Show(Helper.ApprovalQueeMessage, "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MyMessageBox.ShowBox(Helper.ApprovalQueeMessage, "UYARI");
                 }
                 catch (Exception ex)
                 {
@@ -438,7 +388,7 @@ namespace AyzPaymentWizard
                     status = (int)dataGridViewPacket.SelectedRows[i].Cells["STATUS"].Value;
                     archived = (int)dataGridViewPacket.SelectedRows[i].Cells["ARCHIVED"].Value;
                 }
-                if ((status == (int)Helper.PacketStatus.SentToBank) || (status == (int)Helper.PacketStatus.Approved) || (status == (int)Helper.PacketStatus.AnswerReceivedBank) || (status == (int)Helper.PacketStatus.Rejected) || (archived == (int)Helper.ArchiveStatus.Archived))
+                if ((status == (int)Helper.PacketStatus.SentToBank) || (status == (int)Helper.PacketStatus.Approved) || (status == (int)Helper.PacketStatus.AnswerReceivedBank) || (status == (int)Helper.PacketStatus.Rejected) || (archived == (int)Helper.ArchiveStatus.Archived) || status == (int)Helper.PacketStatus.NewPacket)
                 {
                     if (status == (int)Helper.PacketStatus.SentToBank)
                         MessageBox.Show("Paket Bankaya Yollandığı İçin Reddedilemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -450,12 +400,14 @@ namespace AyzPaymentWizard
                         MessageBox.Show("Paket Daha Önce Reddedildiği İçin Tekrar Reddedilemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     else if (archived == (int)Helper.ArchiveStatus.Archived)
                         MessageBox.Show("Paketin Arşivlendiği İçin Reddedilemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else if (status == (int)Helper.PacketStatus.NewPacket)
+                        MessageBox.Show("Yeni Paket, Onaya Yollanmadan Reddedilemez!","Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
                     if (packetId != 0)
                     {
-                        string approvalExp = Interaction.InputBox("Red Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250);
+                        string approvalExp = Interaction.InputBox("Red Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250).Replace("'", "''");
                         if (approvalExp.Length > 0)
                         {
                             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
@@ -478,6 +430,8 @@ namespace AyzPaymentWizard
                             form.FillPacketList();
                             #endregion
                         }
+                        else
+                            MessageBox.Show("Açıklama girmek zorunludur!", "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
             }
@@ -485,73 +439,7 @@ namespace AyzPaymentWizard
             {
                 MessageBox.Show("Hata: \n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        }
-
-        //public bool SftpConnectionCheck(int packetId)
-        //{
-        //    string Hostname = "", Username = "", Password = "";
-        //    int Port = 22;
-        //    var sftpClient = new SftpClient(Hostname, Port, Username, Password);
-        //    try
-        //    {
-        //        using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-        //        {
-        //            CommandText = "SELECT * FROM AYZ_PW_SFTP_SETTING WHERE FIRMNR = " + Helper.FIRMNR + "";
-        //            komut.CommandText = CommandText;
-        //            komut.Connection = conn;
-        //            conn.Open();
-        //            dr = komut.ExecuteReader();
-        //            if (dr.HasRows)
-        //            {
-        //                while (dr.Read())
-        //                {
-        //                    Hostname = dr["HOSTNAME"].ToString();
-        //                    Username = dr["USERNAME"].ToString();
-        //                    Password = dr["PASSWORD"].ToString();
-        //                    Port = Convert.ToInt32(dr["PORT"].ToString());
-        //                }
-        //            }
-        //        }
-
-        //        sftpClient.Connect();
-        //        string ConnResult = sftpClient.IsConnected == true ? "Başarılı" : "Başarısız";
-
-        //        using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-        //        {
-        //            CommandText = "INSERT INTO AYZ_PW_LOG_FILE(LOG_NAME, LOG_DATETIME, LOG_EXP, PACKETID, LOG_CREATE_USERID, LOG_CREATE_USERNAME,STATE)" +
-        //                          "\nVALUES('SFTP BAĞLANTISI', CONVERT(DATETIME, GETDATE(), 104), " +
-        //                          "\n'Host: " + Hostname + ", User: " + Username + ", Password: " + Password + ", Port: " + Port + ", Bağlantı: " + ConnResult + " '," +
-        //                          "\n" + packetId + "," + Helper.USERID + ",'" + Helper.USERNAME + "','" + ConnResult + "')";
-        //            komut.CommandText = CommandText;
-        //            komut.Connection = conn;
-        //            conn.Open();
-        //            dr = komut.ExecuteReader();
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        string ConnResult = sftpClient.IsConnected == true ? "Başarılı" : "Başarısız";
-
-        //        using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-        //        {
-        //            CommandText = "INSERT INTO AYZ_PW_LOG_FILE(LOG_NAME, LOG_DATETIME, LOG_EXP, PACKETID, LOG_CREATE_USERID, LOG_CREATE_USERNAME,STATE)" +
-        //                          "\nVALUES('SFTP BAĞLANTISI', CONVERT(DATETIME, GETDATE(), 104), " +
-        //                          "\n'Host: " + Hostname + ", User: " + Username + ", Password: " + Password + ", Port: " + Port + ", Bağlantı: " + ConnResult + " '," +
-        //                          "\n" + packetId + "," + Helper.USERID + ",'" + Helper.USERNAME + "','" + ConnResult + "')";
-        //            komut.CommandText = CommandText;
-        //            komut.Connection = conn;
-        //            conn.Open();
-        //            dr = komut.ExecuteReader();
-        //        }
-        //        MessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //    }
-
-
-        //    if (sftpClient.IsConnected)
-        //        return true;
-        //    else
-        //        return false;
-        //}
+        }       
 
         private void btnSendToBank_Click(object sender, EventArgs e)
         {
@@ -791,7 +679,7 @@ namespace AyzPaymentWizard
                 }
             }
             else
-                MessageBox.Show(Helper.ApprovalQueeMessage, "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MyMessageBox.ShowBox(Helper.ApprovalQueeMessage, "UYARI");
         }
 
         private void btnArchive_Click(object sender, EventArgs e)
@@ -845,7 +733,7 @@ namespace AyzPaymentWizard
 
         private void Anasayfa_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Application.Exit();
+            Application.Exit();                
         }
 
         private void btnAkibetSorgulama_Click(object sender, EventArgs e)
@@ -1024,7 +912,7 @@ namespace AyzPaymentWizard
                 }
             }
             else
-                MessageBox.Show(Helper.ApprovalQueeMessage, "UYARI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MyMessageBox.ShowBox(Helper.ApprovalQueeMessage, "UYARI");
         }
 
         private List<string> FileNameList(string folderPath, string hostName, int port, string userName, string password)
@@ -1120,6 +1008,26 @@ namespace AyzPaymentWizard
             {
                 Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
                 form.FillPacketList();
+            }
+        }
+
+        private void btnNewPacket_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Helper.AuthorityControl("ADD_PACKAGE") || Helper.IsAdmin())
+                {
+                    FiltersForm filtersForm = new FiltersForm();
+                    filtersForm.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Paket Ekleme Yetkiniz Bulunmuyor!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hata oluştu:\n", ex.Message);
             }
         }
     }

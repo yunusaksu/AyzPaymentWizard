@@ -162,7 +162,7 @@ namespace AyzPaymentWizard
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.InnerException.Message, "DOSYA BULUNAMADI!");
+                MessageBox.Show(ex.Message, "UYARI");
                 Application.Exit();
             }
         }
