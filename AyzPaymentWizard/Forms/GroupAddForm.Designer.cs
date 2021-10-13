@@ -37,17 +37,18 @@
             System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("AKİBET AL");
             System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("KULLANICI EKLEME");
             System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("GRUP EKLEME");
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GroupAddForm));
             this.label1 = new System.Windows.Forms.Label();
             this.txtGroupName = new System.Windows.Forms.TextBox();
             this.AuthorityTreeView = new System.Windows.Forms.TreeView();
             this.btnGroupSave = new System.Windows.Forms.Button();
-            this.btnEdit = new System.Windows.Forms.Button();
             this.dataGridViewGroup = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnInfo = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.btnInfo = new System.Windows.Forms.Button();
+            this.btnNewRecord = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGroup)).BeginInit();
             this.SuspendLayout();
             // 
@@ -115,28 +116,13 @@
             this.btnGroupSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGroupSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnGroupSave.ForeColor = System.Drawing.Color.White;
-            this.btnGroupSave.Location = new System.Drawing.Point(701, 201);
+            this.btnGroupSave.Location = new System.Drawing.Point(701, 392);
             this.btnGroupSave.Name = "btnGroupSave";
             this.btnGroupSave.Size = new System.Drawing.Size(185, 36);
             this.btnGroupSave.TabIndex = 3;
             this.btnGroupSave.Text = "Kaydet";
             this.btnGroupSave.UseVisualStyleBackColor = false;
             this.btnGroupSave.Click += new System.EventHandler(this.btnGroupSave_Click);
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.BackColor = System.Drawing.Color.Gray;
-            this.btnEdit.FlatAppearance.BorderSize = 0;
-            this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnEdit.ForeColor = System.Drawing.Color.White;
-            this.btnEdit.Location = new System.Drawing.Point(701, 392);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(185, 36);
-            this.btnEdit.TabIndex = 4;
-            this.btnEdit.Text = "Düzelt";
-            this.btnEdit.UseVisualStyleBackColor = false;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // dataGridViewGroup
             // 
@@ -147,10 +133,11 @@
             this.dataGridViewGroup.Location = new System.Drawing.Point(127, 253);
             this.dataGridViewGroup.MultiSelect = false;
             this.dataGridViewGroup.Name = "dataGridViewGroup";
+            this.dataGridViewGroup.ReadOnly = true;
             this.dataGridViewGroup.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewGroup.Size = new System.Drawing.Size(560, 175);
             this.dataGridViewGroup.TabIndex = 5;
-            this.dataGridViewGroup.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewGroup_RowEnter);
+            this.dataGridViewGroup.SelectionChanged += new System.EventHandler(this.dataGridViewGroup_SelectionChanged);
             this.dataGridViewGroup.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridViewGroup_KeyDown);
             // 
             // label2
@@ -163,17 +150,6 @@
             this.label2.Size = new System.Drawing.Size(88, 20);
             this.label2.TabIndex = 6;
             this.label2.Text = "GRUPLAR";
-            // 
-            // btnInfo
-            // 
-            this.btnInfo.FlatAppearance.BorderSize = 0;
-            this.btnInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnInfo.Image = global::AyzPaymentWizard.Properties.Resources.info;
-            this.btnInfo.Location = new System.Drawing.Point(16, 276);
-            this.btnInfo.Name = "btnInfo";
-            this.btnInfo.Size = new System.Drawing.Size(33, 34);
-            this.btnInfo.TabIndex = 8;
-            this.btnInfo.UseVisualStyleBackColor = true;
             // 
             // label3
             // 
@@ -208,18 +184,42 @@
             this.label5.TabIndex = 11;
             this.label5.Text = "YETKİLER";
             // 
+            // btnInfo
+            // 
+            this.btnInfo.FlatAppearance.BorderSize = 0;
+            this.btnInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnInfo.Image = global::AyzPaymentWizard.Properties.Resources.info;
+            this.btnInfo.Location = new System.Drawing.Point(16, 276);
+            this.btnInfo.Name = "btnInfo";
+            this.btnInfo.Size = new System.Drawing.Size(33, 34);
+            this.btnInfo.TabIndex = 8;
+            this.btnInfo.UseVisualStyleBackColor = true;
+            // 
+            // btnNewRecord
+            // 
+            this.btnNewRecord.FlatAppearance.BorderSize = 0;
+            this.btnNewRecord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNewRecord.Image = ((System.Drawing.Image)(resources.GetObject("btnNewRecord.Image")));
+            this.btnNewRecord.Location = new System.Drawing.Point(693, 253);
+            this.btnNewRecord.Name = "btnNewRecord";
+            this.btnNewRecord.Size = new System.Drawing.Size(50, 50);
+            this.btnNewRecord.TabIndex = 12;
+            this.btnNewRecord.UseVisualStyleBackColor = true;
+            this.btnNewRecord.Click += new System.EventHandler(this.btnNewRecord_Click);
+            // 
             // GroupAddForm
             // 
+            this.AcceptButton = this.btnGroupSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(898, 436);
+            this.Controls.Add(this.btnNewRecord);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnInfo);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dataGridViewGroup);
-            this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnGroupSave);
             this.Controls.Add(this.AuthorityTreeView);
             this.Controls.Add(this.txtGroupName);
@@ -228,7 +228,7 @@
             this.MaximizeBox = false;
             this.Name = "GroupAddForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "GRUP EKLEME EKRANI";
+            this.Text = "GRUPLAR";
             this.Load += new System.EventHandler(this.GroupAddForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGroup)).EndInit();
             this.ResumeLayout(false);
@@ -242,12 +242,12 @@
         private System.Windows.Forms.TextBox txtGroupName;
         private System.Windows.Forms.TreeView AuthorityTreeView;
         private System.Windows.Forms.Button btnGroupSave;
-        private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.DataGridView dataGridViewGroup;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnInfo;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnNewRecord;
     }
 }

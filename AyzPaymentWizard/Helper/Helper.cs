@@ -21,7 +21,7 @@ namespace AyzPaymentWizard
         static public string FIRMANO { get { return LStr(FIRMNR.ToString(), 3); } }  // Sadece Logo tablolarında kullanılır.
         public static string USERNAME { get; set; }
         public static int USERID { get; set; }
-        public static int FIRMNR { get; set; }                                       // FIRMANO'nun int halidir. FIRMANO yerine kullanılamaz.
+        public static int FIRMNR { get; set; }      // FIRMANO'nun int halidir. FIRMANO yerine kullanılamaz.
 
         public enum FilterType
         {
@@ -53,13 +53,7 @@ namespace AyzPaymentWizard
         }
 
         public enum PacketStatus
-        {
-            //NewPacket = 0,
-            //Approved = 1,
-            //Rejected = 2,
-            //SentToBank = 3,
-            //AnswerReceivedBank = 4,
-            //SendToApproval = 5
+        {            
             NewPacket = 0,
             SendToApproval = 1,
             Approved = 2,

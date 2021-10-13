@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace AyzPaymentWizard
@@ -20,135 +21,9 @@ namespace AyzPaymentWizard
 
         private void btnGroupSave_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(txtGroupName.Text) || (AuthorityTreeView.Nodes["PackageAdd"].Checked == false && AuthorityTreeView.Nodes["PackageEdit"].Checked == false && AuthorityTreeView.Nodes["PackageApprove"].Checked == false && AuthorityTreeView.Nodes["PackageReject"].Checked == false && AuthorityTreeView.Nodes["PackageSendToApprove"].Checked == false && AuthorityTreeView.Nodes["ForwardToBank"].Checked == false && AuthorityTreeView.Nodes["PackageAkibetAl"].Checked == false && AuthorityTreeView.Nodes["AddUser"].Checked == false && AuthorityTreeView.Nodes["AddGroup"].Checked == false))
-            {
-                MessageBox.Show("Lütfen yıldız işaretli alanları doldurunuz!");
-            }
-            else
-            {
-                string groupName = txtGroupName.Text;
-                bool PackageAdd = false, PackageEdit = false, PackageApprove = false, PackageReject = false, PackageSendToApprove = false, PackageForwardToBank = false, PackageAkibet = false, AddUser = false, AddGroup = false;
-
-                for (int i = 0; i < AuthorityTreeView.Nodes.Count; i++)
-                {
-                    PackageAdd = AuthorityTreeView.Nodes["PackageAdd"].Checked;
-                    PackageEdit = AuthorityTreeView.Nodes["PackageEdit"].Checked;
-                    PackageApprove = AuthorityTreeView.Nodes["PackageApprove"].Checked;
-                    PackageReject = AuthorityTreeView.Nodes["PackageReject"].Checked;
-                    PackageSendToApprove = AuthorityTreeView.Nodes["PackageSendToApprove"].Checked;
-                    PackageForwardToBank = AuthorityTreeView.Nodes["ForwardToBank"].Checked;
-                    PackageAkibet = AuthorityTreeView.Nodes["PackageAkibetAl"].Checked;
-                    AddUser = AuthorityTreeView.Nodes["AddUser"].Checked;
-                    AddGroup = AuthorityTreeView.Nodes["AddGroup"].Checked;
-                }
-
-                SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString);
-                SqlCommand komut = new SqlCommand();
-                SqlDataReader dr;
-                try
-                {
-                    komut.CommandText = "INSERT INTO [AYZ_PW_USER](NAME,USERTYPE,DATE) VALUES(" +
-                                    "'" + groupName + "',1 ,GETDATE());" +
-                                    "SELECT SCOPE_IDENTITY()";
-                    komut.Connection = conn;
-                    conn.Open();
-                    int groupId = Convert.ToInt32(komut.ExecuteScalar());
-                    komut.CommandText = "INSERT INTO [AYZ_PW_USERRIGHTS]" +
-                                        "(GROUPID,ADD_PACKAGE,EDIT_PACKAGE,APPROVE_PACKAGE,REJECT_PACKAGE,SENDTO_APPROVE,FORWARDTO_BANK,AKIBET_AL,ADD_USER,ADD_GROUP) " +
-                                        "VALUES(" +
-                                        " '" + groupId + "', " +
-                                        "'" + PackageAdd + "'," +
-                                        "'" + PackageEdit + "', " +
-                                        "'" + PackageApprove + "', " +
-                                        "'" + PackageReject + "'," +
-                                        "'" + PackageSendToApprove + "'," +
-                                        "'" + PackageForwardToBank + "'," +
-                                        "'" + PackageAkibet + "'," +
-                                        "'" + AddUser + "'," +
-                                        "'" + AddGroup + "'" +
-                                        ") ";
-                    komut.ExecuteNonQuery();
-                    conn.Close();
-                    MessageBox.Show("Grup başarılı bir şekilde kaydedildi!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    GroupAddForm form = (GroupAddForm)Application.OpenForms["GroupAddForm"];
-                    form.fillGroupsDGV();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message.ToString(), "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-        }
-
-        private void GroupAddForm_Load(object sender, EventArgs e)
-        {
-            ToolTip infoBtnToolTip = new ToolTip();
-            infoBtnToolTip.SetToolTip(btnInfo, "Silmek İçin: Satırı Seçtikten Sonra Delete Tuşuna Basınız!");
-            dataGridViewGroup.ClearSelection();
-            fillGroupsDGV();
-            dataGridViewGroup.ReadOnly = true;
-        }
-
-        private void fillGroupsDGV()
-        {
-            groups.Clear();
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT * FROM AYZ_PW_USER WHERE USERTYPE = 1";
-                komut.CommandText = CommandText;
-                komut.Connection = conn;
-                conn.Open();
-                dr = komut.ExecuteReader();
-                while (dr.Read())
-                {
-                    UserGroup group = new UserGroup();
-                    group.ID = Convert.ToInt32(dr["ID"].ToString());
-                    group.Name = dr["NAME"].ToString();
-                    groups.Add(group);
-                }
-            }
-
-            var source = new BindingSource();
-            source.DataSource = groups;
-            dataGridViewGroup.DataSource = source;
-
-            dataGridViewGroup.Columns["Date_"].Visible = false;
-            dataGridViewGroup.Columns["UserType"].Visible = false;
-        }
-
-        private void dataGridViewGroup_RowEnter(object sender, DataGridViewCellEventArgs e)
-        {
             if (dataGridViewGroup.SelectedRows.Count > 0)
             {
-                int groupId = (int)dataGridViewGroup.SelectedRows[0].Cells["ID"].Value;
-                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-                {
-                    CommandText = "SELECT * FROM AYZ_PW_USERRIGHTS AS UR LEFT JOIN AYZ_PW_USER AS U ON UR.GROUPID = U.ID WHERE GROUPID = " + groupId + "";
-                    komut.CommandText = CommandText;
-                    komut.Connection = conn;
-                    conn.Open();
-                    dr = komut.ExecuteReader();
-                    while (dr.Read())
-                    {
-                        AuthorityTreeView.Nodes["PackageAdd"].Checked = Convert.ToBoolean(dr["ADD_PACKAGE"].ToString());
-                        AuthorityTreeView.Nodes["PackageEdit"].Checked = Convert.ToBoolean(dr["EDIT_PACKAGE"].ToString());
-                        AuthorityTreeView.Nodes["PackageApprove"].Checked = Convert.ToBoolean(dr["APPROVE_PACKAGE"].ToString());
-                        AuthorityTreeView.Nodes["PackageReject"].Checked = Convert.ToBoolean(dr["REJECT_PACKAGE"].ToString());
-                        AuthorityTreeView.Nodes["PackageSendToApprove"].Checked = Convert.ToBoolean(dr["SENDTO_APPROVE"].ToString());
-                        AuthorityTreeView.Nodes["ForwardToBank"].Checked = Convert.ToBoolean(dr["FORWARDTO_BANK"].ToString());
-                        AuthorityTreeView.Nodes["PackageAkibetAl"].Checked = Convert.ToBoolean(dr["AKIBET_AL"].ToString());
-                        AuthorityTreeView.Nodes["AddUser"].Checked = Convert.ToBoolean(dr["ADD_USER"].ToString());
-                        AuthorityTreeView.Nodes["AddGroup"].Checked = Convert.ToBoolean(dr["ADD_GROUP"].ToString());
-                        txtGroupName.Text = dr["NAME"].ToString();
-                    }
-                }
-            }
-        }
-        
-        private void btnEdit_Click(object sender, EventArgs e)
-        {
-            if (dataGridViewGroup.SelectedRows.Count > 0)
-            {
+                #region Edit
                 if (String.IsNullOrEmpty(txtGroupName.Text) || (AuthorityTreeView.Nodes["PackageAdd"].Checked == false && AuthorityTreeView.Nodes["PackageEdit"].Checked == false && AuthorityTreeView.Nodes["PackageApprove"].Checked == false && AuthorityTreeView.Nodes["PackageReject"].Checked == false && AuthorityTreeView.Nodes["PackageSendToApprove"].Checked == false && AuthorityTreeView.Nodes["ForwardToBank"].Checked == false && AuthorityTreeView.Nodes["PackageAkibetAl"].Checked == false && AuthorityTreeView.Nodes["AddUser"].Checked == false && AuthorityTreeView.Nodes["AddGroup"].Checked == false))
                 {
                     MessageBox.Show("Lütfen yıldız işaretli alanları doldurunuz!");
@@ -187,9 +62,7 @@ namespace AyzPaymentWizard
                             komut.Connection = conn;
                             conn.Open();
                             dr = komut.ExecuteReader();
-                            conn.Close();
-                            GroupAddForm form = (GroupAddForm)Application.OpenForms["GroupAddForm"];
-                            form.fillGroupsDGV();
+                            conn.Close();                            
                             MessageBox.Show("Güncellendi!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         catch (Exception ex)
@@ -198,7 +71,119 @@ namespace AyzPaymentWizard
                         }
                     }
                 }
+                #endregion
             }
+            else
+            {
+                #region Save
+                if (String.IsNullOrEmpty(txtGroupName.Text) || (AuthorityTreeView.Nodes["PackageAdd"].Checked == false && AuthorityTreeView.Nodes["PackageEdit"].Checked == false && AuthorityTreeView.Nodes["PackageApprove"].Checked == false && AuthorityTreeView.Nodes["PackageReject"].Checked == false && AuthorityTreeView.Nodes["PackageSendToApprove"].Checked == false && AuthorityTreeView.Nodes["ForwardToBank"].Checked == false && AuthorityTreeView.Nodes["PackageAkibetAl"].Checked == false && AuthorityTreeView.Nodes["AddUser"].Checked == false && AuthorityTreeView.Nodes["AddGroup"].Checked == false))
+                {
+                    MessageBox.Show("Lütfen yıldız işaretli alanları doldurunuz!");
+                }
+                else
+                {
+                    string groupName = txtGroupName.Text;
+                    bool PackageAdd = false, PackageEdit = false, PackageApprove = false, PackageReject = false, PackageSendToApprove = false, PackageForwardToBank = false, PackageAkibet = false, AddUser = false, AddGroup = false;
+
+                    for (int i = 0; i < AuthorityTreeView.Nodes.Count; i++)
+                    {
+                        PackageAdd = AuthorityTreeView.Nodes["PackageAdd"].Checked;
+                        PackageEdit = AuthorityTreeView.Nodes["PackageEdit"].Checked;
+                        PackageApprove = AuthorityTreeView.Nodes["PackageApprove"].Checked;
+                        PackageReject = AuthorityTreeView.Nodes["PackageReject"].Checked;
+                        PackageSendToApprove = AuthorityTreeView.Nodes["PackageSendToApprove"].Checked;
+                        PackageForwardToBank = AuthorityTreeView.Nodes["ForwardToBank"].Checked;
+                        PackageAkibet = AuthorityTreeView.Nodes["PackageAkibetAl"].Checked;
+                        AddUser = AuthorityTreeView.Nodes["AddUser"].Checked;
+                        AddGroup = AuthorityTreeView.Nodes["AddGroup"].Checked;
+                    }
+
+                    SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString);
+                    SqlCommand komut = new SqlCommand();
+                    SqlDataReader dr;
+                    try
+                    {
+                        komut.CommandText = "INSERT INTO [AYZ_PW_USER](NAME,USERTYPE,DATE) VALUES(" +
+                                        "'" + groupName + "',1 ,GETDATE());" +
+                                        "SELECT SCOPE_IDENTITY()";
+                        komut.Connection = conn;
+                        conn.Open();
+                        int groupId = Convert.ToInt32(komut.ExecuteScalar());
+                        komut.CommandText = "INSERT INTO [AYZ_PW_USERRIGHTS]" +
+                                            "(GROUPID,ADD_PACKAGE,EDIT_PACKAGE,APPROVE_PACKAGE,REJECT_PACKAGE,SENDTO_APPROVE,FORWARDTO_BANK,AKIBET_AL,ADD_USER,ADD_GROUP) " +
+                                            "VALUES(" +
+                                            " '" + groupId + "', " +
+                                            "'" + PackageAdd + "'," +
+                                            "'" + PackageEdit + "', " +
+                                            "'" + PackageApprove + "', " +
+                                            "'" + PackageReject + "'," +
+                                            "'" + PackageSendToApprove + "'," +
+                                            "'" + PackageForwardToBank + "'," +
+                                            "'" + PackageAkibet + "'," +
+                                            "'" + AddUser + "'," +
+                                            "'" + AddGroup + "'" +
+                                            ") ";
+                        komut.ExecuteNonQuery();
+                        conn.Close();
+                        MessageBox.Show("Grup başarılı bir şekilde kaydedildi!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);                        
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message.ToString(), "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                #endregion
+            }
+            fillGroupsDGV();
+            dataGridViewGroup.ClearSelection();
+            txtGroupName.Text = "";
+            for (int i = 0; i < AuthorityTreeView.Nodes.Count; i++)
+            {
+                AuthorityTreeView.Nodes[i].Checked = false;
+            }
+        }
+
+        private void GroupAddForm_Load(object sender, EventArgs e)
+        {
+            ToolTip infoBtnToolTip = new ToolTip();
+            infoBtnToolTip.SetToolTip(btnInfo, "Silmek İçin: Satırı Seçtikten Sonra Delete Tuşuna Basınız!");
+            ToolTip newRecordBtnToolTip = new ToolTip();
+            newRecordBtnToolTip.SetToolTip(btnNewRecord, "Yeni Grup Ekle!");
+            
+            fillGroupsDGV();          
+            dataGridViewGroup.ClearSelection();
+            txtGroupName.Text = "";
+            for (int i = 0; i < AuthorityTreeView.Nodes.Count; i++)
+            {
+                AuthorityTreeView.Nodes[i].Checked = false;
+            }
+        }
+
+        private void fillGroupsDGV()
+        {
+            groups.Clear();
+            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                CommandText = "SELECT * FROM AYZ_PW_USER WHERE USERTYPE = 1";
+                komut.CommandText = CommandText;
+                komut.Connection = conn;
+                conn.Open();
+                dr = komut.ExecuteReader();
+                while (dr.Read())
+                {
+                    UserGroup group = new UserGroup();
+                    group.ID = Convert.ToInt32(dr["ID"].ToString());
+                    group.Name = dr["NAME"].ToString();
+                    groups.Add(group);
+                }
+            }
+
+            var source = new BindingSource();
+            source.DataSource = groups;
+            dataGridViewGroup.DataSource = source;
+
+            dataGridViewGroup.Columns["Date_"].Visible = false;
+            dataGridViewGroup.Columns["UserType"].Visible = false;
         }
 
         private void dataGridViewGroup_KeyDown(object sender, KeyEventArgs e)
@@ -237,7 +222,7 @@ namespace AyzPaymentWizard
                                 komut.ExecuteNonQuery();
                                 conn.Close();
                                 MessageBox.Show("Silindi!");
-                                for (int i = 0; i < 7; i++)
+                                for (int i = 0; i < AuthorityTreeView.Nodes.Count; i++)
                                 {
                                     AuthorityTreeView.Nodes[i].Checked = false;
                                 }
@@ -251,8 +236,54 @@ namespace AyzPaymentWizard
 
                     }
                     fillGroupsDGV();
+                    dataGridViewGroup.ClearSelection();
+                    txtGroupName.Text = "";
+                    for (int i = 0; i < AuthorityTreeView.Nodes.Count; i++)
+                    {
+                        AuthorityTreeView.Nodes[i].Checked = false;
+                    }
                 }
             }
+        }
+
+        private void dataGridViewGroup_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridViewGroup.SelectedRows.Count > 0)
+            {
+                int groupId = (int)dataGridViewGroup.SelectedRows[0].Cells["ID"].Value;
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT * FROM AYZ_PW_USERRIGHTS AS UR LEFT JOIN AYZ_PW_USER AS U ON UR.GROUPID = U.ID WHERE GROUPID = " + groupId + "";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        AuthorityTreeView.Nodes["PackageAdd"].Checked = Convert.ToBoolean(dr["ADD_PACKAGE"].ToString());
+                        AuthorityTreeView.Nodes["PackageEdit"].Checked = Convert.ToBoolean(dr["EDIT_PACKAGE"].ToString());
+                        AuthorityTreeView.Nodes["PackageApprove"].Checked = Convert.ToBoolean(dr["APPROVE_PACKAGE"].ToString());
+                        AuthorityTreeView.Nodes["PackageReject"].Checked = Convert.ToBoolean(dr["REJECT_PACKAGE"].ToString());
+                        AuthorityTreeView.Nodes["PackageSendToApprove"].Checked = Convert.ToBoolean(dr["SENDTO_APPROVE"].ToString());
+                        AuthorityTreeView.Nodes["ForwardToBank"].Checked = Convert.ToBoolean(dr["FORWARDTO_BANK"].ToString());
+                        AuthorityTreeView.Nodes["PackageAkibetAl"].Checked = Convert.ToBoolean(dr["AKIBET_AL"].ToString());
+                        AuthorityTreeView.Nodes["AddUser"].Checked = Convert.ToBoolean(dr["ADD_USER"].ToString());
+                        AuthorityTreeView.Nodes["AddGroup"].Checked = Convert.ToBoolean(dr["ADD_GROUP"].ToString());
+                        txtGroupName.Text = dr["NAME"].ToString();
+                    }
+                }
+            }
+        }
+
+        private void btnNewRecord_Click(object sender, EventArgs e)
+        {
+            int count = AuthorityTreeView.Nodes.Count;
+            txtGroupName.Text = "";
+            for (int i = 0; i < count; i++)
+            {
+                AuthorityTreeView.Nodes[i].Checked = false;
+            }
+            dataGridViewGroup.ClearSelection();
         }
     }
 }
