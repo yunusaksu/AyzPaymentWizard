@@ -181,6 +181,7 @@
             // 
             // btnInfo
             // 
+            this.btnInfo.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnInfo.FlatAppearance.BorderSize = 0;
             this.btnInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnInfo.Image = global::AyzPaymentWizard.Properties.Resources.info;
@@ -206,6 +207,7 @@
             // btnHide
             // 
             this.btnHide.BackColor = System.Drawing.Color.White;
+            this.btnHide.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnHide.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnHide.ForeColor = System.Drawing.Color.Black;
             this.btnHide.Image = global::AyzPaymentWizard.Properties.Resources.hide_icon;

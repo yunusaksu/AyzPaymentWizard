@@ -181,7 +181,7 @@ namespace AyzPaymentWizard.Forms
                         {
                             if (fbd.ShowDialog() == DialogResult.OK)
                             {
-                                foreach (string item in Directory.GetFiles(fbd.SelectedPath))
+                                foreach (string item in Directory.GetDirectories(fbd.SelectedPath))
                                 {
                                     FileInfo fi = new FileInfo(item);
                                     dgvSftp[e.ColumnIndex, e.RowIndex].Value = fi.Directory;

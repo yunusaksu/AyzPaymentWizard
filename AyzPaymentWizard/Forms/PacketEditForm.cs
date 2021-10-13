@@ -25,7 +25,7 @@ namespace AyzPaymentWizard.Forms
         List<Debit> PacketEditsRightList = new List<Debit>();
         List<Debit> PacketDetailList = new List<Debit>();
         List<Debit> FilteredList = new List<Debit>();
-        
+
         public PacketEditForm()
         {
             InitializeComponent();
@@ -325,7 +325,7 @@ namespace AyzPaymentWizard.Forms
             source2.DataSource = PacketEditsLeftList;
             DGVLeftEdit.DataSource = source2;
         }
-        
+
         private void btnToLeft_Click(object sender, EventArgs e)
         {
             for (int i = DGVRightEdit.Rows.Count - 1; i >= 0; i--)
@@ -1445,7 +1445,7 @@ namespace AyzPaymentWizard.Forms
             #endregion
 
         }
-       
+
 
         private void btnLeftPacketEdit_Click(object sender, EventArgs e)
         {
@@ -1554,160 +1554,155 @@ namespace AyzPaymentWizard.Forms
 
         private void btnEditPacket_Click(object sender, EventArgs e)
         {
+
             decimal sumRequire = PacketEditsRightList.Sum(x => x.Total);                                                       // Ödenmesi Gereken
             decimal sumPaid = PacketEditsRightList.Sum(x => x.Paid);                                                           // Ödenecek Tutar   
 
-            // ilk önce AYZ_PW_PACKET_DETAIL Tablosundaki mevcut paket id'li değerler silinecek.
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            if (PacketEditsRightList.Count == 0)
             {
-                try
-                {
-                    CommandText = "DELETE FROM AYZ_PW_PACKET_DETAIL WHERE PACKETID = " + PacketId + " ";
-                    komut.CommandText = CommandText;
-                    komut.Connection = conn;
-                    conn.Open();
-                    komut.ExecuteNonQuery();
-                    conn.Close();
-                }
-                catch (SqlException ex)
-                {
-                    MessageBox.Show("Hata: " + ex.Message.ToString(), "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                MessageBox.Show("Pakete eklenmiş bir ödeme yoktur!", "UYARI!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            // 2. aşama olarak AYZ_PW_PACKET tablosundaki mevcut paket id'li kayıt'ın değerleri güncellenecek.
-            // Hangi değerler güncellenecek: 1.TOTAL_REQUIRED, 2.TOTAL_PAID, 3.ModifiedBy, 4.ModifiedDate, 5.ModifiedTime, 6.Note
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            else
             {
-                try
+                // ilk önce AYZ_PW_PACKET_DETAIL Tablosundaki mevcut paket id'li değerler silinecek.
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
-                    CommandText = "UPDATE AYZ_PW_PACKET " +
-                              "\nSET MODIFIED_BY = " + Helper.USERID + ", " +
-                              "\nMODIFIED_NAME = '" + Helper.USERNAME + "', " +
-                              "\nMODIFIED_DATE = CONVERT(DATE, GETDATE(), 104), " +
-                              "\nMODIFIED_TIME = " + Helper.GetTime() + ", " +
-                              "\nTOTAL_REQUIRED = " + sumRequire.ToString().Replace(',', '.') + ", " +
-                              "\nTOTAL_PAID = " + sumPaid.ToString().Replace(',', '.') + ", " +
-                              "\nNOTE = '" + txtPacketEditExp.Text.Replace("'","''") + "', " +
-                              "\nACCOUNTOUTID = '" + cmbOutAccountInfoEdit.SelectedValue + "' " +
-                              "\nWHERE ID = " + PacketId + " ";
-                    komut.CommandText = CommandText;
-                    komut.Connection = conn;
-                    conn.Open();
-                    komut.ExecuteNonQuery();
-                    conn.Close();
-                }
-                catch (SqlException ex)
-                {
-                    MessageBox.Show("Hata: " + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-
-            // 3. Aşama olarak sağ griddeki yeni değerler AYZ_PW_PACKET_DETAIL tablosuna yazılacak.
-            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                try
-                {
-                    if (PacketEditsRightList.Count > 0)
+                    try
                     {
-                        foreach (var item in PacketEditsRightList)
-                        {
-                            komut.CommandText = "INSERT INTO AYZ_PW_PACKET_DETAIL" +
-                                                    "(" +
-                                                    "\nPACKETID," +
-                                                    "\nPAYTRANSREF," +
-                                                    "\nFICHEREF," +
-                                                    "\nFICHENO," +
-                                                    "\nCLIENTREF," +
-                                                    "\nCLIENTNAME," +
-                                                    "\nIBAN," +
-                                                    "\nAMOUNT_REQUIRED," +
-                                                    "\nAMOUNT_PAID," +
-                                                    "\nCURRCODE," +
-                                                    "\nMODULENR," +
-                                                    "\nTRCODE," +
-                                                    "\nDOCODE," +
-                                                    "\nTRTYPE," +
-                                                    "\nGENEXP1," +
-                                                    "\nCL_CODE," +
-                                                    "\nCL_EMAIL," +
-                                                    "\nCL_TAXNR," +
-                                                    "\nCL_TAXOFFICE," +
-                                                    "\nDUE_DATE," +
-                                                    "\nFICHEDATE," +
-                                                    "\nDD1REF," +
-                                                    "\nDD2REF," +
-                                                    "\nDD3REF," +
-                                                    "\nDD4REF," +
-                                                    "\nDD5REF," +
-                                                    "\nDD6REF," +
-                                                    "\nDD7REF," +
-                                                    "\nMECRA_TYPE," +
-                                                    "\nMECRA," +
-                                                    "\nMARKETING_COMPANY," +
-                                                    "\nCUSTOMER," +
-                                                    "\nPLAN_CODE," +
-                                                    "\nINTERNET_MAIN_CATEGORY," +
-                                                    "\nINTERNET_SUB_CATEGORY" +
-                                                    "\n)" +
-                                                    "\nVALUES" +
-                                                    "\n(" +
-                                                    "\n" + PacketId + "," +
-                                                    "\n" + item.PayRef + "," +
-                                                    "\n" + item.FicheRef + "," +
-                                                    "\n'" + item.FicheNo + "'," +
-                                                    "\n" + item.ClCardRef + "," +
-                                                    "\n'" + item.ClDef + "'," +
-                                                    "\n'" + item.IBAN + "'," +
-                                                    "\n" + item.Total.ToString().Replace(',', '.') + "," +
-                                                    "\n" + item.Paid.ToString().Replace(',', '.') + "," +
-                                                    "\n'" + item.CurCode + "'," +
-                                                    "\n" + item.ModuleNr + "," +
-                                                    "\n" + item.TrCode + "," +
-                                                    "\n'" + item.DoCode + "'," +
-                                                    "\n '" + item.TrType + "'," +
-                                                    "\n '" + item.GenExp1 + "'," +
-                                                    "\n'" + item.ClCode + "'," +
-                                                    "\n'" + item.EmailAdres + "'," +
-                                                    "\n'" + item.TaxNr + "'," +
-                                                    "\n'" + item.TaxOffice + "'," +
-                                                    "\nCONVERT(datetime, '" + item.DueDate + "', 104)," +
-                                                    "\nCONVERT(datetime, '" + item.FicheDate + "', 104)," +
-                                                    "\n" + item.DD1REF + "," +
-                                                    "\n" + item.DD2REF + "," +
-                                                    "\n" + item.DD3REF + "," +
-                                                    "\n" + item.DD4REF + "," +
-                                                    "\n" + item.DD5REF + "," +
-                                                    "\n" + item.DD6REF + "," +
-                                                    "\n" + item.DD7REF + "," +
-                                                    "\n'" + item.MecraType + "'," +
-                                                    "\n'" + item.Mecra + "'," +
-                                                    "\n'" + item.MarketingCompany + "'," +
-                                                    "\n'" + item.Customer + "'," +
-                                                    "\n'" + item.PlanCode + "'," +
-                                                    "\n'" + item.InternetMainCategory + "'," +
-                                                    "\n'" + item.InternetSubCategory + "'" +
-                                                    "\n)";
-                            komut.Connection = conn;
-                            conn.Open();
-                            komut.ExecuteNonQuery();
-                            conn.Close();
-                        }
-                        MessageBox.Show("Paket başarılı bir şekilde güncellendi...!", "Paket Güncelleme Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        Helper.PacketHistorySave(PacketId, "Güncellenmiş Paket", "Paket Güncellendi.");
-                        this.Hide();
-                        Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
-                        form.FillPacketList();
+                        CommandText = "DELETE FROM AYZ_PW_PACKET_DETAIL WHERE PACKETID = " + PacketId + " ";
+                        komut.CommandText = CommandText;
+                        komut.Connection = conn;
+                        conn.Open();
+                        komut.ExecuteNonQuery();
+                        conn.Close();
                     }
-                    else if (PacketEditsRightList.Count == 0)
+                    catch (SqlException ex)
                     {
-                        MessageBox.Show("Pakete eklenmiş bir ödeme yoktur!", "UYARI!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Hata: " + ex.Message.ToString(), "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
-                catch (SqlException ex)
+                // 2. aşama olarak AYZ_PW_PACKET tablosundaki mevcut paket id'li kayıt'ın değerleri güncellenecek.
+                // Hangi değerler güncellenecek: 1.TOTAL_REQUIRED, 2.TOTAL_PAID, 3.ModifiedBy, 4.ModifiedDate, 5.ModifiedTime, 6.Note
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
-                    MessageBox.Show("Hata: " + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    try
+                    {
+                        CommandText = "UPDATE AYZ_PW_PACKET " +
+                                  "\nSET MODIFIED_BY = " + Helper.USERID + ", " +
+                                  "\nMODIFIED_NAME = '" + Helper.USERNAME + "', " +
+                                  "\nMODIFIED_DATE = CONVERT(DATE, GETDATE(), 104), " +
+                                  "\nMODIFIED_TIME = " + Helper.GetTime() + ", " +
+                                  "\nTOTAL_REQUIRED = " + sumRequire.ToString().Replace(',', '.') + ", " +
+                                  "\nTOTAL_PAID = " + sumPaid.ToString().Replace(',', '.') + ", " +
+                                  "\nNOTE = '" + txtPacketEditExp.Text.Replace("'", "''") + "', " +
+                                  "\nACCOUNTOUTID = '" + cmbOutAccountInfoEdit.SelectedValue + "' " +
+                                  "\nWHERE ID = " + PacketId + " ";
+                        komut.CommandText = CommandText;
+                        komut.Connection = conn;
+                        conn.Open();
+                        komut.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                    catch (SqlException ex)
+                    {
+                        MessageBox.Show("Hata: " + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
 
+                // 3. Aşama olarak sağ griddeki yeni değerler AYZ_PW_PACKET_DETAIL tablosuna yazılacak.
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+
+                    foreach (var item in PacketEditsRightList)
+                    {
+                        komut.CommandText = "INSERT INTO AYZ_PW_PACKET_DETAIL" +
+                                                "(" +
+                                                "\nPACKETID," +
+                                                "\nPAYTRANSREF," +
+                                                "\nFICHEREF," +
+                                                "\nFICHENO," +
+                                                "\nCLIENTREF," +
+                                                "\nCLIENTNAME," +
+                                                "\nIBAN," +
+                                                "\nAMOUNT_REQUIRED," +
+                                                "\nAMOUNT_PAID," +
+                                                "\nCURRCODE," +
+                                                "\nMODULENR," +
+                                                "\nTRCODE," +
+                                                "\nDOCODE," +
+                                                "\nTRTYPE," +
+                                                "\nGENEXP1," +
+                                                "\nCL_CODE," +
+                                                "\nCL_EMAIL," +
+                                                "\nCL_TAXNR," +
+                                                "\nCL_TAXOFFICE," +
+                                                "\nDUE_DATE," +
+                                                "\nFICHEDATE," +
+                                                "\nDD1REF," +
+                                                "\nDD2REF," +
+                                                "\nDD3REF," +
+                                                "\nDD4REF," +
+                                                "\nDD5REF," +
+                                                "\nDD6REF," +
+                                                "\nDD7REF," +
+                                                "\nMECRA_TYPE," +
+                                                "\nMECRA," +
+                                                "\nMARKETING_COMPANY," +
+                                                "\nCUSTOMER," +
+                                                "\nPLAN_CODE," +
+                                                "\nINTERNET_MAIN_CATEGORY," +
+                                                "\nINTERNET_SUB_CATEGORY" +
+                                                "\n)" +
+                                                "\nVALUES" +
+                                                "\n(" +
+                                                "\n" + PacketId + "," +
+                                                "\n" + item.PayRef + "," +
+                                                "\n" + item.FicheRef + "," +
+                                                "\n'" + item.FicheNo + "'," +
+                                                "\n" + item.ClCardRef + "," +
+                                                "\n'" + item.ClDef + "'," +
+                                                "\n'" + item.IBAN + "'," +
+                                                "\n" + item.Total.ToString().Replace(',', '.') + "," +
+                                                "\n" + item.Paid.ToString().Replace(',', '.') + "," +
+                                                "\n'" + item.CurCode + "'," +
+                                                "\n" + item.ModuleNr + "," +
+                                                "\n" + item.TrCode + "," +
+                                                "\n'" + item.DoCode + "'," +
+                                                "\n '" + item.TrType + "'," +
+                                                "\n '" + item.GenExp1 + "'," +
+                                                "\n'" + item.ClCode + "'," +
+                                                "\n'" + item.EmailAdres + "'," +
+                                                "\n'" + item.TaxNr + "'," +
+                                                "\n'" + item.TaxOffice + "'," +
+                                                "\nCONVERT(datetime, '" + item.DueDate + "', 104)," +
+                                                "\nCONVERT(datetime, '" + item.FicheDate + "', 104)," +
+                                                "\n" + item.DD1REF + "," +
+                                                "\n" + item.DD2REF + "," +
+                                                "\n" + item.DD3REF + "," +
+                                                "\n" + item.DD4REF + "," +
+                                                "\n" + item.DD5REF + "," +
+                                                "\n" + item.DD6REF + "," +
+                                                "\n" + item.DD7REF + "," +
+                                                "\n'" + item.MecraType + "'," +
+                                                "\n'" + item.Mecra + "'," +
+                                                "\n'" + item.MarketingCompany + "'," +
+                                                "\n'" + item.Customer + "'," +
+                                                "\n'" + item.PlanCode + "'," +
+                                                "\n'" + item.InternetMainCategory + "'," +
+                                                "\n'" + item.InternetSubCategory + "'" +
+                                                "\n)";
+                        komut.Connection = conn;
+                        conn.Open();
+                        komut.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                    MessageBox.Show("Paket başarılı bir şekilde güncellendi...!", "Paket Güncelleme Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Helper.PacketHistorySave(PacketId, "Güncellenmiş Paket", "Paket Güncellendi.");
+                    this.Hide();
+                    Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
+                    form.FillPacketList();
+
+                }
             }
         }
     }

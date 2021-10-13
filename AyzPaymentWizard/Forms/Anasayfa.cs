@@ -44,7 +44,7 @@ namespace AyzPaymentWizard
             GroupAddForm form = new GroupAddForm();
             form.ShowDialog();
         }
-        
+
 
         private void Anasayfa_Load(object sender, EventArgs e)
         {
@@ -109,7 +109,7 @@ namespace AyzPaymentWizard
             #endregion
 
             #region DGV'ın Font Ayarı
-            dataGridViewPacket.DefaultCellStyle.Font = new Font("Time News Roman", 11);
+            dataGridViewPacket.DefaultCellStyle.Font = new Font("Time News Roman", 12);
             dataGridViewPacket.ColumnHeadersDefaultCellStyle.Font = new Font("Time News Roman", 10);
             #endregion
 
@@ -132,11 +132,7 @@ namespace AyzPaymentWizard
             if (!Helper.AuthorityControl("ADD_USER"))
                 btnUserAdd.Enabled = false;
             if (!Helper.AuthorityControl("ADD_GROUP"))
-                btnGroupAdd.Enabled = false;
-
-
-
-
+                btnGroupAdd.Enabled = false;           
         }
         public void FillPacketList()
         {
@@ -201,6 +197,21 @@ namespace AyzPaymentWizard
             dataGridViewPacket.DataSource = source;
 
             dataGridViewPacket.Columns["Currency"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            #region  DataGridView Satırları Renklendirme
+            int RowCounter = 0;
+            foreach (DataGridViewRow row in dataGridViewPacket.Rows)
+            {
+                if (RowCounter % 2 == 0)
+                {
+                    dataGridViewPacket.Rows[RowCounter].DefaultCellStyle.BackColor = Color.LightSkyBlue;
+                }
+                else
+                {
+                    dataGridViewPacket.Rows[RowCounter].DefaultCellStyle.BackColor = Color.WhiteSmoke;
+                }
+                RowCounter = RowCounter + 1;
+            }
+            #endregion
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -274,7 +285,7 @@ namespace AyzPaymentWizard
                     packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
                     status = (int)dataGridViewPacket.SelectedRows[i].Cells["STATUS"].Value;
                     archived = (int)dataGridViewPacket.SelectedRows[i].Cells["ARCHIVED"].Value;
-                }                                                
+                }
                 if (packetId != 0 && status == (int)Helper.PacketStatus.NewPacket)
                 {
                     string approvalExp = Interaction.InputBox("Onay Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250).Replace("'", "''");
@@ -329,7 +340,7 @@ namespace AyzPaymentWizard
                         packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
                         status = (int)dataGridViewPacket.SelectedRows[i].Cells["STATUS"].Value;
                         archived = (int)dataGridViewPacket.SelectedRows[i].Cells["ARCHIVED"].Value;
-                    }                   
+                    }
                     if (packetId != 0 && status == (int)Helper.PacketStatus.SendToApproval)
                     {
                         string approvalExp = Interaction.InputBox("Onay Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250).Replace("'", "''");
@@ -401,7 +412,7 @@ namespace AyzPaymentWizard
                     else if (archived == (int)Helper.ArchiveStatus.Archived)
                         MessageBox.Show("Paketin Arşivlendiği İçin Reddedilemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     else if (status == (int)Helper.PacketStatus.NewPacket)
-                        MessageBox.Show("Yeni Paket, Onaya Yollanmadan Reddedilemez!","Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Yeni Paket, Onaya Yollanmadan Reddedilemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -439,7 +450,7 @@ namespace AyzPaymentWizard
             {
                 MessageBox.Show("Hata: \n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        }       
+        }
 
         private void btnSendToBank_Click(object sender, EventArgs e)
         {
@@ -733,7 +744,7 @@ namespace AyzPaymentWizard
 
         private void Anasayfa_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Application.Exit();                
+            Application.Exit();
         }
 
         private void btnAkibetSorgulama_Click(object sender, EventArgs e)
@@ -1004,7 +1015,7 @@ namespace AyzPaymentWizard
 
         private void Anasayfa_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.F5)
+            if (e.KeyCode == Keys.F5)
             {
                 Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
                 form.FillPacketList();
@@ -1029,6 +1040,21 @@ namespace AyzPaymentWizard
             {
                 MessageBox.Show("Hata oluştu:\n", ex.Message);
             }
+        }
+
+        private void contextMenuStripAnasayfa_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            int packetStatus = (int)dataGridViewPacket.SelectedRows[0].Cells["STATUS"].Value;
+            int index = contextMenuStripAnasayfa.Items.IndexOf(akibetiİnceleToolStripMenuItem);
+            if (packetStatus != (int)Helper.PacketStatus.AnswerReceivedBank)
+                contextMenuStripAnasayfa.Items[index].Enabled = false;
+            else
+                contextMenuStripAnasayfa.Items[index].Enabled = true;
+        }
+
+        private void dataGridViewPacket_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+            dataGridViewPacket.DefaultCellStyle.SelectionBackColor = Color.LightSeaGreen;
         }
     }
 }

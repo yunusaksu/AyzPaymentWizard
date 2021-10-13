@@ -33,9 +33,10 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.btnNewPacket = new System.Windows.Forms.Button();
+            this.imageListPacketIcon = new System.Windows.Forms.ImageList(this.components);
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnAkibetSorgulama = new System.Windows.Forms.Button();
-            this.imageListPacketIcon = new System.Windows.Forms.ImageList(this.components);
             this.btnArchive = new System.Windows.Forms.Button();
             this.btnSendToBank = new System.Windows.Forms.Button();
             this.btnReject = new System.Windows.Forms.Button();
@@ -62,7 +63,6 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripAnasayfa = new System.Windows.Forms.ToolStrip();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnNewPacket = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPacket)).BeginInit();
@@ -116,6 +116,35 @@
             this.panel3.Size = new System.Drawing.Size(1159, 85);
             this.panel3.TabIndex = 2;
             // 
+            // btnNewPacket
+            // 
+            this.btnNewPacket.BackColor = System.Drawing.Color.Transparent;
+            this.btnNewPacket.FlatAppearance.BorderSize = 0;
+            this.btnNewPacket.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNewPacket.ImageIndex = 7;
+            this.btnNewPacket.ImageList = this.imageListPacketIcon;
+            this.btnNewPacket.Location = new System.Drawing.Point(8, 12);
+            this.btnNewPacket.Name = "btnNewPacket";
+            this.btnNewPacket.Size = new System.Drawing.Size(68, 65);
+            this.btnNewPacket.TabIndex = 9;
+            this.btnNewPacket.Tag = "";
+            this.btnNewPacket.UseVisualStyleBackColor = false;
+            this.btnNewPacket.Click += new System.EventHandler(this.btnNewPacket_Click);
+            // 
+            // imageListPacketIcon
+            // 
+            this.imageListPacketIcon.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListPacketIcon.ImageStream")));
+            this.imageListPacketIcon.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListPacketIcon.Images.SetKeyName(0, "editButton.png");
+            this.imageListPacketIcon.Images.SetKeyName(1, "reviewButton.png");
+            this.imageListPacketIcon.Images.SetKeyName(2, "approveButton.png");
+            this.imageListPacketIcon.Images.SetKeyName(3, "sendToApprove.png");
+            this.imageListPacketIcon.Images.SetKeyName(4, "bank.png");
+            this.imageListPacketIcon.Images.SetKeyName(5, "archive.png");
+            this.imageListPacketIcon.Images.SetKeyName(6, "performed_process.png");
+            this.imageListPacketIcon.Images.SetKeyName(7, "newPacketButton.png");
+            this.imageListPacketIcon.Images.SetKeyName(8, "rejectButton.png");
+            // 
             // btnRefresh
             // 
             this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -145,20 +174,6 @@
             this.btnAkibetSorgulama.Tag = "";
             this.btnAkibetSorgulama.UseVisualStyleBackColor = false;
             this.btnAkibetSorgulama.Click += new System.EventHandler(this.btnAkibetSorgulama_Click);
-            // 
-            // imageListPacketIcon
-            // 
-            this.imageListPacketIcon.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListPacketIcon.ImageStream")));
-            this.imageListPacketIcon.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListPacketIcon.Images.SetKeyName(0, "editButton.png");
-            this.imageListPacketIcon.Images.SetKeyName(1, "reviewButton.png");
-            this.imageListPacketIcon.Images.SetKeyName(2, "approveButton.png");
-            this.imageListPacketIcon.Images.SetKeyName(3, "sendToApprove.png");
-            this.imageListPacketIcon.Images.SetKeyName(4, "bank.png");
-            this.imageListPacketIcon.Images.SetKeyName(5, "archive.png");
-            this.imageListPacketIcon.Images.SetKeyName(6, "performed_process.png");
-            this.imageListPacketIcon.Images.SetKeyName(7, "newPacketButton.png");
-            this.imageListPacketIcon.Images.SetKeyName(8, "rejectButton.png");
             // 
             // btnArchive
             // 
@@ -282,6 +297,7 @@
             this.dataGridViewPacket.Size = new System.Drawing.Size(1159, 469);
             this.dataGridViewPacket.TabIndex = 1;
             this.dataGridViewPacket.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewPacket_CellMouseDown);
+            this.dataGridViewPacket.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.dataGridViewPacket_RowStateChanged);
             // 
             // labelUserName
             // 
@@ -303,6 +319,7 @@
             this.paketSeruveniToolStripMenuItem});
             this.contextMenuStripAnasayfa.Name = "contextMenuStripAnasayfa";
             this.contextMenuStripAnasayfa.Size = new System.Drawing.Size(146, 48);
+            this.contextMenuStripAnasayfa.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripAnasayfa_Opening);
             // 
             // akibetiİnceleToolStripMenuItem
             // 
@@ -449,21 +466,6 @@
             this.label3.Size = new System.Drawing.Size(138, 23);
             this.label3.TabIndex = 5;
             this.label3.Text = "Online Kullanıcı:";
-            // 
-            // btnNewPacket
-            // 
-            this.btnNewPacket.BackColor = System.Drawing.Color.Transparent;
-            this.btnNewPacket.FlatAppearance.BorderSize = 0;
-            this.btnNewPacket.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNewPacket.ImageIndex = 7;
-            this.btnNewPacket.ImageList = this.imageListPacketIcon;
-            this.btnNewPacket.Location = new System.Drawing.Point(8, 12);
-            this.btnNewPacket.Name = "btnNewPacket";
-            this.btnNewPacket.Size = new System.Drawing.Size(68, 65);
-            this.btnNewPacket.TabIndex = 9;
-            this.btnNewPacket.Tag = "";
-            this.btnNewPacket.UseVisualStyleBackColor = false;
-            this.btnNewPacket.Click += new System.EventHandler(this.btnNewPacket_Click);
             // 
             // Anasayfa
             // 

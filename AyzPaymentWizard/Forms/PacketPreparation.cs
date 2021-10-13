@@ -508,7 +508,7 @@ namespace AyzPaymentWizard
             }
 
             txtPaidRightDGV.Text = sumedup.ToString();
-        } 
+        }
 
         private void dataGridViewLeft_SortStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
         {
@@ -1016,7 +1016,9 @@ namespace AyzPaymentWizard
                 #region Daha önce oluşturulan paket satırlarının sol gride gelmesini engelleyen kod bloku           
                 using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
-                    CommandText = "SELECT * FROM AYZ_PW_PACKET_DETAIL";
+                    CommandText = "SELECT PD.* FROM  AYZ_PW_PACKET_DETAIL AS PD  " +
+                                  "\nINNER JOIN AYZ_PW_PACKET AS P ON P.ID = PD.PACKETID " +
+                                  "\nWHERE P.STATUS NOT IN(" + (int)Helper.PacketStatus.Rejected + ")"; // reddedilen statüdeki paketler hariç tüm paketleri getir
                     komut.CommandText = CommandText;
                     komut.Connection = conn;
                     conn.Open();
@@ -1275,7 +1277,7 @@ namespace AyzPaymentWizard
                                     "\n) " +
                                     "\nVALUES" +
                                     "(" +
-                                    "\n '" + txtPacketExp.Text.Replace("'","''") + "'," +
+                                    "\n '" + txtPacketExp.Text.Replace("'", "''") + "'," +
                                     "\n'" + Helper.USERID + "'," +
                                     "\n'" + Helper.USERID + "'," +
                                     "\nCONVERT(DATE, GETDATE(), 104)," +
