@@ -38,6 +38,10 @@ namespace AyzPaymentWizard
                         {
                             MessageBox.Show("Yıldız(*) ile işaretli olanların doldurulması zorunludur!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
+                        else if (firmNr == null)
+                        {
+                            MessageBox.Show("Geçerli Firma Numarası Seçiniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
                         else
                         {
                             int userId = (int)dataGridViewUsers.SelectedRows[0].Cells["ID"].Value;
@@ -119,6 +123,10 @@ namespace AyzPaymentWizard
                     {
                         MessageBox.Show("Yıldız(*) ile işaretli olanların doldurulması zorunludur!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
+                    else if (LogoFirmaNumber == null)
+                    {
+                        MessageBox.Show("Geçerli Firma Numarası Seçiniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }                    
                     else
                     {
                         try
@@ -138,7 +146,7 @@ namespace AyzPaymentWizard
                                 cmd.ExecuteNonQuery();
                             }
                             #endregion
-                            conn.Close();                            
+                            conn.Close();
                             MessageBox.Show("Kullanıcı başarılı bir şekilde kaydedildi!", "Kullanıcı Kayıt Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             conn.Close();
                         }
@@ -238,7 +246,7 @@ namespace AyzPaymentWizard
                 showBtnToolTip.SetToolTip(btnShow, "Şifre Göster");
                 ToolTip hideBtnToolTip = new ToolTip();
                 hideBtnToolTip.SetToolTip(btnHide, "Şifre Gizle");
-                
+
                 fillUsersDGV();
                 dataGridViewUsers.ClearSelection();
                 txtEmail.Text = "";
@@ -290,7 +298,6 @@ namespace AyzPaymentWizard
                 txtPassword.PasswordChar = '\0';
             }
         }
-
         private void btnHide_Click(object sender, EventArgs e)
         {
             if (txtPassword.PasswordChar == '\0')
@@ -298,7 +305,8 @@ namespace AyzPaymentWizard
                 btnShow.BringToFront();
                 txtPassword.PasswordChar = '*';
             }
-        }        
+        }
+
 
         private void dataGridViewUsers_KeyDown(object sender, KeyEventArgs e)
         {
@@ -329,7 +337,7 @@ namespace AyzPaymentWizard
                                 conn.Open();
                                 komut.ExecuteNonQuery();
                                 conn.Close();
-                                MessageBox.Show("Silindi!");                                
+                                MessageBox.Show("Silindi!");
                             }
                         }
                         catch (Exception ex)
@@ -422,7 +430,7 @@ namespace AyzPaymentWizard
                 }
 
             }
-        }        
+        }
     }
 }
 

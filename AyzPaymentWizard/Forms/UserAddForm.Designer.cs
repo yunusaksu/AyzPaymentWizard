@@ -43,11 +43,11 @@
             this.dataGridViewUsers = new System.Windows.Forms.DataGridView();
             this.btnInfo = new System.Windows.Forms.Button();
             this.btnShow = new System.Windows.Forms.Button();
-            this.btnHide = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.btnNewRecord = new System.Windows.Forms.Button();
+            this.btnHide = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsers)).BeginInit();
             this.SuspendLayout();
             // 
@@ -204,20 +204,6 @@
             this.btnShow.UseVisualStyleBackColor = false;
             this.btnShow.Click += new System.EventHandler(this.btnShow_Click);
             // 
-            // btnHide
-            // 
-            this.btnHide.BackColor = System.Drawing.Color.White;
-            this.btnHide.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnHide.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHide.ForeColor = System.Drawing.Color.Black;
-            this.btnHide.Image = global::AyzPaymentWizard.Properties.Resources.hide_icon;
-            this.btnHide.Location = new System.Drawing.Point(585, 62);
-            this.btnHide.Name = "btnHide";
-            this.btnHide.Size = new System.Drawing.Size(32, 27);
-            this.btnHide.TabIndex = 12;
-            this.btnHide.UseVisualStyleBackColor = false;
-            this.btnHide.Click += new System.EventHandler(this.btnHide_Click);
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -264,6 +250,19 @@
             this.btnNewRecord.UseVisualStyleBackColor = false;
             this.btnNewRecord.Click += new System.EventHandler(this.btnNewRecord_Click);
             // 
+            // btnHide
+            // 
+            this.btnHide.BackColor = System.Drawing.Color.White;
+            this.btnHide.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHide.ForeColor = System.Drawing.Color.Black;
+            this.btnHide.Image = global::AyzPaymentWizard.Properties.Resources.hide_icon;
+            this.btnHide.Location = new System.Drawing.Point(585, 62);
+            this.btnHide.Name = "btnHide";
+            this.btnHide.Size = new System.Drawing.Size(32, 27);
+            this.btnHide.TabIndex = 102;
+            this.btnHide.UseVisualStyleBackColor = false;
+            this.btnHide.Click += new System.EventHandler(this.btnHide_Click);
+            // 
             // UserAddForm
             // 
             this.AcceptButton = this.btnUserSave;
@@ -280,7 +279,6 @@
             this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.checkedListBoxGroup);
             this.Controls.Add(this.btnShow);
-            this.Controls.Add(this.btnHide);
             this.Controls.Add(this.cmbFirmNumber);
             this.Controls.Add(this.btnUserSave);
             this.Controls.Add(this.txtPassword);
@@ -289,6 +287,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.btnHide);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "UserAddForm";
@@ -312,7 +311,6 @@
         private System.Windows.Forms.Button btnUserSave;
         private System.Windows.Forms.ComboBox cmbFirmNumber;
         private System.Windows.Forms.Button btnShow;
-        private System.Windows.Forms.Button btnHide;
         private System.Windows.Forms.CheckedListBox checkedListBoxGroup;
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Label label5;
@@ -322,5 +320,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btnNewRecord;
+        private System.Windows.Forms.Button btnHide;
     }
 }

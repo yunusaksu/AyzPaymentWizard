@@ -49,7 +49,7 @@
             this.btnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnLogin.ForeColor = System.Drawing.Color.White;
-            this.btnLogin.Location = new System.Drawing.Point(60, 245);
+            this.btnLogin.Location = new System.Drawing.Point(60, 293);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(243, 37);
             this.btnLogin.TabIndex = 0;
@@ -76,7 +76,6 @@
             this.txtLoginName.Size = new System.Drawing.Size(243, 27);
             this.txtLoginName.TabIndex = 3;
             this.txtLoginName.DoubleClick += new System.EventHandler(this.txtLoginName_DoubleClick);
-            this.txtLoginName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtLoginName_KeyUp);
             // 
             // label2
             // 
@@ -124,7 +123,7 @@
             // 
             this.cmbFirms.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.cmbFirms.FormattingEnabled = true;
-            this.cmbFirms.Location = new System.Drawing.Point(60, 245);
+            this.cmbFirms.Location = new System.Drawing.Point(60, 246);
             this.cmbFirms.Name = "cmbFirms";
             this.cmbFirms.Size = new System.Drawing.Size(243, 28);
             this.cmbFirms.TabIndex = 8;
@@ -134,7 +133,7 @@
             this.labelFirma.AutoSize = true;
             this.labelFirma.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelFirma.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.labelFirma.Location = new System.Drawing.Point(57, 242);
+            this.labelFirma.Location = new System.Drawing.Point(57, 225);
             this.labelFirma.Name = "labelFirma";
             this.labelFirma.Size = new System.Drawing.Size(135, 17);
             this.labelFirma.TabIndex = 9;

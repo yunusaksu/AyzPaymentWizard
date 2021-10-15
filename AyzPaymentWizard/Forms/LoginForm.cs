@@ -51,7 +51,8 @@ namespace AyzPaymentWizard
 
             string encryptionText = EncryptionAlgorithm.Encrytion(password);
             string decryptionText = EncryptionAlgorithm.Decrytion(encryptionText);
-            command.CommandText = "SELECT ID, FIRMNR FROM [AYZ_PW_USER] WHERE NAME = '" + userName + "' AND PASSWORD = '" + encryptionText + "'";
+            command.CommandText = "SELECT ID, FIRMNR FROM [AYZ_PW_USER] " +
+                "\nWHERE NAME = '" + userName + "' AND PASSWORD = '" + encryptionText + "' AND FIRMNR = '" + Convert.ToInt32(cmbFirms.Text) + "'";
             command.Connection = conn;
             conn.Open();
             dr = command.ExecuteReader();
@@ -152,8 +153,6 @@ namespace AyzPaymentWizard
                 cmbFirms.DataSource = tbl2;
                 cmbFirms.DisplayMember = "NR";
                 cmbFirms.ValueMember = "NR";
-                cmbFirms.Hide();
-                labelFirma.Hide();
 
                 ToolTip showBtnToolTip = new ToolTip();
                 showBtnToolTip.SetToolTip(btnShow, "Şifre Göster");
@@ -232,36 +231,12 @@ namespace AyzPaymentWizard
         private void txtLoginName_DoubleClick(object sender, EventArgs e)
         {
             txtLoginName.Text = "";
-            btnLogin.Location = new Point(60, 245);
-            cmbFirms.Hide();
-            labelFirma.Hide();
-            LoginForm.ActiveForm.Size = new Size(351, 348);
         }
 
         private void txtLoginPassword_DoubleClick(object sender, EventArgs e)
         {
             txtLoginPassword.Text = "";
-        }
-
-        private void txtLoginName_KeyUp(object sender, KeyEventArgs e)
-        {
-            //if (txtLoginName.Text.ToUpper() == "ADMİN")
-            if (txtLoginName.Text == UserRead())
-            {
-                labelFirma.Show();
-                cmbFirms.Show();
-                btnLogin.Location = new Point(60, 300);
-                cmbFirms.Location = new Point(60, 262);
-                LoginForm.ActiveForm.Size = new Size(351, 380);
-            }
-            else
-            {
-                btnLogin.Location = new Point(60, 245);
-                cmbFirms.Hide();
-                labelFirma.Hide();
-                LoginForm.ActiveForm.Size = new Size(351, 348);
-            }
-        }
+        }        
 
         private void btnShow_Click(object sender, EventArgs e)
         {
