@@ -30,6 +30,7 @@
         {
             this.dataGridViewPaging = new In.Sontx.SimpleDataGridViewPaging.DataGridViewPaging();
             this.btnToExcel = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // dataGridViewPaging
@@ -60,11 +61,28 @@
             this.btnToExcel.UseVisualStyleBackColor = false;
             this.btnToExcel.Click += new System.EventHandler(this.btnToExcel_Click);
             // 
+            // btnDelete
+            // 
+            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDelete.BackColor = System.Drawing.Color.White;
+            this.btnDelete.FlatAppearance.BorderSize = 0;
+            this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnDelete.ForeColor = System.Drawing.Color.DarkRed;
+            this.btnDelete.Location = new System.Drawing.Point(176, 464);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(170, 38);
+            this.btnDelete.TabIndex = 4;
+            this.btnDelete.Text = "Seçili Satırlar Sil";
+            this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // SFTPSTATE
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1281, 502);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnToExcel);
             this.Controls.Add(this.dataGridViewPaging);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -80,5 +98,6 @@
         #endregion
         private In.Sontx.SimpleDataGridViewPaging.DataGridViewPaging dataGridViewPaging;
         private System.Windows.Forms.Button btnToExcel;
+        private System.Windows.Forms.Button btnDelete;
     }
 }

@@ -40,7 +40,7 @@ namespace AyzPaymentWizard
                         }
                         else if (firmNr == null)
                         {
-                            MessageBox.Show("Geçerli Firma Numarası Seçiniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Geçerli Firma Numarası Seçiniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                         else
                         {
@@ -125,7 +125,7 @@ namespace AyzPaymentWizard
                     }
                     else if (LogoFirmaNumber == null)
                     {
-                        MessageBox.Show("Geçerli Firma Numarası Seçiniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Geçerli Firma Numarası Seçiniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }                    
                     else
                     {

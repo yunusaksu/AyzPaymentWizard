@@ -18,7 +18,7 @@ namespace AyzPaymentWizard.Forms
 
         public SFTPSTATE()
         {
-            InitializeComponent();            
+            InitializeComponent();
             dataGridViewPaging.RequestQueryData += DataGridViewPaging_RequestQueryData;
             dataGridViewPaging.Initialize(count());
             dataGridViewPaging.DataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(datagridViewPaging_CellFormatting);
@@ -114,7 +114,7 @@ namespace AyzPaymentWizard.Forms
                 dataGridViewPaging.DataGridView.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.White;
             }
         }
-        
+
 
         private void btnToExcel_Click(object sender, EventArgs e)
         {
@@ -158,6 +158,43 @@ namespace AyzPaymentWizard.Forms
             }
         }
 
-      
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewPaging.DataGridView.SelectedRows.Count > 0)
+            {
+                foreach (DataGridViewRow row in dataGridViewPaging.DataGridView.SelectedRows)
+                {
+                    int id = Convert.ToInt32(row.Cells["ID"].Value);
+                    DeleteRecord(id);
+                    int index = row.Index;
+                    dataGridViewPaging.DataGridView.Rows.RemoveAt(index);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Seçili satır yoktur!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void DeleteRecord(int ID)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    string sql = "DELETE FROM AYZ_PW_LOG_FILE WHERE ID = " + ID + "";
+                    komut = new SqlCommand(sql, conn);
+                    komut.Parameters.AddWithValue("@ID", ID);
+                    conn.Open();
+                    komut.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hata: " + ex.Message);
+            }
+
+        }
     }
 }
