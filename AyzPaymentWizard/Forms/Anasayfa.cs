@@ -48,7 +48,7 @@ namespace AyzPaymentWizard
 
         private void Anasayfa_Load(object sender, EventArgs e)
         {
-            labelUserName.Text = Helper.USERNAME;
+            OnlineUsertoolStripLabel.Text = Helper.USERNAME;
             dataGridViewPacket.MultiSelect = false;
             ToolTip newPacketBtnToolTip = new ToolTip();
             newPacketBtnToolTip.SetToolTip(btnNewPacket, "Yeni Paket");
@@ -132,7 +132,7 @@ namespace AyzPaymentWizard
             if (!Helper.AuthorityControl("ADD_USER"))
                 btnUserAdd.Enabled = false;
             if (!Helper.AuthorityControl("ADD_GROUP"))
-                btnGroupAdd.Enabled = false;           
+                btnGroupAdd.Enabled = false;
         }
         public void FillPacketList()
         {
@@ -1055,6 +1055,11 @@ namespace AyzPaymentWizard
         private void dataGridViewPacket_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
         {
             dataGridViewPacket.DefaultCellStyle.SelectionBackColor = Color.LightSeaGreen;
+        }
+
+        private void SignOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
         }
     }
 }
