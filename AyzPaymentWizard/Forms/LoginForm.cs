@@ -26,14 +26,7 @@ namespace AyzPaymentWizard
 
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool WritePrivateProfileString(string lpAppName, string lpKeyName, string lpString, string lpFileName);
-
-        bool WriteINI(string SectionName, string KeyName, string StringToWrite, string INIFileName)
-        {
-            bool Return;
-            Return = WritePrivateProfileString(SectionName, KeyName, StringToWrite, INIFileName);
-            return Return;
-        }
+        static extern bool WritePrivateProfileString(string lpAppName, string lpKeyName, string lpString, string lpFileName);        
 
         [DllImport("kernel32.dll")]
         static extern uint GetPrivateProfileString(string lpAppName, string lpKeyName, string lpDefault, StringBuilder lpReturnedString, int nSize, string lpFileName);
@@ -44,13 +37,13 @@ namespace AyzPaymentWizard
             Application.Exit();
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private void BtnLogin_Click(object sender, EventArgs e)
         {
             var userName = txtLoginName.Text;
             var password = txtLoginPassword.Text;
 
             string encryptionText = EncryptionAlgorithm.Encrytion(password);
-            string decryptionText = EncryptionAlgorithm.Decrytion(encryptionText);
+            //string decryptionText = EncryptionAlgorithm.Decrytion(encryptionText);
             command.CommandText = "SELECT ID, FIRMNR FROM [AYZ_PW_USER] " +
                 "\nWHERE NAME = '" + userName + "' AND PASSWORD = '" + encryptionText + "' AND FIRMNR = '" + Convert.ToInt32(cmbFirms.Text) + "'";
             command.Connection = conn;
@@ -116,7 +109,7 @@ namespace AyzPaymentWizard
         private string UserRead()
         {
             FileIniDataParser parser = new FileIniDataParser();
-            IniData generateData = parser.ReadFile(ConnectionHelper.SystemIniPath);
+            IniData generateData = parser.ReadFile(Helper.SystemIniPath);
 
             //Reading the Content of the File
             string AdminuserName = generateData["AdminNameBaslik"]["AdminUser"].ToString();
@@ -127,7 +120,7 @@ namespace AyzPaymentWizard
         private string PasswordRead()
         {
             StringBuilder sb2 = new StringBuilder(5000);
-            GetPrivateProfileString("AdminPassWordBaslik", "AdminPassword", "", sb2, sb2.Capacity, ConnectionHelper.SystemIniPath);
+            GetPrivateProfileString("AdminPassWordBaslik", "AdminPassword", "", sb2, sb2.Capacity, Helper.SystemIniPath);
             string password = EncryptionAlgorithm.Decrytion(sb2.ToString());
             return password;
         }
@@ -155,7 +148,7 @@ namespace AyzPaymentWizard
                 cmbFirms.ValueMember = "NR";
 
                 ToolTip showBtnToolTip = new ToolTip();
-                showBtnToolTip.SetToolTip(btnShow, "Şifre Göster");
+                showBtnToolTip.SetToolTip(BtnShow, "Şifre Göster");
                 ToolTip hideBtnToolTip = new ToolTip();
                 hideBtnToolTip.SetToolTip(btnHide, "Şifre Gizle");
             }
@@ -168,17 +161,17 @@ namespace AyzPaymentWizard
 
         private void IsExistDatabase()
         {
-            string path = Application.StartupPath + @"\CreateDatabaseTables";
+            string path = Helper.root + "AYZ PAYMENT WIZARD" + @"\dbo.CREATE_DATABASE";
 
-            #region AppStartPath'de veritabanı create dosyalarının koyulacağı dosya yoksa create edilir.
+            #region AYZ PAYMENT WIZARD klasöründe veritabanı create dosyalarının koyulacağı dosya yoksa create edilir.
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
             #endregion
 
-            #region AppStartPath'de veritabanı güncelleme dosyalarının koyulacağı dosya yoksa create edilir.
-            string path2 = Application.StartupPath + @"\UpdateDatabaseTables";
+            #region AYZ PAYMENT WIZARD klasöründe veritabanı güncelleme dosyalarının koyulacağı dosya yoksa create edilir.
+            string path2 = Helper.root + "AYZ PAYMENT WIZARD" + @"\dbo.UPDATE_DATABASE";
             if (!Directory.Exists(path2))
             {
                 Directory.CreateDirectory(path2);
@@ -217,7 +210,7 @@ namespace AyzPaymentWizard
                                         catch (SqlException ex)
                                         {
                                             string spError = commandString.Length > 100 ? commandString.Substring(0, 100) + " ...\n..." : commandString;
-                                            MessageBox.Show(string.Format("Please check the SqlServer script.\nFile: {0} \nLine: {1} \nError: {2} \nSQL Command: \n{3}", Application.StartupPath + "" + item + "", ex.LineNumber, ex.Message, spError), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                            MessageBox.Show(string.Format("Lütfen SqlServer script'i kontrol ediniz.\nFile: {0} \nLine: {1} \nError: {2} \nSQL Command: \n{3}", Helper.root + @"\AYZ PAYMENT WIZARD" + "" + item + "", ex.LineNumber, ex.Message, spError), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                         }
                                     }
                                 }
@@ -228,17 +221,17 @@ namespace AyzPaymentWizard
             }
         }
 
-        private void txtLoginName_DoubleClick(object sender, EventArgs e)
+        private void TxtLoginName_DoubleClick(object sender, EventArgs e)
         {
             txtLoginName.Text = "";
         }
 
-        private void txtLoginPassword_DoubleClick(object sender, EventArgs e)
+        private void TxtLoginPassword_DoubleClick(object sender, EventArgs e)
         {
             txtLoginPassword.Text = "";
-        }        
+        }
 
-        private void btnShow_Click(object sender, EventArgs e)
+        private void BtnShow_Click(object sender, EventArgs e)
         {
             if (txtLoginPassword.PasswordChar == '*')
             {
@@ -247,11 +240,11 @@ namespace AyzPaymentWizard
             }
         }
 
-        private void btnHide_Click(object sender, EventArgs e)
+        private void BtnHide_Click(object sender, EventArgs e)
         {
             if (txtLoginPassword.PasswordChar == '\0')
             {
-                btnShow.BringToFront();
+                BtnShow.BringToFront();
                 txtLoginPassword.PasswordChar = '*';
             }
         }

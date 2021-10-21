@@ -1,19 +1,13 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Windows.Forms;
-using System.IO;
 namespace AyzPaymentWizard
 {
 
     public class ConnectionHelper
-    {
-        static string root = Directory.GetDirectoryRoot(@"\AYZ PAYMENT WIZARD");
-        public static string SystemIniPath = root + "AYZ PAYMENT WIZARD" + @"\System.ini";
-
-
-        //public static string SystemIniPath = Application.StartupPath + @"\System.ini";
-        static bool existIni = File.Exists(SystemIniPath);
+    {        
+        static bool existIni = File.Exists(Helper.SystemIniPath);
 
         private static string DecryptionServername = EncryptionAlgorithm.Decrytion(GetServerName());
         private static string DecryptionDatabasename = EncryptionAlgorithm.Decrytion(GetDatabaseName());
@@ -27,7 +21,7 @@ namespace AyzPaymentWizard
             if (existIni == true)
             {
                 StringBuilder sb = new StringBuilder(5000);
-                GetPrivateProfileString("ServerNameBaslik", "Server", "", sb, sb.Capacity, SystemIniPath);
+                GetPrivateProfileString("ServerNameBaslik", "Server", "", sb, sb.Capacity, Helper.SystemIniPath);
                 server = sb.ToString();
                 return server;
 
@@ -41,14 +35,14 @@ namespace AyzPaymentWizard
         private static string GetDatabaseName()
         {
             StringBuilder sb = new StringBuilder(5000);
-            GetPrivateProfileString("DatabaseNameBaslik", "Database", "", sb, sb.Capacity, SystemIniPath);
+            GetPrivateProfileString("DatabaseNameBaslik", "Database", "", sb, sb.Capacity, Helper.SystemIniPath);
             string db = sb.ToString();
             return db;
         }
         private static string GetServerUserName()
         {
             StringBuilder sb = new StringBuilder(5000);
-            GetPrivateProfileString("ServerUserNameBaslik", "ServerUser", "", sb, sb.Capacity, SystemIniPath);
+            GetPrivateProfileString("ServerUserNameBaslik", "ServerUser", "", sb, sb.Capacity, Helper.SystemIniPath);
             string name = sb.ToString();
             return name;
         }
@@ -57,7 +51,7 @@ namespace AyzPaymentWizard
         private static string GetUserPass()
         {
             StringBuilder sb = new StringBuilder(5000);
-            GetPrivateProfileString("ServerUserPasswordBaslik", "ServerPass", "", sb, sb.Capacity, SystemIniPath);
+            GetPrivateProfileString("ServerUserPasswordBaslik", "ServerPass", "", sb, sb.Capacity, Helper.SystemIniPath);
             string pass = sb.ToString();
             return pass;
         }

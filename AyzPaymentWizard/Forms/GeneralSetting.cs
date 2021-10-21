@@ -17,7 +17,7 @@ namespace AyzPaymentWizard.Forms
             InitializeComponent();
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -47,7 +47,7 @@ namespace AyzPaymentWizard.Forms
             }
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs e)
         {
             try
             {
@@ -78,9 +78,9 @@ namespace AyzPaymentWizard.Forms
             }
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e)
+        private void BtnUpdate_Click(object sender, EventArgs e)
         {
-            string path = Application.StartupPath + @"\UpdateDatabaseTables";
+            string path = Helper.root + @"\AYZ PAYMENT WIZARD" + @"\dbo.UPDATE_DATABASE";
 
             DirectoryInfo directoryInfo = new DirectoryInfo(path);
             foreach (FileInfo item in directoryInfo.GetFiles())
@@ -104,7 +104,7 @@ namespace AyzPaymentWizard.Forms
                                 catch (SqlException ex)
                                 {
                                     string spError = commandString.Length > 100 ? commandString.Substring(0, 100) + " ...\n..." : commandString;
-                                    MessageBox.Show(string.Format("Please check the SqlServer script.\nFile: {0} \nLine: {1} \nError: {2} \nSQL Command: \n{3}", Application.StartupPath + "CreateDatabaseScript.sql", ex.LineNumber, ex.Message, spError), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    MessageBox.Show(string.Format("Lütfen SqlServer scrpitlerinizi kontorl ediniz.\nFile: {0} \nLine: {1} \nError: {2} \nSQL Command: \n{3}", Helper.root + @"\AYZ PAYMENT WIZARD", ex.LineNumber, ex.Message, spError), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 }
                             }
                         }

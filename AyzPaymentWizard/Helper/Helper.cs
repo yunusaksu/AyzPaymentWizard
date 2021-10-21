@@ -4,6 +4,7 @@ using Renci.SshNet;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -15,6 +16,9 @@ namespace AyzPaymentWizard
         static SqlCommand komut = new SqlCommand();
         static SqlDataReader dr;
         static string CommandText = "";
+
+        public static string root = Directory.GetDirectoryRoot(@"\AYZ PAYMENT WIZARD");
+        public static string SystemIniPath = root + "AYZ PAYMENT WIZARD" + @"\System.ini";
 
         static public string LOGOUSERNAME { get; set; }
         static public string LOGOUSERPASS { get; set; }
@@ -358,7 +362,7 @@ namespace AyzPaymentWizard
             try
             {
                 FileIniDataParser parser = new FileIniDataParser();
-                IniData generateData = parser.ReadFile(ConnectionHelper.SystemIniPath);
+                IniData generateData = parser.ReadFile(SystemIniPath);
 
                 //Reading the Content of the File
                 string AdminuserName = generateData["AdminNameBaslik"]["AdminUser"].ToString();
