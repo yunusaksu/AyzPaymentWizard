@@ -126,7 +126,7 @@ namespace AyzPaymentWizard
                     else if (LogoFirmaNumber == null)
                     {
                         MessageBox.Show("Geçerli Firma Numarası Seçiniz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }                    
+                    }
                     else
                     {
                         try
@@ -337,7 +337,13 @@ namespace AyzPaymentWizard
                                 conn.Open();
                                 komut.ExecuteNonQuery();
                                 conn.Close();
-                                MessageBox.Show("Silindi!");
+                                int firmNr = (int)dataGridViewUsers.SelectedRows[0].Cells["FIRMNR"].Value;
+                                string sql3 = "DELETE FROM AYZ_PW_FILTER_VALUES WHERE USERNR=" + id + " AND PACKETID IS NULL AND FIRMNR = '" + firmNr + "'";
+                                komut = new SqlCommand(sql3, conn);
+                                conn.Open();
+                                komut.ExecuteNonQuery();
+                                conn.Close();
+                                MessageBox.Show("Silindi!","Uyarı",MessageBoxButtons.OK,MessageBoxIcon.Information);
                             }
                         }
                         catch (Exception ex)
