@@ -194,7 +194,7 @@
             this.btnSave.TabIndex = 15;
             this.btnSave.Text = "Kaydet";
             this.btnSave.UseVisualStyleBackColor = false;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // btnCancel
             // 
@@ -209,7 +209,7 @@
             this.btnCancel.TabIndex = 16;
             this.btnCancel.Text = "Vazgeç";
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // btnTrialMail
             // 
@@ -224,7 +224,7 @@
             this.btnTrialMail.TabIndex = 17;
             this.btnTrialMail.Text = "Deneme Maili Yolla";
             this.btnTrialMail.UseVisualStyleBackColor = false;
-            this.btnTrialMail.Click += new System.EventHandler(this.btnTrialMail_Click);
+            this.btnTrialMail.Click += new System.EventHandler(this.BtnTrialMail_Click);
             // 
             // btnShow
             // 
@@ -237,7 +237,7 @@
             this.btnShow.Size = new System.Drawing.Size(36, 27);
             this.btnShow.TabIndex = 18;
             this.btnShow.UseVisualStyleBackColor = false;
-            this.btnShow.Click += new System.EventHandler(this.btnShow_Click);
+            this.btnShow.Click += new System.EventHandler(this.BtnShow_Click);
             // 
             // btnHide
             // 
@@ -250,7 +250,7 @@
             this.btnHide.Size = new System.Drawing.Size(36, 27);
             this.btnHide.TabIndex = 19;
             this.btnHide.UseVisualStyleBackColor = false;
-            this.btnHide.Click += new System.EventHandler(this.btnHide_Click);
+            this.btnHide.Click += new System.EventHandler(this.BtnHide_Click);
             // 
             // label8
             // 
@@ -307,7 +307,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "SMTP";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

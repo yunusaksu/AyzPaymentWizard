@@ -104,7 +104,7 @@
             this.btnCreatePackage.TabIndex = 2;
             this.btnCreatePackage.Text = "PAKETİ OLUŞTUR";
             this.btnCreatePackage.UseVisualStyleBackColor = false;
-            this.btnCreatePackage.Click += new System.EventHandler(this.btnCreatePackage_Click);
+            this.btnCreatePackage.Click += new System.EventHandler(this.BtnCreatePackage_Click);
             // 
             // btnAllToRight
             // 
@@ -115,7 +115,7 @@
             this.btnAllToRight.TabIndex = 11;
             this.btnAllToRight.Text = ">>";
             this.btnAllToRight.UseVisualStyleBackColor = true;
-            this.btnAllToRight.Click += new System.EventHandler(this.btnRight_Click);
+            this.btnAllToRight.Click += new System.EventHandler(this.BtnRight_Click);
             // 
             // btnAllToLeft
             // 
@@ -126,7 +126,7 @@
             this.btnAllToLeft.TabIndex = 12;
             this.btnAllToLeft.Text = "<<";
             this.btnAllToLeft.UseVisualStyleBackColor = true;
-            this.btnAllToLeft.Click += new System.EventHandler(this.btnLeft_Click);
+            this.btnAllToLeft.Click += new System.EventHandler(this.BtnLeft_Click);
             // 
             // label4
             // 
@@ -182,7 +182,7 @@
             this.btnToRight.TabIndex = 22;
             this.btnToRight.Text = ">";
             this.btnToRight.UseVisualStyleBackColor = true;
-            this.btnToRight.Click += new System.EventHandler(this.btnRightsel_Click);
+            this.btnToRight.Click += new System.EventHandler(this.BtnRightsel_Click);
             // 
             // btnToLeft
             // 
@@ -193,7 +193,7 @@
             this.btnToLeft.TabIndex = 23;
             this.btnToLeft.Text = "<";
             this.btnToLeft.UseVisualStyleBackColor = true;
-            this.btnToLeft.Click += new System.EventHandler(this.btnLeftsel_Click);
+            this.btnToLeft.Click += new System.EventHandler(this.BtnLeftsel_Click);
             // 
             // dataGridViewLeft
             // 
@@ -208,9 +208,9 @@
             this.dataGridViewLeft.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewLeft.Size = new System.Drawing.Size(569, 498);
             this.dataGridViewLeft.TabIndex = 20;
-            this.dataGridViewLeft.SortStringChanged += new System.EventHandler<Zuby.ADGV.AdvancedDataGridView.SortEventArgs>(this.dataGridViewLeft_SortStringChanged_1);
-            this.dataGridViewLeft.FilterStringChanged += new System.EventHandler<Zuby.ADGV.AdvancedDataGridView.FilterEventArgs>(this.dataGridViewLeft_FilterStringChanged_1);
-            this.dataGridViewLeft.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewLeft_CellValueChanged);
+            this.dataGridViewLeft.SortStringChanged += new System.EventHandler<Zuby.ADGV.AdvancedDataGridView.SortEventArgs>(this.DataGridViewLeft_SortStringChanged_1);
+            this.dataGridViewLeft.FilterStringChanged += new System.EventHandler<Zuby.ADGV.AdvancedDataGridView.FilterEventArgs>(this.DataGridViewLeft_FilterStringChanged_1);
+            this.dataGridViewLeft.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewLeft_CellValueChanged);
             // 
             // dataGridViewRight
             // 
@@ -224,13 +224,13 @@
             this.dataGridViewRight.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewRight.Size = new System.Drawing.Size(605, 370);
             this.dataGridViewRight.TabIndex = 24;
-            this.dataGridViewRight.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewRight_CellEndEdit);
-            this.dataGridViewRight.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewRight_CellEnter);
-            this.dataGridViewRight.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridViewRight_CellValidating);
-            this.dataGridViewRight.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewRight_CellValueChanged);
-            this.dataGridViewRight.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridViewRight_CurrentCellDirtyStateChanged);
-            this.dataGridViewRight.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridViewRight_EditingControlShowing);
-            this.dataGridViewRight.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataGridViewRight_RowsAdded);
+            this.dataGridViewRight.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewRight_CellEndEdit);
+            this.dataGridViewRight.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewRight_CellEnter);
+            this.dataGridViewRight.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.DataGridViewRight_CellValidating);
+            this.dataGridViewRight.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridViewRight_CellValueChanged);
+            this.dataGridViewRight.CurrentCellDirtyStateChanged += new System.EventHandler(this.DataGridViewRight_CurrentCellDirtyStateChanged);
+            this.dataGridViewRight.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.DataGridViewRight_EditingControlShowing);
+            this.dataGridViewRight.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.DataGridViewRight_RowsAdded);
             // 
             // txtSumLeftDGV
             // 

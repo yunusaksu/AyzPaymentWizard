@@ -142,11 +142,11 @@
     <Compile Include="Forms\PacketEditForm.Designer.cs">
       <DependentUpon>PacketEditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\sftpForm.cs">
+    <Compile Include="Forms\SftpForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\sftpForm.Designer.cs">
-      <DependentUpon>sftpForm.cs</DependentUpon>
+    <Compile Include="Forms\SftpForm.Designer.cs">
+      <DependentUpon>SftpForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Filters.cs">
       <SubType>Form</SubType>
@@ -247,8 +247,8 @@
     <EmbeddedResource Include="Forms\PacketPreparation.resx">
       <DependentUpon>PacketPreparation.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\sftpForm.resx">
-      <DependentUpon>sftpForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\SftpForm.resx">
+      <DependentUpon>SftpForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SFTPSTATE.resx">
       <DependentUpon>SFTPSTATE.cs</DependentUpon>

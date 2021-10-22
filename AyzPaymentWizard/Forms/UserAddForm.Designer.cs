@@ -125,7 +125,7 @@
             this.btnUserSave.TabIndex = 5;
             this.btnUserSave.Text = "Kaydet";
             this.btnUserSave.UseVisualStyleBackColor = false;
-            this.btnUserSave.Click += new System.EventHandler(this.btnUserSave_Click);
+            this.btnUserSave.Click += new System.EventHandler(this.BtnUserSave_Click);
             // 
             // cmbFirmNumber
             // 
@@ -176,8 +176,8 @@
             this.dataGridViewUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewUsers.Size = new System.Drawing.Size(443, 215);
             this.dataGridViewUsers.TabIndex = 15;
-            this.dataGridViewUsers.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.dataGridViewUsers_RowStateChanged);
-            this.dataGridViewUsers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridViewUsers_KeyDown);
+            this.dataGridViewUsers.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.DataGridViewUsers_RowStateChanged);
+            this.dataGridViewUsers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DataGridViewUsers_KeyDown);
             // 
             // btnInfo
             // 
@@ -202,7 +202,7 @@
             this.btnShow.Size = new System.Drawing.Size(32, 27);
             this.btnShow.TabIndex = 99;
             this.btnShow.UseVisualStyleBackColor = false;
-            this.btnShow.Click += new System.EventHandler(this.btnShow_Click);
+            this.btnShow.Click += new System.EventHandler(this.BtnShow_Click);
             // 
             // label6
             // 
@@ -248,7 +248,7 @@
             this.btnNewRecord.Size = new System.Drawing.Size(50, 50);
             this.btnNewRecord.TabIndex = 101;
             this.btnNewRecord.UseVisualStyleBackColor = false;
-            this.btnNewRecord.Click += new System.EventHandler(this.btnNewRecord_Click);
+            this.btnNewRecord.Click += new System.EventHandler(this.BtnNewRecord_Click);
             // 
             // btnHide
             // 
@@ -261,7 +261,7 @@
             this.btnHide.Size = new System.Drawing.Size(32, 27);
             this.btnHide.TabIndex = 102;
             this.btnHide.UseVisualStyleBackColor = false;
-            this.btnHide.Click += new System.EventHandler(this.btnHide_Click);
+            this.btnHide.Click += new System.EventHandler(this.BtnHide_Click);
             // 
             // UserAddForm
             // 
@@ -288,7 +288,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnHide);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "UserAddForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

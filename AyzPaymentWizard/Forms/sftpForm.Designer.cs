@@ -1,6 +1,6 @@
 ﻿namespace AyzPaymentWizard.Forms
 {
-    partial class sftpForm
+    partial class SftpForm
     {
         /// <summary>
         /// Required designer variable.
@@ -49,9 +49,9 @@
             this.dgvSftp.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvSftp.Size = new System.Drawing.Size(1232, 403);
             this.dgvSftp.TabIndex = 0;
-            this.dgvSftp.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSftp_CellClick);
-            this.dgvSftp.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvSftp_CellPainting);
-            this.dgvSftp.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvSftp_KeyDown);
+            this.dgvSftp.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvSftp_CellClick);
+            this.dgvSftp.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.DgvSftp_CellPainting);
+            this.dgvSftp.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DgvSftp_KeyDown);
             // 
             // btnSave
             // 
@@ -67,7 +67,7 @@
             this.btnSave.TabIndex = 1;
             this.btnSave.Text = "KAYDET";
             this.btnSave.UseVisualStyleBackColor = false;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // btnCancel
             // 
@@ -84,7 +84,7 @@
             this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "VAZGEÇ";
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // openFileDialog1
             // 
@@ -104,7 +104,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SFTP AYARLARI";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.sftpForm_Load);
+            this.Load += new System.EventHandler(this.SftpForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvSftp)).EndInit();
             this.ResumeLayout(false);
 

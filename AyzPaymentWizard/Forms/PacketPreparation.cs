@@ -110,7 +110,7 @@ namespace AyzPaymentWizard
             return result;
         }
 
-        private void btnRightsel_Click(object sender, EventArgs e)
+        private void BtnRightsel_Click(object sender, EventArgs e)
         {
             for (int i = dataGridViewLeft.Rows.Count - 1; i >= 0; i--)
             {
@@ -200,7 +200,7 @@ namespace AyzPaymentWizard
             dataGridViewLeft.DataSource = source2;
         }
 
-        private void btnLeftsel_Click(object sender, EventArgs e)
+        private void BtnLeftsel_Click(object sender, EventArgs e)
         {
             for (int i = dataGridViewRight.Rows.Count - 1; i >= 0; i--)
             {
@@ -284,7 +284,7 @@ namespace AyzPaymentWizard
             dataGridViewLeft.DataSource = source2;
         }
 
-        private void dataGridViewLeft_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void DataGridViewLeft_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 1)
                 txtSumLeftDGV.Text = CellSum().ToString();
@@ -296,14 +296,14 @@ namespace AyzPaymentWizard
             double sum = 0;
             for (int i = 0; i < dataGridViewLeft.Rows.Count; ++i)
             {
-                double d = 0;
+                double d;
                 Double.TryParse(dataGridViewLeft.Rows[i].Cells[1].Value.ToString(), out d);
                 sum += d;
             }
             return sum;
         }
 
-        private void dataGridViewLeft_FilterStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
+        private void DataGridViewLeft_FilterStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.FilterEventArgs e)
         {
             try
             {
@@ -339,7 +339,7 @@ namespace AyzPaymentWizard
         }
 
         //Odenecek icin DatagridviewRight
-        private void dataGridViewRight_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void DataGridViewRight_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
 
             decimal sumP = 0m;
@@ -380,7 +380,7 @@ namespace AyzPaymentWizard
 
         }
 
-        private void dataGridViewRight_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        private void DataGridViewRight_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             DataGridViewTextBoxCell cell = dataGridViewRight[dataGridViewRight.Columns["Paid"].Index, e.RowIndex] as DataGridViewTextBoxCell;
 
@@ -427,7 +427,7 @@ namespace AyzPaymentWizard
             }
         }
 
-        private void dataGridViewRight_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        private void DataGridViewRight_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
 
             if (dataGridViewRight.CurrentCell.ColumnIndex == dataGridViewRight.Columns["Paid"].Index)
@@ -464,14 +464,14 @@ namespace AyzPaymentWizard
             }
         }
 
-        private void dataGridViewRight_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void DataGridViewRight_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             // Clear the row error in case the user presses ESC.
             dataGridViewRight.Rows[e.RowIndex].ErrorText = String.Empty;
         }
 
 
-        private void dataGridViewRight_CellEnter(object sender, DataGridViewCellEventArgs e)
+        private void DataGridViewRight_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
             decimal sumedup = 0m;
 
@@ -485,7 +485,7 @@ namespace AyzPaymentWizard
 
 
 
-        private void dataGridViewRight_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        private void DataGridViewRight_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
             decimal sumedup = 0m;
 
@@ -498,7 +498,7 @@ namespace AyzPaymentWizard
         }
 
 
-        private void dataGridViewRight_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        private void DataGridViewRight_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             decimal sumedup = 0m;
 
@@ -510,7 +510,7 @@ namespace AyzPaymentWizard
             txtPaidRightDGV.Text = sumedup.ToString();
         }
 
-        private void dataGridViewLeft_SortStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
+        private void DataGridViewLeft_SortStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
         {
             try
             {
@@ -548,7 +548,7 @@ namespace AyzPaymentWizard
             }
         }
 
-        private void button_unloadfilters_Click(object sender, EventArgs e)
+        private void Button_unloadfilters_Click(object sender, EventArgs e)
         {
             dataGridViewLeft.CleanFilterAndSort();
         }
@@ -1050,7 +1050,7 @@ namespace AyzPaymentWizard
 
         }
 
-        private void btnRight_Click(object sender, EventArgs e)
+        private void BtnRight_Click(object sender, EventArgs e)
         {
             for (int i = dataGridViewLeft.Rows.Count - 1; i >= 0; i--)
             {
@@ -1143,7 +1143,7 @@ namespace AyzPaymentWizard
             dataGridViewLeft.DataSource = source2;
         }
 
-        private void btnLeft_Click(object sender, EventArgs e)
+        private void BtnLeft_Click(object sender, EventArgs e)
         {
             for (int i = dataGridViewRight.Rows.Count - 1; i >= 0; i--)
             {
@@ -1228,7 +1228,7 @@ namespace AyzPaymentWizard
             dataGridViewLeft.DataSource = source2;
         }
 
-        private void btnFilter_Click(object sender, EventArgs e)
+        private void BtnFilter_Click(object sender, EventArgs e)
         {
             var source = new BindingSource();
             source.DataSource = FilteredList;
@@ -1237,7 +1237,7 @@ namespace AyzPaymentWizard
             LeftList = FilteredList;
         }
 
-        private void btnCreatePackage_Click(object sender, EventArgs e)
+        private void BtnCreatePackage_Click(object sender, EventArgs e)
         {
             decimal sumRequire = RightList.Sum(x => x.Total);                                      // Ödenmesi Gereken
             decimal sumPaid = RightList.Sum(x => x.Paid);                                          // Ödenecek Tutar        
@@ -1292,7 +1292,7 @@ namespace AyzPaymentWizard
                                     "\n '" + bankCode + "', " +
                                     "\n '" + tigerBankAccountCode + "', " +
                                     "\n '" + bankOutAccID + "', " +
-                                    "\n '" + getCurrency(currencyValue) + "', " +
+                                    "\n '" + GetCurrency(currencyValue) + "', " +
                                     "\n '" + Helper.USERNAME + "' " +
                                     "\n);" +
                                     "\nSELECT SCOPE_IDENTITY()";
@@ -1403,7 +1403,7 @@ namespace AyzPaymentWizard
             }
         }
 
-        private string getCurrency(int currencyValue)
+        private string GetCurrency(int currencyValue)
         {
             string CurCode = "";
             if (currencyValue != 0)

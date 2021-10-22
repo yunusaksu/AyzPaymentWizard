@@ -637,6 +637,7 @@
             this.Controls.Add(this.btnFiltreApply);
             this.Controls.Add(this.tabControl1);
             this.ForeColor = System.Drawing.Color.White;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "FiltersForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FİLTRELER";

@@ -19,7 +19,7 @@ namespace AyzPaymentWizard
             InitializeComponent();
         }
 
-        private void btnUserSave_Click(object sender, EventArgs e)
+        private void BtnUserSave_Click(object sender, EventArgs e)
         {
             if (dataGridViewUsers.SelectedRows.Count > 0)
             {
@@ -113,7 +113,7 @@ namespace AyzPaymentWizard
                 //var GroupId = cmbGroup.SelectedValue;
                 var LogoFirmaNumber = cmbFirmNumber.SelectedValue;
 
-                if (mailCheck(email, LogoFirmaNumber))
+                if (MailCheck(email, LogoFirmaNumber))
                 {
                     MessageBox.Show("Bu mail ile kayıt olmuş kullanıcı zaten mevcut!\nLütfen farklı bir mail ile kayıt olunuz!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -158,7 +158,7 @@ namespace AyzPaymentWizard
                 }
                 #endregion
             }
-            fillUsersDGV();
+            FillUsersDGV();
             dataGridViewUsers.ClearSelection();
             txtEmail.Text = "";
             txtPassword.Text = "";
@@ -169,7 +169,7 @@ namespace AyzPaymentWizard
             }
         }
 
-        private bool mailCheck(string email, object LogoFirmNr)
+        private bool MailCheck(string email, object LogoFirmNr)
         {
             try
             {
@@ -247,7 +247,7 @@ namespace AyzPaymentWizard
                 ToolTip hideBtnToolTip = new ToolTip();
                 hideBtnToolTip.SetToolTip(btnHide, "Şifre Gizle");
 
-                fillUsersDGV();
+                FillUsersDGV();
                 dataGridViewUsers.ClearSelection();
                 txtEmail.Text = "";
                 txtPassword.Text = "";
@@ -263,7 +263,7 @@ namespace AyzPaymentWizard
             }
         }
 
-        private void fillUsersDGV()
+        private void FillUsersDGV()
         {
             users.Clear();
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
@@ -290,7 +290,7 @@ namespace AyzPaymentWizard
             dataGridViewUsers.DataSource = source;
         }
 
-        private void btnShow_Click(object sender, EventArgs e)
+        private void BtnShow_Click(object sender, EventArgs e)
         {
             if (txtPassword.PasswordChar == '*')
             {
@@ -298,7 +298,7 @@ namespace AyzPaymentWizard
                 txtPassword.PasswordChar = '\0';
             }
         }
-        private void btnHide_Click(object sender, EventArgs e)
+        private void BtnHide_Click(object sender, EventArgs e)
         {
             if (txtPassword.PasswordChar == '\0')
             {
@@ -308,7 +308,7 @@ namespace AyzPaymentWizard
         }
 
 
-        private void dataGridViewUsers_KeyDown(object sender, KeyEventArgs e)
+        private void DataGridViewUsers_KeyDown(object sender, KeyEventArgs e)
         {
             int id = 0;
             int selectedRowCount = dataGridViewUsers.Rows.GetRowCount(DataGridViewElementStates.Selected);
@@ -345,7 +345,7 @@ namespace AyzPaymentWizard
                             MessageBox.Show("Silme işlemi sırasında bir hata ile oluştu.\n" + ex.Message, "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
-                    fillUsersDGV();
+                    FillUsersDGV();
                     dataGridViewUsers.ClearSelection();
                     txtEmail.Text = "";
                     txtPassword.Text = "";
@@ -358,7 +358,7 @@ namespace AyzPaymentWizard
             }
         }
 
-        private void btnNewRecord_Click(object sender, EventArgs e)
+        private void BtnNewRecord_Click(object sender, EventArgs e)
         {
             txtEmail.Text = "";
             txtPassword.Text = "";
@@ -370,7 +370,7 @@ namespace AyzPaymentWizard
             dataGridViewUsers.ClearSelection();
         }
 
-        private void dataGridViewUsers_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        private void DataGridViewUsers_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
         {
             if (dataGridViewUsers.SelectedRows.Count > 0)
             {

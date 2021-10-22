@@ -59,7 +59,7 @@
             this.btnToExcel.TabIndex = 3;
             this.btnToExcel.Text = "Excel\'e Aktar";
             this.btnToExcel.UseVisualStyleBackColor = false;
-            this.btnToExcel.Click += new System.EventHandler(this.btnToExcel_Click);
+            this.btnToExcel.Click += new System.EventHandler(this.BtnToExcel_Click);
             // 
             // btnDelete
             // 
@@ -75,7 +75,7 @@
             this.btnDelete.TabIndex = 4;
             this.btnDelete.Text = "Seçili Satırlar Sil";
             this.btnDelete.UseVisualStyleBackColor = false;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // SFTPSTATE
             // 

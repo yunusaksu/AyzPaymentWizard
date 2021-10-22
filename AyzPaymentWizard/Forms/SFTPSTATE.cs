@@ -11,7 +11,7 @@ namespace AyzPaymentWizard.Forms
     public partial class SFTPSTATE : Form
     {
         SqlCommand komut = new SqlCommand();
-        SqlDataReader dr;
+        //SqlDataReader dr;
         string CommandText = "";
 
         List<LOG_FILE> list = new List<LOG_FILE>();
@@ -20,11 +20,11 @@ namespace AyzPaymentWizard.Forms
         {
             InitializeComponent();
             dataGridViewPaging.RequestQueryData += DataGridViewPaging_RequestQueryData;
-            dataGridViewPaging.Initialize(count());
-            dataGridViewPaging.DataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(datagridViewPaging_CellFormatting);
+            dataGridViewPaging.Initialize(Count());
+            dataGridViewPaging.DataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(DatagridViewPaging_CellFormatting);
         }
 
-        private int count()
+        private int Count()
         {
             using (SqlConnection con = new SqlConnection(ConnectionHelper.ConnectionString))
             {
@@ -39,7 +39,7 @@ namespace AyzPaymentWizard.Forms
         }
         private void SFTPSTATE_Load(object sender, EventArgs e)
         {
-            fillSFTPDGV();
+            FillSFTPDGV();
         }
 
 
@@ -56,7 +56,7 @@ namespace AyzPaymentWizard.Forms
             }
         }
 
-        private void fillSFTPDGV()
+        private void FillSFTPDGV()
         {
             #region Boş
             //    using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
@@ -98,7 +98,7 @@ namespace AyzPaymentWizard.Forms
         }
 
 
-        private void datagridViewPaging_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private void DatagridViewPaging_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             DataGridViewCell cell = dataGridViewPaging.DataGridView.Rows[e.RowIndex].Cells["STATE"];
             string value = cell.Value.ToString() == "Başarılı" ? "Başarılı" : "Başarısız";
@@ -116,7 +116,7 @@ namespace AyzPaymentWizard.Forms
         }
 
 
-        private void btnToExcel_Click(object sender, EventArgs e)
+        private void BtnToExcel_Click(object sender, EventArgs e)
         {
 
             Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
@@ -158,7 +158,7 @@ namespace AyzPaymentWizard.Forms
             }
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void BtnDelete_Click(object sender, EventArgs e)
         {
             if (dataGridViewPaging.DataGridView.SelectedRows.Count > 0)
             {

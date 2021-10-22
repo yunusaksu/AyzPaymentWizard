@@ -18,13 +18,13 @@ namespace AyzPaymentWizard.Forms
         SqlCommand komut = new SqlCommand();
         SqlDataReader dr;
         string CommandText = "";
-        int PacketId;
+        private readonly int PacketId;
         bool Review = false;
 
         List<Debit> PacketEditsLeftList = new List<Debit>();
         List<Debit> PacketEditsRightList = new List<Debit>();
-        List<Debit> PacketDetailList = new List<Debit>();
-        List<Debit> FilteredList = new List<Debit>();
+        private List<Debit> PacketDetailList = new List<Debit>();
+        //List<Debit> FilteredList = new List<Debit>();
 
         public PacketEditForm()
         {
@@ -51,7 +51,7 @@ namespace AyzPaymentWizard.Forms
         DateTime payBegDate, payEndDate, invBegDate, invEndDate;
         #endregion                         
 
-        private void btnPLeft_Click(object sender, EventArgs e)
+        private void BtnPLeft_Click(object sender, EventArgs e)
         {
             for (int i = DGVLeftEdit.Rows.Count - 1; i >= 0; i--)
             {
@@ -236,7 +236,7 @@ namespace AyzPaymentWizard.Forms
             txtPaid.Text = sumedup.ToString();
         }
 
-        private void btnToRight_Click(object sender, EventArgs e)
+        private void BtnToRight_Click(object sender, EventArgs e)
         {
             for (int i = DGVLeftEdit.Rows.Count - 1; i >= 0; i--)
             {
@@ -326,7 +326,7 @@ namespace AyzPaymentWizard.Forms
             DGVLeftEdit.DataSource = source2;
         }
 
-        private void btnToLeft_Click(object sender, EventArgs e)
+        private void BtnToLeft_Click(object sender, EventArgs e)
         {
             for (int i = DGVRightEdit.Rows.Count - 1; i >= 0; i--)
             {
@@ -413,7 +413,7 @@ namespace AyzPaymentWizard.Forms
             DGVLeftEdit.DataSource = source2;
         }
 
-        private void btnAllToRight_Click(object sender, EventArgs e)
+        private void BtnAllToRight_Click(object sender, EventArgs e)
         {
             for (int i = DGVLeftEdit.Rows.Count - 1; i >= 0; i--)
             {
@@ -504,7 +504,7 @@ namespace AyzPaymentWizard.Forms
             DGVLeftEdit.DataSource = source2;
         }
 
-        private void btnAllToLeft_Click(object sender, EventArgs e)
+        private void BtnAllToLeft_Click(object sender, EventArgs e)
         {
             for (int i = DGVRightEdit.Rows.Count - 1; i >= 0; i--)
             {
@@ -1447,7 +1447,7 @@ namespace AyzPaymentWizard.Forms
         }
 
 
-        private void btnLeftPacketEdit_Click(object sender, EventArgs e)
+        private void BtnLeftPacketEdit_Click(object sender, EventArgs e)
         {
             for (int i = DGVRightEdit.Rows.Count - 1; i >= 0; i--)
             {
@@ -1532,7 +1532,7 @@ namespace AyzPaymentWizard.Forms
             DGVLeftEdit.DataSource = source2;
         }
 
-        private void btnFiltreRecoveryPacketEdit_Click(object sender, EventArgs e)
+        private void BtnFiltreRecoveryPacketEdit_Click(object sender, EventArgs e)
         {
             PacketEditsLeftList.RemoveRange(0, PacketEditsLeftList.Count);
             FillLeftList();
@@ -1552,7 +1552,7 @@ namespace AyzPaymentWizard.Forms
             DGVRightEdit.DataSource = source2;
         }
 
-        private void btnEditPacket_Click(object sender, EventArgs e)
+        private void BtnEditPacket_Click(object sender, EventArgs e)
         {
 
             decimal sumRequire = PacketEditsRightList.Sum(x => x.Total);                                                       // Ödenmesi Gereken

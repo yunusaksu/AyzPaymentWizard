@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AyzPaymentWizard.Forms
@@ -150,11 +152,13 @@ namespace AyzPaymentWizard.Forms
             DGVDebitClosing.DataSource = source;
         }
 
-        private void btnDebitClosing_Click(object sender, EventArgs e)
-        {
+                                      
+        
+        private async void btnDebitClosing_Click(object sender, EventArgs e)
+        {            
             string TigerBankAccNo = "";
             string BankName = "";
-            #region Paket Id'den paranın çıkacağı hesap bulunur. (AYZ_PW_BANKACCOUNT tablosundan)
+            #region AYZ_PW_BANKACCOUNT tablosundan Paket Id ile paranın çıkacağı hesap bulunur.
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
                 CommandText = "SELECT B.*,BN.DEFINITION_ FROM AYZ_PW_PACKET AS P " +
@@ -367,20 +371,20 @@ namespace AyzPaymentWizard.Forms
                         saveDownloadedFiles(Item, DetailResult, FooterResult);
                         Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
                         form.FillPacketList();
-                        this.Hide();
+                        //this.Hide();
                         MessageBox.Show("Akibet alındı!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
                         MessageBox.Show("Bu Paketin Banka Tarafından Henüz Akibet Dosyası Yollanmamıştır!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                }
+                }                
             }
             else
             {
                 MessageBox.Show("Hatalı Logo Giriş Bilgileri Tespit Edildi!", "Logo Bilgileri Hatalı!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }            
-        }
+        }        
 
         private int GetBankFicheLinePayTransRef(int bankfichelineref)
         {

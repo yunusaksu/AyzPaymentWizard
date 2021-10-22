@@ -17,12 +17,12 @@ namespace AyzPaymentWizard.Forms
             InitializeComponent();
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             this.Hide();
         }
 
-        private void btnTrialMail_Click(object sender, EventArgs e)
+        private void BtnTrialMail_Click(object sender, EventArgs e)
         {
             int port = Convert.ToInt32(txtPortNo.Text);
             string smtpServer = txtServerAddress.Text;
@@ -89,7 +89,7 @@ namespace AyzPaymentWizard.Forms
             }
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs e)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace AyzPaymentWizard.Forms
 
         }
 
-        private void btnShow_Click(object sender, EventArgs e)
+        private void BtnShow_Click(object sender, EventArgs e)
         {
             if (txtSmtpPassword.PasswordChar == '*')
             {
@@ -135,7 +135,7 @@ namespace AyzPaymentWizard.Forms
             }
         }
 
-        private void btnHide_Click(object sender, EventArgs e)
+        private void BtnHide_Click(object sender, EventArgs e)
         {
             if (txtSmtpPassword.PasswordChar == '\0')
             {

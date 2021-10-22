@@ -738,7 +738,7 @@ namespace AyzPaymentWizard
 
         private void sFTPAyarlarıToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            sftpForm form = new sftpForm();
+            SftpForm form = new SftpForm();
             form.ShowDialog();
         }
 

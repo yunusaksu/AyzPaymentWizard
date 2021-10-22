@@ -8,21 +8,21 @@ using System.Windows.Forms;
 
 namespace AyzPaymentWizard.Forms
 {
-    public partial class sftpForm : Form
+    public partial class SftpForm : Form
     {
         SqlCommand komut = new SqlCommand();
         SqlDataReader dr;
         string CommandText = "";
         List<SecureFTP> list = new List<SecureFTP>();
 
-        public sftpForm()
+        public SftpForm()
         {
             InitializeComponent();
         }
 
-        private void sftpForm_Load(object sender, EventArgs e)
+        private void SftpForm_Load(object sender, EventArgs e)
         {
-            fillDGVsftp();
+            FillDGVsftp();
             dgvSftp.Columns["ID"].Visible = false;
             dgvSftp.Columns["BANKCODE"].HeaderText = "BANKA KODU";
             dgvSftp.Columns["FIRMNR"].HeaderText = "FIRMA NO";
@@ -43,11 +43,11 @@ namespace AyzPaymentWizard.Forms
 
             this.dgvSftp.Columns["PAYMENTORDERLOGFOLDER"].DefaultCellStyle.Padding = new Padding(20, 0, 0, 0);
 
-            this.dgvSftp.CellPainting += new DataGridViewCellPaintingEventHandler(dgvSftp_CellPainting);
-            this.dgvSftp.CellClick += new DataGridViewCellEventHandler(dgvSftp_CellClick);
+            this.dgvSftp.CellPainting += new DataGridViewCellPaintingEventHandler(DgvSftp_CellPainting);
+            this.dgvSftp.CellClick += new DataGridViewCellEventHandler(DgvSftp_CellClick);
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs e)
         {
             #region AYZ_PW_SFTP_SETTING tablosunu boşaltma
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
@@ -94,7 +94,7 @@ namespace AyzPaymentWizard.Forms
                 MessageBox.Show("Hata: \n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        void fillDGVsftp()
+        void FillDGVsftp()
         {
             list.Clear();
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
@@ -126,7 +126,7 @@ namespace AyzPaymentWizard.Forms
             dgvSftp.DataSource = source;
         }
 
-        private void dgvSftp_KeyDown(object sender, KeyEventArgs e)
+        private void DgvSftp_KeyDown(object sender, KeyEventArgs e)
         {
             int id = 0;
             int selectedRowCount = dgvSftp.Rows.GetRowCount(DataGridViewElementStates.Selected);
@@ -151,17 +151,17 @@ namespace AyzPaymentWizard.Forms
                             conn.Close();
                         }
                     }
-                    fillDGVsftp();
+                    FillDGVsftp();
                 }
             }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             this.Hide();
         }
 
-        private void dgvSftp_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvSftp_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
@@ -198,7 +198,7 @@ namespace AyzPaymentWizard.Forms
             }
         }
 
-        private void dgvSftp_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        private void DgvSftp_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
 
             if (e.CellStyle.Padding.Left > 5)

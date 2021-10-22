@@ -105,7 +105,7 @@
             this.btnEditPacket.TabIndex = 13;
             this.btnEditPacket.Text = "PAKETİ DÜZENLE";
             this.btnEditPacket.UseVisualStyleBackColor = false;
-            this.btnEditPacket.Click += new System.EventHandler(this.btnEditPacket_Click);
+            this.btnEditPacket.Click += new System.EventHandler(this.BtnEditPacket_Click);
             // 
             // label4
             // 
@@ -329,7 +329,7 @@
             this.btnToLeftt.TabIndex = 23;
             this.btnToLeftt.Text = "<";
             this.btnToLeftt.UseVisualStyleBackColor = true;
-            this.btnToLeftt.Click += new System.EventHandler(this.btnToLeft_Click);
+            this.btnToLeftt.Click += new System.EventHandler(this.BtnToLeft_Click);
             // 
             // btnAllToLeft
             // 
@@ -340,7 +340,7 @@
             this.btnAllToLeft.TabIndex = 12;
             this.btnAllToLeft.Text = "<<";
             this.btnAllToLeft.UseVisualStyleBackColor = true;
-            this.btnAllToLeft.Click += new System.EventHandler(this.btnAllToLeft_Click);
+            this.btnAllToLeft.Click += new System.EventHandler(this.BtnAllToLeft_Click);
             // 
             // btnToRight
             // 
@@ -351,7 +351,7 @@
             this.btnToRight.TabIndex = 22;
             this.btnToRight.Text = ">";
             this.btnToRight.UseVisualStyleBackColor = true;
-            this.btnToRight.Click += new System.EventHandler(this.btnToRight_Click);
+            this.btnToRight.Click += new System.EventHandler(this.BtnToRight_Click);
             // 
             // btnAllToRight
             // 
@@ -362,7 +362,7 @@
             this.btnAllToRight.TabIndex = 11;
             this.btnAllToRight.Text = ">>";
             this.btnAllToRight.UseVisualStyleBackColor = true;
-            this.btnAllToRight.Click += new System.EventHandler(this.btnAllToRight_Click);
+            this.btnAllToRight.Click += new System.EventHandler(this.BtnAllToRight_Click);
             // 
             // label9
             // 
