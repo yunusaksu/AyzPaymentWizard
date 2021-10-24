@@ -553,6 +553,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1258, 550);
             this.Controls.Add(this.collapsibleSplitContainer1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "PacketEditForm";
             this.Text = "PAKET DÜZENLEME EKRANI";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

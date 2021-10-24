@@ -120,6 +120,7 @@
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.cmbCurrType);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "GeneralSetting";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "GENEL AYARLAR";

@@ -224,7 +224,7 @@
             this.Controls.Add(this.AuthorityTreeView);
             this.Controls.Add(this.txtGroupName);
             this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "GroupAddForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

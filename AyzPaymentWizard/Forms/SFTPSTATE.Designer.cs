@@ -85,7 +85,7 @@
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnToExcel);
             this.Controls.Add(this.dataGridViewPaging);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "SFTPSTATE";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SFTP BAĞLANTI HAREKETLERİ";

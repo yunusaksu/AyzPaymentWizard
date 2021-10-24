@@ -17,6 +17,7 @@ namespace AyzPaymentWizard.Forms
         int PacketID;
         bool Review = false;
         string Item = "";
+        string TigerBankAccNo = "", BankName = "";
         PAYMENTOUTCOME[] DetailResult;
         FOOTER[] FooterResult;
         public DebitClosingForm()
@@ -45,7 +46,7 @@ namespace AyzPaymentWizard.Forms
         {
             if (Review == false)
             {
-                fillDGVDebitClosing();
+                FillDGVDebitClosing();
             }
             else
             {
@@ -72,7 +73,7 @@ namespace AyzPaymentWizard.Forms
 
         }
 
-        private void fillDGVDebitClosing()
+        private void FillDGVDebitClosing()
         {
             for (int i = 0; i < DetailResult.Length; i++)
             {
@@ -152,12 +153,8 @@ namespace AyzPaymentWizard.Forms
             DGVDebitClosing.DataSource = source;
         }
 
-                                      
-        
-        private async void btnDebitClosing_Click(object sender, EventArgs e)
-        {            
-            string TigerBankAccNo = "";
-            string BankName = "";
+        private void FindTigerBankAccountAndBankName()
+        {
             #region AYZ_PW_BANKACCOUNT tablosundan Paket Id ile paranın çıkacağı hesap bulunur.
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
@@ -176,6 +173,16 @@ namespace AyzPaymentWizard.Forms
                 }
             }
             #endregion
+        }
+
+
+        private void BtnDebitClosing_Click(object sender, EventArgs e)
+        {
+            // Sets the progress bar's Maximum property to  
+            // the total number of records to be created.  
+            progressBar.Maximum = liste.Count;
+
+            FindTigerBankAccountAndBankName();
 
             UnityObjects.UnityApplication UnityApp = new UnityObjects.UnityApplication();
             if (UnityApp.Login("" + Helper.LOGOUSERNAME + "", "" + Helper.LOGOUSERPASS + "", Helper.FIRMNR))
@@ -246,8 +253,8 @@ namespace AyzPaymentWizard.Forms
                         int BANKFICHEREF = bankvo.DataFields.FieldByName("INTERNAL_REFERENCE").Value; // Gönderilen Havale-EFT'nin referansı
                         int BANKFICHELINEREF = 0;                                                     // Gönderilen Havale-EFT'nin satır referansı
                         int BANKFICHELINEPAYTRANSREF = 0;
-                        int INVOICEPAYTRANSREF = 0;
-                        int invoiceRef = 0;
+                        //int INVOICEPAYTRANSREF = 0;
+                        //int invoiceRef = 0;
                         #region Gönderilen Havale-EFT'nin LG_XXX_BNFLINE referansını elde ediyoruz.
                         using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                         {
@@ -290,6 +297,8 @@ namespace AyzPaymentWizard.Forms
                         #endregion
                         if (debitList.Count == 1)
                         {
+                            progressBar.Value += progressBar.Step;                            
+                            label1.Text = "Kapatılan Borçlar = " + progressBar.Value.ToString() + "/" + liste.Count + "";
                             decimal NecessaryAmountPaid = Convert.ToDecimal(debitList[0].Paid);
                             if (totalAmount >= NecessaryAmountPaid)
                             {
@@ -306,7 +315,9 @@ namespace AyzPaymentWizard.Forms
                             }
                         }
                         else if (debitList.Count > 0)
-                        {
+                        {                            
+                            progressBar.Value += progressBar.Step;                            
+                            label1.Text = "Kapatılan Borçlar = " + progressBar.Value.ToString() + "/" + liste.Count + "";
                             for (int i = 0; i < debitList.Count; i++)
                             {
                                 decimal NecessaryAmountPaid = Convert.ToDecimal(debitList[i].Paid);
@@ -328,6 +339,11 @@ namespace AyzPaymentWizard.Forms
                                 }
                             }
                         }
+                        if (progressBar.Value == liste.Count)
+                        {
+                            label1.Text = "Borç Kapama İşlemi Başarı ile Tamamlandı!";
+                            btnDebitClosing.Enabled = false;
+                        }                            
                     }
                     else
                     {
@@ -372,19 +388,19 @@ namespace AyzPaymentWizard.Forms
                         Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
                         form.FillPacketList();
                         //this.Hide();
-                        MessageBox.Show("Akibet alındı!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //MessageBox.Show("Akibet alındı!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
                         MessageBox.Show("Bu Paketin Banka Tarafından Henüz Akibet Dosyası Yollanmamıştır!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                }                
+                }
             }
             else
             {
                 MessageBox.Show("Hatalı Logo Giriş Bilgileri Tespit Edildi!", "Logo Bilgileri Hatalı!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }            
-        }        
+            }
+        }
 
         private int GetBankFicheLinePayTransRef(int bankfichelineref)
         {

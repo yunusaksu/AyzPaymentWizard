@@ -71,7 +71,7 @@ namespace AyzPaymentWizard.Forms
                                           "\nVALUES(" +
                                           "\n'" + list[i].BANKCODE + "'," +
                                           "\n'" + list[i].FIRMNR + "'," +
-                                          "\n'" + list[i].HOSTNAME + "'," +
+                                          "\n'" + list[i].HOSTNAME.Trim() + "'," +
                                           "\n'" + list[i].USERNAME + "'," +
                                           "\n'" + list[i].PASSWORD + "'," +
                                           "\n'" + list[i].PORT + "'," +
