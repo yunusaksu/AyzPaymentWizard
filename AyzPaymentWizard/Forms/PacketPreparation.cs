@@ -1242,9 +1242,9 @@ namespace AyzPaymentWizard
             decimal sumRequire = RightList.Sum(x => x.Total);                                      // Ödenmesi Gereken
             decimal sumPaid = RightList.Sum(x => x.Paid);                                          // Ödenecek Tutar        
             int? bankOutAccID = (int?)cmbOutAccountInfo.SelectedValue;
-            string bankAccountNo = "";
+            //string bankAccountNo = "";
             string bankCode = "";
-            string kurusAccount = "";
+            //string kurusAccount = "";
             string bankName = "";
             int bankref = 0;
             string tigerBankAccountCode = "";

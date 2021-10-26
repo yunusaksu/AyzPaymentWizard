@@ -136,6 +136,10 @@ namespace AyzPaymentWizard
         }
         public void FillPacketList()
         {
+            int getSelectedRowIndex = 0;
+            if (dataGridViewPacket.Rows.Count != 0)
+                getSelectedRowIndex = dataGridViewPacket.SelectedRows[0].Index;
+
             packets.Clear();
 
             // Login olunan Firmanın tüm paketlerini AYZ_PW_PACKET tablosundan getiren işlemler
@@ -211,6 +215,11 @@ namespace AyzPaymentWizard
                 }
                 RowCounter = RowCounter + 1;
             }
+            #endregion
+
+            #region İşlem Yapılan Satırı Seçme
+            if (dataGridViewPacket.Rows.Count != 0)
+                dataGridViewPacket.Rows[getSelectedRowIndex].Selected = true;
             #endregion
         }
 
