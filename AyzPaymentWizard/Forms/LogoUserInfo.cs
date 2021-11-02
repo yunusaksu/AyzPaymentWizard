@@ -53,7 +53,7 @@ namespace AyzPaymentWizard.Forms
                     userpassword = dr["LOGO_USERPASSWORD"].ToString();
                 }
             }
-            
+
             if (txtLogoUserPassword.Text != "" && String.IsNullOrEmpty(txtLogoUserPassword.Text))
             {
                 txtLogoUserPassword.Text = EncryptionAlgorithm.Decrytion(userpassword);
@@ -94,7 +94,7 @@ namespace AyzPaymentWizard.Forms
                     conn.Open();
                     dr = komut.ExecuteReader();
                 }
-                MessageBox.Show("Kayıt Başarılı. \nYeni bilgilerin belleğe alınması için uygulama yeniden başlatılacaktır!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);               
+                MessageBox.Show("Kayıt Başarılı. \nYeni bilgilerin belleğe alınması için uygulama yeniden başlatılacaktır!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Application.Restart();
             }
             catch (Exception ex)
@@ -109,9 +109,9 @@ namespace AyzPaymentWizard.Forms
             if (UnityApp.Login(txtLogoUserName.Text, txtLogoUserPassword.Text, Helper.FIRMNR))
                 MessageBox.Show("Logo Bağlantısı Kuruldu!", "LOGO BAĞLANTISI TEST EKRANI", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
-                MessageBox.Show("Hatalı Logo Giriş Bilgileri Tespit Edildi!", "Logo Bilgileri Hatalı!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Hatalı Logo Giriş Bilgileri Tespit Edildi! \n" + UnityApp.GetLastError().ToString() + "/" + UnityApp.GetLastErrorString(), "Logo Bilgileri Hatalı!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
         }
-        
+
     }
 }

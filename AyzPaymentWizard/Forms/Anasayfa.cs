@@ -71,7 +71,7 @@ namespace AyzPaymentWizard
             ToolTip RefreshToolTip = new ToolTip();
             RefreshToolTip.SetToolTip(btnRefresh, "Yenile(F5)");
             FillPacketList();
-            #region Paket Kolon Görünüm,Header Text ve Display Index Ayarları
+            #region Kolon Görünüm,Header Text ve Display Index Ayarları
             dataGridViewPacket.ReadOnly = true;
             dataGridViewPacket.Columns["CreatedTime"].Visible = false;
             dataGridViewPacket.Columns["Id"].Visible = false;

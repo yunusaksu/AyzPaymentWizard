@@ -398,7 +398,7 @@ namespace AyzPaymentWizard.Forms
             }
             else
             {
-                MessageBox.Show("Hatalı Logo Giriş Bilgileri Tespit Edildi!", "Logo Bilgileri Hatalı!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Hatalı Logo Giriş Bilgileri Tespit Edildi! \n" + UnityApp.GetLastError().ToString() + "/" + UnityApp.GetLastErrorString(), "Logo Bilgileri Hatalı!", MessageBoxButtons.OK, MessageBoxIcon.Warning);                
             }
         }
 
