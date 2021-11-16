@@ -63,6 +63,7 @@
             this.btnUserAdd = new System.Windows.Forms.ToolStripButton();
             this.OnlineUsertoolStripLabel = new System.Windows.Forms.ToolStripDropDownButton();
             this.SignOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.silToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPacket)).BeginInit();
@@ -303,22 +304,23 @@
             // 
             this.contextMenuStripAnasayfa.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.akibetiİnceleToolStripMenuItem,
-            this.paketSeruveniToolStripMenuItem});
+            this.paketSeruveniToolStripMenuItem,
+            this.silToolStripMenuItem});
             this.contextMenuStripAnasayfa.Name = "contextMenuStripAnasayfa";
-            this.contextMenuStripAnasayfa.Size = new System.Drawing.Size(146, 48);
+            this.contextMenuStripAnasayfa.Size = new System.Drawing.Size(181, 92);
             this.contextMenuStripAnasayfa.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripAnasayfa_Opening);
             // 
             // akibetiİnceleToolStripMenuItem
             // 
             this.akibetiİnceleToolStripMenuItem.Name = "akibetiİnceleToolStripMenuItem";
-            this.akibetiİnceleToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.akibetiİnceleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.akibetiİnceleToolStripMenuItem.Text = "Akibeti İncele";
             this.akibetiİnceleToolStripMenuItem.Click += new System.EventHandler(this.akibetiİnceleToolStripMenuItem_Click);
             // 
             // paketSeruveniToolStripMenuItem
             // 
             this.paketSeruveniToolStripMenuItem.Name = "paketSeruveniToolStripMenuItem";
-            this.paketSeruveniToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.paketSeruveniToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.paketSeruveniToolStripMenuItem.Text = "Kayıt Bilgisi";
             this.paketSeruveniToolStripMenuItem.Click += new System.EventHandler(this.paketSeruveniToolStripMenuItem_Click);
             // 
@@ -464,6 +466,13 @@
             this.SignOutToolStripMenuItem.Text = "Oturum Kapat";
             this.SignOutToolStripMenuItem.Click += new System.EventHandler(this.SignOutToolStripMenuItem_Click);
             // 
+            // silToolStripMenuItem
+            // 
+            this.silToolStripMenuItem.Name = "silToolStripMenuItem";
+            this.silToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.silToolStripMenuItem.Text = "Sil";
+            this.silToolStripMenuItem.Click += new System.EventHandler(this.silToolStripMenuItem_Click);
+            // 
             // Anasayfa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -527,5 +536,6 @@
         private System.Windows.Forms.Button btnNewPacket;
         private System.Windows.Forms.ToolStripDropDownButton OnlineUsertoolStripLabel;
         private System.Windows.Forms.ToolStripMenuItem SignOutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem silToolStripMenuItem;
     }
 }

@@ -90,27 +90,44 @@ namespace AyzPaymentWizard
             dataGridViewPacket.Columns["Archived"].Visible = false;
             dataGridViewPacket.Columns["Id"].HeaderText = "ID";
             dataGridViewPacket.Columns["CreatedBy"].HeaderText = "Oluşturan";
+            dataGridViewPacket.Columns["CreatedBy"].Width = 180;
             dataGridViewPacket.Columns["CreatedDate"].HeaderText = "Oluşturma Tarihi";
+            dataGridViewPacket.Columns["CreatedDate"].Width = 180;
             dataGridViewPacket.Columns["ModifiedBy"].HeaderText = "Güncelleyen";
+            dataGridViewPacket.Columns["ModifiedBy"].Width = 180;
             dataGridViewPacket.Columns["ModifiedDate"].HeaderText = "Güncelleme Tarihi";
+            dataGridViewPacket.Columns["ModifiedDate"].Width = 180;
             dataGridViewPacket.Columns["TotalRequired"].HeaderText = "Ödenmesi Gereken";
+            dataGridViewPacket.Columns["TotalRequired"].Width = 180;
             dataGridViewPacket.Columns["TotalPaid"].HeaderText = "Ödenecek";
+            dataGridViewPacket.Columns["TotalPaid"].Width = 180;
             dataGridViewPacket.Columns["Note"].HeaderText = "Not";
+            dataGridViewPacket.Columns["Note"].Width = 180;
             dataGridViewPacket.Columns["ApprovalNote"].HeaderText = "Onay Notu";
+            dataGridViewPacket.Columns["ApprovalNote"].Width = 180;
             dataGridViewPacket.Columns["Currency"].HeaderText = "";
+            dataGridViewPacket.Columns["Currency"].Width = 180;
             dataGridViewPacket.Columns["FirmNr"].HeaderText = "Firma No";
+            dataGridViewPacket.Columns["FirmNr"].Width = 180;
             dataGridViewPacket.Columns["StatusMask"].HeaderText = "Paket Durumu";
+            dataGridViewPacket.Columns["StatusMask"].Width = 180;
             dataGridViewPacket.Columns["ApprovedBy"].HeaderText = "Onaylayan";
+            dataGridViewPacket.Columns["ApprovedBy"].Width = 180;
             dataGridViewPacket.Columns["ApprovedDate"].HeaderText = "Onaylama Tarihi";
+            dataGridViewPacket.Columns["ApprovedDate"].Width = 180;
             dataGridViewPacket.Columns["Archived"].HeaderText = "Arşiv Durumu";
+            dataGridViewPacket.Columns["Archived"].Width = 180;
             dataGridViewPacket.Columns["ApprovierName"].HeaderText = "Onaylayan";
+            dataGridViewPacket.Columns["ApprovierName"].Width = 180;
             dataGridViewPacket.Columns["ModifiedByName"].HeaderText = "Güncelleyen";
+            dataGridViewPacket.Columns["ModifiedByName"].Width = 180;
             dataGridViewPacket.Columns["CreatedByName"].HeaderText = "Oluşturan";
+            dataGridViewPacket.Columns["CreatedByName"].Width = 180;
             #endregion
 
             #region DGV'ın Font Ayarı
             dataGridViewPacket.DefaultCellStyle.Font = new Font("Time News Roman", 12);
-            dataGridViewPacket.ColumnHeadersDefaultCellStyle.Font = new Font("Time News Roman", 10);
+            dataGridViewPacket.ColumnHeadersDefaultCellStyle.Font = new Font("Time News Roman", 10);            
             #endregion
 
             if (!Helper.IsAdmin())
@@ -137,7 +154,7 @@ namespace AyzPaymentWizard
         public void FillPacketList()
         {
             int getSelectedRowIndex = 0;
-            if (dataGridViewPacket.Rows.Count != 0)
+            if (dataGridViewPacket.Rows.Count != 0 && dataGridViewPacket.SelectedRows.Count > 0)
                 getSelectedRowIndex = dataGridViewPacket.SelectedRows[0].Index;
 
             packets.Clear();
@@ -145,7 +162,7 @@ namespace AyzPaymentWizard
             // Login olunan Firmanın tüm paketlerini AYZ_PW_PACKET tablosundan getiren işlemler
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
             {
-                CommandText = "SELECT * FROM AYZ_PW_PACKET WHERE FIRMNR = " + Helper.FIRMNR + " ";
+                CommandText = "SELECT * FROM AYZ_PW_PACKET WHERE FIRMNR = " + Helper.FIRMNR + " AND ARCHIVED = " + (int)Helper.ArchiveStatus.Unarchived + "";
                 komut.CommandText = CommandText;
                 komut.Connection = conn;
                 conn.Open();
@@ -1054,11 +1071,19 @@ namespace AyzPaymentWizard
         private void contextMenuStripAnasayfa_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             int packetStatus = (int)dataGridViewPacket.SelectedRows[0].Cells["STATUS"].Value;
-            int index = contextMenuStripAnasayfa.Items.IndexOf(akibetiİnceleToolStripMenuItem);
+            int indexAkibetIncele = contextMenuStripAnasayfa.Items.IndexOf(akibetiİnceleToolStripMenuItem);
+            int indexSil = contextMenuStripAnasayfa.Items.IndexOf(silToolStripMenuItem);
+
+
             if (packetStatus != (int)Helper.PacketStatus.AnswerReceivedBank)
-                contextMenuStripAnasayfa.Items[index].Enabled = false;
+                contextMenuStripAnasayfa.Items[indexAkibetIncele].Enabled = false;
             else
-                contextMenuStripAnasayfa.Items[index].Enabled = true;
+                contextMenuStripAnasayfa.Items[indexAkibetIncele].Enabled = true;
+
+            if (packetStatus != (int)Helper.PacketStatus.Rejected)
+                contextMenuStripAnasayfa.Items[indexSil].Enabled = false;
+            else
+                contextMenuStripAnasayfa.Items[indexSil].Enabled = true;
         }
 
         private void dataGridViewPacket_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
@@ -1069,6 +1094,62 @@ namespace AyzPaymentWizard
         private void SignOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Restart();
+        }
+
+        private void silToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int packetId = (int)dataGridViewPacket.SelectedRows[0].Cells["ID"].Value;
+            int packetStatus = (int)dataGridViewPacket.SelectedRows[0].Cells["STATUS"].Value;
+            if (packetStatus == (int)Helper.PacketStatus.Rejected)
+            {
+                int id = 0;
+                int selectedRowCount = dataGridViewPacket.Rows.GetRowCount(DataGridViewElementStates.Selected);
+                if (selectedRowCount > 0)
+                {
+                    for (int i = 0; i < selectedRowCount; i++)
+                    {
+                        id = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
+                    }
+
+                    if (MessageBox.Show("Bu kayıdı silmek istediğinize emin misiniz?", "Mesaj", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        try
+                        {                            
+                            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                            {
+                                string sql = "DELETE FROM AYZ_PW_PACKET WHERE ID=" + id + "";
+                                komut = new SqlCommand(sql, conn);
+                                conn.Open();
+                                komut.ExecuteNonQuery();
+                                conn.Close();
+                                string sql2 = "DELETE FROM AYZ_PW_PACKET_DETAIL WHERE PACKETID=" + id + "";
+                                komut = new SqlCommand(sql2, conn);
+                                conn.Open();
+                                komut.ExecuteNonQuery();
+                                conn.Close();
+                                int firmNr = (int)dataGridViewPacket.SelectedRows[0].Cells["FIRMNR"].Value;
+                                string sql3 = "DELETE FROM AYZ_PW_FILTER_VALUES WHERE PACKETID =" + id + " AND FIRMNR = '" + firmNr + "'";
+                                komut = new SqlCommand(sql3, conn);
+                                conn.Open();
+                                komut.ExecuteNonQuery();
+                                conn.Close();                                
+                                string sql4 = "DELETE FROM AYZ_PW_PACKET_HISTORY WHERE PACKETID =" + id + " AND FIRMNR = '" + firmNr + "'";
+                                komut = new SqlCommand(sql4, conn);
+                                conn.Open();
+                                komut.ExecuteNonQuery();
+                                conn.Close();
+                                MessageBox.Show("Silindi!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                dataGridViewPacket.ClearSelection();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Silme işlemi sırasında bir hata ile oluştu.\n" + ex.Message, "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    FillPacketList();
+                }
+            }
         }
     }
 }

@@ -157,6 +157,7 @@
             this.Controls.Add(this.txtLogoUserPassword);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "LogoUserInfo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LOGO KULLANICI BİLGİLERİ";
