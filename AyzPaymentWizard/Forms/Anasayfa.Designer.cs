@@ -48,6 +48,7 @@
             this.contextMenuStripAnasayfa = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.akibetiİnceleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.paketSeruveniToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.silToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripDropDownSettingButton = new System.Windows.Forms.ToolStripDropDownButton();
@@ -57,13 +58,13 @@
             this.sFTPBaglantiLoglariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sMTPSunucuAyarlariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.genelAyarlarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.archivedPaketlerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripAnasayfa = new System.Windows.Forms.ToolStrip();
             this.btnGroupAdd = new System.Windows.Forms.ToolStripButton();
             this.btnUserAdd = new System.Windows.Forms.ToolStripButton();
             this.OnlineUsertoolStripLabel = new System.Windows.Forms.ToolStripDropDownButton();
             this.SignOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.silToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPacket)).BeginInit();
@@ -307,22 +308,29 @@
             this.paketSeruveniToolStripMenuItem,
             this.silToolStripMenuItem});
             this.contextMenuStripAnasayfa.Name = "contextMenuStripAnasayfa";
-            this.contextMenuStripAnasayfa.Size = new System.Drawing.Size(181, 92);
+            this.contextMenuStripAnasayfa.Size = new System.Drawing.Size(146, 70);
             this.contextMenuStripAnasayfa.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripAnasayfa_Opening);
             // 
             // akibetiİnceleToolStripMenuItem
             // 
             this.akibetiİnceleToolStripMenuItem.Name = "akibetiİnceleToolStripMenuItem";
-            this.akibetiİnceleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.akibetiİnceleToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.akibetiİnceleToolStripMenuItem.Text = "Akibeti İncele";
             this.akibetiİnceleToolStripMenuItem.Click += new System.EventHandler(this.akibetiİnceleToolStripMenuItem_Click);
             // 
             // paketSeruveniToolStripMenuItem
             // 
             this.paketSeruveniToolStripMenuItem.Name = "paketSeruveniToolStripMenuItem";
-            this.paketSeruveniToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.paketSeruveniToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.paketSeruveniToolStripMenuItem.Text = "Kayıt Bilgisi";
             this.paketSeruveniToolStripMenuItem.Click += new System.EventHandler(this.paketSeruveniToolStripMenuItem_Click);
+            // 
+            // silToolStripMenuItem
+            // 
+            this.silToolStripMenuItem.Name = "silToolStripMenuItem";
+            this.silToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.silToolStripMenuItem.Text = "Sil";
+            this.silToolStripMenuItem.Click += new System.EventHandler(this.silToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -342,7 +350,8 @@
             this.logoUserSettingsToolStripMenuItem,
             this.sFTPBaglantiLoglariToolStripMenuItem,
             this.sMTPSunucuAyarlariToolStripMenuItem,
-            this.genelAyarlarToolStripMenuItem});
+            this.genelAyarlarToolStripMenuItem,
+            this.archivedPaketlerToolStripMenuItem});
             this.toolStripDropDownSettingButton.Font = new System.Drawing.Font("Segoe UI", 13F);
             this.toolStripDropDownSettingButton.ForeColor = System.Drawing.SystemColors.GrayText;
             this.toolStripDropDownSettingButton.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -397,6 +406,14 @@
             this.genelAyarlarToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
             this.genelAyarlarToolStripMenuItem.Text = "Genel Ayarlar";
             this.genelAyarlarToolStripMenuItem.Click += new System.EventHandler(this.genelAyarlarToolStripMenuItem_Click);
+            // 
+            // archivedPaketlerToolStripMenuItem
+            // 
+            this.archivedPaketlerToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.archivedPaketlerToolStripMenuItem.Name = "archivedPaketlerToolStripMenuItem";
+            this.archivedPaketlerToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
+            this.archivedPaketlerToolStripMenuItem.Text = "Arşivlenen Paketler";
+            this.archivedPaketlerToolStripMenuItem.Click += new System.EventHandler(this.archivedPaketlerToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
@@ -466,13 +483,6 @@
             this.SignOutToolStripMenuItem.Text = "Oturum Kapat";
             this.SignOutToolStripMenuItem.Click += new System.EventHandler(this.SignOutToolStripMenuItem_Click);
             // 
-            // silToolStripMenuItem
-            // 
-            this.silToolStripMenuItem.Name = "silToolStripMenuItem";
-            this.silToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.silToolStripMenuItem.Text = "Sil";
-            this.silToolStripMenuItem.Click += new System.EventHandler(this.silToolStripMenuItem_Click);
-            // 
             // Anasayfa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -537,5 +547,6 @@
         private System.Windows.Forms.ToolStripDropDownButton OnlineUsertoolStripLabel;
         private System.Windows.Forms.ToolStripMenuItem SignOutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem silToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem archivedPaketlerToolStripMenuItem;
     }
 }

@@ -90,44 +90,27 @@ namespace AyzPaymentWizard
             dataGridViewPacket.Columns["Archived"].Visible = false;
             dataGridViewPacket.Columns["Id"].HeaderText = "ID";
             dataGridViewPacket.Columns["CreatedBy"].HeaderText = "Oluşturan";
-            dataGridViewPacket.Columns["CreatedBy"].Width = 180;
             dataGridViewPacket.Columns["CreatedDate"].HeaderText = "Oluşturma Tarihi";
-            dataGridViewPacket.Columns["CreatedDate"].Width = 180;
             dataGridViewPacket.Columns["ModifiedBy"].HeaderText = "Güncelleyen";
-            dataGridViewPacket.Columns["ModifiedBy"].Width = 180;
             dataGridViewPacket.Columns["ModifiedDate"].HeaderText = "Güncelleme Tarihi";
-            dataGridViewPacket.Columns["ModifiedDate"].Width = 180;
             dataGridViewPacket.Columns["TotalRequired"].HeaderText = "Ödenmesi Gereken";
-            dataGridViewPacket.Columns["TotalRequired"].Width = 180;
             dataGridViewPacket.Columns["TotalPaid"].HeaderText = "Ödenecek";
-            dataGridViewPacket.Columns["TotalPaid"].Width = 180;
             dataGridViewPacket.Columns["Note"].HeaderText = "Not";
-            dataGridViewPacket.Columns["Note"].Width = 180;
             dataGridViewPacket.Columns["ApprovalNote"].HeaderText = "Onay Notu";
-            dataGridViewPacket.Columns["ApprovalNote"].Width = 180;
             dataGridViewPacket.Columns["Currency"].HeaderText = "";
-            dataGridViewPacket.Columns["Currency"].Width = 180;
             dataGridViewPacket.Columns["FirmNr"].HeaderText = "Firma No";
-            dataGridViewPacket.Columns["FirmNr"].Width = 180;
             dataGridViewPacket.Columns["StatusMask"].HeaderText = "Paket Durumu";
-            dataGridViewPacket.Columns["StatusMask"].Width = 180;
             dataGridViewPacket.Columns["ApprovedBy"].HeaderText = "Onaylayan";
-            dataGridViewPacket.Columns["ApprovedBy"].Width = 180;
             dataGridViewPacket.Columns["ApprovedDate"].HeaderText = "Onaylama Tarihi";
-            dataGridViewPacket.Columns["ApprovedDate"].Width = 180;
             dataGridViewPacket.Columns["Archived"].HeaderText = "Arşiv Durumu";
-            dataGridViewPacket.Columns["Archived"].Width = 180;
             dataGridViewPacket.Columns["ApprovierName"].HeaderText = "Onaylayan";
-            dataGridViewPacket.Columns["ApprovierName"].Width = 180;
             dataGridViewPacket.Columns["ModifiedByName"].HeaderText = "Güncelleyen";
-            dataGridViewPacket.Columns["ModifiedByName"].Width = 180;
             dataGridViewPacket.Columns["CreatedByName"].HeaderText = "Oluşturan";
-            dataGridViewPacket.Columns["CreatedByName"].Width = 180;
             #endregion
 
             #region DGV'ın Font Ayarı
             dataGridViewPacket.DefaultCellStyle.Font = new Font("Time News Roman", 12);
-            dataGridViewPacket.ColumnHeadersDefaultCellStyle.Font = new Font("Time News Roman", 10);            
+            dataGridViewPacket.ColumnHeadersDefaultCellStyle.Font = new Font("Time News Roman", 10);
             #endregion
 
             if (!Helper.IsAdmin())
@@ -236,7 +219,14 @@ namespace AyzPaymentWizard
 
             #region İşlem Yapılan Satırı Seçme
             if (dataGridViewPacket.Rows.Count != 0)
-                dataGridViewPacket.Rows[getSelectedRowIndex].Selected = true;
+            {
+                //Satır mevcut mu
+                if (dataGridViewPacket.RowCount > getSelectedRowIndex)
+                {
+                    dataGridViewPacket.Rows[getSelectedRowIndex].Selected = true;
+                }               
+            }
+
             #endregion
         }
 
@@ -723,31 +713,39 @@ namespace AyzPaymentWizard
         {
             try
             {
-                int packetId = 0;
+                int packetId = 0, status = 0;
                 for (int i = 0; i < dataGridViewPacket.SelectedRows.Count; i++)
                 {
                     packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
+                    status = (int)dataGridViewPacket.SelectedRows[i].Cells["STATUS"].Value;
                 }
-                if (packetId != 0)
+                if (status == (int)Helper.PacketStatus.AnswerReceivedBank)
                 {
-                    using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                    if (packetId != 0)
                     {
-                        // Güncellenecek Alanlar : STATUS, APPROVALNOTE
-                        CommandText = "UPDATE AYZ_PW_PACKET" +
-                                      "\nSET ARCHIVED = " + (int)Helper.ArchiveStatus.Archived + "" +
-                                      "\nWHERE ID = " + packetId + "";
-                        komut.CommandText = CommandText;
-                        komut.Connection = conn;
-                        conn.Open();
-                        komut.ExecuteNonQuery();
-                        conn.Close();
-                    }
-                    Helper.PacketHistorySave(packetId, "Arşivlendi", "Paket Arşivlendi.");
+                        using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                        {
+                            // Güncellenecek Alanlar : STATUS, APPROVALNOTE
+                            CommandText = "UPDATE AYZ_PW_PACKET" +
+                                          "\nSET ARCHIVED = " + (int)Helper.ArchiveStatus.Archived + "" +
+                                          "\nWHERE ID = " + packetId + "";
+                            komut.CommandText = CommandText;
+                            komut.Connection = conn;
+                            conn.Open();
+                            komut.ExecuteNonQuery();
+                            conn.Close();
+                        }
+                        Helper.PacketHistorySave(packetId, "Arşivlendi", "Paket Arşivlendi.");
 
-                    #region Anasayfayı yenilemek için
-                    Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
-                    form.FillPacketList();
-                    #endregion
+                        #region Anasayfayı yenilemek için
+                        Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
+                        form.FillPacketList();
+                        #endregion
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Sadece Akibeti Alınmış Paketler Arşivlenebilir!", "Uyarı!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
@@ -1114,7 +1112,7 @@ namespace AyzPaymentWizard
                     if (MessageBox.Show("Bu kayıdı silmek istediğinize emin misiniz?", "Mesaj", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         try
-                        {                            
+                        {
                             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                             {
                                 string sql = "DELETE FROM AYZ_PW_PACKET WHERE ID=" + id + "";
@@ -1132,7 +1130,7 @@ namespace AyzPaymentWizard
                                 komut = new SqlCommand(sql3, conn);
                                 conn.Open();
                                 komut.ExecuteNonQuery();
-                                conn.Close();                                
+                                conn.Close();
                                 string sql4 = "DELETE FROM AYZ_PW_PACKET_HISTORY WHERE PACKETID =" + id + " AND FIRMNR = '" + firmNr + "'";
                                 komut = new SqlCommand(sql4, conn);
                                 conn.Open();
@@ -1150,6 +1148,12 @@ namespace AyzPaymentWizard
                     FillPacketList();
                 }
             }
+        }
+
+        private void archivedPaketlerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Archive form = new Archive();
+            form.ShowDialog();
         }
     }
 }

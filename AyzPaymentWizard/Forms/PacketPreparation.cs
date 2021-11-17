@@ -185,9 +185,6 @@ namespace AyzPaymentWizard
                     //Updating the number of Rows
                     txtTotalLeftDGV.Text = (Convert.ToInt32(txtTotalLeftDGV.Text) - select.Count).ToString();
                     txtTotalRightDGV.Text = (Convert.ToInt32(txtTotalRightDGV.Text) + select.Count).ToString();
-
-
-
                 }
             }
 
