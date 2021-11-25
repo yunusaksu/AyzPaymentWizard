@@ -24,7 +24,7 @@ namespace AyzPaymentWizard
             if (dataGridViewGroup.SelectedRows.Count > 0)
             {
                 #region Edit
-                if (String.IsNullOrEmpty(txtGroupName.Text) || (AuthorityTreeView.Nodes["PackageAdd"].Checked == false && AuthorityTreeView.Nodes["PackageEdit"].Checked == false && AuthorityTreeView.Nodes["PackageApprove"].Checked == false && AuthorityTreeView.Nodes["PackageReject"].Checked == false && AuthorityTreeView.Nodes["PackageSendToApprove"].Checked == false && AuthorityTreeView.Nodes["ForwardToBank"].Checked == false && AuthorityTreeView.Nodes["PackageAkibetAl"].Checked == false && AuthorityTreeView.Nodes["AddUser"].Checked == false && AuthorityTreeView.Nodes["AddGroup"].Checked == false))
+                if (String.IsNullOrEmpty(txtGroupName.Text) || CheckedNodes(AuthorityTreeView))
                 {
                     MessageBox.Show("Lütfen yıldız işaretli alanları doldurunuz!");
                 }
@@ -62,7 +62,7 @@ namespace AyzPaymentWizard
                             komut.Connection = conn;
                             conn.Open();
                             dr = komut.ExecuteReader();
-                            conn.Close();                            
+                            conn.Close();
                             MessageBox.Show("Güncellendi!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         catch (Exception ex)
@@ -76,27 +76,22 @@ namespace AyzPaymentWizard
             else
             {
                 #region Save
-                if (String.IsNullOrEmpty(txtGroupName.Text) || (AuthorityTreeView.Nodes["PackageAdd"].Checked == false && AuthorityTreeView.Nodes["PackageEdit"].Checked == false && AuthorityTreeView.Nodes["PackageApprove"].Checked == false && AuthorityTreeView.Nodes["PackageReject"].Checked == false && AuthorityTreeView.Nodes["PackageSendToApprove"].Checked == false && AuthorityTreeView.Nodes["ForwardToBank"].Checked == false && AuthorityTreeView.Nodes["PackageAkibetAl"].Checked == false && AuthorityTreeView.Nodes["AddUser"].Checked == false && AuthorityTreeView.Nodes["AddGroup"].Checked == false))
+                if (String.IsNullOrEmpty(txtGroupName.Text) || CheckedNodes(AuthorityTreeView))
                 {
                     MessageBox.Show("Lütfen yıldız işaretli alanları doldurunuz!");
                 }
                 else
                 {
                     string groupName = txtGroupName.Text;
-                    bool PackageAdd = false, PackageEdit = false, PackageApprove = false, PackageReject = false, PackageSendToApprove = false, PackageForwardToBank = false, PackageAkibet = false, AddUser = false, AddGroup = false;
-
-                    for (int i = 0; i < AuthorityTreeView.Nodes.Count; i++)
-                    {
-                        PackageAdd = AuthorityTreeView.Nodes["PackageAdd"].Checked;
-                        PackageEdit = AuthorityTreeView.Nodes["PackageEdit"].Checked;
-                        PackageApprove = AuthorityTreeView.Nodes["PackageApprove"].Checked;
-                        PackageReject = AuthorityTreeView.Nodes["PackageReject"].Checked;
-                        PackageSendToApprove = AuthorityTreeView.Nodes["PackageSendToApprove"].Checked;
-                        PackageForwardToBank = AuthorityTreeView.Nodes["ForwardToBank"].Checked;
-                        PackageAkibet = AuthorityTreeView.Nodes["PackageAkibetAl"].Checked;
-                        AddUser = AuthorityTreeView.Nodes["AddUser"].Checked;
-                        AddGroup = AuthorityTreeView.Nodes["AddGroup"].Checked;
-                    }
+                    bool PackageAdd = AuthorityTreeView.Nodes["PackageAdd"].Checked;
+                    bool PackageEdit = AuthorityTreeView.Nodes["PackageEdit"].Checked;
+                    bool PackageApprove = AuthorityTreeView.Nodes["PackageApprove"].Checked;
+                    bool PackageReject = AuthorityTreeView.Nodes["PackageReject"].Checked;
+                    bool PackageSendToApprove = AuthorityTreeView.Nodes["PackageSendToApprove"].Checked;
+                    bool PackageForwardToBank = AuthorityTreeView.Nodes["ForwardToBank"].Checked;
+                    bool PackageAkibet = AuthorityTreeView.Nodes["PackageAkibetAl"].Checked;
+                    bool AddUser = AuthorityTreeView.Nodes["AddUser"].Checked;
+                    bool AddGroup = AuthorityTreeView.Nodes["AddGroup"].Checked;
 
                     SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString);
                     SqlCommand komut = new SqlCommand();
@@ -125,7 +120,7 @@ namespace AyzPaymentWizard
                                             ") ";
                         komut.ExecuteNonQuery();
                         conn.Close();
-                        MessageBox.Show("Grup başarılı bir şekilde kaydedildi!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);                        
+                        MessageBox.Show("Grup başarılı bir şekilde kaydedildi!", "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
@@ -149,8 +144,8 @@ namespace AyzPaymentWizard
             infoBtnToolTip.SetToolTip(btnInfo, "Silmek İçin: Satırı Seçtikten Sonra Delete Tuşuna Basınız!");
             ToolTip newRecordBtnToolTip = new ToolTip();
             newRecordBtnToolTip.SetToolTip(btnNewRecord, "Yeni Grup Ekle!");
-            
-            fillGroupsDGV();          
+
+            fillGroupsDGV();
             dataGridViewGroup.ClearSelection();
             txtGroupName.Text = "";
             for (int i = 0; i < AuthorityTreeView.Nodes.Count; i++)
@@ -284,6 +279,29 @@ namespace AyzPaymentWizard
                 AuthorityTreeView.Nodes[i].Checked = false;
             }
             dataGridViewGroup.ClearSelection();
+        }
+
+        // Return a list of the TreeNodes that are checked.
+        private void FindCheckedNodes(List<TreeNode> checked_nodes, TreeNodeCollection nodes)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                // Add this node.
+                if (node.Checked)
+                    checked_nodes.Add(node);
+
+                // Check the node's descendants.
+                FindCheckedNodes(checked_nodes, node.Nodes);
+            }
+        }
+        private bool CheckedNodes(TreeView trv)
+        {
+            List<TreeNode> checked_nodes = new List<TreeNode>();
+            FindCheckedNodes(checked_nodes, AuthorityTreeView.Nodes);
+            if (checked_nodes.Count > 0)
+                return false;
+            else
+                return true;
         }
     }
 }
