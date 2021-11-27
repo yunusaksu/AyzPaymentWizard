@@ -281,13 +281,13 @@
             this.Controls.Add(this.btnShow);
             this.Controls.Add(this.cmbFirmNumber);
             this.Controls.Add(this.btnUserSave);
-            this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUsername);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnHide);
+            this.Controls.Add(this.txtPassword);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "UserAddForm";
