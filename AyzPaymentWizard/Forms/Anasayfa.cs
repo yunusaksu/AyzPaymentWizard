@@ -593,7 +593,7 @@ namespace AyzPaymentWizard
                                     Dstring = "D",
                                     HEDEFBANKA = HEDEFBANKA1,
                                     HEDEFSUBE = HEDEFSUBE1,
-                                    HEDEFHESAPNUMARASI = HEDEFHESAPNUMARASI1,
+                                    HEDEFHESAPNUMARASI = "",
                                     PARAKODU = PARAKODU1,
                                     TUTAR = TUTAR1,
                                     ACIKLAMA = ACIKLAMA1,
