@@ -105,7 +105,7 @@ namespace AyzPaymentWizard
                     }
                 }
 
-                var sftpClient = new SftpClient(Hostname, Port, Username, Password);    // Problem Buradan kaynaklanıyor!
+                var sftpClient = new SftpClient(Hostname, Port, Username, Password);   
                 sftpClient.Connect();
                 string ConnResult = sftpClient.IsConnected == true ? "Başarılı" : "Başarısız";
                 using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
@@ -121,7 +121,7 @@ namespace AyzPaymentWizard
                 }
                 return true;
             }
-            catch (SqlException ex)
+            catch (SqlException)
             {
                 return false;
             }

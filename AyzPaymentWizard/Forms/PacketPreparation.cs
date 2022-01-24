@@ -507,6 +507,8 @@ namespace AyzPaymentWizard
             txtPaidRightDGV.Text = sumedup.ToString();
         }
 
+        
+
         private void DataGridViewLeft_SortStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
         {
             try

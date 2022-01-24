@@ -94,8 +94,7 @@ namespace AyzPaymentWizard
                     bool AddGroup = AuthorityTreeView.Nodes["AddGroup"].Checked;
 
                     SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString);
-                    SqlCommand komut = new SqlCommand();
-                    SqlDataReader dr;
+                    SqlCommand komut = new SqlCommand();                    
                     try
                     {
                         komut.CommandText = "INSERT INTO [AYZ_PW_USER](NAME,USERTYPE,DATE) VALUES(" +
