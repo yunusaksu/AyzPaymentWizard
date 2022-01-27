@@ -99,9 +99,10 @@
             this.btnEditPacket.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEditPacket.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnEditPacket.ForeColor = System.Drawing.Color.White;
-            this.btnEditPacket.Location = new System.Drawing.Point(5, 91);
+            this.btnEditPacket.Location = new System.Drawing.Point(7, 112);
+            this.btnEditPacket.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnEditPacket.Name = "btnEditPacket";
-            this.btnEditPacket.Size = new System.Drawing.Size(599, 36);
+            this.btnEditPacket.Size = new System.Drawing.Size(803, 44);
             this.btnEditPacket.TabIndex = 13;
             this.btnEditPacket.Text = "PAKETİ DÜZENLE";
             this.btnEditPacket.UseVisualStyleBackColor = false;
@@ -113,9 +114,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label4.Location = new System.Drawing.Point(6, 31);
+            this.label4.Location = new System.Drawing.Point(8, 38);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(90, 20);
+            this.label4.Size = new System.Drawing.Size(116, 25);
             this.label4.TabIndex = 14;
             this.label4.Text = "AÇIKLAMA";
             // 
@@ -125,9 +127,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label5.Location = new System.Drawing.Point(6, 65);
+            this.label5.Location = new System.Drawing.Point(8, 80);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(116, 20);
+            this.label5.Size = new System.Drawing.Size(143, 25);
             this.label5.TabIndex = 16;
             this.label5.Text = "ÇIKIŞ HESABI";
             // 
@@ -137,9 +140,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbOutAccountInfoEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.cmbOutAccountInfoEdit.FormattingEnabled = true;
-            this.cmbOutAccountInfoEdit.Location = new System.Drawing.Point(160, 57);
+            this.cmbOutAccountInfoEdit.Location = new System.Drawing.Point(213, 70);
+            this.cmbOutAccountInfoEdit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbOutAccountInfoEdit.Name = "cmbOutAccountInfoEdit";
-            this.cmbOutAccountInfoEdit.Size = new System.Drawing.Size(444, 28);
+            this.cmbOutAccountInfoEdit.Size = new System.Drawing.Size(595, 33);
             this.cmbOutAccountInfoEdit.TabIndex = 17;
             // 
             // txtPacketEditExp
@@ -147,9 +151,10 @@
             this.txtPacketEditExp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPacketEditExp.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtPacketEditExp.Location = new System.Drawing.Point(160, 25);
+            this.txtPacketEditExp.Location = new System.Drawing.Point(213, 31);
+            this.txtPacketEditExp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtPacketEditExp.Name = "txtPacketEditExp";
-            this.txtPacketEditExp.Size = new System.Drawing.Size(444, 26);
+            this.txtPacketEditExp.Size = new System.Drawing.Size(595, 30);
             this.txtPacketEditExp.TabIndex = 19;
             // 
             // DGVLeftEdit
@@ -161,9 +166,11 @@
             this.DGVLeftEdit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DGVLeftEdit.FilterAndSortEnabled = true;
             this.DGVLeftEdit.Location = new System.Drawing.Point(0, 0);
+            this.DGVLeftEdit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.DGVLeftEdit.Name = "DGVLeftEdit";
+            this.DGVLeftEdit.RowHeadersWidth = 51;
             this.DGVLeftEdit.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGVLeftEdit.Size = new System.Drawing.Size(547, 504);
+            this.DGVLeftEdit.Size = new System.Drawing.Size(731, 621);
             this.DGVLeftEdit.TabIndex = 27;
             this.DGVLeftEdit.SortStringChanged += new System.EventHandler<Zuby.ADGV.AdvancedDataGridView.SortEventArgs>(this.DGVLeftEdit_SortStringChanged_1);
             this.DGVLeftEdit.FilterStringChanged += new System.EventHandler<Zuby.ADGV.AdvancedDataGridView.FilterEventArgs>(this.DGVLeftEdit_FilterStringChanged_1);
@@ -177,9 +184,11 @@
             this.DGVRightEdit.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVRightEdit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DGVRightEdit.Location = new System.Drawing.Point(0, 0);
+            this.DGVRightEdit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.DGVRightEdit.Name = "DGVRightEdit";
+            this.DGVRightEdit.RowHeadersWidth = 51;
             this.DGVRightEdit.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGVRightEdit.Size = new System.Drawing.Size(607, 376);
+            this.DGVRightEdit.Size = new System.Drawing.Size(813, 464);
             this.DGVRightEdit.TabIndex = 13;
             this.DGVRightEdit.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGVRightEdit_CellEndEdit);
             this.DGVRightEdit.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGVRightEdit_CellEnter);
@@ -198,8 +207,9 @@
             this.panel3.Controls.Add(this.txtPacketEditExp);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(607, 131);
+            this.panel3.Size = new System.Drawing.Size(813, 161);
             this.panel3.TabIndex = 14;
             // 
             // panel9
@@ -208,10 +218,10 @@
             this.panel9.Controls.Add(this.label7);
             this.panel9.Controls.Add(this.textBox5);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel9.Location = new System.Drawing.Point(0, 39);
+            this.panel9.Location = new System.Drawing.Point(0, 48);
             this.panel9.Margin = new System.Windows.Forms.Padding(1);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(607, 131);
+            this.panel9.Size = new System.Drawing.Size(813, 161);
             this.panel9.TabIndex = 29;
             // 
             // label7
@@ -220,9 +230,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label7.Location = new System.Drawing.Point(3, -22);
+            this.label7.Location = new System.Drawing.Point(4, -27);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(90, 20);
+            this.label7.Size = new System.Drawing.Size(116, 25);
             this.label7.TabIndex = 14;
             this.label7.Text = "AÇIKLAMA";
             // 
@@ -231,34 +242,39 @@
             this.textBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.textBox5.Location = new System.Drawing.Point(161, -28);
+            this.textBox5.Location = new System.Drawing.Point(215, -34);
+            this.textBox5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(437, 26);
+            this.textBox5.Size = new System.Drawing.Size(585, 30);
             this.textBox5.TabIndex = 21;
             // 
             // txtPaid
             // 
-            this.txtPaid.Location = new System.Drawing.Point(265, 10);
+            this.txtPaid.Location = new System.Drawing.Point(589, 14);
+            this.txtPaid.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtPaid.Name = "txtPaid";
             this.txtPaid.ReadOnly = true;
-            this.txtPaid.Size = new System.Drawing.Size(129, 20);
+            this.txtPaid.Size = new System.Drawing.Size(171, 22);
             this.txtPaid.TabIndex = 26;
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(411, 13);
+            this.label12.Location = new System.Drawing.Point(253, 8);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(31, 13);
+            this.label12.Size = new System.Drawing.Size(72, 34);
             this.label12.TabIndex = 22;
-            this.label12.Text = "Sum:";
+            this.label12.Text = "Ödenmesi\r\nGereken";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // txtSumRightDGV
             // 
-            this.txtSumRightDGV.Location = new System.Drawing.Point(448, 10);
+            this.txtSumRightDGV.Location = new System.Drawing.Point(333, 14);
+            this.txtSumRightDGV.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtSumRightDGV.Name = "txtSumRightDGV";
             this.txtSumRightDGV.ReadOnly = true;
-            this.txtSumRightDGV.Size = new System.Drawing.Size(111, 20);
+            this.txtSumRightDGV.Size = new System.Drawing.Size(147, 22);
             this.txtSumRightDGV.TabIndex = 21;
             // 
             // panel17
@@ -275,57 +291,65 @@
             this.panel17.Location = new System.Drawing.Point(0, 0);
             this.panel17.Margin = new System.Windows.Forms.Padding(1);
             this.panel17.Name = "panel17";
-            this.panel17.Size = new System.Drawing.Size(607, 39);
+            this.panel17.Size = new System.Drawing.Size(813, 48);
             this.panel17.TabIndex = 28;
             // 
             // labelCurREd
             // 
             this.labelCurREd.AutoSize = true;
-            this.labelCurREd.Location = new System.Drawing.Point(578, 14);
+            this.labelCurREd.Location = new System.Drawing.Point(771, 17);
+            this.labelCurREd.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelCurREd.Name = "labelCurREd";
-            this.labelCurREd.Size = new System.Drawing.Size(0, 13);
+            this.labelCurREd.Size = new System.Drawing.Size(0, 17);
             this.labelCurREd.TabIndex = 28;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(201, 14);
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label11.ForeColor = System.Drawing.Color.DarkGreen;
+            this.label11.Location = new System.Drawing.Point(495, 17);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(60, 13);
+            this.label11.Size = new System.Drawing.Size(86, 17);
             this.label11.TabIndex = 27;
             this.label11.Text = "Ödenecek:";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(597, 14);
+            this.label14.Location = new System.Drawing.Point(796, 17);
+            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(0, 13);
+            this.label14.Size = new System.Drawing.Size(0, 17);
             this.label14.TabIndex = 23;
             // 
             // txtTotalRightDGV
             // 
-            this.txtTotalRightDGV.Location = new System.Drawing.Point(69, 11);
+            this.txtTotalRightDGV.Location = new System.Drawing.Point(92, 14);
+            this.txtTotalRightDGV.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtTotalRightDGV.Name = "txtTotalRightDGV";
             this.txtTotalRightDGV.ReadOnly = true;
-            this.txtTotalRightDGV.Size = new System.Drawing.Size(114, 20);
+            this.txtTotalRightDGV.Size = new System.Drawing.Size(151, 22);
             this.txtTotalRightDGV.TabIndex = 17;
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(4, 14);
+            this.label13.Location = new System.Drawing.Point(5, 17);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(59, 13);
+            this.label13.Size = new System.Drawing.Size(77, 17);
             this.label13.TabIndex = 18;
             this.label13.Text = "Total rows:";
             // 
             // btnToLeftt
             // 
             this.btnToLeftt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnToLeftt.Location = new System.Drawing.Point(-1, 65);
+            this.btnToLeftt.Location = new System.Drawing.Point(-1, 80);
+            this.btnToLeftt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnToLeftt.Name = "btnToLeftt";
-            this.btnToLeftt.Size = new System.Drawing.Size(36, 24);
+            this.btnToLeftt.Size = new System.Drawing.Size(48, 30);
             this.btnToLeftt.TabIndex = 23;
             this.btnToLeftt.Text = "<";
             this.btnToLeftt.UseVisualStyleBackColor = true;
@@ -334,9 +358,10 @@
             // btnAllToLeft
             // 
             this.btnAllToLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnAllToLeft.Location = new System.Drawing.Point(-2, 95);
+            this.btnAllToLeft.Location = new System.Drawing.Point(-3, 117);
+            this.btnAllToLeft.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAllToLeft.Name = "btnAllToLeft";
-            this.btnAllToLeft.Size = new System.Drawing.Size(37, 27);
+            this.btnAllToLeft.Size = new System.Drawing.Size(49, 33);
             this.btnAllToLeft.TabIndex = 12;
             this.btnAllToLeft.Text = "<<";
             this.btnAllToLeft.UseVisualStyleBackColor = true;
@@ -345,9 +370,10 @@
             // btnToRight
             // 
             this.btnToRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnToRight.Location = new System.Drawing.Point(-2, 65);
+            this.btnToRight.Location = new System.Drawing.Point(-3, 80);
+            this.btnToRight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnToRight.Name = "btnToRight";
-            this.btnToRight.Size = new System.Drawing.Size(37, 25);
+            this.btnToRight.Size = new System.Drawing.Size(49, 31);
             this.btnToRight.TabIndex = 22;
             this.btnToRight.Text = ">";
             this.btnToRight.UseVisualStyleBackColor = true;
@@ -356,9 +382,10 @@
             // btnAllToRight
             // 
             this.btnAllToRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnAllToRight.Location = new System.Drawing.Point(-2, 96);
+            this.btnAllToRight.Location = new System.Drawing.Point(-3, 118);
+            this.btnAllToRight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAllToRight.Name = "btnAllToRight";
-            this.btnAllToRight.Size = new System.Drawing.Size(37, 26);
+            this.btnAllToRight.Size = new System.Drawing.Size(49, 32);
             this.btnAllToRight.TabIndex = 11;
             this.btnAllToRight.Text = ">>";
             this.btnAllToRight.UseVisualStyleBackColor = true;
@@ -367,18 +394,20 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(309, 14);
+            this.label9.Location = new System.Drawing.Point(412, 17);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(31, 13);
+            this.label9.Size = new System.Drawing.Size(40, 17);
             this.label9.TabIndex = 20;
             this.label9.Text = "Sum:";
             // 
             // txtSumLeftDGV
             // 
-            this.txtSumLeftDGV.Location = new System.Drawing.Point(346, 10);
+            this.txtSumLeftDGV.Location = new System.Drawing.Point(461, 12);
+            this.txtSumLeftDGV.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtSumLeftDGV.Name = "txtSumLeftDGV";
             this.txtSumLeftDGV.ReadOnly = true;
-            this.txtSumLeftDGV.Size = new System.Drawing.Size(173, 20);
+            this.txtSumLeftDGV.Size = new System.Drawing.Size(229, 22);
             this.txtSumLeftDGV.TabIndex = 19;
             // 
             // panel11
@@ -391,41 +420,46 @@
             this.panel11.Controls.Add(this.txtTotalLeftDGV);
             this.panel11.Controls.Add(this.label6);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel11.Location = new System.Drawing.Point(0, 4);
+            this.panel11.Location = new System.Drawing.Point(0, 6);
+            this.panel11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(547, 38);
+            this.panel11.Size = new System.Drawing.Size(731, 46);
             this.panel11.TabIndex = 26;
             // 
             // labelCurLEd
             // 
             this.labelCurLEd.AutoSize = true;
-            this.labelCurLEd.Location = new System.Drawing.Point(538, 13);
+            this.labelCurLEd.Location = new System.Drawing.Point(717, 16);
+            this.labelCurLEd.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelCurLEd.Name = "labelCurLEd";
-            this.labelCurLEd.Size = new System.Drawing.Size(0, 13);
+            this.labelCurLEd.Size = new System.Drawing.Size(0, 17);
             this.labelCurLEd.TabIndex = 22;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(596, 17);
+            this.label8.Location = new System.Drawing.Point(795, 21);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(0, 13);
+            this.label8.Size = new System.Drawing.Size(0, 17);
             this.label8.TabIndex = 21;
             // 
             // txtTotalLeftDGV
             // 
-            this.txtTotalLeftDGV.Location = new System.Drawing.Point(68, 14);
+            this.txtTotalLeftDGV.Location = new System.Drawing.Point(91, 17);
+            this.txtTotalLeftDGV.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtTotalLeftDGV.Name = "txtTotalLeftDGV";
             this.txtTotalLeftDGV.ReadOnly = true;
-            this.txtTotalLeftDGV.Size = new System.Drawing.Size(164, 20);
+            this.txtTotalLeftDGV.Size = new System.Drawing.Size(217, 22);
             this.txtTotalLeftDGV.TabIndex = 17;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 17);
+            this.label6.Location = new System.Drawing.Point(4, 21);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(59, 13);
+            this.label6.Size = new System.Drawing.Size(77, 17);
             this.label6.TabIndex = 18;
             this.label6.Text = "Total rows:";
             // 
@@ -436,6 +470,7 @@
             this.collapsibleSplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.collapsibleSplitContainer1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.collapsibleSplitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.collapsibleSplitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.collapsibleSplitContainer1.Name = "collapsibleSplitContainer1";
             // 
             // collapsibleSplitContainer1.Panel1
@@ -447,12 +482,12 @@
             // 
             this.collapsibleSplitContainer1.Panel2.Controls.Add(this.panel14);
             this.collapsibleSplitContainer1.Panel2.Controls.Add(this.panel6);
-            this.collapsibleSplitContainer1.Size = new System.Drawing.Size(1258, 550);
+            this.collapsibleSplitContainer1.Size = new System.Drawing.Size(1677, 677);
             this.collapsibleSplitContainer1.SplitterButtonBitmap = ((System.Drawing.Bitmap)(resources.GetObject("collapsibleSplitContainer1.SplitterButtonBitmap")));
             this.collapsibleSplitContainer1.SplitterButtonPosition = SoftGee.ButtonPosition.Center;
             this.collapsibleSplitContainer1.SplitterButtonStyle = SoftGee.ButtonStyle.PushButton;
-            this.collapsibleSplitContainer1.SplitterDistance = 588;
-            this.collapsibleSplitContainer1.SplitterWidth = 22;
+            this.collapsibleSplitContainer1.SplitterDistance = 783;
+            this.collapsibleSplitContainer1.SplitterWidth = 29;
             this.collapsibleSplitContainer1.TabIndex = 29;
             // 
             // panel7
@@ -460,8 +495,9 @@
             this.panel7.Controls.Add(this.panel8);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(0, 0);
+            this.panel7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(547, 546);
+            this.panel7.Size = new System.Drawing.Size(731, 673);
             this.panel7.TabIndex = 1;
             // 
             // panel8
@@ -470,8 +506,9 @@
             this.panel8.Controls.Add(this.panel10);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 0);
+            this.panel8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(547, 546);
+            this.panel8.Size = new System.Drawing.Size(731, 673);
             this.panel8.TabIndex = 1;
             // 
             // panel12
@@ -479,17 +516,19 @@
             this.panel12.Controls.Add(this.DGVLeftEdit);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel12.Location = new System.Drawing.Point(0, 0);
+            this.panel12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(547, 504);
+            this.panel12.Size = new System.Drawing.Size(731, 621);
             this.panel12.TabIndex = 1;
             // 
             // panel10
             // 
             this.panel10.Controls.Add(this.panel11);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel10.Location = new System.Drawing.Point(0, 504);
+            this.panel10.Location = new System.Drawing.Point(0, 621);
+            this.panel10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(547, 42);
+            this.panel10.Size = new System.Drawing.Size(731, 52);
             this.panel10.TabIndex = 0;
             // 
             // panel13
@@ -499,9 +538,10 @@
             this.panel13.Controls.Add(this.btnToRight);
             this.panel13.Controls.Add(this.btnAllToRight);
             this.panel13.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel13.Location = new System.Drawing.Point(547, 0);
+            this.panel13.Location = new System.Drawing.Point(731, 0);
+            this.panel13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(37, 546);
+            this.panel13.Size = new System.Drawing.Size(48, 673);
             this.panel13.TabIndex = 0;
             // 
             // panel14
@@ -509,9 +549,10 @@
             this.panel14.Controls.Add(this.panel15);
             this.panel14.Controls.Add(this.panel16);
             this.panel14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel14.Location = new System.Drawing.Point(37, 0);
+            this.panel14.Location = new System.Drawing.Point(48, 0);
+            this.panel14.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel14.Name = "panel14";
-            this.panel14.Size = new System.Drawing.Size(607, 546);
+            this.panel14.Size = new System.Drawing.Size(813, 673);
             this.panel14.TabIndex = 2;
             // 
             // panel15
@@ -521,7 +562,7 @@
             this.panel15.Location = new System.Drawing.Point(0, 0);
             this.panel15.Margin = new System.Windows.Forms.Padding(1);
             this.panel15.Name = "panel15";
-            this.panel15.Size = new System.Drawing.Size(607, 376);
+            this.panel15.Size = new System.Drawing.Size(813, 464);
             this.panel15.TabIndex = 1;
             // 
             // panel16
@@ -529,10 +570,10 @@
             this.panel16.Controls.Add(this.panel9);
             this.panel16.Controls.Add(this.panel17);
             this.panel16.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel16.Location = new System.Drawing.Point(0, 376);
+            this.panel16.Location = new System.Drawing.Point(0, 464);
             this.panel16.Margin = new System.Windows.Forms.Padding(1);
             this.panel16.Name = "panel16";
-            this.panel16.Size = new System.Drawing.Size(607, 170);
+            this.panel16.Size = new System.Drawing.Size(813, 209);
             this.panel16.TabIndex = 0;
             // 
             // panel6
@@ -543,17 +584,19 @@
             this.panel6.Controls.Add(this.btnAllToLeft);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel6.Location = new System.Drawing.Point(0, 0);
+            this.panel6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(37, 546);
+            this.panel6.Size = new System.Drawing.Size(48, 673);
             this.panel6.TabIndex = 1;
             // 
             // PacketEditForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1258, 550);
+            this.ClientSize = new System.Drawing.Size(1677, 677);
             this.Controls.Add(this.collapsibleSplitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "PacketEditForm";
             this.Text = "PAKET DÜZENLEME EKRANI";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

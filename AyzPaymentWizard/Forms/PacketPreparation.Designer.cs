@@ -503,7 +503,7 @@
             // labelCurR
             // 
             this.labelCurR.AutoSize = true;
-            this.labelCurR.Location = new System.Drawing.Point(771, 17);
+            this.labelCurR.Location = new System.Drawing.Point(789, 17);
             this.labelCurR.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelCurR.Name = "labelCurR";
             this.labelCurR.Size = new System.Drawing.Size(0, 17);
@@ -512,16 +512,18 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(268, 17);
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label11.ForeColor = System.Drawing.Color.DarkGreen;
+            this.label11.Location = new System.Drawing.Point(520, 19);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(77, 17);
+            this.label11.Size = new System.Drawing.Size(86, 17);
             this.label11.TabIndex = 27;
             this.label11.Text = "Ödenecek:";
             // 
             // txtPaidRightDGV
             // 
-            this.txtPaidRightDGV.Location = new System.Drawing.Point(353, 12);
+            this.txtPaidRightDGV.Location = new System.Drawing.Point(619, 14);
             this.txtPaidRightDGV.Margin = new System.Windows.Forms.Padding(4);
             this.txtPaidRightDGV.Name = "txtPaidRightDGV";
             this.txtPaidRightDGV.ReadOnly = true;
@@ -531,7 +533,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(796, 17);
+            this.label14.Location = new System.Drawing.Point(789, 17);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(0, 17);
@@ -540,12 +542,13 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(548, 16);
+            this.label12.Location = new System.Drawing.Point(263, 8);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(40, 17);
+            this.label12.Size = new System.Drawing.Size(72, 34);
             this.label12.TabIndex = 22;
-            this.label12.Text = "Sum:";
+            this.label12.Text = "Ödenmesi\r\nGereken";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // txtTotalRightDGV
             // 
@@ -558,7 +561,7 @@
             // 
             // txtSumRightDGV
             // 
-            this.txtSumRightDGV.Location = new System.Drawing.Point(597, 12);
+            this.txtSumRightDGV.Location = new System.Drawing.Point(361, 14);
             this.txtSumRightDGV.Margin = new System.Windows.Forms.Padding(4);
             this.txtSumRightDGV.Name = "txtSumRightDGV";
             this.txtSumRightDGV.ReadOnly = true;
