@@ -624,7 +624,7 @@ namespace AyzPaymentWizard
             var HeaderL = new Dictionary<string, string>()
             {
                 { "DueDate", "Vade Tarihi" },{"CurCode", "Döviz"}, {"Total","Tutar" },{"ClCode","Cari Kod" }, {"ClDef","Cari Hesap Tanımı" },{"IBAN","IBAN" },
-                {"FicheDate","Fiş Tarihi"},{"FicheNo","FicheNo"},{"DoCode","Belge Numarası"},{ "NotInPayTransFrame","Active" }
+                {"FicheDate","Fiş Tarihi"},{"FicheNo","FicheNo"},{"DoCode","Belge Numarası"},{ "NotInPayTransFrame","Active" }, { "GeneralBalance","Bakiye" }
             };
 
             foreach (var headL in HeaderL)
