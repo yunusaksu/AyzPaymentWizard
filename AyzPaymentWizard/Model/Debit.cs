@@ -48,5 +48,7 @@ namespace AyzPaymentWizard.Model
         public bool NotInPayTrans { get; set; }// PayTrans LG_XXX_XX_PAYTRANS tablosunda kayıdın hala olup olmadığını kontrol eder.
         public string NotInPayTransFrame { get; set; } // NotInPayTrans'ın frame'dir.
 
+        public string GeneralBalance { get; set; }   // Genel Bakiye: Tüm Döviz Türlerinin TL Karşılığının Toplamını gösterir.
+
     }
 }

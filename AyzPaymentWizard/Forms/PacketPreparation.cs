@@ -507,7 +507,7 @@ namespace AyzPaymentWizard
             txtPaidRightDGV.Text = sumedup.ToString();
         }
 
-        
+
 
         private void DataGridViewLeft_SortStringChanged_1(object sender, Zuby.ADGV.AdvancedDataGridView.SortEventArgs e)
         {
@@ -923,6 +923,18 @@ namespace AyzPaymentWizard
                                     debit.TrType = dr["TRTYPE"].ToString();
                                     debit.GenExp1 = dr["GENEXP1"].ToString();
                                     debit.Branch = Convert.ToInt32(dr["BRANCH"].ToString());
+
+                                    debit.GeneralBalance = dr["YPB_BAK"].ToString();
+                                    if (Convert.ToDecimal(debit.GeneralBalance) < 0)
+                                    {
+                                        debit.GeneralBalance = String.Format("{0:C}", Math.Round(decimal.Parse(debit.GeneralBalance), 2).ToString());
+                                        debit.GeneralBalance = debit.GeneralBalance.Replace("-", "") + " (A)";
+                                    }
+                                    else if (Convert.ToDecimal(debit.GeneralBalance) > 0)
+                                    {
+                                        debit.GeneralBalance = String.Format("{0:C}", Math.Round(decimal.Parse(debit.GeneralBalance), 2).ToString());
+                                        debit.GeneralBalance = debit.GeneralBalance + " (B)";
+                                    }
                                     LeftList.Add(debit);
                                 }
                             }
@@ -1012,7 +1024,7 @@ namespace AyzPaymentWizard
                     }
                 }
 
-                #region Daha önce oluşturulan paket satırlarının sol gride gelmesini engelleyen kod bloku           
+                #region Daha önce oluşturulan paket satırlarının sol gride gelmesini engelleyen kod bloğu           
                 using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
                     CommandText = "SELECT PD.* FROM  AYZ_PW_PACKET_DETAIL AS PD  " +
