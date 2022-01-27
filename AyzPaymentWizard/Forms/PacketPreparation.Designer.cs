@@ -523,7 +523,7 @@
             // 
             // txtPaidRightDGV
             // 
-            this.txtPaidRightDGV.Location = new System.Drawing.Point(619, 14);
+            this.txtPaidRightDGV.Location = new System.Drawing.Point(615, 14);
             this.txtPaidRightDGV.Margin = new System.Windows.Forms.Padding(4);
             this.txtPaidRightDGV.Name = "txtPaidRightDGV";
             this.txtPaidRightDGV.ReadOnly = true;
