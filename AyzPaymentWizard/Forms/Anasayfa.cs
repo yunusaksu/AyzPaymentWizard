@@ -594,7 +594,7 @@ namespace AyzPaymentWizard
                                     HEDEFBANKA = HEDEFBANKA1,
                                     HEDEFSUBE = HEDEFSUBE1,
                                     HEDEFHESAPNUMARASI = "",
-                                    PARAKODU = PARAKODU1,
+                                    PARAKODU = PARAKODU1.Replace("TL","TRY"),
                                     TUTAR = TUTAR1,
                                     ACIKLAMA = ACIKLAMA1,
                                     FIRMAREFERANS = FIRMAREFERANS1,
