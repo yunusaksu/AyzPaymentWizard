@@ -3,7 +3,7 @@
 namespace AyzPaymentWizard.Model
 {
     public class Debit                          // Borçlu Olunan Cari Hesapların Bilgilerini Tutar.
-    {        
+    {
         public int PayRef { get; set; }         // LG_XXX_XX_PAYTRANS tablosunun Logicalref'i
         public int ClCardRef { get; set; }      // Cari Hesap Kartının LogicalRef'i
         public int FicheRef { get; set; }       // INVOICE Logicalref'i
@@ -16,7 +16,7 @@ namespace AyzPaymentWizard.Model
         public int TrCurr { get; set; }         // Borçlu Olunan Kur Type'nin Logo'daki değerini tutar. Örn: TL için 0, USD için 1'dir.
         public string ClCode { get; set; }      // Cari Hesap Kodunu tutar.
         public string ClDef { get; set; }       // Cari Hesap'ın Unvanını tutar.
-        public string GeneralBalance { get; set; }   // Genel Bakiye: Tüm Döviz Türlerinin TL Karşılığının Toplamını gösterir.
+        public string GeneralBalance { get; set; }   // Genel Bakiye: Tüm Döviz Türlerinin TL Karşılığının Toplamını gösterir.        
         public int IsPerson { get; set; }      // Borçlu Olunan Kişi mi Kurum mu Bilgisini tutar.
         public string TaxNr { get; set; }      // Vergi Numarasını tutar.
         public string TaxOffice { get; set; }  // Vergi Dairesini Tutar.
@@ -48,6 +48,11 @@ namespace AyzPaymentWizard.Model
         #endregion
         public bool NotInPayTrans { get; set; }// PayTrans LG_XXX_XX_PAYTRANS tablosunda kayıdın hala olup olmadığını kontrol eder.
         public string NotInPayTransFrame { get; set; } // NotInPayTrans'ın frame'dir.        
+
+        public string TLBalance { get; set; }       // TL Bakiye
+        public string USDBalance { get; set; }      // USD Bakiye
+        public string EUROBalance { get; set; }     // EURO Bakiye
+        public string GBPBalance { get; set; }      // GBP Bakiye
 
     }
 }

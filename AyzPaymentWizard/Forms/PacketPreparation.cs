@@ -131,6 +131,11 @@ namespace AyzPaymentWizard
                     debit.TrCurr = Convert.ToInt32(drv.Cells["TrCurr"].Value);
                     debit.ClCode = drv.Cells["ClCode"].Value.ToString();
                     debit.ClDef = drv.Cells["ClDef"].Value.ToString();
+                    debit.GeneralBalance = drv.Cells["GeneralBalance"].Value.ToString();
+                    debit.TLBalance = drv.Cells["TLBalance"].Value.ToString();
+                    debit.USDBalance = drv.Cells["USDBalance"].Value.ToString();
+                    debit.EUROBalance = drv.Cells["EUROBalance"].Value.ToString();
+                    debit.GBPBalance = drv.Cells["GBPBalance"].Value.ToString();
                     debit.IsPerson = Convert.ToInt32(drv.Cells["IsPerson"].Value);
                     debit.TaxNr = drv.Cells["TaxNr"].Value.ToString();
                     debit.TaxOffice = drv.Cells["TaxOffice"].Value.ToString();
@@ -218,6 +223,11 @@ namespace AyzPaymentWizard
                     debit.TrCurr = Convert.ToInt32(drv.Cells["TrCurr"].Value);
                     debit.ClCode = drv.Cells["ClCode"].Value.ToString();
                     debit.ClDef = drv.Cells["ClDef"].Value.ToString();
+                    debit.GeneralBalance = drv.Cells["GeneralBalance"].Value.ToString();
+                    debit.TLBalance = drv.Cells["TLBalance"].Value.ToString();
+                    debit.USDBalance = drv.Cells["USDBalance"].Value.ToString();
+                    debit.EUROBalance = drv.Cells["EUROBalance"].Value.ToString();
+                    debit.GBPBalance = drv.Cells["GBPBalance"].Value.ToString();
                     debit.IsPerson = Convert.ToInt32(drv.Cells["IsPerson"].Value);
                     debit.TaxNr = drv.Cells["TaxNr"].Value.ToString();
                     debit.TaxOffice = drv.Cells["TaxOffice"].Value.ToString();
@@ -623,9 +633,11 @@ namespace AyzPaymentWizard
 
             var HeaderL = new Dictionary<string, string>()
             {
-                { "DueDate", "Vade Tarihi" },{"CurCode", "Döviz"}, {"Total","Tutar" },{"ClCode","Cari Kod" }, {"ClDef","Cari Hesap Tanımı" },{"IBAN","IBAN" },
-                {"FicheDate","Fiş Tarihi"},{"FicheNo","FicheNo"},{"DoCode","Belge Numarası"},{ "NotInPayTransFrame","Active" }, { "GeneralBalance","Bakiye" }
+                { "DueDate", "Vade Tarihi" }, {"CurCode", "Döviz"}, {"Total","Tutar" }, {"ClCode","Cari Kod" }, {"ClDef","Cari Hesap Tanımı" }, {"IBAN","IBAN" },
+                {"FicheDate","Fiş Tarihi"}, {"FicheNo","FicheNo"}, {"DoCode","Belge Numarası"}, { "NotInPayTransFrame","Active" }, { "GeneralBalance","Bakiye" },
+                { "TLBalance","TL Bakiye" }, { "USDBalance","USD Bakiye" }, { "EUROBalance","EURO Bakiye" }, { "GBPBalance","GBP Bakiye" }
             };
+
 
             foreach (var headL in HeaderL)
             {
@@ -686,7 +698,8 @@ namespace AyzPaymentWizard
                 { "Paid", "Ödenecek" }, { "Total", "Ödenmesi Gereken" },{ "DueDate", "Vade Tarihi"},{ "ClDef", "Cari Hesap Tanımı" },{"IBAN","IBAN" },
                 {"ClCode","Cari Kod" },{"FicheDate","Fiş Tarihi"},{"FicheNo","Fiş Numarası"},{"DoCode","Belge Numarası"},{"MecraType","Mecra Türü"},
                 { "MarketingCompany","Pazarlama Şirketi"},{"Customer","Müşteri"},{"PlanCode","Plan Kodu"},{"InternetMainCategory","İnternet Ana Kategori"},
-                {"InternetSubCategory","İnternet Alt Kategori" }
+                {"InternetSubCategory","İnternet Alt Kategori" }, { "GeneralBalance","Bakiye" },
+                { "TLBalance","TL Bakiye" }, { "USDBalance","USD Bakiye" }, { "EUROBalance","EURO Bakiye" }, { "GBPBalance","GBP Bakiye" } 
             };
 
             foreach (var gosterRHead in gosterilecekRHeader)
@@ -924,6 +937,7 @@ namespace AyzPaymentWizard
                                     debit.GenExp1 = dr["GENEXP1"].ToString();
                                     debit.Branch = Convert.ToInt32(dr["BRANCH"].ToString());
 
+                                    #region Genel Bakiye
                                     debit.GeneralBalance = dr["YPB_BAK"].ToString();
                                     if (Convert.ToDecimal(debit.GeneralBalance) < 0)
                                     {
@@ -931,10 +945,53 @@ namespace AyzPaymentWizard
                                         debit.GeneralBalance = debit.GeneralBalance.Replace("-", "") + " (A)";
                                     }
                                     else if (Convert.ToDecimal(debit.GeneralBalance) > 0)
+                                        debit.GeneralBalance = String.Format("{0:C}", Math.Round(decimal.Parse(debit.GeneralBalance), 2).ToString()) + " (B)";
+                                    #endregion
+
+                                    #region TL Bakiye
+                                    debit.TLBalance = dr["TL_BAK"].ToString();
+                                    if (Convert.ToDecimal(debit.TLBalance) < 0)
                                     {
-                                        debit.GeneralBalance = String.Format("{0:C}", Math.Round(decimal.Parse(debit.GeneralBalance), 2).ToString());
-                                        debit.GeneralBalance = debit.GeneralBalance + " (B)";
+                                        debit.TLBalance = String.Format("{0:C}", Math.Round(decimal.Parse(debit.TLBalance), 2).ToString());
+                                        debit.TLBalance = debit.TLBalance.Replace("-", "") + " (A)";
                                     }
+                                    else if (Convert.ToDecimal(debit.TLBalance) > 0)
+                                        debit.TLBalance = String.Format("{0:C}", Math.Round(decimal.Parse(debit.TLBalance), 2).ToString()) + " (B)";
+                                    #endregion
+
+                                    #region USD Bakiye
+                                    debit.USDBalance = Convert.ToDouble(dr["USD_BAK"]).ToString();
+                                    if (Convert.ToDouble(debit.USDBalance) < 0)
+                                    {
+                                        debit.USDBalance = String.Format("{0:C}", Math.Round(double.Parse(debit.USDBalance), 2).ToString());
+                                        debit.USDBalance = debit.USDBalance.Replace("-", "") + " (A)";
+                                    }
+                                    else if (Convert.ToDouble(debit.USDBalance) > 0)
+                                        debit.USDBalance = String.Format("{0:C}", Math.Round(double.Parse(debit.USDBalance), 2).ToString()) + " (B)";
+                                    #endregion
+
+                                    #region EURO Bakiye
+                                    debit.EUROBalance = Convert.ToDouble(dr["EUR_BAK"]).ToString();
+                                    if (Convert.ToDouble(debit.EUROBalance) < 0)
+                                    {
+                                        debit.EUROBalance = String.Format("{0:C}", Math.Round(double.Parse(debit.EUROBalance), 2).ToString());
+                                        debit.EUROBalance = debit.EUROBalance.Replace("-", "") + " (A)";
+                                    }
+                                    else if (Convert.ToDouble(debit.EUROBalance) > 0)
+                                        debit.EUROBalance = String.Format("{0:C}", Math.Round(double.Parse(debit.EUROBalance), 2).ToString()) + " (B)";
+                                    #endregion
+
+                                    #region GBP Bakiye
+                                    debit.GBPBalance = Convert.ToDouble(dr["GBP_BAK"]).ToString();
+                                    if (Convert.ToDouble(debit.GBPBalance) < 0)
+                                    {
+                                        debit.GBPBalance = String.Format("{0:C}", Math.Round(double.Parse(debit.GBPBalance), 2).ToString());
+                                        debit.GBPBalance = debit.GBPBalance.Replace("-", "") + " (A)";
+                                    }
+                                    else if (Convert.ToDouble(debit.GBPBalance) > 0)
+                                        debit.GBPBalance = String.Format("{0:C}", Math.Round(double.Parse(debit.GBPBalance), 2).ToString()) + " (B)";
+                                    #endregion
+
                                     LeftList.Add(debit);
                                 }
                             }
@@ -1083,6 +1140,11 @@ namespace AyzPaymentWizard
                     debit.TrCurr = Convert.ToInt32(drv.Cells["TrCurr"].Value);
                     debit.ClCode = drv.Cells["ClCode"].Value.ToString();
                     debit.ClDef = drv.Cells["ClDef"].Value.ToString();
+                    debit.GeneralBalance = drv.Cells["GeneralBalance"].Value.ToString();
+                    debit.TLBalance = drv.Cells["TLBalance"].Value.ToString();
+                    debit.USDBalance = drv.Cells["USDBalance"].Value.ToString();
+                    debit.EUROBalance = drv.Cells["EUROBalance"].Value.ToString();
+                    debit.GBPBalance = drv.Cells["GBPBalance"].Value.ToString();
                     debit.IsPerson = Convert.ToInt32(drv.Cells["IsPerson"].Value);
                     debit.TaxNr = drv.Cells["TaxNr"].Value.ToString();
                     debit.TaxOffice = drv.Cells["TaxOffice"].Value.ToString();
@@ -1176,6 +1238,11 @@ namespace AyzPaymentWizard
                     debit.TrCurr = Convert.ToInt32(drv.Cells["TrCurr"].Value);
                     debit.ClCode = drv.Cells["ClCode"].Value.ToString();
                     debit.ClDef = drv.Cells["ClDef"].Value.ToString();
+                    debit.GeneralBalance = drv.Cells["GeneralBalance"].Value.ToString();
+                    debit.TLBalance = drv.Cells["TLBalance"].Value.ToString();
+                    debit.USDBalance = drv.Cells["USDBalance"].Value.ToString();
+                    debit.EUROBalance = drv.Cells["EUROBalance"].Value.ToString();
+                    debit.GBPBalance = drv.Cells["GBPBalance"].Value.ToString();
                     debit.IsPerson = Convert.ToInt32(drv.Cells["IsPerson"].Value);
                     debit.TaxNr = drv.Cells["TaxNr"].Value.ToString();
                     debit.TaxOffice = drv.Cells["TaxOffice"].Value.ToString();
@@ -1349,7 +1416,12 @@ namespace AyzPaymentWizard
                                                 "\nCUSTOMER," +
                                                 "\nPLAN_CODE," +
                                                 "\nINTERNET_MAIN_CATEGORY," +
-                                                "\nINTERNET_SUB_CATEGORY" +
+                                                "\nINTERNET_SUB_CATEGORY," +
+                                                "\nYPB_BAK," +
+                                                "\nTL_BAK," +
+                                                "\nUSD_BAK," +
+                                                "\nEUR_BAK," +
+                                                "\nGBP_BAK" +
                                                 "\n)" +
                                                 "\nVALUES" +
                                                 "\n(" +
@@ -1387,7 +1459,12 @@ namespace AyzPaymentWizard
                                                 "\n'" + item.Customer + "'," +
                                                 "\n'" + item.PlanCode + "'," +
                                                 "\n'" + item.InternetMainCategory + "'," +
-                                                "\n'" + item.InternetSubCategory + "'" +
+                                                "\n'" + item.InternetSubCategory + "'," +
+                                                "\n'" + item.GeneralBalance + "'," +
+                                                "\n'" + item.TLBalance + "'," +
+                                                "\n'" + item.USDBalance + "'," +
+                                                "\n'" + item.EUROBalance + "'," +
+                                                "\n'" + item.GBPBalance + "'" +
                                                 "\n)";
                             komut.ExecuteNonQuery();
                         }
