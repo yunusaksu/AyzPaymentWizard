@@ -1073,6 +1073,62 @@ namespace AyzPaymentWizard
                                     debit.DD5REF = Convert.ToInt32(dr["PlanRef"].ToString());
                                     debit.DD6REF = Convert.ToInt32(dr["InternetMainRef"].ToString());
                                     debit.DD7REF = Convert.ToInt32(dr["InternetSubRef"].ToString());
+
+                                    #region Genel Bakiye
+                                    debit.GeneralBalance = dr["YPB_BAK"].ToString();
+                                    if (Convert.ToDecimal(debit.GeneralBalance) < 0)
+                                    {
+                                        debit.GeneralBalance = String.Format("{0:C}", Math.Round(decimal.Parse(debit.GeneralBalance), 2).ToString());
+                                        debit.GeneralBalance = debit.GeneralBalance.Replace("-", "") + " (A)";
+                                    }
+                                    else if (Convert.ToDecimal(debit.GeneralBalance) > 0)
+                                        debit.GeneralBalance = String.Format("{0:C}", Math.Round(decimal.Parse(debit.GeneralBalance), 2).ToString()) + " (B)";
+                                    #endregion
+
+                                    #region TL Bakiye
+                                    debit.TLBalance = dr["TL_BAK"].ToString();
+                                    if (Convert.ToDecimal(debit.TLBalance) < 0)
+                                    {
+                                        debit.TLBalance = String.Format("{0:C}", Math.Round(decimal.Parse(debit.TLBalance), 2).ToString());
+                                        debit.TLBalance = debit.TLBalance.Replace("-", "") + " (A)";
+                                    }
+                                    else if (Convert.ToDecimal(debit.TLBalance) > 0)
+                                        debit.TLBalance = String.Format("{0:C}", Math.Round(decimal.Parse(debit.TLBalance), 2).ToString()) + " (B)";
+                                    #endregion
+
+                                    #region USD Bakiye
+                                    debit.USDBalance = Convert.ToDouble(dr["USD_BAK"]).ToString();
+                                    if (Convert.ToDouble(debit.USDBalance) < 0)
+                                    {
+                                        debit.USDBalance = String.Format("{0:C}", Math.Round(double.Parse(debit.USDBalance), 2).ToString());
+                                        debit.USDBalance = debit.USDBalance.Replace("-", "") + " (A)";
+                                    }
+                                    else if (Convert.ToDouble(debit.USDBalance) > 0)
+                                        debit.USDBalance = String.Format("{0:C}", Math.Round(double.Parse(debit.USDBalance), 2).ToString()) + " (B)";
+                                    #endregion
+
+                                    #region EURO Bakiye
+                                    debit.EUROBalance = Convert.ToDouble(dr["EUR_BAK"]).ToString();
+                                    if (Convert.ToDouble(debit.EUROBalance) < 0)
+                                    {
+                                        debit.EUROBalance = String.Format("{0:C}", Math.Round(double.Parse(debit.EUROBalance), 2).ToString());
+                                        debit.EUROBalance = debit.EUROBalance.Replace("-", "") + " (A)";
+                                    }
+                                    else if (Convert.ToDouble(debit.EUROBalance) > 0)
+                                        debit.EUROBalance = String.Format("{0:C}", Math.Round(double.Parse(debit.EUROBalance), 2).ToString()) + " (B)";
+                                    #endregion
+
+                                    #region GBP Bakiye
+                                    debit.GBPBalance = Convert.ToDouble(dr["GBP_BAK"]).ToString();
+                                    if (Convert.ToDouble(debit.GBPBalance) < 0)
+                                    {
+                                        debit.GBPBalance = String.Format("{0:C}", Math.Round(double.Parse(debit.GBPBalance), 2).ToString());
+                                        debit.GBPBalance = debit.GBPBalance.Replace("-", "") + " (A)";
+                                    }
+                                    else if (Convert.ToDouble(debit.GBPBalance) > 0)
+                                        debit.GBPBalance = String.Format("{0:C}", Math.Round(double.Parse(debit.GBPBalance), 2).ToString()) + " (B)";
+                                    #endregion
+
                                     LeftList.Add(debit);
                                 }
                             }

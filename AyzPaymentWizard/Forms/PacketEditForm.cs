@@ -296,8 +296,7 @@ namespace AyzPaymentWizard.Forms
                         debit.DD4REF = Convert.ToInt32(drv.Cells["DD4REF"].Value);
                         debit.DD5REF = Convert.ToInt32(drv.Cells["DD5REF"].Value);
                         debit.DD6REF = Convert.ToInt32(drv.Cells["DD6REF"].Value);
-                        debit.DD7REF = Convert.ToInt32(drv.Cells["DD7REF"].Value);
-
+                        debit.DD7REF = Convert.ToInt32(drv.Cells["DD7REF"].Value);                       
                     }
                     PacketEditsRightList.Add(debit);
                     var select = PacketEditsLeftList.Where(x => x.PayRef == debit.PayRef).ToList();
@@ -383,12 +382,11 @@ namespace AyzPaymentWizard.Forms
                         debit.InternetSubCategory = drv.Cells["InternetSubCategory"].Value.ToString();
                         debit.DD1REF = Convert.ToInt32(drv.Cells["DD1REF"].Value);
                         debit.DD2REF = Convert.ToInt32(drv.Cells["DD2REF"].Value);
-
                         debit.DD3REF = Convert.ToInt32(drv.Cells["DD3REF"].Value);
                         debit.DD4REF = Convert.ToInt32(drv.Cells["DD4REF"].Value);
                         debit.DD5REF = Convert.ToInt32(drv.Cells["DD5REF"].Value);
                         debit.DD6REF = Convert.ToInt32(drv.Cells["DD6REF"].Value);
-                        debit.DD7REF = Convert.ToInt32(drv.Cells["DD7REF"].Value);
+                        debit.DD7REF = Convert.ToInt32(drv.Cells["DD7REF"].Value);                        
                     }
                     PacketEditsLeftList.Add(debit);
                     var select = PacketEditsRightList.Where(x => x.PayRef == debit.PayRef).ToList();
@@ -482,8 +480,7 @@ namespace AyzPaymentWizard.Forms
                         debit.DD4REF = Convert.ToInt32(drv.Cells["DD4REF"].Value);
                         debit.DD5REF = Convert.ToInt32(drv.Cells["DD5REF"].Value);
                         debit.DD6REF = Convert.ToInt32(drv.Cells["DD6REF"].Value);
-                        debit.DD7REF = Convert.ToInt32(drv.Cells["DD7REF"].Value);
-
+                        debit.DD7REF = Convert.ToInt32(drv.Cells["DD7REF"].Value);                        
                     }
                     PacketEditsRightList.Add(debit);
                     var select = PacketEditsLeftList.Where(x => x.PayRef == debit.PayRef).ToList();
@@ -576,6 +573,11 @@ namespace AyzPaymentWizard.Forms
                         debit.DD5REF = Convert.ToInt32(drv.Cells["DD5REF"].Value);
                         debit.DD6REF = Convert.ToInt32(drv.Cells["DD6REF"].Value);
                         debit.DD7REF = Convert.ToInt32(drv.Cells["DD7REF"].Value);
+                        debit.GeneralBalance = drv.Cells["GeneralBalance"].Value.ToString();
+                        debit.TLBalance = drv.Cells["TLBalance"].Value.ToString();
+                        debit.USDBalance = drv.Cells["USDBalance"].Value.ToString();
+                        debit.EUROBalance = drv.Cells["EUROBalance"].Value.ToString();
+                        debit.GBPBalance = drv.Cells["GBPBalance"].Value.ToString();
                     }
                     PacketEditsLeftList.Add(debit);
                     var select = PacketEditsRightList.Where(x => x.PayRef == debit.PayRef).ToList();
@@ -729,7 +731,6 @@ namespace AyzPaymentWizard.Forms
                 MessageBox.Show("Hata: \n" + ex.Message, "Mesaj", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-
 
         //Filtereleme Metodu 
         private List<Debit> FilterAndSortDataStr(IEnumerable<Debit> collection, string filter, string sort)
@@ -1292,6 +1293,60 @@ namespace AyzPaymentWizard.Forms
                                 debit.DD5REF = Convert.ToInt32(dr["PlanRef"].ToString());
                                 debit.DD6REF = Convert.ToInt32(dr["InternetMainRef"].ToString());
                                 debit.DD7REF = Convert.ToInt32(dr["InternetSubRef"].ToString());
+                                #region Genel Bakiye
+                                debit.GeneralBalance = dr["YPB_BAK"].ToString();
+                                if (Convert.ToDecimal(debit.GeneralBalance) < 0)
+                                {
+                                    debit.GeneralBalance = String.Format("{0:C}", Math.Round(decimal.Parse(debit.GeneralBalance), 2).ToString());
+                                    debit.GeneralBalance = debit.GeneralBalance.Replace("-", "") + " (A)";
+                                }
+                                else if (Convert.ToDecimal(debit.GeneralBalance) > 0)
+                                    debit.GeneralBalance = String.Format("{0:C}", Math.Round(decimal.Parse(debit.GeneralBalance), 2).ToString()) + " (B)";
+                                #endregion
+
+                                #region TL Bakiye
+                                debit.TLBalance = dr["TL_BAK"].ToString();
+                                if (Convert.ToDecimal(debit.TLBalance) < 0)
+                                {
+                                    debit.TLBalance = String.Format("{0:C}", Math.Round(decimal.Parse(debit.TLBalance), 2).ToString());
+                                    debit.TLBalance = debit.TLBalance.Replace("-", "") + " (A)";
+                                }
+                                else if (Convert.ToDecimal(debit.TLBalance) > 0)
+                                    debit.TLBalance = String.Format("{0:C}", Math.Round(decimal.Parse(debit.TLBalance), 2).ToString()) + " (B)";
+                                #endregion
+
+                                #region USD Bakiye
+                                debit.USDBalance = Convert.ToDouble(dr["USD_BAK"]).ToString();
+                                if (Convert.ToDouble(debit.USDBalance) < 0)
+                                {
+                                    debit.USDBalance = String.Format("{0:C}", Math.Round(double.Parse(debit.USDBalance), 2).ToString());
+                                    debit.USDBalance = debit.USDBalance.Replace("-", "") + " (A)";
+                                }
+                                else if (Convert.ToDouble(debit.USDBalance) > 0)
+                                    debit.USDBalance = String.Format("{0:C}", Math.Round(double.Parse(debit.USDBalance), 2).ToString()) + " (B)";
+                                #endregion
+
+                                #region EURO Bakiye
+                                debit.EUROBalance = Convert.ToDouble(dr["EUR_BAK"]).ToString();
+                                if (Convert.ToDouble(debit.EUROBalance) < 0)
+                                {
+                                    debit.EUROBalance = String.Format("{0:C}", Math.Round(double.Parse(debit.EUROBalance), 2).ToString());
+                                    debit.EUROBalance = debit.EUROBalance.Replace("-", "") + " (A)";
+                                }
+                                else if (Convert.ToDouble(debit.EUROBalance) > 0)
+                                    debit.EUROBalance = String.Format("{0:C}", Math.Round(double.Parse(debit.EUROBalance), 2).ToString()) + " (B)";
+                                #endregion
+
+                                #region GBP Bakiye
+                                debit.GBPBalance = Convert.ToDouble(dr["GBP_BAK"]).ToString();
+                                if (Convert.ToDouble(debit.GBPBalance) < 0)
+                                {
+                                    debit.GBPBalance = String.Format("{0:C}", Math.Round(double.Parse(debit.GBPBalance), 2).ToString());
+                                    debit.GBPBalance = debit.GBPBalance.Replace("-", "") + " (A)";
+                                }
+                                else if (Convert.ToDouble(debit.GBPBalance) > 0)
+                                    debit.GBPBalance = String.Format("{0:C}", Math.Round(double.Parse(debit.GBPBalance), 2).ToString()) + " (B)";
+                                #endregion
                                 PacketEditsLeftList.Add(debit);
                             }
                         }
@@ -1427,6 +1482,11 @@ namespace AyzPaymentWizard.Forms
                             debit.TrType = dr["TRTYPE"].ToString();
                             debit.GenExp1 = dr["GENEXP1"].ToString();
                             debit.Branch = dr["BRANCH"].ToString() == "" ? 0 : Convert.ToInt32(dr["BRANCH"].ToString());
+                            debit.GeneralBalance = dr["YPB_BAK"].ToString();
+                            debit.TLBalance = dr["TL_BAK"].ToString();
+                            debit.USDBalance = dr["USD_BAK"].ToString();
+                            debit.EUROBalance = dr["EUR_BAK"].ToString();
+                            debit.GBPBalance = dr["GBP_BAK"].ToString();
                             #region Boyutlu Satırların Propertysleri
                             debit.MecraType = dr["MECRA_TYPE"].ToString();
                             debit.Mecra = dr["MECRA"].ToString();
@@ -1637,7 +1697,6 @@ namespace AyzPaymentWizard.Forms
 
         private void BtnEditPacket_Click(object sender, EventArgs e)
         {
-
             decimal sumRequire = PacketEditsRightList.Sum(x => x.Total);                                                       // Ödenmesi Gereken
             decimal sumPaid = PacketEditsRightList.Sum(x => x.Paid);                                                           // Ödenecek Tutar   
 
