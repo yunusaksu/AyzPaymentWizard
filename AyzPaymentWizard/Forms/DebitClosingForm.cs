@@ -90,7 +90,7 @@ namespace AyzPaymentWizard.Forms
                 payment.EFTQUERYNO = DetailResult[i].EFTQUERYNO;
                 payment.IBAN = DetailResult[i].IBAN;
                 payment.TYPE = DetailResult[i].TYPE;
-                payment.TRANSACTION_DATE = DetailResult[i].TRANSACTION_DATE;
+                payment.TRANSACTION_DATE = DetailResult[i].TRANSACTION_DATE.ToString();
                 using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
                     CommandText = "SELECT C.CODE,C.LOGICALREF FROM AYZ_PW_SUMMARY AS S " +
@@ -191,7 +191,7 @@ namespace AyzPaymentWizard.Forms
                 {
                     int CurType = GetCurType(item.CURRENCYCODE);
                     decimal CurRate = GetCurRate(item.CURRENCYCODE);
-                    decimal ReportCurRate = GetReportCurRate();
+                    decimal ReportCurRate = GetReportCurRate();                    
                     string day = item.TRANSACTION_DATE.ToString().Substring(0, 2);
                     string month = item.TRANSACTION_DATE.ToString().Substring(2, 2);
                     string year = item.TRANSACTION_DATE.ToString().Substring(4, 4);

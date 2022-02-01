@@ -115,7 +115,7 @@ namespace AyzPaymentWizard.Model
 
         [FieldFixedLength(8)]
         //[FieldConverter(ConverterKind.Date,"ddMMyyyy")]
-        public int TRANSACTION_DATE;
+        public string TRANSACTION_DATE;
 
         [FieldFixedLength(8)]
         [FieldAlign(AlignMode.Left, '0')]
@@ -139,7 +139,7 @@ namespace AyzPaymentWizard.Model
         public string COMPANYREF { get; set; }
         public int PAYMENTSTATUS { get; set; }
         public int TRANSACTIONNO { get; set; }
-        public int TRANSACTION_DATE { get; set; }
+        public string TRANSACTION_DATE { get; set; }
         public int EFTQUERYNO { get; set; }
         public string IBAN { get; set; }
     }

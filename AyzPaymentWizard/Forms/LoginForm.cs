@@ -45,7 +45,7 @@ namespace AyzPaymentWizard
             string encryptionText = EncryptionAlgorithm.Encrytion(password);
             //string decryptionText = EncryptionAlgorithm.Decrytion(encryptionText);
             command.CommandText = "SELECT ID, FIRMNR FROM [AYZ_PW_USER] " +
-                "\nWHERE NAME = '" + userName + "' AND PASSWORD = '" + encryptionText + "' AND FIRMNR = '" + Convert.ToInt32(cmbFirms.Text) + "'";
+                "\nWHERE NAME = '" + userName + "' AND PASSWORD = '" + encryptionText + "' AND FIRMNR = '" + Convert.ToInt32(cmbFirms.SelectedValue) + "'";
             command.Connection = conn;
             conn.Open();
             dr = command.ExecuteReader();
@@ -60,7 +60,7 @@ namespace AyzPaymentWizard
                 {
                     Helper.USERID = 0; // Admin için USERID SIFIRDIR(0).
                     Helper.USERNAME = userName;
-                    Helper.FIRMNR = Convert.ToInt32(cmbFirms.Text);
+                    Helper.FIRMNR = Convert.ToInt32(cmbFirms.SelectedValue);
                     GetLogoUsernameAndUserPassword();
                     Anasayfa form = new Anasayfa();
                     form.Show();
@@ -132,7 +132,7 @@ namespace AyzPaymentWizard
                 conn = new SqlConnection(ConnectionHelper.ConnectionString);
                 IsExistDatabase();
                 SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString);
-                SqlCommand cmd2 = new SqlCommand("SELECT NR FROM L_CAPIFIRM", conn2);
+                SqlCommand cmd2 = new SqlCommand("SELECT NR,NAME FROM L_CAPIFIRM", conn2);
                 conn2.Open();
                 DataTable tbl2 = new DataTable();
                 tbl2.Load(cmd2.ExecuteReader());
@@ -144,7 +144,7 @@ namespace AyzPaymentWizard
 #endif
 
                 cmbFirms.DataSource = tbl2;
-                cmbFirms.DisplayMember = "NR";
+                cmbFirms.DisplayMember = "NAME";
                 cmbFirms.ValueMember = "NR";
 
                 ToolTip showBtnToolTip = new ToolTip();
