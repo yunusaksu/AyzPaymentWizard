@@ -211,14 +211,14 @@ namespace AyzPaymentWizard
                 // Begin            
                 ///
                 SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString);
-                SqlCommand cmd2 = new SqlCommand("SELECT NR FROM L_CAPIFIRM", conn2);
+                SqlCommand cmd2 = new SqlCommand("SELECT NR,NAME FROM L_CAPIFIRM", conn2);
                 conn2.Open();
                 DataTable tbl2 = new DataTable();
                 tbl2.Load(cmd2.ExecuteReader());
                 conn2.Close();
 
                 cmbFirmNumber.DataSource = tbl2;
-                cmbFirmNumber.DisplayMember = "NR";
+                cmbFirmNumber.DisplayMember = "NAME";
                 cmbFirmNumber.ValueMember = "NR";
                 ///
                 // End
@@ -366,6 +366,7 @@ namespace AyzPaymentWizard
 
         private void BtnNewRecord_Click(object sender, EventArgs e)
         {
+            cmbFirmNumber.SelectedIndex = 0;
             txtEmail.Text = "";
             txtPassword.Text = "";
             txtUsername.Text = "";
@@ -395,14 +396,14 @@ namespace AyzPaymentWizard
                         txtEmail.Text = dr["EMAIL"].ToString();
 
                         SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString);
-                        SqlCommand cmd2 = new SqlCommand("SELECT NR FROM L_CAPIFIRM", conn2);
+                        SqlCommand cmd2 = new SqlCommand("SELECT NR,NAME FROM L_CAPIFIRM", conn2);
                         conn2.Open();
                         DataTable tbl2 = new DataTable();
                         tbl2.Load(cmd2.ExecuteReader());
                         conn2.Close();
 
                         cmbFirmNumber.DataSource = tbl2;
-                        cmbFirmNumber.DisplayMember = "NR";
+                        cmbFirmNumber.DisplayMember = "NAME";
                         cmbFirmNumber.ValueMember = "NR";
                         cmbFirmNumber.SelectedValue = Convert.ToInt32(dr["FIRMNR"].ToString());
                     }
