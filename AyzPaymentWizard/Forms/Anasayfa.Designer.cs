@@ -521,7 +521,7 @@
             this.btnPrepareAgain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPrepareAgain.ImageIndex = 9;
             this.btnPrepareAgain.ImageList = this.imageListPacketIcon;
-            this.btnPrepareAgain.Location = new System.Drawing.Point(351, 15);
+            this.btnPrepareAgain.Location = new System.Drawing.Point(346, 15);
             this.btnPrepareAgain.Margin = new System.Windows.Forms.Padding(4);
             this.btnPrepareAgain.Name = "btnPrepareAgain";
             this.btnPrepareAgain.Size = new System.Drawing.Size(91, 80);

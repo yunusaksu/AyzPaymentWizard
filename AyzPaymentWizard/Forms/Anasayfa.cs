@@ -306,8 +306,8 @@ namespace AyzPaymentWizard
                     archived = (int)dataGridViewPacket.SelectedRows[i].Cells["ARCHIVED"].Value;
                 }
                 if (packetId != 0 && status == (int)Helper.PacketStatus.NewPacket)
-                {
-                    string approvalExp = Interaction.InputBox("Onay Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250).Replace("'", "''");
+                {                    
+                    string approvalExp = InputDialog.Show("Onay İsteme Notunuz :").Replace("'", "''");
                     if (approvalExp.Length > 0)
                     {
 
@@ -362,7 +362,7 @@ namespace AyzPaymentWizard
                     }
                     if (packetId != 0 && status == (int)Helper.PacketStatus.SendToApproval)
                     {
-                        string approvalExp = Interaction.InputBox("Onay Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250).Replace("'", "''");
+                        string approvalExp = InputDialog.Show("Onay Notunuz :").Replace("'", "''");
                         if (approvalExp.Length > 0)
                         {
                             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
@@ -437,7 +437,7 @@ namespace AyzPaymentWizard
                 {
                     if (packetId != 0)
                     {
-                        string approvalExp = Interaction.InputBox("Red Notunuz", "Açıklama Giriniz", "Örn: Açıklama....", 500, 250).Replace("'", "''");
+                        string approvalExp = InputDialog.Show("Red Notunuz :").Replace("'", "''");
                         if (approvalExp.Length > 0)
                         {
                             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
@@ -1161,7 +1161,22 @@ namespace AyzPaymentWizard
 
         private void btnPrepareAgain_Click(object sender, EventArgs e)
         {
+            try
+            {
+                string approvalExp = InputDialog.Show("Tekrar Paket Hazırlamaya Gönderme Sebebinizi Açıklayınız :").Replace("'", "''");
+                if (approvalExp.Length > 0)
+                {
 
+                }
+                else
+                {
+                    MessageBox.Show("Açıklama girmek zorunludur!");
+                }
+            }
+            catch (Exception)
+            {
+                
+            }
         }
     }
 }
