@@ -306,7 +306,7 @@ namespace AyzPaymentWizard
                     archived = (int)dataGridViewPacket.SelectedRows[i].Cells["ARCHIVED"].Value;
                 }
                 if (packetId != 0 && status == (int)Helper.PacketStatus.NewPacket)
-                {                    
+                {
                     string approvalExp = InputDialog.Show("Onay İsteme Notunuz :").Replace("'", "''");
                     if (approvalExp.Length > 0)
                     {
@@ -349,17 +349,18 @@ namespace AyzPaymentWizard
 
         private void btnApproved_Click(object sender, EventArgs e)
         {
-            if (Helper.AuthorityControl("APPROVE_PACKAGE") || Helper.IsAdmin())
+            int packetId = 0, status = 0, archived = -1;
+            for (int i = 0; i < dataGridViewPacket.SelectedRows.Count; i++)
+            {
+                packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
+                status = (int)dataGridViewPacket.SelectedRows[i].Cells["STATUS"].Value;
+                archived = (int)dataGridViewPacket.SelectedRows[i].Cells["ARCHIVED"].Value;
+            }
+            if ((Helper.AuthorityControl("APPROVE_PACKAGE") || Helper.IsAdmin()) && packetId != 0)
             {
                 try
                 {
-                    int packetId = 0, status = 0, archived = -1;
-                    for (int i = 0; i < dataGridViewPacket.SelectedRows.Count; i++)
-                    {
-                        packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
-                        status = (int)dataGridViewPacket.SelectedRows[i].Cells["STATUS"].Value;
-                        archived = (int)dataGridViewPacket.SelectedRows[i].Cells["ARCHIVED"].Value;
-                    }
+
                     if (packetId != 0 && status == (int)Helper.PacketStatus.SendToApproval)
                     {
                         string approvalExp = InputDialog.Show("Onay Notunuz :").Replace("'", "''");
@@ -403,7 +404,8 @@ namespace AyzPaymentWizard
             }
             else
             {
-                MessageBox.Show("Paketi Onaylama Yetkiniz Bulunmuyor!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (packetId != 0)
+                    MessageBox.Show("Paketi Onaylama Yetkiniz Bulunmuyor!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -1161,21 +1163,48 @@ namespace AyzPaymentWizard
 
         private void btnPrepareAgain_Click(object sender, EventArgs e)
         {
+            int packetId = 0, status = 0, archived = -1;
+            for (int i = 0; i < dataGridViewPacket.SelectedRows.Count; i++)
+            {
+                packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
+                status = (int)dataGridViewPacket.SelectedRows[i].Cells["STATUS"].Value;
+                archived = (int)dataGridViewPacket.SelectedRows[i].Cells["ARCHIVED"].Value;
+            }
             try
             {
-                string approvalExp = InputDialog.Show("Tekrar Paket Hazırlamaya Gönderme Sebebinizi Açıklayınız :").Replace("'", "''");
-                if (approvalExp.Length > 0)
+                if ((Helper.AuthorityControl("TRYAGAIN_PACKAGE") || Helper.IsAdmin()) && packetId != 0 && status ==  (int)Helper.PacketStatus.SendToApproval)
                 {
-
+                    string approvalExp = InputDialog.Show("Tekrar Paket Hazırlamaya Gönderme Sebebinizi Açıklayınız :").Replace("'", "''");
+                    // Sadece onaya yollanan paketler tekrar paket hazırlamaya gönderilebilir olması sağlanacak.
+                    // Tekrar Paket Hazırlamaya gönderdiğinde Paketin durumunu Yeni Paket olarak update edicem.
+                    using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                    {                        
+                        CommandText = "UPDATE AYZ_PW_PACKET" +
+                                      "\nSET STATUS = " + (int)Helper.PacketStatus.NewPacket + ", " +
+                                      "\nAPPROVED_BY = " + Helper.USERID + "," +
+                                      "\nAPPROVED_DATE = CONVERT(DATE, GETDATE(), 104)," +
+                                      "\nAPPROVED_TIME = " + Helper.GetTime() + "," +
+                                      "\nAPPROVED_NAME = '" + Helper.USERNAME + "'," +
+                                      "\nAPPROVALNOTE = '" + approvalExp + "'" +
+                                      "\nWHERE ID = " + packetId + "";
+                        komut.CommandText = CommandText;
+                        komut.Connection = conn;
+                        conn.Open();
+                        if(komut.ExecuteNonQuery() == 1)
+                        {
+                            // Tekrar Paket Hazırlanmaya yollandığında paketi hazırlayan kişiye şu tutarlı paket fatih.koc tarafından şu not ile tekrar düzeltilip yollanması talep edildi mailini atıcam.
+                        }
+                        conn.Close();
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Açıklama girmek zorunludur!");
+
                 }
             }
             catch (Exception)
             {
-                
+
             }
         }
     }

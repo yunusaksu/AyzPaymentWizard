@@ -52,6 +52,7 @@ namespace AyzPaymentWizard
                                           "\nEDIT_PACKAGE = '" + AuthorityTreeView.Nodes["PackageEdit"].Checked + "', " +
                                           "\nAPPROVE_PACKAGE = '" + AuthorityTreeView.Nodes["PackageApprove"].Checked + "' , " +
                                           "\nREJECT_PACKAGE = '" + AuthorityTreeView.Nodes["PackageReject"].Checked + "', " +
+                                          "\nTRYAGAIN_PACKAGE = '" + AuthorityTreeView.Nodes["TryAgainPackage"].Checked + "', " +
                                           "\nSENDTO_APPROVE = '" + AuthorityTreeView.Nodes["PackageSendToApprove"].Checked + "', " +
                                           "\nFORWARDTO_BANK = '" + AuthorityTreeView.Nodes["ForwardToBank"].Checked + "', " +
                                           "\nAKIBET_AL = '" + AuthorityTreeView.Nodes["PackageAkibetAl"].Checked + "', " +
@@ -88,6 +89,7 @@ namespace AyzPaymentWizard
                     bool PackageApprove = AuthorityTreeView.Nodes["PackageApprove"].Checked;
                     bool PackageReject = AuthorityTreeView.Nodes["PackageReject"].Checked;
                     bool PackageSendToApprove = AuthorityTreeView.Nodes["PackageSendToApprove"].Checked;
+                    bool TryAgainPreparePackage = AuthorityTreeView.Nodes["TryAgainPackage"].Checked;
                     bool PackageForwardToBank = AuthorityTreeView.Nodes["ForwardToBank"].Checked;
                     bool PackageAkibet = AuthorityTreeView.Nodes["PackageAkibetAl"].Checked;
                     bool AddUser = AuthorityTreeView.Nodes["AddUser"].Checked;
@@ -104,13 +106,14 @@ namespace AyzPaymentWizard
                         conn.Open();
                         int groupId = Convert.ToInt32(komut.ExecuteScalar());
                         komut.CommandText = "INSERT INTO [AYZ_PW_USERRIGHTS]" +
-                                            "(GROUPID,ADD_PACKAGE,EDIT_PACKAGE,APPROVE_PACKAGE,REJECT_PACKAGE,SENDTO_APPROVE,FORWARDTO_BANK,AKIBET_AL,ADD_USER,ADD_GROUP) " +
+                                            "(GROUPID,ADD_PACKAGE,EDIT_PACKAGE,APPROVE_PACKAGE,REJECT_PACKAGE,TRYAGAIN_PACKAGE,SENDTO_APPROVE,FORWARDTO_BANK,AKIBET_AL,ADD_USER,ADD_GROUP) " +
                                             "VALUES(" +
                                             " '" + groupId + "', " +
                                             "'" + PackageAdd + "'," +
                                             "'" + PackageEdit + "', " +
                                             "'" + PackageApprove + "', " +
                                             "'" + PackageReject + "'," +
+                                            "'" + TryAgainPreparePackage + "'," +
                                             "'" + PackageSendToApprove + "'," +
                                             "'" + PackageForwardToBank + "'," +
                                             "'" + PackageAkibet + "'," +
@@ -258,6 +261,7 @@ namespace AyzPaymentWizard
                         AuthorityTreeView.Nodes["PackageEdit"].Checked = Convert.ToBoolean(dr["EDIT_PACKAGE"].ToString());
                         AuthorityTreeView.Nodes["PackageApprove"].Checked = Convert.ToBoolean(dr["APPROVE_PACKAGE"].ToString());
                         AuthorityTreeView.Nodes["PackageReject"].Checked = Convert.ToBoolean(dr["REJECT_PACKAGE"].ToString());
+                        AuthorityTreeView.Nodes["TryAgainPackage"].Checked = Convert.ToBoolean(dr["TRYAGAIN_PACKAGE"].ToString());
                         AuthorityTreeView.Nodes["PackageSendToApprove"].Checked = Convert.ToBoolean(dr["SENDTO_APPROVE"].ToString());
                         AuthorityTreeView.Nodes["ForwardToBank"].Checked = Convert.ToBoolean(dr["FORWARDTO_BANK"].ToString());
                         AuthorityTreeView.Nodes["PackageAkibetAl"].Checked = Convert.ToBoolean(dr["AKIBET_AL"].ToString());
@@ -301,6 +305,21 @@ namespace AyzPaymentWizard
                 return false;
             else
                 return true;
+        }
+
+        private void btnInfo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridViewGroup_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

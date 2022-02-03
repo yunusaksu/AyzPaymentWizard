@@ -63,7 +63,8 @@ namespace AyzPaymentWizard
             Approved = 2,
             Rejected = 3,
             SentToBank = 4,
-            AnswerReceivedBank = 5            
+            AnswerReceivedBank = 5,
+            PrepareAgain = 6
         }
         public enum ArchiveStatus
         {
