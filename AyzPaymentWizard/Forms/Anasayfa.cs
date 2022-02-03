@@ -1150,7 +1150,7 @@ namespace AyzPaymentWizard
             }
         }
 
-        private void archivedPaketlerToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnArchives_Click(object sender, EventArgs e)
         {
             Archive form = new Archive();
             form.ShowDialog();

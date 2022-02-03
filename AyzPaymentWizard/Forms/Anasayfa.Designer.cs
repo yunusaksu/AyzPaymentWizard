@@ -58,13 +58,14 @@
             this.sFTPBaglantiLoglariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sMTPSunucuAyarlariToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.genelAyarlarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.archivedPaketlerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripAnasayfa = new System.Windows.Forms.ToolStrip();
             this.btnGroupAdd = new System.Windows.Forms.ToolStripButton();
             this.btnUserAdd = new System.Windows.Forms.ToolStripButton();
             this.OnlineUsertoolStripLabel = new System.Windows.Forms.ToolStripDropDownButton();
             this.SignOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnArchives = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPacket)).BeginInit();
@@ -80,9 +81,10 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.dataGridViewPacket);
-            this.panel1.Location = new System.Drawing.Point(12, 31);
+            this.panel1.Location = new System.Drawing.Point(16, 38);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1316, 677);
+            this.panel1.Size = new System.Drawing.Size(1755, 833);
             this.panel1.TabIndex = 1;
             // 
             // label1
@@ -91,9 +93,10 @@
             this.label1.BackColor = System.Drawing.Color.White;
             this.label1.Font = new System.Drawing.Font("Consolas", 20F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.Gray;
-            this.label1.Location = new System.Drawing.Point(509, 4);
+            this.label1.Location = new System.Drawing.Point(679, 5);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(315, 32);
+            this.label1.Size = new System.Drawing.Size(397, 40);
             this.label1.TabIndex = 3;
             this.label1.Text = "HAZIRLANMIŞ PAKETLER";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -113,9 +116,10 @@
             this.panel3.Controls.Add(this.btnSendToApprove);
             this.panel3.Controls.Add(this.btnRewiew);
             this.panel3.Controls.Add(this.btnEdit);
-            this.panel3.Location = new System.Drawing.Point(3, 512);
+            this.panel3.Location = new System.Drawing.Point(4, 630);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1159, 85);
+            this.panel3.Size = new System.Drawing.Size(1544, 104);
             this.panel3.TabIndex = 2;
             // 
             // btnNewPacket
@@ -125,9 +129,10 @@
             this.btnNewPacket.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNewPacket.ImageIndex = 7;
             this.btnNewPacket.ImageList = this.imageListPacketIcon;
-            this.btnNewPacket.Location = new System.Drawing.Point(8, 12);
+            this.btnNewPacket.Location = new System.Drawing.Point(11, 15);
+            this.btnNewPacket.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnNewPacket.Name = "btnNewPacket";
-            this.btnNewPacket.Size = new System.Drawing.Size(68, 65);
+            this.btnNewPacket.Size = new System.Drawing.Size(91, 80);
             this.btnNewPacket.TabIndex = 9;
             this.btnNewPacket.Tag = "";
             this.btnNewPacket.UseVisualStyleBackColor = false;
@@ -154,9 +159,10 @@
             this.btnRefresh.FlatAppearance.BorderSize = 0;
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
-            this.btnRefresh.Location = new System.Drawing.Point(1077, 4);
+            this.btnRefresh.Location = new System.Drawing.Point(1436, 5);
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(68, 65);
+            this.btnRefresh.Size = new System.Drawing.Size(91, 80);
             this.btnRefresh.TabIndex = 8;
             this.btnRefresh.Tag = "";
             this.btnRefresh.UseVisualStyleBackColor = false;
@@ -169,9 +175,10 @@
             this.btnAkibetSorgulama.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAkibetSorgulama.ImageIndex = 6;
             this.btnAkibetSorgulama.ImageList = this.imageListPacketIcon;
-            this.btnAkibetSorgulama.Location = new System.Drawing.Point(523, 13);
+            this.btnAkibetSorgulama.Location = new System.Drawing.Point(697, 16);
+            this.btnAkibetSorgulama.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAkibetSorgulama.Name = "btnAkibetSorgulama";
-            this.btnAkibetSorgulama.Size = new System.Drawing.Size(68, 65);
+            this.btnAkibetSorgulama.Size = new System.Drawing.Size(91, 80);
             this.btnAkibetSorgulama.TabIndex = 7;
             this.btnAkibetSorgulama.Tag = "";
             this.btnAkibetSorgulama.UseVisualStyleBackColor = false;
@@ -184,9 +191,10 @@
             this.btnArchive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnArchive.ImageIndex = 5;
             this.btnArchive.ImageList = this.imageListPacketIcon;
-            this.btnArchive.Location = new System.Drawing.Point(463, 13);
+            this.btnArchive.Location = new System.Drawing.Point(617, 16);
+            this.btnArchive.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnArchive.Name = "btnArchive";
-            this.btnArchive.Size = new System.Drawing.Size(68, 65);
+            this.btnArchive.Size = new System.Drawing.Size(91, 80);
             this.btnArchive.TabIndex = 6;
             this.btnArchive.Tag = "";
             this.btnArchive.UseVisualStyleBackColor = false;
@@ -199,9 +207,10 @@
             this.btnSendToBank.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSendToBank.ImageIndex = 4;
             this.btnSendToBank.ImageList = this.imageListPacketIcon;
-            this.btnSendToBank.Location = new System.Drawing.Point(395, 13);
+            this.btnSendToBank.Location = new System.Drawing.Point(527, 16);
+            this.btnSendToBank.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSendToBank.Name = "btnSendToBank";
-            this.btnSendToBank.Size = new System.Drawing.Size(68, 65);
+            this.btnSendToBank.Size = new System.Drawing.Size(91, 80);
             this.btnSendToBank.TabIndex = 5;
             this.btnSendToBank.Tag = "";
             this.btnSendToBank.UseVisualStyleBackColor = false;
@@ -214,9 +223,10 @@
             this.btnReject.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReject.ImageIndex = 8;
             this.btnReject.ImageList = this.imageListPacketIcon;
-            this.btnReject.Location = new System.Drawing.Point(330, 13);
+            this.btnReject.Location = new System.Drawing.Point(440, 16);
+            this.btnReject.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnReject.Name = "btnReject";
-            this.btnReject.Size = new System.Drawing.Size(68, 65);
+            this.btnReject.Size = new System.Drawing.Size(91, 80);
             this.btnReject.TabIndex = 4;
             this.btnReject.Tag = "";
             this.btnReject.UseVisualStyleBackColor = false;
@@ -229,9 +239,10 @@
             this.btnApproved.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnApproved.ImageIndex = 2;
             this.btnApproved.ImageList = this.imageListPacketIcon;
-            this.btnApproved.Location = new System.Drawing.Point(266, 13);
+            this.btnApproved.Location = new System.Drawing.Point(355, 16);
+            this.btnApproved.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnApproved.Name = "btnApproved";
-            this.btnApproved.Size = new System.Drawing.Size(68, 65);
+            this.btnApproved.Size = new System.Drawing.Size(91, 80);
             this.btnApproved.TabIndex = 3;
             this.btnApproved.Tag = "";
             this.btnApproved.UseVisualStyleBackColor = false;
@@ -244,9 +255,10 @@
             this.btnSendToApprove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSendToApprove.ImageIndex = 3;
             this.btnSendToApprove.ImageList = this.imageListPacketIcon;
-            this.btnSendToApprove.Location = new System.Drawing.Point(199, 13);
+            this.btnSendToApprove.Location = new System.Drawing.Point(265, 16);
+            this.btnSendToApprove.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSendToApprove.Name = "btnSendToApprove";
-            this.btnSendToApprove.Size = new System.Drawing.Size(68, 65);
+            this.btnSendToApprove.Size = new System.Drawing.Size(91, 80);
             this.btnSendToApprove.TabIndex = 2;
             this.btnSendToApprove.Tag = "";
             this.btnSendToApprove.UseVisualStyleBackColor = false;
@@ -259,9 +271,10 @@
             this.btnRewiew.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRewiew.ImageIndex = 1;
             this.btnRewiew.ImageList = this.imageListPacketIcon;
-            this.btnRewiew.Location = new System.Drawing.Point(137, 12);
+            this.btnRewiew.Location = new System.Drawing.Point(183, 15);
+            this.btnRewiew.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnRewiew.Name = "btnRewiew";
-            this.btnRewiew.Size = new System.Drawing.Size(68, 65);
+            this.btnRewiew.Size = new System.Drawing.Size(91, 80);
             this.btnRewiew.TabIndex = 1;
             this.btnRewiew.Tag = "";
             this.btnRewiew.UseVisualStyleBackColor = false;
@@ -274,9 +287,10 @@
             this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEdit.ImageIndex = 0;
             this.btnEdit.ImageList = this.imageListPacketIcon;
-            this.btnEdit.Location = new System.Drawing.Point(72, 12);
+            this.btnEdit.Location = new System.Drawing.Point(96, 15);
+            this.btnEdit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(68, 65);
+            this.btnEdit.Size = new System.Drawing.Size(91, 80);
             this.btnEdit.TabIndex = 0;
             this.btnEdit.Tag = "";
             this.btnEdit.UseVisualStyleBackColor = false;
@@ -292,55 +306,58 @@
             this.dataGridViewPacket.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewPacket.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedHorizontal;
             this.dataGridViewPacket.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewPacket.Location = new System.Drawing.Point(3, 42);
+            this.dataGridViewPacket.Location = new System.Drawing.Point(4, 52);
+            this.dataGridViewPacket.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridViewPacket.Name = "dataGridViewPacket";
             this.dataGridViewPacket.ReadOnly = true;
+            this.dataGridViewPacket.RowHeadersWidth = 51;
             this.dataGridViewPacket.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewPacket.Size = new System.Drawing.Size(1159, 469);
+            this.dataGridViewPacket.Size = new System.Drawing.Size(1545, 577);
             this.dataGridViewPacket.TabIndex = 1;
             this.dataGridViewPacket.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewPacket_CellMouseDown);
             this.dataGridViewPacket.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.dataGridViewPacket_RowStateChanged);
             // 
             // contextMenuStripAnasayfa
             // 
+            this.contextMenuStripAnasayfa.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.contextMenuStripAnasayfa.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.akibetiİnceleToolStripMenuItem,
             this.paketSeruveniToolStripMenuItem,
             this.silToolStripMenuItem});
             this.contextMenuStripAnasayfa.Name = "contextMenuStripAnasayfa";
-            this.contextMenuStripAnasayfa.Size = new System.Drawing.Size(146, 70);
+            this.contextMenuStripAnasayfa.Size = new System.Drawing.Size(169, 76);
             this.contextMenuStripAnasayfa.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripAnasayfa_Opening);
             // 
             // akibetiİnceleToolStripMenuItem
             // 
             this.akibetiİnceleToolStripMenuItem.Name = "akibetiİnceleToolStripMenuItem";
-            this.akibetiİnceleToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.akibetiİnceleToolStripMenuItem.Size = new System.Drawing.Size(168, 24);
             this.akibetiİnceleToolStripMenuItem.Text = "Akibeti İncele";
             this.akibetiİnceleToolStripMenuItem.Click += new System.EventHandler(this.akibetiİnceleToolStripMenuItem_Click);
             // 
             // paketSeruveniToolStripMenuItem
             // 
             this.paketSeruveniToolStripMenuItem.Name = "paketSeruveniToolStripMenuItem";
-            this.paketSeruveniToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.paketSeruveniToolStripMenuItem.Size = new System.Drawing.Size(168, 24);
             this.paketSeruveniToolStripMenuItem.Text = "Kayıt Bilgisi";
             this.paketSeruveniToolStripMenuItem.Click += new System.EventHandler(this.paketSeruveniToolStripMenuItem_Click);
             // 
             // silToolStripMenuItem
             // 
             this.silToolStripMenuItem.Name = "silToolStripMenuItem";
-            this.silToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.silToolStripMenuItem.Size = new System.Drawing.Size(168, 24);
             this.silToolStripMenuItem.Text = "Sil";
             this.silToolStripMenuItem.Click += new System.EventHandler(this.silToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 32);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 37);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 32);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 37);
             // 
             // toolStripDropDownSettingButton
             // 
@@ -350,20 +367,19 @@
             this.logoUserSettingsToolStripMenuItem,
             this.sFTPBaglantiLoglariToolStripMenuItem,
             this.sMTPSunucuAyarlariToolStripMenuItem,
-            this.genelAyarlarToolStripMenuItem,
-            this.archivedPaketlerToolStripMenuItem});
+            this.genelAyarlarToolStripMenuItem});
             this.toolStripDropDownSettingButton.Font = new System.Drawing.Font("Segoe UI", 13F);
             this.toolStripDropDownSettingButton.ForeColor = System.Drawing.SystemColors.GrayText;
             this.toolStripDropDownSettingButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownSettingButton.Name = "toolStripDropDownSettingButton";
-            this.toolStripDropDownSettingButton.Size = new System.Drawing.Size(80, 29);
+            this.toolStripDropDownSettingButton.Size = new System.Drawing.Size(95, 34);
             this.toolStripDropDownSettingButton.Text = "Ayarlar";
             // 
             // sFTPAyarlarıToolStripMenuItem
             // 
             this.sFTPAyarlarıToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
             this.sFTPAyarlarıToolStripMenuItem.Name = "sFTPAyarlarıToolStripMenuItem";
-            this.sFTPAyarlarıToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
+            this.sFTPAyarlarıToolStripMenuItem.Size = new System.Drawing.Size(312, 34);
             this.sFTPAyarlarıToolStripMenuItem.Text = "SFTP Ayarları";
             this.sFTPAyarlarıToolStripMenuItem.Click += new System.EventHandler(this.sFTPAyarlarıToolStripMenuItem_Click);
             // 
@@ -371,7 +387,7 @@
             // 
             this.btnBankAndBankAccAdd.ForeColor = System.Drawing.SystemColors.GrayText;
             this.btnBankAndBankAccAdd.Name = "btnBankAndBankAccAdd";
-            this.btnBankAndBankAccAdd.Size = new System.Drawing.Size(257, 30);
+            this.btnBankAndBankAccAdd.Size = new System.Drawing.Size(312, 34);
             this.btnBankAndBankAccAdd.Text = "Çalışılan Bankalar";
             this.btnBankAndBankAccAdd.Click += new System.EventHandler(this.btnBankAndBankAccAdd_Click_1);
             // 
@@ -379,7 +395,7 @@
             // 
             this.logoUserSettingsToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
             this.logoUserSettingsToolStripMenuItem.Name = "logoUserSettingsToolStripMenuItem";
-            this.logoUserSettingsToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
+            this.logoUserSettingsToolStripMenuItem.Size = new System.Drawing.Size(312, 34);
             this.logoUserSettingsToolStripMenuItem.Text = "Logo Kullanıcı Ayarları";
             this.logoUserSettingsToolStripMenuItem.Click += new System.EventHandler(this.logoUserSettingsToolStripMenuItem_Click);
             // 
@@ -387,7 +403,7 @@
             // 
             this.sFTPBaglantiLoglariToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
             this.sFTPBaglantiLoglariToolStripMenuItem.Name = "sFTPBaglantiLoglariToolStripMenuItem";
-            this.sFTPBaglantiLoglariToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
+            this.sFTPBaglantiLoglariToolStripMenuItem.Size = new System.Drawing.Size(312, 34);
             this.sFTPBaglantiLoglariToolStripMenuItem.Text = "SFTP Bağlantı Logları";
             this.sFTPBaglantiLoglariToolStripMenuItem.Click += new System.EventHandler(this.sFTPBaglantiLoglariToolStripMenuItem_Click);
             // 
@@ -395,7 +411,7 @@
             // 
             this.sMTPSunucuAyarlariToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
             this.sMTPSunucuAyarlariToolStripMenuItem.Name = "sMTPSunucuAyarlariToolStripMenuItem";
-            this.sMTPSunucuAyarlariToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
+            this.sMTPSunucuAyarlariToolStripMenuItem.Size = new System.Drawing.Size(312, 34);
             this.sMTPSunucuAyarlariToolStripMenuItem.Text = "SMTP Sunucu Ayarları";
             this.sMTPSunucuAyarlariToolStripMenuItem.Click += new System.EventHandler(this.sMTPSunucuAyarlariToolStripMenuItem_Click);
             // 
@@ -403,38 +419,33 @@
             // 
             this.genelAyarlarToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
             this.genelAyarlarToolStripMenuItem.Name = "genelAyarlarToolStripMenuItem";
-            this.genelAyarlarToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
+            this.genelAyarlarToolStripMenuItem.Size = new System.Drawing.Size(312, 34);
             this.genelAyarlarToolStripMenuItem.Text = "Genel Ayarlar";
             this.genelAyarlarToolStripMenuItem.Click += new System.EventHandler(this.genelAyarlarToolStripMenuItem_Click);
-            // 
-            // archivedPaketlerToolStripMenuItem
-            // 
-            this.archivedPaketlerToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.archivedPaketlerToolStripMenuItem.Name = "archivedPaketlerToolStripMenuItem";
-            this.archivedPaketlerToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
-            this.archivedPaketlerToolStripMenuItem.Text = "Arşivlenen Paketler";
-            this.archivedPaketlerToolStripMenuItem.Click += new System.EventHandler(this.archivedPaketlerToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 32);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 37);
             // 
             // toolStripAnasayfa
             // 
             this.toolStripAnasayfa.BackColor = System.Drawing.SystemColors.Control;
             this.toolStripAnasayfa.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toolStripAnasayfa.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripAnasayfa.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnGroupAdd,
             this.toolStripSeparator2,
             this.btnUserAdd,
             this.toolStripSeparator3,
-            this.toolStripDropDownSettingButton,
+            this.OnlineUsertoolStripLabel,
+            this.btnArchives,
             this.toolStripSeparator5,
-            this.OnlineUsertoolStripLabel});
+            this.toolStripDropDownSettingButton,
+            this.toolStripSeparator1});
             this.toolStripAnasayfa.Location = new System.Drawing.Point(0, 0);
             this.toolStripAnasayfa.Name = "toolStripAnasayfa";
-            this.toolStripAnasayfa.Size = new System.Drawing.Size(1174, 32);
+            this.toolStripAnasayfa.Size = new System.Drawing.Size(1565, 37);
             this.toolStripAnasayfa.TabIndex = 0;
             this.toolStripAnasayfa.Text = "AnasayfaToolStrip";
             // 
@@ -446,7 +457,7 @@
             this.btnGroupAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnGroupAdd.Image")));
             this.btnGroupAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnGroupAdd.Name = "btnGroupAdd";
-            this.btnGroupAdd.Size = new System.Drawing.Size(74, 29);
+            this.btnGroupAdd.Size = new System.Drawing.Size(89, 34);
             this.btnGroupAdd.Text = "Gruplar";
             this.btnGroupAdd.Click += new System.EventHandler(this.btnGroupAdd_Click);
             // 
@@ -458,7 +469,7 @@
             this.btnUserAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnUserAdd.Image")));
             this.btnUserAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnUserAdd.Name = "btnUserAdd";
-            this.btnUserAdd.Size = new System.Drawing.Size(98, 29);
+            this.btnUserAdd.Size = new System.Drawing.Size(119, 34);
             this.btnUserAdd.Text = "Kullanıcılar";
             this.btnUserAdd.Click += new System.EventHandler(this.btnUserAdd_Click);
             // 
@@ -471,7 +482,7 @@
             this.OnlineUsertoolStripLabel.ForeColor = System.Drawing.SystemColors.GrayText;
             this.OnlineUsertoolStripLabel.Image = global::AyzPaymentWizard.Properties.Resources.Man;
             this.OnlineUsertoolStripLabel.Name = "OnlineUsertoolStripLabel";
-            this.OnlineUsertoolStripLabel.Size = new System.Drawing.Size(132, 29);
+            this.OnlineUsertoolStripLabel.Size = new System.Drawing.Size(160, 34);
             this.OnlineUsertoolStripLabel.Text = "Online User";
             // 
             // SignOutToolStripMenuItem
@@ -479,20 +490,38 @@
             this.SignOutToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.SignOutToolStripMenuItem.ForeColor = System.Drawing.SystemColors.GrayText;
             this.SignOutToolStripMenuItem.Name = "SignOutToolStripMenuItem";
-            this.SignOutToolStripMenuItem.Size = new System.Drawing.Size(174, 24);
+            this.SignOutToolStripMenuItem.Size = new System.Drawing.Size(217, 30);
             this.SignOutToolStripMenuItem.Text = "Oturum Kapat";
             this.SignOutToolStripMenuItem.Click += new System.EventHandler(this.SignOutToolStripMenuItem_Click);
             // 
+            // btnArchives
+            // 
+            this.btnArchives.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnArchives.Font = new System.Drawing.Font("Segoe UI", 13F);
+            this.btnArchives.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.btnArchives.Image = ((System.Drawing.Image)(resources.GetObject("btnArchives.Image")));
+            this.btnArchives.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnArchives.Name = "btnArchives";
+            this.btnArchives.Size = new System.Drawing.Size(200, 34);
+            this.btnArchives.Text = "Arşivlenen Paketler";
+            this.btnArchives.Click += new System.EventHandler(this.btnArchives_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 37);
+            // 
             // Anasayfa
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1174, 649);
+            this.ClientSize = new System.Drawing.Size(1565, 799);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStripAnasayfa);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Anasayfa";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ANASAYFA";
@@ -547,6 +576,7 @@
         private System.Windows.Forms.ToolStripDropDownButton OnlineUsertoolStripLabel;
         private System.Windows.Forms.ToolStripMenuItem SignOutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem silToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem archivedPaketlerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton btnArchives;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
