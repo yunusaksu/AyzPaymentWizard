@@ -66,6 +66,7 @@
             this.SignOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnArchives = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnPrepareAgain = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPacket)).BeginInit();
@@ -106,6 +107,7 @@
             this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel3.Controls.Add(this.btnPrepareAgain);
             this.panel3.Controls.Add(this.btnNewPacket);
             this.panel3.Controls.Add(this.btnRefresh);
             this.panel3.Controls.Add(this.btnAkibetSorgulama);
@@ -151,6 +153,7 @@
             this.imageListPacketIcon.Images.SetKeyName(6, "performed_process.png");
             this.imageListPacketIcon.Images.SetKeyName(7, "newPacketButton.png");
             this.imageListPacketIcon.Images.SetKeyName(8, "rejectButton.png");
+            this.imageListPacketIcon.Images.SetKeyName(9, "try_again.png");
             // 
             // btnRefresh
             // 
@@ -175,7 +178,7 @@
             this.btnAkibetSorgulama.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAkibetSorgulama.ImageIndex = 6;
             this.btnAkibetSorgulama.ImageList = this.imageListPacketIcon;
-            this.btnAkibetSorgulama.Location = new System.Drawing.Point(697, 16);
+            this.btnAkibetSorgulama.Location = new System.Drawing.Point(777, 16);
             this.btnAkibetSorgulama.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAkibetSorgulama.Name = "btnAkibetSorgulama";
             this.btnAkibetSorgulama.Size = new System.Drawing.Size(91, 80);
@@ -191,7 +194,7 @@
             this.btnArchive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnArchive.ImageIndex = 5;
             this.btnArchive.ImageList = this.imageListPacketIcon;
-            this.btnArchive.Location = new System.Drawing.Point(617, 16);
+            this.btnArchive.Location = new System.Drawing.Point(697, 16);
             this.btnArchive.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnArchive.Name = "btnArchive";
             this.btnArchive.Size = new System.Drawing.Size(91, 80);
@@ -207,7 +210,7 @@
             this.btnSendToBank.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSendToBank.ImageIndex = 4;
             this.btnSendToBank.ImageList = this.imageListPacketIcon;
-            this.btnSendToBank.Location = new System.Drawing.Point(527, 16);
+            this.btnSendToBank.Location = new System.Drawing.Point(607, 16);
             this.btnSendToBank.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSendToBank.Name = "btnSendToBank";
             this.btnSendToBank.Size = new System.Drawing.Size(91, 80);
@@ -223,7 +226,7 @@
             this.btnReject.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReject.ImageIndex = 8;
             this.btnReject.ImageList = this.imageListPacketIcon;
-            this.btnReject.Location = new System.Drawing.Point(440, 16);
+            this.btnReject.Location = new System.Drawing.Point(520, 16);
             this.btnReject.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnReject.Name = "btnReject";
             this.btnReject.Size = new System.Drawing.Size(91, 80);
@@ -239,7 +242,7 @@
             this.btnApproved.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnApproved.ImageIndex = 2;
             this.btnApproved.ImageList = this.imageListPacketIcon;
-            this.btnApproved.Location = new System.Drawing.Point(355, 16);
+            this.btnApproved.Location = new System.Drawing.Point(435, 16);
             this.btnApproved.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnApproved.Name = "btnApproved";
             this.btnApproved.Size = new System.Drawing.Size(91, 80);
@@ -511,6 +514,22 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 37);
             // 
+            // btnPrepareAgain
+            // 
+            this.btnPrepareAgain.BackColor = System.Drawing.Color.Transparent;
+            this.btnPrepareAgain.FlatAppearance.BorderSize = 0;
+            this.btnPrepareAgain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPrepareAgain.ImageIndex = 9;
+            this.btnPrepareAgain.ImageList = this.imageListPacketIcon;
+            this.btnPrepareAgain.Location = new System.Drawing.Point(351, 15);
+            this.btnPrepareAgain.Margin = new System.Windows.Forms.Padding(4);
+            this.btnPrepareAgain.Name = "btnPrepareAgain";
+            this.btnPrepareAgain.Size = new System.Drawing.Size(91, 80);
+            this.btnPrepareAgain.TabIndex = 10;
+            this.btnPrepareAgain.Tag = "";
+            this.btnPrepareAgain.UseVisualStyleBackColor = false;
+            this.btnPrepareAgain.Click += new System.EventHandler(this.btnPrepareAgain_Click);
+            // 
             // Anasayfa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -578,5 +597,6 @@
         private System.Windows.Forms.ToolStripMenuItem silToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton btnArchives;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.Button btnPrepareAgain;
     }
 }

@@ -45,11 +45,12 @@ namespace AyzPaymentWizard
             form.ShowDialog();
         }
 
-
         private void Anasayfa_Load(object sender, EventArgs e)
         {
             OnlineUsertoolStripLabel.Text = Helper.USERNAME;
             dataGridViewPacket.MultiSelect = false;
+
+            #region ToolTips            
             ToolTip newPacketBtnToolTip = new ToolTip();
             newPacketBtnToolTip.SetToolTip(btnNewPacket, "Yeni Paket");
             ToolTip editBtnToolTip = new ToolTip();
@@ -58,6 +59,8 @@ namespace AyzPaymentWizard
             reviewBtnToolTip.SetToolTip(btnRewiew, "Paketi İncele");
             ToolTip sendToApproveToolTip = new ToolTip();
             sendToApproveToolTip.SetToolTip(btnSendToApprove, "Onaya Gönder");
+            ToolTip tryAgainPacketToolTip = new ToolTip();
+            tryAgainPacketToolTip.SetToolTip(btnPrepareAgain, "Paketi Tekrar Hazırlamaya Gönder");
             ToolTip ApprovedToolTip = new ToolTip();
             ApprovedToolTip.SetToolTip(btnApproved, "Paketi Onayla");
             ToolTip RejectToolTip = new ToolTip();
@@ -69,6 +72,8 @@ namespace AyzPaymentWizard
             ToolTip AkibetToolTip = new ToolTip();
             AkibetToolTip.SetToolTip(btnAkibetSorgulama, "Akibet Sorgula");
             ToolTip RefreshToolTip = new ToolTip();
+            #endregion
+
             RefreshToolTip.SetToolTip(btnRefresh, "Yenile(F5)");
             FillPacketList();
             #region Kolon Görünüm,Header Text ve Display Index Ayarları
@@ -1152,6 +1157,11 @@ namespace AyzPaymentWizard
         {
             Archive form = new Archive();
             form.ShowDialog();
+        }
+
+        private void btnPrepareAgain_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
