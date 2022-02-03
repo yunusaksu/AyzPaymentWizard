@@ -224,7 +224,7 @@ namespace AyzPaymentWizard
                 if (dataGridViewPacket.RowCount > getSelectedRowIndex)
                 {
                     dataGridViewPacket.Rows[getSelectedRowIndex].Selected = true;
-                }               
+                }
             }
 
             #endregion
@@ -239,11 +239,9 @@ namespace AyzPaymentWizard
                 status = (int)dataGridViewPacket.SelectedRows[i].Cells["STATUS"].Value;
             }
 
-            if ((status == (int)Helper.PacketStatus.SendToApproval) || (status == (int)Helper.PacketStatus.SentToBank) || (status == (int)Helper.PacketStatus.AnswerReceivedBank) || (status == (int)Helper.PacketStatus.Approved) || (status == (int)Helper.PacketStatus.Rejected))
+            if ((status == (int)Helper.PacketStatus.SentToBank) || (status == (int)Helper.PacketStatus.AnswerReceivedBank) || (status == (int)Helper.PacketStatus.Approved) || (status == (int)Helper.PacketStatus.Rejected))
             {
-                if (status == (int)Helper.PacketStatus.SendToApproval)
-                    MessageBox.Show("Paket Onaya Yollandığı İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                else if (status == (int)Helper.PacketStatus.SentToBank)
+                if (status == (int)Helper.PacketStatus.SentToBank)
                     MessageBox.Show("Paket Bankaya Yollandığı İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 else if (status == (int)Helper.PacketStatus.AnswerReceivedBank)
                     MessageBox.Show("Paketin Akibeti Alındığı İçin Düzenlenemez!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -594,7 +592,7 @@ namespace AyzPaymentWizard
                                     HEDEFBANKA = HEDEFBANKA1,
                                     HEDEFSUBE = HEDEFSUBE1,
                                     HEDEFHESAPNUMARASI = "",
-                                    PARAKODU = PARAKODU1.Replace("TL","TRY"),
+                                    PARAKODU = PARAKODU1.Replace("TL", "TRY"),
                                     TUTAR = TUTAR1,
                                     ACIKLAMA = ACIKLAMA1,
                                     FIRMAREFERANS = FIRMAREFERANS1,
