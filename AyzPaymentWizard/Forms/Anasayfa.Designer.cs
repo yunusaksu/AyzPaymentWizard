@@ -33,8 +33,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.btnNewPacket = new System.Windows.Forms.Button();
+            this.btnPrepareAgain = new System.Windows.Forms.Button();
             this.imageListPacketIcon = new System.Windows.Forms.ImageList(this.components);
+            this.btnNewPacket = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnAkibetSorgulama = new System.Windows.Forms.Button();
             this.btnArchive = new System.Windows.Forms.Button();
@@ -66,7 +67,7 @@
             this.SignOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnArchives = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnPrepareAgain = new System.Windows.Forms.Button();
+            this.ToolStripMenuItemMarkAndDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPacket)).BeginInit();
@@ -83,9 +84,9 @@
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.dataGridViewPacket);
             this.panel1.Location = new System.Drawing.Point(16, 38);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1755, 833);
+            this.panel1.Size = new System.Drawing.Size(1536, 833);
             this.panel1.TabIndex = 1;
             // 
             // label1
@@ -119,26 +120,26 @@
             this.panel3.Controls.Add(this.btnRewiew);
             this.panel3.Controls.Add(this.btnEdit);
             this.panel3.Location = new System.Drawing.Point(4, 630);
-            this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1544, 104);
+            this.panel3.Size = new System.Drawing.Size(1528, 104);
             this.panel3.TabIndex = 2;
             // 
-            // btnNewPacket
+            // btnPrepareAgain
             // 
-            this.btnNewPacket.BackColor = System.Drawing.Color.Transparent;
-            this.btnNewPacket.FlatAppearance.BorderSize = 0;
-            this.btnNewPacket.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNewPacket.ImageIndex = 7;
-            this.btnNewPacket.ImageList = this.imageListPacketIcon;
-            this.btnNewPacket.Location = new System.Drawing.Point(11, 15);
-            this.btnNewPacket.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnNewPacket.Name = "btnNewPacket";
-            this.btnNewPacket.Size = new System.Drawing.Size(91, 80);
-            this.btnNewPacket.TabIndex = 9;
-            this.btnNewPacket.Tag = "";
-            this.btnNewPacket.UseVisualStyleBackColor = false;
-            this.btnNewPacket.Click += new System.EventHandler(this.btnNewPacket_Click);
+            this.btnPrepareAgain.BackColor = System.Drawing.Color.Transparent;
+            this.btnPrepareAgain.FlatAppearance.BorderSize = 0;
+            this.btnPrepareAgain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPrepareAgain.ImageIndex = 9;
+            this.btnPrepareAgain.ImageList = this.imageListPacketIcon;
+            this.btnPrepareAgain.Location = new System.Drawing.Point(346, 15);
+            this.btnPrepareAgain.Margin = new System.Windows.Forms.Padding(4);
+            this.btnPrepareAgain.Name = "btnPrepareAgain";
+            this.btnPrepareAgain.Size = new System.Drawing.Size(91, 80);
+            this.btnPrepareAgain.TabIndex = 10;
+            this.btnPrepareAgain.Tag = "";
+            this.btnPrepareAgain.UseVisualStyleBackColor = false;
+            this.btnPrepareAgain.Click += new System.EventHandler(this.btnPrepareAgain_Click);
             // 
             // imageListPacketIcon
             // 
@@ -155,6 +156,22 @@
             this.imageListPacketIcon.Images.SetKeyName(8, "rejectButton.png");
             this.imageListPacketIcon.Images.SetKeyName(9, "try_again.png");
             // 
+            // btnNewPacket
+            // 
+            this.btnNewPacket.BackColor = System.Drawing.Color.Transparent;
+            this.btnNewPacket.FlatAppearance.BorderSize = 0;
+            this.btnNewPacket.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNewPacket.ImageIndex = 7;
+            this.btnNewPacket.ImageList = this.imageListPacketIcon;
+            this.btnNewPacket.Location = new System.Drawing.Point(11, 15);
+            this.btnNewPacket.Margin = new System.Windows.Forms.Padding(4);
+            this.btnNewPacket.Name = "btnNewPacket";
+            this.btnNewPacket.Size = new System.Drawing.Size(91, 80);
+            this.btnNewPacket.TabIndex = 9;
+            this.btnNewPacket.Tag = "";
+            this.btnNewPacket.UseVisualStyleBackColor = false;
+            this.btnNewPacket.Click += new System.EventHandler(this.btnNewPacket_Click);
+            // 
             // btnRefresh
             // 
             this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -162,8 +179,8 @@
             this.btnRefresh.FlatAppearance.BorderSize = 0;
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
-            this.btnRefresh.Location = new System.Drawing.Point(1436, 5);
-            this.btnRefresh.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRefresh.Location = new System.Drawing.Point(1420, 5);
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(4);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(91, 80);
             this.btnRefresh.TabIndex = 8;
@@ -179,7 +196,7 @@
             this.btnAkibetSorgulama.ImageIndex = 6;
             this.btnAkibetSorgulama.ImageList = this.imageListPacketIcon;
             this.btnAkibetSorgulama.Location = new System.Drawing.Point(777, 16);
-            this.btnAkibetSorgulama.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAkibetSorgulama.Margin = new System.Windows.Forms.Padding(4);
             this.btnAkibetSorgulama.Name = "btnAkibetSorgulama";
             this.btnAkibetSorgulama.Size = new System.Drawing.Size(91, 80);
             this.btnAkibetSorgulama.TabIndex = 7;
@@ -195,7 +212,7 @@
             this.btnArchive.ImageIndex = 5;
             this.btnArchive.ImageList = this.imageListPacketIcon;
             this.btnArchive.Location = new System.Drawing.Point(697, 16);
-            this.btnArchive.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnArchive.Margin = new System.Windows.Forms.Padding(4);
             this.btnArchive.Name = "btnArchive";
             this.btnArchive.Size = new System.Drawing.Size(91, 80);
             this.btnArchive.TabIndex = 6;
@@ -211,7 +228,7 @@
             this.btnSendToBank.ImageIndex = 4;
             this.btnSendToBank.ImageList = this.imageListPacketIcon;
             this.btnSendToBank.Location = new System.Drawing.Point(607, 16);
-            this.btnSendToBank.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSendToBank.Margin = new System.Windows.Forms.Padding(4);
             this.btnSendToBank.Name = "btnSendToBank";
             this.btnSendToBank.Size = new System.Drawing.Size(91, 80);
             this.btnSendToBank.TabIndex = 5;
@@ -227,7 +244,7 @@
             this.btnReject.ImageIndex = 8;
             this.btnReject.ImageList = this.imageListPacketIcon;
             this.btnReject.Location = new System.Drawing.Point(520, 16);
-            this.btnReject.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnReject.Margin = new System.Windows.Forms.Padding(4);
             this.btnReject.Name = "btnReject";
             this.btnReject.Size = new System.Drawing.Size(91, 80);
             this.btnReject.TabIndex = 4;
@@ -243,7 +260,7 @@
             this.btnApproved.ImageIndex = 2;
             this.btnApproved.ImageList = this.imageListPacketIcon;
             this.btnApproved.Location = new System.Drawing.Point(435, 16);
-            this.btnApproved.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnApproved.Margin = new System.Windows.Forms.Padding(4);
             this.btnApproved.Name = "btnApproved";
             this.btnApproved.Size = new System.Drawing.Size(91, 80);
             this.btnApproved.TabIndex = 3;
@@ -259,7 +276,7 @@
             this.btnSendToApprove.ImageIndex = 3;
             this.btnSendToApprove.ImageList = this.imageListPacketIcon;
             this.btnSendToApprove.Location = new System.Drawing.Point(265, 16);
-            this.btnSendToApprove.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSendToApprove.Margin = new System.Windows.Forms.Padding(4);
             this.btnSendToApprove.Name = "btnSendToApprove";
             this.btnSendToApprove.Size = new System.Drawing.Size(91, 80);
             this.btnSendToApprove.TabIndex = 2;
@@ -275,7 +292,7 @@
             this.btnRewiew.ImageIndex = 1;
             this.btnRewiew.ImageList = this.imageListPacketIcon;
             this.btnRewiew.Location = new System.Drawing.Point(183, 15);
-            this.btnRewiew.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRewiew.Margin = new System.Windows.Forms.Padding(4);
             this.btnRewiew.Name = "btnRewiew";
             this.btnRewiew.Size = new System.Drawing.Size(91, 80);
             this.btnRewiew.TabIndex = 1;
@@ -291,7 +308,7 @@
             this.btnEdit.ImageIndex = 0;
             this.btnEdit.ImageList = this.imageListPacketIcon;
             this.btnEdit.Location = new System.Drawing.Point(96, 15);
-            this.btnEdit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnEdit.Margin = new System.Windows.Forms.Padding(4);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(91, 80);
             this.btnEdit.TabIndex = 0;
@@ -310,12 +327,12 @@
             this.dataGridViewPacket.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedHorizontal;
             this.dataGridViewPacket.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewPacket.Location = new System.Drawing.Point(4, 52);
-            this.dataGridViewPacket.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridViewPacket.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridViewPacket.Name = "dataGridViewPacket";
             this.dataGridViewPacket.ReadOnly = true;
             this.dataGridViewPacket.RowHeadersWidth = 51;
             this.dataGridViewPacket.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewPacket.Size = new System.Drawing.Size(1545, 577);
+            this.dataGridViewPacket.Size = new System.Drawing.Size(1528, 577);
             this.dataGridViewPacket.TabIndex = 1;
             this.dataGridViewPacket.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewPacket_CellMouseDown);
             this.dataGridViewPacket.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.dataGridViewPacket_RowStateChanged);
@@ -326,29 +343,30 @@
             this.contextMenuStripAnasayfa.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.akibetiİnceleToolStripMenuItem,
             this.paketSeruveniToolStripMenuItem,
-            this.silToolStripMenuItem});
+            this.silToolStripMenuItem,
+            this.ToolStripMenuItemMarkAndDelete});
             this.contextMenuStripAnasayfa.Name = "contextMenuStripAnasayfa";
-            this.contextMenuStripAnasayfa.Size = new System.Drawing.Size(169, 76);
+            this.contextMenuStripAnasayfa.Size = new System.Drawing.Size(336, 128);
             this.contextMenuStripAnasayfa.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripAnasayfa_Opening);
             // 
             // akibetiİnceleToolStripMenuItem
             // 
             this.akibetiİnceleToolStripMenuItem.Name = "akibetiİnceleToolStripMenuItem";
-            this.akibetiİnceleToolStripMenuItem.Size = new System.Drawing.Size(168, 24);
+            this.akibetiİnceleToolStripMenuItem.Size = new System.Drawing.Size(335, 24);
             this.akibetiİnceleToolStripMenuItem.Text = "Akibeti İncele";
             this.akibetiİnceleToolStripMenuItem.Click += new System.EventHandler(this.akibetiİnceleToolStripMenuItem_Click);
             // 
             // paketSeruveniToolStripMenuItem
             // 
             this.paketSeruveniToolStripMenuItem.Name = "paketSeruveniToolStripMenuItem";
-            this.paketSeruveniToolStripMenuItem.Size = new System.Drawing.Size(168, 24);
+            this.paketSeruveniToolStripMenuItem.Size = new System.Drawing.Size(335, 24);
             this.paketSeruveniToolStripMenuItem.Text = "Kayıt Bilgisi";
             this.paketSeruveniToolStripMenuItem.Click += new System.EventHandler(this.paketSeruveniToolStripMenuItem_Click);
             // 
             // silToolStripMenuItem
             // 
             this.silToolStripMenuItem.Name = "silToolStripMenuItem";
-            this.silToolStripMenuItem.Size = new System.Drawing.Size(168, 24);
+            this.silToolStripMenuItem.Size = new System.Drawing.Size(335, 24);
             this.silToolStripMenuItem.Text = "Sil";
             this.silToolStripMenuItem.Click += new System.EventHandler(this.silToolStripMenuItem_Click);
             // 
@@ -514,21 +532,12 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 37);
             // 
-            // btnPrepareAgain
+            // ToolStripMenuItemMarkAndDelete
             // 
-            this.btnPrepareAgain.BackColor = System.Drawing.Color.Transparent;
-            this.btnPrepareAgain.FlatAppearance.BorderSize = 0;
-            this.btnPrepareAgain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPrepareAgain.ImageIndex = 9;
-            this.btnPrepareAgain.ImageList = this.imageListPacketIcon;
-            this.btnPrepareAgain.Location = new System.Drawing.Point(346, 15);
-            this.btnPrepareAgain.Margin = new System.Windows.Forms.Padding(4);
-            this.btnPrepareAgain.Name = "btnPrepareAgain";
-            this.btnPrepareAgain.Size = new System.Drawing.Size(91, 80);
-            this.btnPrepareAgain.TabIndex = 10;
-            this.btnPrepareAgain.Tag = "";
-            this.btnPrepareAgain.UseVisualStyleBackColor = false;
-            this.btnPrepareAgain.Click += new System.EventHandler(this.btnPrepareAgain_Click);
+            this.ToolStripMenuItemMarkAndDelete.Name = "ToolStripMenuItemMarkAndDelete";
+            this.ToolStripMenuItemMarkAndDelete.Size = new System.Drawing.Size(335, 24);
+            this.ToolStripMenuItemMarkAndDelete.Text = "Akibeti Alınamadı Olarak İşaretle ve Sil";
+            this.ToolStripMenuItemMarkAndDelete.Click += new System.EventHandler(this.ToolStripMenuItemMarkAndDelete_Click);
             // 
             // Anasayfa
             // 
@@ -540,7 +549,7 @@
             this.Controls.Add(this.toolStripAnasayfa);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Anasayfa";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ANASAYFA";
@@ -598,5 +607,6 @@
         private System.Windows.Forms.ToolStripButton btnArchives;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Button btnPrepareAgain;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemMarkAndDelete;
     }
 }

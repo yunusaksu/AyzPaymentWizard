@@ -12,6 +12,9 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Net.Mail;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace AyzPaymentWizard
@@ -49,7 +52,6 @@ namespace AyzPaymentWizard
         {
             OnlineUsertoolStripLabel.Text = Helper.USERNAME;
             dataGridViewPacket.MultiSelect = false;
-
             #region ToolTips            
             ToolTip newPacketBtnToolTip = new ToolTip();
             newPacketBtnToolTip.SetToolTip(btnNewPacket, "Yeni Paket");
@@ -73,7 +75,6 @@ namespace AyzPaymentWizard
             AkibetToolTip.SetToolTip(btnAkibetSorgulama, "Akibet Sorgula");
             ToolTip RefreshToolTip = new ToolTip();
             #endregion
-
             RefreshToolTip.SetToolTip(btnRefresh, "Yenile(F5)");
             FillPacketList();
             #region Kolon Görünüm,Header Text ve Display Index Ayarları
@@ -112,12 +113,11 @@ namespace AyzPaymentWizard
             dataGridViewPacket.Columns["ModifiedByName"].HeaderText = "Güncelleyen";
             dataGridViewPacket.Columns["CreatedByName"].HeaderText = "Oluşturan";
             #endregion
-
             #region DGV'ın Font Ayarı
             dataGridViewPacket.DefaultCellStyle.Font = new Font("Time News Roman", 12);
             dataGridViewPacket.ColumnHeadersDefaultCellStyle.Font = new Font("Time News Roman", 10);
             #endregion
-
+            #region Anasaya Alt Bar Ikonlu Button'ların yetki kontrolü
             if (!Helper.IsAdmin())
                 toolStripDropDownSettingButton.Enabled = false;
             if (!Helper.AuthorityControl("AKIBET_AL"))
@@ -138,6 +138,9 @@ namespace AyzPaymentWizard
                 btnUserAdd.Enabled = false;
             if (!Helper.AuthorityControl("ADD_GROUP"))
                 btnGroupAdd.Enabled = false;
+            if (!Helper.AuthorityControl("TRYAGAIN_PACKAGE"))
+                btnPrepareAgain.Enabled = false;
+            #endregion
         }
         public void FillPacketList()
         {
@@ -1076,6 +1079,7 @@ namespace AyzPaymentWizard
             int packetStatus = (int)dataGridViewPacket.SelectedRows[0].Cells["STATUS"].Value;
             int indexAkibetIncele = contextMenuStripAnasayfa.Items.IndexOf(akibetiİnceleToolStripMenuItem);
             int indexSil = contextMenuStripAnasayfa.Items.IndexOf(silToolStripMenuItem);
+            int indexAkibetiAlinamadiIseSil = contextMenuStripAnasayfa.Items.IndexOf(ToolStripMenuItemMarkAndDelete);
 
 
             if (packetStatus != (int)Helper.PacketStatus.AnswerReceivedBank)
@@ -1087,6 +1091,12 @@ namespace AyzPaymentWizard
                 contextMenuStripAnasayfa.Items[indexSil].Enabled = false;
             else
                 contextMenuStripAnasayfa.Items[indexSil].Enabled = true;
+
+            if (packetStatus == (int)Helper.PacketStatus.SentToBank)
+                contextMenuStripAnasayfa.Items[indexAkibetiAlinamadiIseSil].Enabled = true;
+            else
+                contextMenuStripAnasayfa.Items[indexAkibetiAlinamadiIseSil].Enabled = false;
+
         }
 
         private void dataGridViewPacket_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
@@ -1161,24 +1171,22 @@ namespace AyzPaymentWizard
             form.ShowDialog();
         }
 
+        // Sadece onaya yollanan paketler tekrar paket hazırlamaya gönderilebilir olması sağlanacak. Tekrar Paket Hazırlamaya gönderdiğinde Paketin durumunu Yeni Paket olarak update edicem.
         private void btnPrepareAgain_Click(object sender, EventArgs e)
         {
-            int packetId = 0, status = 0, archived = -1;
+            int packetId = 0, status = 0;
             for (int i = 0; i < dataGridViewPacket.SelectedRows.Count; i++)
             {
                 packetId = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
                 status = (int)dataGridViewPacket.SelectedRows[i].Cells["STATUS"].Value;
-                archived = (int)dataGridViewPacket.SelectedRows[i].Cells["ARCHIVED"].Value;
             }
             try
             {
-                if ((Helper.AuthorityControl("TRYAGAIN_PACKAGE") || Helper.IsAdmin()) && packetId != 0 && status ==  (int)Helper.PacketStatus.SendToApproval)
+                if ((Helper.AuthorityControl("TRYAGAIN_PACKAGE") || Helper.IsAdmin()) && packetId != 0 && status == (int)Helper.PacketStatus.SendToApproval)
                 {
-                    string approvalExp = InputDialog.Show("Tekrar Paket Hazırlamaya Gönderme Sebebinizi Açıklayınız :").Replace("'", "''");
-                    // Sadece onaya yollanan paketler tekrar paket hazırlamaya gönderilebilir olması sağlanacak.
-                    // Tekrar Paket Hazırlamaya gönderdiğinde Paketin durumunu Yeni Paket olarak update edicem.
+                    string approvalExp = InputDialog.Show("Tekrar Paket Hazırlamaya Gönderme Sebebinizi Açıklayınız :").Replace("'", "''");                    
                     using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-                    {                        
+                    {
                         CommandText = "UPDATE AYZ_PW_PACKET" +
                                       "\nSET STATUS = " + (int)Helper.PacketStatus.NewPacket + ", " +
                                       "\nAPPROVED_BY = " + Helper.USERID + "," +
@@ -1190,9 +1198,11 @@ namespace AyzPaymentWizard
                         komut.CommandText = CommandText;
                         komut.Connection = conn;
                         conn.Open();
-                        if(komut.ExecuteNonQuery() == 1)
+                        if (komut.ExecuteNonQuery() == 1)
                         {
-                            // Tekrar Paket Hazırlanmaya yollandığında paketi hazırlayan kişiye şu tutarlı paket fatih.koc tarafından şu not ile tekrar düzeltilip yollanması talep edildi mailini atıcam.
+                            #region Paketi Hazırlayana; Paketi tekrar hazırla maili yollayan method
+                            SendMail_(packetId);
+                            #endregion                            
                         }
                         conn.Close();
                     }
@@ -1201,10 +1211,154 @@ namespace AyzPaymentWizard
                 {
 
                 }
+
+                #region Anasayfayı yenilemek için
+                Anasayfa form = (Anasayfa)Application.OpenForms["Anasayfa"];
+                form.FillPacketList();
+                #endregion
             }
             catch (Exception)
             {
 
+            }
+        }
+
+        private void SendMail_(int packetId)
+        {
+            string url = "", serverAddress = "", smtpServerName = "", smtpPassword = "", senderMailAddress = "", maillingAddresses = "";
+            int port = -1;
+            bool enableSSL = false;
+            string NameOfPreparedPackage = ""; decimal TotalPaid = 0; string Not = "";
+
+            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                CommandText = "SELECT P.CREATED_NAME,P.TOTAL_PAID,P.APPROVALNOTE,U.EMAIL FROM AYZ_PW_PACKET AS P " +
+                              "\nINNER JOIN AYZ_PW_USER AS U ON P.CREATED_BY = U.ID AND USERTYPE = 0 WHERE P.ID = " + packetId + "";
+                komut.CommandText = CommandText;
+                komut.Connection = conn;
+                conn.Open();
+                dr = komut.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        NameOfPreparedPackage = dr["CREATED_NAME"].ToString();
+                        TotalPaid = Convert.ToDecimal(dr["TOTAL_PAID"]);
+                        Not = dr["APPROVALNOTE"].ToString();
+                        maillingAddresses = dr["EMAIL"].ToString();
+                    }
+                }
+                conn.Close();
+            }
+
+            using (SqlConnection conn_ = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                CommandText = "SELECT * FROM AYZ_PW_SMTP_SETTING";
+                komut.CommandText = CommandText;
+                komut.Connection = conn_;
+                conn_.Open();
+                dr = komut.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        url = dr["APPROVE_URL"].ToString();
+                        port = Convert.ToInt32(dr["SMTP_PORT_NO"].ToString());
+                        serverAddress = dr["SMTP_SERVERNAME"].ToString();
+                        smtpServerName = dr["SMTP_USERNAME"].ToString();
+                        smtpPassword = EncryptionAlgorithm.Decrytion(dr["SMTP_USERPASSWORD"].ToString());
+                        senderMailAddress = dr["SENDER_MAILADDRESS"].ToString();
+                        enableSSL = Convert.ToBoolean(dr["SMTP_SSL_CONN"].ToString());
+                    }
+                }
+            }
+
+            using (SmtpClient smtpSend = new SmtpClient())
+            {
+                smtpSend.Host = serverAddress;
+                smtpSend.Port = port;
+                smtpSend.Credentials = new System.Net.NetworkCredential(senderMailAddress, smtpPassword);
+                smtpSend.EnableSsl = enableSSL;
+
+                MailMessage emailMessage = new System.Net.Mail.MailMessage();
+                emailMessage.To.Add(maillingAddresses);
+                emailMessage.From = new MailAddress(senderMailAddress, smtpServerName);
+                emailMessage.Subject = "Ödeme Paketini Tekrar Düzenleme";
+                emailMessage.IsBodyHtml = true;
+                string htmlBody;
+                string paid = String.Format("{0:C}", TotalPaid);
+                htmlBody = "Sayın " + NameOfPreparedPackage + ", <br /><br />";
+                htmlBody += "" + Helper.USERNAME + ", " + paid + " tutarlı paketi şu mesaj ile <b>'" + Not + "'</b> ";
+                htmlBody += "tekrar hazırlamanızı talep etti.<br /><br />";
+                htmlBody += "Teşekkürler.";
+                emailMessage.Body = htmlBody;
+
+                if (!Regex.IsMatch(emailMessage.Body, @"^([0-9a-z!@#\$\%\^&\*\(\)\-=_\+])", RegexOptions.IgnoreCase) ||
+                        !Regex.IsMatch(emailMessage.Subject, @"^([0-9a-z!@#\$\%\^&\*\(\)\-=_\+])", RegexOptions.IgnoreCase))
+                {
+                    emailMessage.BodyEncoding = Encoding.Unicode;
+                }
+                smtpSend.Send(emailMessage);
+            }
+        }
+
+        private void ToolStripMenuItemMarkAndDelete_Click(object sender, EventArgs e)
+        {            
+            int packetStatus = (int)dataGridViewPacket.SelectedRows[0].Cells["STATUS"].Value;
+            if (packetStatus == (int)Helper.PacketStatus.SentToBank)
+            {
+                int id = 0;
+                int selectedRowCount = dataGridViewPacket.Rows.GetRowCount(DataGridViewElementStates.Selected);
+                if (selectedRowCount > 0)
+                {
+                    for (int i = 0; i < selectedRowCount; i++)
+                    {
+                        id = (int)dataGridViewPacket.SelectedRows[i].Cells["ID"].Value;
+                    }
+
+                    if (MessageBox.Show("Bu paketin banka tarafından akibeti yollanmadığı için silinecektir.\nSilmek istediğinize emin misiniz?", "Mesaj", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                            {
+                                string sql = "DELETE FROM AYZ_PW_PACKET WHERE ID=" + id + "";
+                                komut = new SqlCommand(sql, conn);
+                                conn.Open();
+                                komut.ExecuteNonQuery();
+                                conn.Close();
+                                string sql2 = "DELETE FROM AYZ_PW_PACKET_DETAIL WHERE PACKETID=" + id + "";
+                                komut = new SqlCommand(sql2, conn);
+                                conn.Open();
+                                komut.ExecuteNonQuery();
+                                conn.Close();
+                                string sql5 = "DELETE FROM AYZ_PW_SUMMARY WHERE PACKETID=" + id + "";
+                                komut = new SqlCommand(sql5, conn);
+                                conn.Open();
+                                komut.ExecuteNonQuery();
+                                conn.Close();
+                                int firmNr = (int)dataGridViewPacket.SelectedRows[0].Cells["FIRMNR"].Value;
+                                string sql3 = "DELETE FROM AYZ_PW_FILTER_VALUES WHERE PACKETID =" + id + " AND FIRMNR = '" + firmNr + "'";
+                                komut = new SqlCommand(sql3, conn);
+                                conn.Open();
+                                komut.ExecuteNonQuery();
+                                conn.Close();
+                                string sql4 = "DELETE FROM AYZ_PW_PACKET_HISTORY WHERE PACKETID =" + id + " AND FIRMNR = '" + firmNr + "'";
+                                komut = new SqlCommand(sql4, conn);
+                                conn.Open();
+                                komut.ExecuteNonQuery();
+                                conn.Close();
+                                MessageBox.Show("Silindi!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                dataGridViewPacket.ClearSelection();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Silme işlemi sırasında bir hata oluştu.\n" + ex.Message, "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    FillPacketList();
+                }
             }
         }
     }

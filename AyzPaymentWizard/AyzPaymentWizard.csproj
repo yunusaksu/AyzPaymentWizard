@@ -328,6 +328,8 @@
     <Content Include="Images\Search.png" />
     <Content Include="Images\show_icon.png" />
     <Content Include="logo.ico" />
+    <Content Include="Resources\Collapse Arrow_20px.png" />
+    <Content Include="Resources\Expand Arrow_20px.png" />
     <None Include="Resources\Man.ico" />
     <None Include="Resources\newRecord.png" />
     <None Include="Resources\warning_board.png" />
