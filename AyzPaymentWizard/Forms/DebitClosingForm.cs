@@ -372,8 +372,7 @@ namespace AyzPaymentWizard.Forms
                     if (dr.HasRows)
                     {
                         using (SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString))
-                        {
-                            // Güncellenecek Alanlar: STATUS                        
+                        {                                               
                             CommandText = "UPDATE AYZ_PW_PACKET" +
                                           "\nSET STATUS = " + (int)Helper.PacketStatus.AnswerReceivedBank + "" +
                                           "\nWHERE ID = " + PacketID + "";

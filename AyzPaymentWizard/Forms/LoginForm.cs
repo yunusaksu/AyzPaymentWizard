@@ -56,9 +56,9 @@ namespace AyzPaymentWizard
             }
             else
             {
-                if (txtLoginPassword.Text == PasswordRead() && txtLoginName.Text == UserRead())
+                if (txtLoginPassword.Text == PasswordRead() && txtLoginName.Text == UserRead()) // Burada Admin mi kontrolü yapılıyor.
                 {
-                    Helper.USERID = 0; // Admin için USERID SIFIRDIR(0).
+                    Helper.USERID = 0; // Admin için USERID, SIFIRDIR(0).
                     Helper.USERNAME = userName;
                     Helper.FIRMNR = Convert.ToInt32(cmbFirms.SelectedValue);
                     GetLogoUsernameAndUserPassword();
@@ -78,6 +78,7 @@ namespace AyzPaymentWizard
                     Helper.USERID = id;
                     Helper.USERNAME = userName;
                     Helper.FIRMNR = firmNr;
+                    GetLogoUsernameAndUserPassword();
                     Anasayfa form = new Anasayfa();
                     form.Show();
                     this.Hide();
