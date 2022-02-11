@@ -101,7 +101,7 @@ namespace AyzPaymentWizard.Model
         [FieldFixedLength(60)]
         [FieldAlign(AlignMode.Left, ' ')]
         public string DESCRIPTION;
-        
+
         [FieldFixedLength(20)]
         [FieldAlign(AlignMode.Left, ' ')]
         public string COMPANYREF;
@@ -128,6 +128,7 @@ namespace AyzPaymentWizard.Model
     public class SUB_PAYMENTOUTCOME
     {
         public string CLCODE { get; set; }
+        public string CLIENTDEF { get; set; }
         public int CLCARDID { get; set; }    // LG_XXX_CLCARD'ın LogicalReferansı
         public string TYPE { get; set; }
         public int BANKCODE { get; set; }

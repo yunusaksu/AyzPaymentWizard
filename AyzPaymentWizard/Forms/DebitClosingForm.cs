@@ -93,7 +93,7 @@ namespace AyzPaymentWizard.Forms
                 payment.TRANSACTION_DATE = DetailResult[i].TRANSACTION_DATE.ToString();
                 using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
-                    CommandText = "SELECT C.CODE,C.LOGICALREF FROM AYZ_PW_SUMMARY AS S " +
+                    CommandText = "SELECT C.CODE,C.LOGICALREF,C.DEFINITION_ FROM AYZ_PW_SUMMARY AS S " +
                                   "\nLEFT JOIN LG_" + Helper.FIRMANO + "_CLCARD AS C ON C.LOGICALREF = S.CLIENTREF " +
                                   "\nWHERE S.RETURNKEY = '" + payment.COMPANYREF + "'";
                     komut.CommandText = CommandText;
@@ -104,6 +104,7 @@ namespace AyzPaymentWizard.Forms
                     {
                         payment.CLCODE = dr["CODE"].ToString();
                         payment.CLCARDID = Convert.ToInt32(dr["LOGICALREF"].ToString());
+                        payment.CLIENTDEF = dr["DEFINITION_"].ToString();
                     }
                 }
                 liste.Add(payment);
@@ -191,7 +192,7 @@ namespace AyzPaymentWizard.Forms
                 {
                     int CurType = GetCurType(item.CURRENCYCODE);
                     decimal CurRate = GetCurRate(item.CURRENCYCODE);
-                    decimal ReportCurRate = GetReportCurRate();                    
+                    decimal ReportCurRate = GetReportCurRate();
                     string day = item.TRANSACTION_DATE.ToString().Substring(0, 2);
                     string month = item.TRANSACTION_DATE.ToString().Substring(2, 2);
                     string year = item.TRANSACTION_DATE.ToString().Substring(4, 4);
@@ -207,8 +208,7 @@ namespace AyzPaymentWizard.Forms
                     bankvo.DataFields.FieldByName("CREATED_BY").Value = 1;
                     bankvo.DataFields.FieldByName("CURRSEL_TOTALS").Value = 1;
                     bankvo.DataFields.FieldByName("DATA_REFERENCE").Value = "~";
-                    bankvo.DataFields.FieldByName("NOTES1").Value = "" + BankName + " GÖNDERİLEN HAVALELER";
-
+                    bankvo.DataFields.FieldByName("NOTES1").Value = "" + item.CLIENTDEF + "";
                     UnityObjects.Lines transactions_lines = bankvo.DataFields.FieldByName("TRANSACTIONS").Lines;
                     transactions_lines.AppendLine();
                     transactions_lines[transactions_lines.Count - 1].FieldByName("INTERNAL_REFERENCE").Value = "~";
@@ -297,7 +297,7 @@ namespace AyzPaymentWizard.Forms
                         #endregion
                         if (debitList.Count == 1)
                         {
-                            progressBar.Value += progressBar.Step;                            
+                            progressBar.Value += progressBar.Step;
                             label1.Text = "Kapatılan Borçlar = " + progressBar.Value.ToString() + "/" + liste.Count + "";
                             decimal NecessaryAmountPaid = Convert.ToDecimal(debitList[0].Paid);
                             if (totalAmount >= NecessaryAmountPaid)
@@ -315,8 +315,8 @@ namespace AyzPaymentWizard.Forms
                             }
                         }
                         else if (debitList.Count > 0)
-                        {                            
-                            progressBar.Value += progressBar.Step;                            
+                        {
+                            progressBar.Value += progressBar.Step;
                             label1.Text = "Kapatılan Borçlar = " + progressBar.Value.ToString() + "/" + liste.Count + "";
                             for (int i = 0; i < debitList.Count; i++)
                             {
@@ -343,7 +343,7 @@ namespace AyzPaymentWizard.Forms
                         {
                             label1.Text = "Borç Kapama İşlemi Başarı ile Tamamlandı!";
                             btnDebitClosing.Enabled = false;
-                        }                            
+                        }
                     }
                     else
                     {
@@ -372,7 +372,7 @@ namespace AyzPaymentWizard.Forms
                     if (dr.HasRows)
                     {
                         using (SqlConnection conn2 = new SqlConnection(ConnectionHelper.ConnectionString))
-                        {                                               
+                        {
                             CommandText = "UPDATE AYZ_PW_PACKET" +
                                           "\nSET STATUS = " + (int)Helper.PacketStatus.AnswerReceivedBank + "" +
                                           "\nWHERE ID = " + PacketID + "";
@@ -397,7 +397,7 @@ namespace AyzPaymentWizard.Forms
             }
             else
             {
-                MessageBox.Show("Hatalı Logo Giriş Bilgileri Tespit Edildi! \n" + UnityApp.GetLastError().ToString() + "/" + UnityApp.GetLastErrorString(), "Logo Bilgileri Hatalı!", MessageBoxButtons.OK, MessageBoxIcon.Warning);                
+                MessageBox.Show("Hatalı Logo Giriş Bilgileri Tespit Edildi! \n" + UnityApp.GetLastError().ToString() + "/" + UnityApp.GetLastErrorString(), "Logo Bilgileri Hatalı!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

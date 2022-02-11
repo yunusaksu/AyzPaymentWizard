@@ -914,6 +914,48 @@ namespace AyzPaymentWizard
                                         }
                                         if (check == true)
                                         {
+                                            #region Ödeme Emri Başarısız Olanlar Packet'den çıkartılacak. Ancak akibet incelede bu history olarak tutulacak.
+                                            List<int> clientRefs = new List<int>();
+                                            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                                            {
+                                                CommandText = "SELECT * FROM AYZ_PW_SUMMARY WHERE PACKETID = '" + packetId + "' AND PAYMENT_STATUS IS NULL";
+                                                komut.CommandText = CommandText;
+                                                komut.Connection = conn;
+                                                conn.Open();
+                                                dr = komut.ExecuteReader();
+                                                while (dr.Read())
+                                                {
+                                                    clientRefs.Add(Convert.ToInt32(dr["CLIENTREF"]));
+                                                }
+                                                conn.Close();
+                                            }
+                                            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                                            {
+                                                for (int i = 0; i < clientRefs.Count; i++)
+                                                {
+                                                    CommandText = "DELETE FROM AYZ_PW_PACKET_DETAIL " +
+                                                                  "\nWHERE PACKETID = '" + packetId + "' AND CLIENTREF = '" + clientRefs[i] + "'";
+                                                    komut.CommandText = CommandText;
+                                                    komut.Connection = conn;
+                                                    conn.Open();
+                                                    int resultExecutingQuery = komut.ExecuteNonQuery();
+                                                    conn.Close();
+                                                }
+                                            }
+                                            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                                            {
+                                                CommandText = "UPDATE AYZ_PW_PACKET" +
+                                                              "\nSET " +
+                                                              "\nTOTAL_REQUIRED = (SELECT SUM(AMOUNT_REQUIRED) FROM AYZ_PW_PACKET_DETAIL)" +
+                                                              "\n,TOTAL_PAID = (SELECT SUM(AMOUNT_PAID) FROM AYZ_PW_PACKET_DETAIL)" +
+                                                              "\nWHERE ID = '" + packetId + "'";
+                                                komut.CommandText = CommandText;
+                                                komut.Connection = conn;
+                                                conn.Open();
+                                                komut.ExecuteNonQuery();
+                                                conn.Close();
+                                            }
+                                            #endregion
                                             DebitClosingForm form = new DebitClosingForm(packetId, item, DetailResult, FooterResult);
                                             form.ShowDialog();
                                         }
@@ -1184,7 +1226,7 @@ namespace AyzPaymentWizard
             {
                 if ((Helper.AuthorityControl("TRYAGAIN_PACKAGE") || Helper.IsAdmin()) && packetId != 0 && status == (int)Helper.PacketStatus.SendToApproval)
                 {
-                    string approvalExp = InputDialog.Show("Tekrar Paket Hazırlamaya Gönderme Sebebinizi Açıklayınız :").Replace("'", "''");                    
+                    string approvalExp = InputDialog.Show("Tekrar Paket Hazırlamaya Gönderme Sebebinizi Açıklayınız :").Replace("'", "''");
                     using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
                     {
                         CommandText = "UPDATE AYZ_PW_PACKET" +
@@ -1303,7 +1345,7 @@ namespace AyzPaymentWizard
         }
 
         private void ToolStripMenuItemMarkAndDelete_Click(object sender, EventArgs e)
-        {            
+        {
             int packetStatus = (int)dataGridViewPacket.SelectedRows[0].Cells["STATUS"].Value;
             if (packetStatus == (int)Helper.PacketStatus.SentToBank)
             {
