@@ -1,4 +1,5 @@
 ﻿using FileHelpers;
+using System;
 using System.IO;
 namespace AyzPaymentWizard.Model
 {
@@ -123,6 +124,16 @@ namespace AyzPaymentWizard.Model
 
         [FieldFixedLength(26)]
         public string IBAN;
+    }
+
+    public  class PAYMENT_REVIEW
+    {
+        public DateTime PACKETCREATEDATE { get; set; }
+        public string CLCODE { get; set; }
+        public string CLIENT_DEF{ get; set; }
+        public string AMOUNT_PAID { get; set; }
+        public string CURRCODE { get; set; }
+        public string PAYMENT_STATUS { get; set; } // Başarılı veya Başarısız        
     }
 
     public class SUB_PAYMENTOUTCOME

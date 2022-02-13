@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -11,6 +12,7 @@ namespace AyzPaymentWizard.Forms
     public partial class DebitClosingForm : Form
     {
         List<SUB_PAYMENTOUTCOME> liste = new List<SUB_PAYMENTOUTCOME>();
+        List<PAYMENT_REVIEW> liste2 = new List<PAYMENT_REVIEW>();
         SqlCommand komut = new SqlCommand();
         SqlDataReader dr;
         string CommandText = "";
@@ -47,29 +49,48 @@ namespace AyzPaymentWizard.Forms
             if (Review == false)
             {
                 FillDGVDebitClosing();
+                #region DGVDebitClosing Gridinin Kolon Görünüm,Header Text ve Display Index Ayarları
+                DGVDebitClosing.Columns["CLCARDID"].Visible = false;
+                DGVDebitClosing.Columns["TYPE"].Visible = false;
+                DGVDebitClosing.Columns["COMPANYREF"].Visible = false;
+                DGVDebitClosing.Columns["PAYMENTSTATUS"].Visible = false;
+                DGVDebitClosing.Columns["EFTQUERYNO"].Visible = false;
+                DGVDebitClosing.Columns["TRANSACTIONNO"].HeaderText = "İŞLEM NO";
+                DGVDebitClosing.Columns["DESCRIPTION"].HeaderText = "AÇIKLAMA";
+                DGVDebitClosing.Columns["BANKCODE"].HeaderText = "BANKA KODU";
+                DGVDebitClosing.Columns["TRANSACTION_DATE"].HeaderText = "İŞLEM TARİHİ";
+                DGVDebitClosing.Columns["AMOUNT"].HeaderText = "İŞLEM TUTARI";
+                DGVDebitClosing.Columns["CURRENCYCODE"].HeaderText = "KUR";
+                DGVDebitClosing.Columns["BRANCHCODE"].HeaderText = "ŞUBE KODU";
+                DGVDebitClosing.Columns["CLCODE"].HeaderText = "CARİ HESAP KODU";
+                DGVDebitClosing.Columns["ACCOUNTNO"].HeaderText = "HESAP NO";
+                #endregion
             }
             else
             {
                 ReviewfillDGVDebitClosing();
                 btnDebitClosing.Enabled = false;
+
+                #region İnceleme Modu Grid Kolon Görünüm,Header Text Ayarları
+                this.DGVDebitClosing.DefaultCellStyle.Font = new Font("Times New Roman", 12);
+                this.DGVDebitClosing.ColumnHeadersDefaultCellStyle.Font = new Font("Times New Roman", 10);
+                DGVDebitClosing.Columns["PACKETCREATEDATE"].HeaderText = "PAKET TARİHİ";
+                DGVDebitClosing.Columns["PACKETCREATEDATE"].Width = 150;
+                DGVDebitClosing.Columns["CLCODE"].HeaderText = "CARİ KODU";
+                DGVDebitClosing.Columns["CLCODE"].Width = 150;
+                DGVDebitClosing.Columns["CLIENT_DEF"].HeaderText = "CARİ HESAP";
+                DGVDebitClosing.Columns["CLIENT_DEF"].Width = 400;
+                DGVDebitClosing.Columns["AMOUNT_PAID"].HeaderText = "TUTAR";
+                DGVDebitClosing.Columns["AMOUNT_PAID"].Width = 100;
+                DGVDebitClosing.Columns["CURRCODE"].HeaderText = "KUR";
+                DGVDebitClosing.Columns["CURRCODE"].Width = 100;
+                DGVDebitClosing.Columns["PAYMENT_STATUS"].HeaderText = "İŞLEM SONUCU";
+                DGVDebitClosing.Columns["PAYMENT_STATUS"].Width = 150;
+                #endregion
+
             }
 
-            #region DGVDebitClosing Gridinin Kolon Görünüm,Header Text ve Display Index Ayarları
-            DGVDebitClosing.Columns["CLCARDID"].Visible = false;
-            DGVDebitClosing.Columns["TYPE"].Visible = false;
-            DGVDebitClosing.Columns["COMPANYREF"].Visible = false;
-            DGVDebitClosing.Columns["PAYMENTSTATUS"].Visible = false;
-            DGVDebitClosing.Columns["EFTQUERYNO"].Visible = false;
-            DGVDebitClosing.Columns["TRANSACTIONNO"].HeaderText = "İŞLEM NO";
-            DGVDebitClosing.Columns["DESCRIPTION"].HeaderText = "AÇIKLAMA";
-            DGVDebitClosing.Columns["BANKCODE"].HeaderText = "BANKA KODU";
-            DGVDebitClosing.Columns["TRANSACTION_DATE"].HeaderText = "İŞLEM TARİHİ";
-            DGVDebitClosing.Columns["AMOUNT"].HeaderText = "İŞLEM TUTARI";
-            DGVDebitClosing.Columns["CURRENCYCODE"].HeaderText = "KUR";
-            DGVDebitClosing.Columns["BRANCHCODE"].HeaderText = "ŞUBE KODU";
-            DGVDebitClosing.Columns["CLCODE"].HeaderText = "CARİ HESAP KODU";
-            DGVDebitClosing.Columns["ACCOUNTNO"].HeaderText = "HESAP NO";
-            #endregion
+
 
         }
 
@@ -117,11 +138,15 @@ namespace AyzPaymentWizard.Forms
 
         private void ReviewfillDGVDebitClosing()
         {
+
+            #region ilk önce akibeti alınanları listele
+
             using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                CommandText = "SELECT D.*, S.CLIENTREF,CLIENT.CODE FROM AYZ_PW_SUMMARY AS S " +
-                              "\nLEFT JOIN AYZ_PW_DOWNLOADED_FILE_DETAIL AS D ON S.RETURNKEY = D.COMPANY_REF " +
-                              "\nLEFT JOIN LG_" + Helper.FIRMANO + "_CLCARD AS CLIENT ON CLIENT.LOGICALREF  = S.CLIENTREF " +
+            {                
+                CommandText = "SELECT DISTINCT PD.*,CL.CODE,P.CREATED_DATE FROM AYZ_PW_SUMMARY AS S " +
+                              "\nINNER JOIN AYZ_PW_PACKET_DETAIL AS PD ON S.PACKETID = PD.PACKETID " +
+                              "\nINNER JOIN AYZ_PW_PACKET AS P ON P.ID = PD.PACKETID " +
+                              "\nINNER JOIN LG_" + Helper.FIRMANO + "_CLCARD AS CL ON CL.LOGICALREF = PD.CLIENTREF " +
                               "\nWHERE S.PACKETID = " + PacketID + "";
                 komut.CommandText = CommandText;
                 komut.Connection = conn;
@@ -130,27 +155,45 @@ namespace AyzPaymentWizard.Forms
 
                 while (dr.Read())
                 {
-                    SUB_PAYMENTOUTCOME payment = new SUB_PAYMENTOUTCOME();
+                    PAYMENT_REVIEW payment = new PAYMENT_REVIEW();
+                    payment.PACKETCREATEDATE = Convert.ToDateTime(dr["CREATED_DATE"]);
                     payment.CLCODE = dr["CODE"].ToString();
-                    payment.ACCOUNTNO = dr["TARGET_ACCNO"].ToString();
-                    payment.BRANCHCODE = Convert.ToInt32(dr["TARGET_BRANCH"].ToString());
-                    payment.BANKCODE = Convert.ToInt32(dr["TARGET_BANK"].ToString());
-                    payment.PAYMENTSTATUS = Convert.ToInt32(dr["PAYMENT_STATUS"].ToString());
-                    payment.CURRENCYCODE = dr["CURRCODE"].ToString();
-                    payment.AMOUNT = dr["AMOUNT"].ToString();
-                    payment.DESCRIPTION = dr["EXPLAIN"].ToString();
-                    payment.COMPANYREF = dr["COMPANY_REF"].ToString();
-                    payment.TRANSACTIONNO = Convert.ToInt32(dr["TRANSACTIONNO"].ToString());
-                    payment.EFTQUERYNO = Convert.ToInt32(dr["EFTQUERY_NO"].ToString());
-                    payment.IBAN = dr["IBAN"].ToString();
-                    payment.TYPE = dr["RECORD_TYPE"].ToString();
-                    payment.CLCARDID = Convert.ToInt32(dr["CLIENTREF"].ToString());
-                    liste.Add(payment);
+                    payment.PAYMENT_STATUS = "BAŞARILI";
+                    payment.CURRCODE = dr["CURRCODE"].ToString();
+                    payment.AMOUNT_PAID = dr["AMOUNT_PAID"].ToString();
+                    payment.CLIENT_DEF = dr["CLIENTNAME"].ToString();
+                    liste2.Add(payment);
                 }
             }
+            #endregion
+
+            #region akibeti alınamayan varsa(başarısız olan) listeye onlarıda ekle
+            using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                CommandText = "SELECT * FROM AYZ_PW_SUMMARY AS S " +
+                              "\nINNER JOIN LG_" + Helper.FIRMANO + "_CLCARD AS C ON S.CLIENTREF = C.LOGICALREF " +
+                              "\nWHERE S.PAYMENT_STATUS IS NULL AND S.PACKETID = " + PacketID + "";
+                komut.CommandText = CommandText;
+                komut.Connection = conn;
+                conn.Open();
+                dr = komut.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    PAYMENT_REVIEW payment = new PAYMENT_REVIEW();
+                    payment.PACKETCREATEDATE = Convert.ToDateTime(dr["CREATED_DATE"]);
+                    payment.CLCODE = dr["CODE"].ToString();
+                    payment.PAYMENT_STATUS = "BAŞARISIZ";
+                    payment.CURRCODE = dr["CURRCODE"].ToString();
+                    payment.AMOUNT_PAID = dr["AMOUNT"].ToString();
+                    payment.CLIENT_DEF = dr["DEFINITION_"].ToString();
+                    liste2.Add(payment);
+                }
+            }
+            #endregion
 
             var source = new BindingSource();
-            source.DataSource = liste;
+            source.DataSource = liste2;
             DGVDebitClosing.DataSource = source;
         }
 
