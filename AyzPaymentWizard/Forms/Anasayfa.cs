@@ -98,8 +98,10 @@ namespace AyzPaymentWizard
             dataGridViewPacket.Columns["Id"].HeaderText = "ID";
             dataGridViewPacket.Columns["CreatedBy"].HeaderText = "Oluşturan";
             dataGridViewPacket.Columns["CreatedDate"].HeaderText = "Oluşturma Tarihi";
+            dataGridViewPacket.Columns["CreatedDate"].Width = 200;
             dataGridViewPacket.Columns["ModifiedBy"].HeaderText = "Güncelleyen";
             dataGridViewPacket.Columns["ModifiedDate"].HeaderText = "Güncelleme Tarihi";
+            dataGridViewPacket.Columns["ModifiedDate"].Width = 200;
             dataGridViewPacket.Columns["TotalRequired"].HeaderText = "Ödenmesi Gereken";
             dataGridViewPacket.Columns["TotalRequired"].Width = 200;
             dataGridViewPacket.Columns["TotalPaid"].HeaderText = "Ödenecek";
