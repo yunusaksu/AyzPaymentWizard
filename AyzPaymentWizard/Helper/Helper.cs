@@ -26,6 +26,7 @@ namespace AyzPaymentWizard
         public static string USERNAME { get; set; }
         public static int USERID { get; set; }
         public static int FIRMNR { get; set; }      // FIRMANO'nun int halidir. FIRMANO yerine kullanılamaz.
+        public static string FIRMNAME { get; set; }
 
         public enum FilterType
         {

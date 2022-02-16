@@ -61,6 +61,7 @@ namespace AyzPaymentWizard
                     Helper.USERID = 0; // Admin için USERID, SIFIRDIR(0).
                     Helper.USERNAME = userName;
                     Helper.FIRMNR = Convert.ToInt32(cmbFirms.SelectedValue);
+                    Helper.FIRMNAME = cmbFirms.Text.ToUpper();
                     GetLogoUsernameAndUserPassword();
                     Anasayfa form = new Anasayfa();
                     form.Show();

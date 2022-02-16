@@ -24,7 +24,6 @@ namespace AyzPaymentWizard
                 GetPrivateProfileString("ServerNameBaslik", "Server", "", sb, sb.Capacity, Helper.SystemIniPath);
                 server = sb.ToString();
                 return server;
-
             }
             else
             {

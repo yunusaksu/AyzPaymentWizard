@@ -50,6 +50,7 @@ namespace AyzPaymentWizard
 
         private void Anasayfa_Load(object sender, EventArgs e)
         {
+            label1.Text = Helper.FIRMNAME + " " + label1.Text;
             OnlineUsertoolStripLabel.Text = Helper.USERNAME;
             dataGridViewPacket.MultiSelect = false;
             #region ToolTips            
@@ -1402,6 +1403,6 @@ namespace AyzPaymentWizard
                     FillPacketList();
                 }
             }
-        }
+        }        
     }
 }

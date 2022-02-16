@@ -50,6 +50,7 @@
             this.akibetiİnceleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.paketSeruveniToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.silToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItemMarkAndDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripDropDownSettingButton = new System.Windows.Forms.ToolStripDropDownButton();
@@ -67,7 +68,6 @@
             this.SignOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnArchives = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.ToolStripMenuItemMarkAndDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPacket)).BeginInit();
@@ -101,7 +101,7 @@
             this.label1.Size = new System.Drawing.Size(397, 40);
             this.label1.TabIndex = 3;
             this.label1.Text = "HAZIRLANMIŞ PAKETLER";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;            
             // 
             // panel3
             // 
@@ -346,7 +346,7 @@
             this.silToolStripMenuItem,
             this.ToolStripMenuItemMarkAndDelete});
             this.contextMenuStripAnasayfa.Name = "contextMenuStripAnasayfa";
-            this.contextMenuStripAnasayfa.Size = new System.Drawing.Size(336, 128);
+            this.contextMenuStripAnasayfa.Size = new System.Drawing.Size(336, 100);
             this.contextMenuStripAnasayfa.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripAnasayfa_Opening);
             // 
             // akibetiİnceleToolStripMenuItem
@@ -369,6 +369,13 @@
             this.silToolStripMenuItem.Size = new System.Drawing.Size(335, 24);
             this.silToolStripMenuItem.Text = "Sil";
             this.silToolStripMenuItem.Click += new System.EventHandler(this.silToolStripMenuItem_Click);
+            // 
+            // ToolStripMenuItemMarkAndDelete
+            // 
+            this.ToolStripMenuItemMarkAndDelete.Name = "ToolStripMenuItemMarkAndDelete";
+            this.ToolStripMenuItemMarkAndDelete.Size = new System.Drawing.Size(335, 24);
+            this.ToolStripMenuItemMarkAndDelete.Text = "Akibeti Alınamadı Olarak İşaretle ve Sil";
+            this.ToolStripMenuItemMarkAndDelete.Click += new System.EventHandler(this.ToolStripMenuItemMarkAndDelete_Click);
             // 
             // toolStripSeparator2
             // 
@@ -531,13 +538,6 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 37);
-            // 
-            // ToolStripMenuItemMarkAndDelete
-            // 
-            this.ToolStripMenuItemMarkAndDelete.Name = "ToolStripMenuItemMarkAndDelete";
-            this.ToolStripMenuItemMarkAndDelete.Size = new System.Drawing.Size(335, 24);
-            this.ToolStripMenuItemMarkAndDelete.Text = "Akibeti Alınamadı Olarak İşaretle ve Sil";
-            this.ToolStripMenuItemMarkAndDelete.Click += new System.EventHandler(this.ToolStripMenuItemMarkAndDelete_Click);
             // 
             // Anasayfa
             // 
