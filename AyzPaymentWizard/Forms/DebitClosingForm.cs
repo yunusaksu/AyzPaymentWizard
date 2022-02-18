@@ -86,6 +86,8 @@ namespace AyzPaymentWizard.Forms
                 DGVDebitClosing.Columns["CURRCODE"].Width = 100;
                 DGVDebitClosing.Columns["PAYMENT_STATUS"].HeaderText = "İŞLEM SONUCU";
                 DGVDebitClosing.Columns["PAYMENT_STATUS"].Width = 150;
+                DGVDebitClosing.Columns["FICHENO"].HeaderText = "FATURA NO";
+                DGVDebitClosing.Columns["FICHENO"].Width = 150;
                 #endregion
 
             }
@@ -162,6 +164,7 @@ namespace AyzPaymentWizard.Forms
                     payment.CURRCODE = dr["CURRCODE"].ToString();
                     payment.AMOUNT_PAID = dr["AMOUNT_PAID"].ToString();
                     payment.CLIENT_DEF = dr["CLIENTNAME"].ToString();
+                    payment.FICHENO = dr["FICHENO"].ToString();
                     liste2.Add(payment);
                 }
             }
@@ -187,6 +190,7 @@ namespace AyzPaymentWizard.Forms
                     payment.CURRCODE = dr["CURRCODE"].ToString();
                     payment.AMOUNT_PAID = dr["AMOUNT"].ToString();
                     payment.CLIENT_DEF = dr["DEFINITION_"].ToString();
+                    payment.FICHENO = "***************";
                     liste2.Add(payment);
                 }
             }

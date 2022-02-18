@@ -134,6 +134,7 @@ namespace AyzPaymentWizard.Model
         public string AMOUNT_PAID { get; set; }
         public string CURRCODE { get; set; }
         public string PAYMENT_STATUS { get; set; } // Başarılı veya Başarısız        
+        public string FICHENO { get; set; }     // Fatura Numarası
     }
 
     public class SUB_PAYMENTOUTCOME
