@@ -10,7 +10,7 @@
         public int BankRef { get; set; }  //Logo Ref
         public int BankNr { get; set; }
         public int BranchNr { get; set; }                               
-        public int FirmNr { get; set; }        // Firm No
+        public int FirmNr { get; set; }       
         public int Status { get; set; }
     }
 }
