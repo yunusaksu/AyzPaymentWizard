@@ -560,7 +560,7 @@ namespace AyzPaymentWizard.Forms
             }
             else
             {
-                //result = 160;
+                //result = 160;;
                 result = 0;
                 return result;
             }
