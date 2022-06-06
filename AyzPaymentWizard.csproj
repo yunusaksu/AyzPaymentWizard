@@ -1,0 +1,362 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7F46AD90-1C21-413E-B148-04C8044D5694}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>AyzPaymentWizard</RootNamespace>
+    <AssemblyName>AyzPaymentWizard</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\yunus\Desktop\AYZ ÖDEME SİHİRBAZI\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>45</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AdvancedDataGridView, Version=1.1.22318.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>binaryyy\Debug\AdvancedDataGridView.dll</HintPath>
+    </Reference>
+    <Reference Include="CollapsibleSplitContainer, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\CollapsibleSplitContainer.dll</HintPath>
+    </Reference>
+    <Reference Include="FileHelpers, Version=3.4.2.0, Culture=neutral, PublicKeyToken=3e0c08d59cc3d657, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>binaryyy\Debug\FileHelpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="SftpConOperator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>binaryyy\Debug\SftpConOperator.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Forms\Anasayfa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Anasayfa.Designer.cs">
+      <DependentUpon>Anasayfa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Archive.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Archive.Designer.cs">
+      <DependentUpon>Archive.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\BankAccounts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BankAccounts.Designer.cs">
+      <DependentUpon>BankAccounts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\BanksForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BanksForm.Designer.cs">
+      <DependentUpon>BanksForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DebitClosingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DebitClosingForm.Designer.cs">
+      <DependentUpon>DebitClosingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\GeneralSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GeneralSetting.Designer.cs">
+      <DependentUpon>GeneralSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\LogoUserInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LogoUserInfo.Designer.cs">
+      <DependentUpon>LogoUserInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MyMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MyMessageBox.Designer.cs">
+      <DependentUpon>MyMessageBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PacketAdventure.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PacketAdventure.Designer.cs">
+      <DependentUpon>PacketAdventure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PacketEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PacketEditForm.Designer.cs">
+      <DependentUpon>PacketEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SftpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SftpForm.Designer.cs">
+      <DependentUpon>SftpForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Filters.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Filters.Designer.cs">
+      <DependentUpon>Filters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\GroupAddForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GroupAddForm.Designer.cs">
+      <DependentUpon>GroupAddForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SFTPSTATE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SFTPSTATE.Designer.cs">
+      <DependentUpon>SFTPSTATE.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SMTP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SMTP.Designer.cs">
+      <DependentUpon>SMTP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\ConnectionHelper.cs" />
+    <Compile Include="Helper\EncryptionAlgorithm.cs" />
+    <Compile Include="Helper\Helper.cs" />
+    <Compile Include="Forms\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\InputDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Model\Bank.cs" />
+    <Compile Include="Model\BankAcc.cs" />
+    <Compile Include="Model\Debit.cs" />
+    <Compile Include="Model\LOG_FILE.cs" />
+    <Compile Include="Model\Packet.cs" />
+    <Compile Include="Forms\PacketPreparation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PacketPreparation.Designer.cs">
+      <DependentUpon>PacketPreparation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PaymentOutcome.cs" />
+    <Compile Include="Model\SecureFTP.cs" />
+    <Compile Include="Model\UserGroup.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Forms\UserAddForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UserAddForm.Designer.cs">
+      <DependentUpon>UserAddForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Forms\Anasayfa.resx">
+      <DependentUpon>Anasayfa.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Archive.resx">
+      <DependentUpon>Archive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BankAccounts.resx">
+      <DependentUpon>BankAccounts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BanksForm.resx">
+      <DependentUpon>BanksForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DebitClosingForm.resx">
+      <DependentUpon>DebitClosingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Filters.resx">
+      <DependentUpon>Filters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GeneralSetting.resx">
+      <DependentUpon>GeneralSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GroupAddForm.resx">
+      <DependentUpon>GroupAddForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LogoUserInfo.resx">
+      <DependentUpon>LogoUserInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MyMessageBox.resx">
+      <DependentUpon>MyMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PacketAdventure.resx">
+      <DependentUpon>PacketAdventure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PacketEditForm.resx">
+      <DependentUpon>PacketEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PacketPreparation.resx">
+      <DependentUpon>PacketPreparation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SftpForm.resx">
+      <DependentUpon>SftpForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SFTPSTATE.resx">
+      <DependentUpon>SFTPSTATE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SMTP.resx">
+      <DependentUpon>SMTP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UserAddForm.resx">
+      <DependentUpon>UserAddForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXml">
+      <Version>2.12.1</Version>
+    </PackageReference>
+    <PackageReference Include="ini-parser">
+      <Version>2.5.2</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Office.Interop.Excel">
+      <Version>15.0.4795.1000</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.SqlServer.SqlManagementObjects">
+      <Version>161.46367.54</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="SimpleDataGridViewPaging">
+      <Version>1.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="SSH.NET">
+      <Version>2020.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Linq.Dynamic">
+      <Version>1.0.8</Version>
+    </PackageReference>
+    <PackageReference Include="System.Runtime">
+      <Version>4.3.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\hide_icon.png" />
+    <Content Include="Images\homepage.ico" />
+    <Content Include="Images\HomepageSubBarImages\approveButton.png" />
+    <Content Include="Images\HomepageSubBarImages\archive.png" />
+    <Content Include="Images\HomepageSubBarImages\bank.png" />
+    <Content Include="Images\HomepageSubBarImages\editButton.png" />
+    <Content Include="Images\HomepageSubBarImages\performed_process.png" />
+    <Content Include="Images\HomepageSubBarImages\refresh.png" />
+    <Content Include="Images\HomepageSubBarImages\rejectButton.png" />
+    <Content Include="Images\HomepageSubBarImages\reviewButton.png" />
+    <Content Include="Images\HomepageSubBarImages\sendToApprove.png" />
+    <Content Include="Images\HomepageSubBarImages\try_again.png" />
+    <Content Include="Images\info.png" />
+    <Content Include="Images\logo.ico" />
+    <Content Include="Images\Search.png" />
+    <Content Include="Images\show_icon.png" />
+    <Content Include="logo.ico" />
+    <Content Include="Read Me.txt" />
+    <Content Include="Resources\Collapse Arrow_20px.png" />
+    <Content Include="Resources\Expand Arrow_20px.png" />
+    <None Include="Resources\Man.ico" />
+    <None Include="Resources\newRecord.png" />
+    <None Include="Resources\warning_board.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="UnityObjects">
+      <Guid>{51F6657D-9972-45FD-8D5D-98849802A9C9}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

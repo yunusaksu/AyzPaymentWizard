@@ -1,0 +1,6 @@
+1- C:/ klasörünün altına AYZ PAYMENT WIZARD klasörü kopyalanacak.
+2- SetupForPaymentWizard.msi çalıştırılacak.
+3- DBConfig.exe çalıştırılıp ayarlar check edilecek.
+4- Kurulan bilgisayarın sayı ve para biçimi Ondalık ayıraç olarak virgül(,) basamak ayıracı olarak nokta(.) olmalıdır.
+
+bu adımlar sonucu kurulum hazır olur.

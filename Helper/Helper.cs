@@ -1,0 +1,383 @@
+﻿using IniParser;
+using IniParser.Model;
+using Renci.SshNet;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.IO;
+using System.Net.Mail;
+using System.Text;
+using System.Text.RegularExpressions;
+
+namespace AyzPaymentWizard
+{
+    public class Helper
+    {
+        static SqlCommand komut = new SqlCommand();
+        static SqlDataReader dr;
+        static string CommandText = "";
+
+        public static string root = Directory.GetDirectoryRoot(@"\AYZ PAYMENT WIZARD");
+        public static string SystemIniPath = root + "AYZ PAYMENT WIZARD" + @"\System.ini";
+
+        static public string LOGOUSERNAME { get; set; }
+        static public string LOGOUSERPASS { get; set; }
+        static public string FIRMANO { get { return LStr(FIRMNR.ToString(), 3); } }  // Sadece Logo tablolarında kullanılır.
+        public static string USERNAME { get; set; }
+        public static int USERID { get; set; }
+        public static int FIRMNR { get; set; }      // FIRMANO'nun int halidir. FIRMANO yerine kullanılamaz.
+        public static string FIRMNAME { get; set; }
+
+        public enum FilterType
+        {
+            DetailSendig = 0,
+            Currency = 1,
+            ExpiryDate = 2,
+            InvoiceDate = 3,
+            ClientCodeType = 4,
+            ClientSpecialCode = 5,
+            ClientSpecialCode2 = 6,
+            ReplaceDueDateAndTodayDate = 7,
+            VoucherType = 8,
+            MecraType = 9,
+            Mecra = 10,
+            MarketingCompany = 11,
+            Customer = 12,
+            PlanCode = 13,
+            InternerMainCategory = 14,
+            InternetSubCategory = 15,
+            Branch = 16,
+            ClientCodeBeg = 17,
+            ClientCodeEnd = 18
+        };
+
+        public static int GetTime()
+        {
+            int time = DateTime.Now.Hour * 16777216 + DateTime.Now.Minute * 65536 + DateTime.Now.Second * 256;
+            return time;
+        }
+
+        public enum PacketStatus
+        {            
+            NewPacket = 0,
+            SendToApproval = 1,
+            Approved = 2,
+            Rejected = 3,
+            SentToBank = 4,
+            AnswerReceivedBank = 5,
+            PrepareAgain = 6
+        }
+        public enum ArchiveStatus
+        {
+            Unarchived = 0,
+            Archived = 1
+        }
+
+        static public string ApprovalQueeMessage =  "Lütfen Paket İş Akışını Takip Edin!" +
+                             "\n    1 - Yeni Paket " +
+                             "\n    2 - Onaya Yollandı " +
+                             "\n    3 - Onaylandı " +
+                             "\n    4 - Bankaya Yollandı " +
+                             "\n    5 - Akibet Alındı";
+
+        public static bool SFTPCHECKANDLOG(int? packetId)
+        {
+            string Hostname = "", Username = "", Password = "";
+            int Port = 22;
+            try
+            {
+                packetId = packetId == null ? 0 : packetId;
+
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT * FROM AYZ_PW_SFTP_SETTING WHERE FIRMNR = " + Helper.FIRMNR + "";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            Hostname = dr["HOSTNAME"].ToString();
+                            Username = dr["USERNAME"].ToString();
+                            Password = dr["PASSWORD"].ToString();
+                            Port = Convert.ToInt32(dr["PORT"].ToString());
+                        }
+                    }
+                }
+
+                var sftpClient = new SftpClient(Hostname, Port, Username, Password);   
+                sftpClient.Connect();
+                string ConnResult = sftpClient.IsConnected == true ? "Başarılı" : "Başarısız";
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "INSERT INTO AYZ_PW_LOG_FILE(LOG_NAME, LOG_DATETIME, LOG_EXP, PACKETID, LOG_CREATE_USERID, LOG_CREATE_USERNAME,STATE)" +
+                                  "\nVALUES('SFTP BAĞLANTISI', CONVERT(DATETIME, GETDATE(), 104), " +
+                                  "\n'Host: " + Hostname + ", User: " + Username + ", Password: " + Password + ", Port: " + Port + ", Bağlantı: " + ConnResult + " '," +
+                                  "\n" + packetId + "," + Helper.USERID + ",'" + Helper.USERNAME + "','" + ConnResult + "')";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                }
+                return true;
+            }
+            catch (SqlException)
+            {
+                return false;
+            }
+            catch
+            {
+                string ConnResult = "Başarısız";
+
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "INSERT INTO AYZ_PW_LOG_FILE(LOG_NAME, LOG_DATETIME, LOG_EXP, PACKETID, LOG_CREATE_USERID, LOG_CREATE_USERNAME,STATE)" +
+                                  "\nVALUES('SFTP BAĞLANTISI', CONVERT(DATETIME, GETDATE(), 104), " +
+                                  "\n'Host: " + Hostname + ", User: " + Username + ", Password: " + Password + ", Port: " + Port + ", Bağlantı: " + ConnResult + " '," +
+                                  "\n" + packetId + "," + Helper.USERID + ",'" + Helper.USERNAME + "','" + ConnResult + "')";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                }
+                return false;
+            }
+        }
+
+        public static bool MailSendForPacketApprove(int packetId)
+        {
+            try
+            {
+                var result = false;
+                string url = "", serverAddress = "", smtpServerName = "", smtpPassword = "", senderMailAddress = "", maillingAddresses = "";
+                int port = -1;
+                bool enableSSL = false;
+
+                #region Onay Alma Maili Yollanacak Kişilerin Maillerini Alma
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    var groups = "";
+                    CommandText = "SELECT GROUPID FROM AYZ_PW_USERRIGHTS WHERE APPROVE_PACKAGE = 1";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            groups = groups + dr["GROUPID"].ToString() + ",";
+                        }
+                        groups = groups.ToString().Substring(0, groups.Length - 1);
+                        conn.Close();
+                        CommandText = "SELECT DISTINCT USERID, U.NAME,EPOSTA = U.EMAIL FROM AYZ_PW_USERGROUPS AS UG " +
+                                      "\nLEFT JOIN AYZ_PW_USER AS U ON U.ID = UG.USERID WHERE UG.GROUPID IN(" + groups + ") AND U.FIRMNR = " + Helper.FIRMNR + "";
+                        komut.CommandText = CommandText;
+                        komut.Connection = conn;
+                        conn.Open();
+                        dr = komut.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            maillingAddresses = maillingAddresses + dr["EPOSTA"].ToString() + ",";
+                        }
+                        maillingAddresses = maillingAddresses.ToString().Substring(0, maillingAddresses.Length - 1);
+
+                        using (SqlConnection conn_ = new SqlConnection(ConnectionHelper.ConnectionString))
+                        {
+                            CommandText = "SELECT * FROM AYZ_PW_SMTP_SETTING";
+                            komut.CommandText = CommandText;
+                            komut.Connection = conn_;
+                            conn_.Open();
+                            dr = komut.ExecuteReader();
+                            if (dr.HasRows)
+                            {
+                                while (dr.Read())
+                                {
+                                    url = dr["APPROVE_URL"].ToString();
+                                    port = Convert.ToInt32(dr["SMTP_PORT_NO"].ToString());
+                                    serverAddress = dr["SMTP_SERVERNAME"].ToString();
+                                    smtpServerName = dr["SMTP_USERNAME"].ToString();
+                                    smtpPassword = EncryptionAlgorithm.Decrytion(dr["SMTP_USERPASSWORD"].ToString());
+                                    senderMailAddress = dr["SENDER_MAILADDRESS"].ToString();
+                                    enableSSL = Convert.ToBoolean(dr["SMTP_SSL_CONN"].ToString());
+                                }
+                            }
+                        }
+
+                        using (SmtpClient smtpSend = new SmtpClient())
+                        {
+                            smtpSend.Host = serverAddress;
+                            smtpSend.Port = port;
+
+                            smtpSend.Credentials = new System.Net.NetworkCredential(senderMailAddress, smtpPassword);
+
+                            smtpSend.EnableSsl = enableSSL;
+
+                            MailMessage emailMessage = new System.Net.Mail.MailMessage();
+                            var mailArray = maillingAddresses.Split(',');
+                            foreach (var item in mailArray)
+                            {
+                                emailMessage.To.Add(item);
+                            }
+                            emailMessage.From = new MailAddress(senderMailAddress, smtpServerName);
+                            emailMessage.Subject = "ÖDEME PAKETİ ONAYI";
+                            emailMessage.IsBodyHtml = true;
+                            string htmlBody;
+                            htmlBody = "Sayın Yetkili <br /><br />";
+                            htmlBody += "Onaylanmayı bekleyen bir paketiniz vardır:<br /><br />";
+                            string encryptionPacketId = EncryptionAlgorithm.Encrytion(packetId.ToString());
+                            htmlBody += "" + url + "Approve/PacketApprove?packetId=" + encryptionPacketId + "<br /><br />";
+                            htmlBody += "Teşekkür ederiz.";
+                            emailMessage.Body = htmlBody;
+
+                            if (!Regex.IsMatch(emailMessage.Body, @"^([0-9a-z!@#\$\%\^&\*\(\)\-=_\+])", RegexOptions.IgnoreCase) ||
+                                    !Regex.IsMatch(emailMessage.Subject, @"^([0-9a-z!@#\$\%\^&\*\(\)\-=_\+])", RegexOptions.IgnoreCase))
+                            {
+                                emailMessage.BodyEncoding = Encoding.Unicode;
+                            }
+
+                            smtpSend.Send(emailMessage);
+                            result = true;
+                        }
+                    }
+                    #endregion                
+                    else
+                    {
+                        result = true;
+                    }
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception("SMTP Sunucu Ayarlarını Kontrol Edin!\nSMTP Sunucusuna bağlanılamadı!");
+            }
+        }
+        public static void PacketHistorySave(int packetId, string status, string explain)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "INSERT INTO AYZ_PW_PACKET_HISTORY(PACKETID,FIRMNR,DATE_,STATUS,EXPLAIN, USERID,USERNAME) " +
+                              "VALUES(" +
+                              "\n" + packetId + ", " +
+                              "\n" + Helper.FIRMNR + ", " +
+                              "\nCONVERT(DATETIME, GETDATE(), 104), " +
+                              "\n'" + status + "', " +
+                              "\n'" + explain + "', " +
+                              "\n" + Helper.USERID + ", " +
+                              "\n'" + Helper.USERNAME + "')";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException;
+            }
+
+        }
+        public static bool NotInPayTrans(int payRef)
+        {
+            try
+            {
+                List<int> paytransIdList = new List<int>();
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                {
+                    CommandText = "SELECT LOGICALREF FROM LG_" + FIRMANO + "_01_PAYTRANS";
+                    komut.CommandText = CommandText;
+                    komut.Connection = conn;
+                    conn.Open();
+                    dr = komut.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            int id = Convert.ToInt32(dr["LOGICALREF"].ToString());
+                            paytransIdList.Add(id);
+                        }
+                    }
+
+                    bool foo = paytransIdList.Contains(payRef);
+                    return foo;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException;
+            }
+
+        }
+        public static string LStr(object val, int len)
+        {
+            string sVal = val.ToString();
+            while (sVal.Length < len)
+                sVal = "0" + sVal;
+            return sVal.Substring(0, len);
+        }
+
+        public static bool AuthorityControl(string ColumnName)
+        {
+            try
+            {
+                bool result = false;
+                if (Helper.IsAdmin())
+                {
+                    return true;
+                }
+                else
+                {
+                    using (SqlConnection conn = new SqlConnection(ConnectionHelper.ConnectionString))
+                    {
+                        CommandText = "SELECT " + ColumnName + " FROM AYZ_PW_USER AS U " +
+                                      "LEFT JOIN AYZ_PW_USERGROUPS AS UG ON U.ID = UG.USERID " +
+                                      "LEFT JOIN AYZ_PW_USERRIGHTS AS UR ON UG.GROUPID = UR.GROUPID " +
+                                      "WHERE U.ID = " + USERID + "";
+                        komut.CommandText = CommandText;
+                        komut.Connection = conn;
+                        conn.Open();
+                        dr = komut.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            result = Convert.ToBoolean(dr["" + ColumnName + ""].ToString());
+                            if (result == true)
+                                break;
+                        }
+                    }
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException;
+            }
+
+        }
+
+        public static bool IsAdmin()
+        {
+            try
+            {
+                FileIniDataParser parser = new FileIniDataParser();
+                IniData generateData = parser.ReadFile(SystemIniPath);
+
+                //Reading the Content of the File
+                string AdminuserName = generateData["AdminNameBaslik"]["AdminUser"].ToString();
+                string user = EncryptionAlgorithm.Decrytion(AdminuserName);
+                if (user == Helper.USERNAME)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException;
+            }
+        }
+    }
+}
